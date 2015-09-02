@@ -12,74 +12,81 @@
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
 class cl_dataFilter {
-    private   $arr_filter = [];
-    private   $v_isFilterSet =  false;
+    private   $arr_filters = [];
     private   $arr_dataToBeFiltered = [];
     protected $arr_filteredData = [];
     protected $v_filteredDataCount = 0;
     
     function __construct($fp_arr_dataToBeFiltered) 
     {
-        
+        if(!empty($fp_arr_dataToBeFiltered))
+        {
+            $this->arr_dataToBeFiltered = $fp_arr_dataToBeFiltered;
+            $this->v_filteredDataCount  = count($fp_arr_dataToBeFiltered);
+        }
     }
     
     public function addFilter($fp_key, $fp_arr_values)
     {
         if(key_exists($fp_key, $this->arr_dataToBeFiltered))
         {
-            $this->arr_filter[$fp_key] = $fp_arr_values;
-            $this->v_isFilterSet = true;
+            $this->arr_filters[$fp_key] = $fp_arr_values;
         }
     }
-    
+        
     public function getFilteredData()
     {
-        $larr_dataToBeFiltered = [];
         $larr_filteredData     = [];
-        
-        if ($this->v_isFilterSet == true) {
-            if (empty($this->arr_filteredData)) {
-                $larr_dataToBeFiltered = $this->arr_dataToBeFiltered;
-            } else {
-                $larr_dataToBeFiltered = $this->arr_filteredData;
-            }
-            foreach ($larr_dataToBeFiltered as $lwa_dataToBeFiltered) {
-                $lv_valueMatchesAllFilters = true;
-                foreach ($this->$arr_filter as $filter_key => $filter_values) {
-                    $lv_valueMatchesCurrentFilter = false; //Initialize flag for Filter Match
-                    $lv_valueToBeFiltered = $lwa_dataToBeFiltered[$filter_key];
-                    $lv_valueMatchesCurrentFilter = in_array($lv_valueToBeFiltered, $filter_values);
-
-//              Performs AND to ensure all filters match
-                    $lv_valueMatchesAllFilters = $lv_valueMatchesAllFilters && $lv_valueMatchesCurrentFilter;
-                }
-                if ($lv_valueMatchesAllFilters == true) {
-                    $larr_filteredData[] = $lwa_dataToBeFiltered;
+        $lv_filteredDataCount  = 0;
+        if (!empty($this->arr_filters)) 
+        {
+            $larr_dataTableToBeFiltered = $this->getDataToBeFiltered();
+            foreach ($larr_dataTableToBeFiltered as $lwa_dataRowToBeFiltered) 
+            {
+                $lv_doesDataRowMatchFilters = $this->doesDataRowMatchFilters($lwa_dataRowToBeFiltered);
+                if ($lv_doesDataRowMatchFilters == true) 
+                {
+                    $larr_filteredData[] = $lwa_dataRowToBeFiltered;
+                    $lv_filteredDataCount++;
                 }
             }
         }
-        $this->arr_filteredData = $larr_filteredData;
+        $this->arr_filteredData    = $larr_filteredData;
+        $this->v_filteredDataCount = $lv_filteredDataCount;
         return $this->arr_filteredData;
     }
     
     
-    private function doesDataRowMatchFilter($fp_arr_dataRowToBeFiltered)
+    private function getDataToBeFiltered()
+    {
+        $larr_dataToBeFiltered = [];
+        if (empty($this->arr_filteredData)) 
+        {
+            $larr_dataToBeFiltered = $this->arr_dataToBeFiltered;
+        } else 
+        {
+            $larr_dataToBeFiltered = $this->arr_filteredData;
+        }
+        return $larr_dataToBeFiltered;
+    }
+    
+    private function doesDataRowMatchFilters($fp_arr_dataRowToBeFiltered)
     {
         $lv_rowMatchesAllFilters = true;
         foreach ($this->$arr_filter as $filter_key => $filter_values) 
         {
-            $lv_valueMatchesCurrentFilter = false; //Initialize flag for Filter Match
-            $fp_arr_dataToBeFiltered = $lwa_dataToBeFiltered[$filter_key];
-            $lv_valueMatchesCurrentFilter = in_array($fp_arr_dataToBeFiltered, $filter_values);
-
+//            $lv_valueMatchesCurrentFilter = false; //Initialize flag for Filter Match
+            $lv_valueToBeMatched = $lwa_dataToBeFiltered[$filter_key];
+            $lv_valueMatchesCurrentFilter = in_array($lv_valueToBeMatched, $filter_values);
 //              Performs AND to ensure all filters match
-                    $lv_rowMatchesAllFilters = $lv_rowMatchesAllFilters && $lv_valueMatchesCurrentFilter;
+            $lv_rowMatchesAllFilters = $lv_rowMatchesAllFilters && $lv_valueMatchesCurrentFilter;
         }
+        return $lv_rowMatchesAllFilters;
     }
     
     public function resetFilters()
     {
-        $this->arr_filter = [];
+        $this->arr_filters = [];
+        $this->arr_filteredData = [];
     }
-    
 }
