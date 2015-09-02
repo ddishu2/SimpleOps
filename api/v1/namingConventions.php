@@ -1,13 +1,14 @@
 <?php
 
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* Author: Prashanth Tellis
+* Date: 02/09/2015
+* Description: Naming Conventions Usedin RMT 
+*/
 
-//1D Array - arr | larr
-//2D Array-  it | lit
-//Variables- v  | lv
-//Constants  
-
+//Array - arr_ OR it_ | larr_ OR lit_
+//Variables- v_   | lv_
+//Constants  c_   | lc_
+//Classes    cl_
+//Objects    o_   | lo_
+//
