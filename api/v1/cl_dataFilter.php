@@ -1,13 +1,6 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of cl_dataFilter
+ *A generic class that can filter a 2D associative array.
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
@@ -25,7 +18,10 @@ class cl_dataFilter {
             $this->v_filteredDataCount  = count($fp_arr_dataToBeFiltered);
         }
     }
-    
+
+/**   
+* @return void
+*/
     public function addFilter($fp_key, $fp_arr_values)
     {
         if(key_exists($fp_key, $this->arr_dataToBeFiltered))
@@ -33,7 +29,10 @@ class cl_dataFilter {
             $this->arr_filters[$fp_key] = $fp_arr_values;
         }
     }
-        
+
+/**   
+* @return array|[]
+*/
     public function getFilteredData()
     {
         $larr_filteredData     = [];
@@ -83,7 +82,10 @@ class cl_dataFilter {
         }
         return $lv_rowMatchesAllFilters;
     }
-    
+
+/**   
+* @return void
+*/
     public function resetFilters()
     {
         $this->arr_filters = [];
