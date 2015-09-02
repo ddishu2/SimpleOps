@@ -26,7 +26,7 @@ class cl_DB
       self::closeDBHandle();
   }
   
-  public static function getCount()
+  public static function getCountAndReset()
   {
       $lv_count = self::$count;
       self::clearCount();
@@ -42,8 +42,10 @@ class cl_DB
   {
       self::$count = $fp_v_count;
   }
-
-
+/**
+* 
+*@throws DB_EXCEPTION: Could not
+*/
   private static function setDBHandle()
   {
       if(is_null(self::$dbhandle))
@@ -104,14 +106,16 @@ class cl_DB
       {
           throw new Exception(self::QUERY_EXCEPTION);
       }
-      $lv_count = $lv_query_results->num_rows;
-      self::setCount($lv_count);
-      while($row = $lv_query_results->fetch_assoc())
-      {
-        $re_results[] = $row;
-      }
-      /* free result set */
-      $lv_query_results->free();
-      return $re_results; 
+      else
+        {
+            $lv_count = $lv_query_results->num_rows;
+            self::setCount($lv_count);
+            while ($row = $lv_query_results->fetch_assoc()) {
+                $re_results[] = $row;
+            }
+            /* free result set */
+            $lv_query_results->free();
+            return $re_results;
+        }
   }
 }
