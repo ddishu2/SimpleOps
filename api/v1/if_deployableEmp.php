@@ -10,14 +10,9 @@
  *The interface for deplyable employees
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
-interface if_deployableEmp 
+interface if_deployableEmps 
 {
     
-//    public function filterByLocations($fp_arr_locations);
-//    
-//    public function filterBySkills($fp_arr_skills);
-//    
-//    public function filterByLevels($fp_arr_levels);
     
-    public function getDeployable();
+    public function get();
 }
