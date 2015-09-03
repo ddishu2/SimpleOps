@@ -20,11 +20,11 @@ class cl_vo_deployableEmp {
         $lv_query = "SELECT * FROM `v_deployable_emps` \n"
                     ."ORDER BY hire_date ASC;";
         $lt_data = cl_DB::getResultsFromQuery($lv_query);
-        $this->emp_count = $lt_data['count'];
-        if($this->emp_count > 0)
-        {
-            $this->it_deployable_emps = $lt_data['data'];
-        }
+//        $this->emp_count = $lt_data['count'];
+//        if($this->emp_count > 0)
+//        {
+            $this->it_deployable_emps = $lt_data;
+//        }
     }
     
     private function isProposed($fp_v_emp_id)

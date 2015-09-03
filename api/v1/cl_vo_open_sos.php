@@ -91,7 +91,7 @@ class cl_vo_open_sos
         
         
         self::$it_open_sos = cl_DB::getResultsFromQuery($lv_query);
-        self::$count       = cl_DB::getCount();
+        //self::$count       = cl_DB::getCount();
         return self::$it_open_sos;
     }
 
