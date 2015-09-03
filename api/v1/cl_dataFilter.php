@@ -7,15 +7,14 @@
 class cl_dataFilter {
     private   $arr_filters = [];
     private   $arr_dataToBeFiltered = [];
-    protected $arr_filteredData = [];
-    protected $v_filteredDataCount = 0;
+    private   $arr_filteredData = [];
+    private   $v_filteredDataCount = 0;
     
     function __construct($fp_arr_dataToBeFiltered) 
     {
         if(!empty($fp_arr_dataToBeFiltered))
         {
             $this->arr_dataToBeFiltered = $fp_arr_dataToBeFiltered;
-            $this->v_filteredDataCount  = count($fp_arr_dataToBeFiltered);
         }
     }
 
@@ -29,20 +28,16 @@ class cl_dataFilter {
             $this->arr_filters[$fp_key] = $fp_arr_values;
         }
     }
-    
+        
     private function addFilteredDataRow($fp_arr_filteredData)
     {
         $this->arr_filteredData[] = $lwa_dataRowToBeFiltered;
         $this->v_filteredDataCount++;
     }
-
-/**   
-* @return array|[]
-*/
-    public function getFilteredData()
+    
+    private function setFilteredData()
     {
         $larr_filteredData     = [];
-        $lv_filteredDataCount  = 0;
         $larr_dataTableToBeFiltered = $this->getDataToBeFiltered();
         if (!empty($this->arr_filters)) 
         {
@@ -52,15 +47,23 @@ class cl_dataFilter {
                 if ($lv_doesDataRowMatchFilters == true) 
                 {
                     $this->addFilteredDataRow($lwa_dataRowToBeFiltered);
-//                    if($fp_filteredDataMaxCount > 0 && $lv_filteredDataCount == $fp_filteredDataMaxCount)
-//                    {
-//                        break;
-//                    }
                 }
             }
         }
+        else
+        {
+            $larr_filteredData     = $this->arr_dataToBeFiltered;
+        }
         $this->arr_filteredData    = $larr_filteredData;
-        $this->v_filteredDataCount = $lv_filteredDataCount;
+        
+    }
+    
+/**   
+* @return array|[]
+*/
+    public function getFilteredData()
+    {
+        $this->setFilteredData();
         return $this->arr_filteredData;
     }
     
@@ -81,10 +84,10 @@ class cl_dataFilter {
     private function doesDataRowMatchFilters($fp_arr_dataRowToBeFiltered)
     {
         $lv_rowMatchesAllFilters = true;
-        foreach ($this->$arr_filter as $filter_key => $filter_values) 
+        foreach ($this->arr_filters as $filter_key => $filter_values) 
         {
 //            $lv_valueMatchesCurrentFilter = false; //Initialize flag for Filter Match
-            $lv_valueToBeMatched = $lwa_dataToBeFiltered[$filter_key];
+            $lv_valueToBeMatched = $fp_arr_dataRowToBeFiltered[$filter_key];
             $lv_valueMatchesCurrentFilter = in_array($lv_valueToBeMatched, $filter_values);
 //              Performs AND to ensure all filters match
             $lv_rowMatchesAllFilters = $lv_rowMatchesAllFilters && $lv_valueMatchesCurrentFilter;
