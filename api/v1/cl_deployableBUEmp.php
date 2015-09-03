@@ -33,7 +33,7 @@ class cl_deployableBUEmp extends cl_abs_deployableEmp
         
     public function filterBySkills($fp_arr_skills)
     {
-        parent::add
+//        parent::add
     }
     
     public function filterByLevels($fp_arr_levels)
