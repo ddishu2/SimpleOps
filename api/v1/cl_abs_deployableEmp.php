@@ -18,8 +18,6 @@
     protected $v_deployable_emp_count = 0;
     protected $it_deployable_emps = [];
     
-<<<<<<< .working
-=======
     private function setDeployableEmps()
     {
         $lt_data = [];
@@ -32,7 +30,6 @@
             $this->it_deployable_emps = $lt_data;
 //        }
     }
->>>>>>> .new
     
     public function __construct()
     {
