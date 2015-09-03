@@ -7,7 +7,7 @@
  * @author ptellis
  * 
  */
- require __DIR__.DIRECTORY_SEPARATOR.'if_deployableEmp.php';
+ require __DIR__.DIRECTORY_SEPARATOR.'if_deployableEmps.php';
  abstract class cl_abs_deployableEmp implements if_deployableEmp {
     
     const c_emp_skill_fname = 'so_loc';
