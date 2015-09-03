@@ -8,11 +8,16 @@
 
 /**
  *
- * @author ptellis
+ * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
-interface if_deployableEmp {
-
-public function getDeployable();
-public function isDeployable($fp_v_emp_corp_id);
-
+interface if_deployableEmp 
+{
+    
+//    public function filterByLocations($fp_arr_locations);
+//    
+//    public function filterBySkills($fp_arr_skills);
+//    
+//    public function filterByLevels($fp_arr_levels);
+    
+    public function getDeployable();
 }
