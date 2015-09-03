@@ -14,9 +14,15 @@
 class cl_Lock {
 
 public function __construct(){}
-public function getSoftLockedEmps(){}
+public function getSoftLockedEmps()
+{
+    
+}
 public function getHardLockedEmps(){}
-public function getSoftLockExpiredEmps(){}
+public function getSoftLockExpiredEmps()
+{
+    
+}
 public function setSoftLock($fp_v_lock_trans_id)
 {
 //    

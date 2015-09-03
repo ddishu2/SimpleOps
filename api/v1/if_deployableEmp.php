@@ -7,7 +7,7 @@
  */
 
 /**
- *
+ *The interface for deplyable employees
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
 interface if_deployableEmp 
