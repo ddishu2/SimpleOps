@@ -79,6 +79,10 @@ class cl_dataFilter {
             $lv_valueMatchesCurrentFilter = in_array($lv_valueToBeMatched, $filter_values);
 //              Performs AND to ensure all filters match
             $lv_rowMatchesAllFilters = $lv_rowMatchesAllFilters && $lv_valueMatchesCurrentFilter;
+            if($lv_rowMatchesAllFilters == false)
+            {
+                break;
+            }
         }
         return $lv_rowMatchesAllFilters;
     }
