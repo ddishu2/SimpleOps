@@ -1,5 +1,5 @@
 <?php
-//This class represents Open SOs
+//This class represents Open SOs for a given date range
 class cl_vo_open_so
 {
     const C_DATE_FORMAT   = 'Y-m-d';
