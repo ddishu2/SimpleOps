@@ -29,6 +29,12 @@ class cl_dataFilter {
             $this->arr_filters[$fp_key] = $fp_arr_values;
         }
     }
+    
+    private function addFilteredDataRow($fp_arr_filteredData)
+    {
+        $this->arr_filteredData[] = $lwa_dataRowToBeFiltered;
+        $this->v_filteredDataCount++;
+    }
 
 /**   
 * @return array|[]
@@ -37,16 +43,19 @@ class cl_dataFilter {
     {
         $larr_filteredData     = [];
         $lv_filteredDataCount  = 0;
+        $larr_dataTableToBeFiltered = $this->getDataToBeFiltered();
         if (!empty($this->arr_filters)) 
         {
-            $larr_dataTableToBeFiltered = $this->getDataToBeFiltered();
             foreach ($larr_dataTableToBeFiltered as $lwa_dataRowToBeFiltered) 
             {
                 $lv_doesDataRowMatchFilters = $this->doesDataRowMatchFilters($lwa_dataRowToBeFiltered);
                 if ($lv_doesDataRowMatchFilters == true) 
                 {
-                    $larr_filteredData[] = $lwa_dataRowToBeFiltered;
-                    $lv_filteredDataCount++;
+                    $this->addFilteredDataRow($lwa_dataRowToBeFiltered);
+//                    if($fp_filteredDataMaxCount > 0 && $lv_filteredDataCount == $fp_filteredDataMaxCount)
+//                    {
+//                        break;
+//                    }
                 }
             }
         }
