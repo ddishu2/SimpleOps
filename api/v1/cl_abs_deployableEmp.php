@@ -18,18 +18,18 @@
     protected $v_deployable_emp_count = 0;
     protected $it_deployable_emps = [];
     
-    private function setDeployableEmps()
-    {
-        $lt_data = [];
-        $lv_query = "SELECT * FROM `v_deployable_emps` \n"
-                    ."ORDER BY hire_date ASC;";
-        $lt_data = cl_DB::getResultsFromQuery($lv_query);
-//        $this->emp_count = $lt_data['count'];
-//        if($this->emp_count > 0)
-//        {
-            $this->it_deployable_emps = $lt_data;
-//        }
-    }
+//    private function setDeployableEmps()
+//    {
+//        $lt_data = [];
+//        $lv_query = "SELECT * FROM `v_deployable_emps` \n"
+//                    ."ORDER BY hire_date ASC;";
+//        $lt_data = cl_DB::getResultsFromQuery($lv_query);
+////        $this->emp_count = $lt_data['count'];
+////        if($this->emp_count > 0)
+////        {
+//            $this->it_deployable_emps = $lt_data;
+////        }
+//    }
     
     public function __construct()
     {
@@ -57,6 +57,8 @@
 //    abstract public function filterByLocations($fp_arr_locations);
        
     abstract public function isDeployable();
+    abstract public function get();
+    abstract protected function isSoftLocked($fp_v_emp_id);
     
 //    abstract protected function isEmpIDValid($fp_v_emp_id);
 //    
