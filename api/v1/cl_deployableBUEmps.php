@@ -12,7 +12,7 @@
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
 
-class cl_deployableBUEmp extends cl_abs_deployableEmp
+class cl_deployableBUEmps extends cl_abs_deployableEmp
 {
     const c_emp_skill_fname = 'so_loc';
     const c_emp_loc_fname   = 'skill1_l4';
