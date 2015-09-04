@@ -14,7 +14,8 @@
 
 class cl_Proposals {
     private $proposal_id;
-    private $arr_perfect_proposals = [];
+    private $arr_generated_perfect_proposals = [];
+    private $arr__perfect_proposals = [];
     private $v_perfect_proposal_count = 0;
     private $arr_open_sos;
     private $arr_deployableEmp;
@@ -83,7 +84,12 @@ class cl_Proposals {
         return $re_proposed;
     }
     
-    private function hasProposalBeenRejectedMaxTimes($fp_v_so_id)
+    
+/**
+* Returns true if SO has been rejected MaxTimes 
+*@return true|false
+*/
+    private static function hasProposalBeenRejectedMaxTimes($fp_v_so_id)
     {
         
         
