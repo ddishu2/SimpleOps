@@ -27,33 +27,33 @@ class cl_EmpSkills {
     
     private function setSkillMatrix()
     {
-        $larr_skills = [];
-        $lv_query =  'SELECT'.PHP_EOL
-                     .'*'.PHP_EOL
-                     .'FROM'.PHP_EOL
-                     .self::C_SKILLS_TABLE;
-        $lo_db = new cl_DB();
-        $larr_skills = $lo_db->getResultsFromQuery($lv_query);
-        foreach($larr_skills as $lwa_skill)
-        {
-             $larr_alt_skills = array_slice($lwa_skill, self::c_alt_skill_offset, self::c_alt_skill_max_index);
-             $larr_alt_skills = array_values($larr_alt_skills)
-        }
-        $this->arr_skill_matrix = $larr_skills;
+//        $larr_skills = [];
+//        $lv_query =  'SELECT'.PHP_EOL
+//                     .'*'.PHP_EOL
+//                     .'FROM'.PHP_EOL
+//                     .self::C_SKILLS_TABLE;
+//        $lo_db = new cl_DB();
+//        $larr_skills = $lo_db->getResultsFromQuery($lv_query);
+//        foreach($larr_skills as $lwa_skill)
+//        {
+//             $larr_alt_skills = array_slice($lwa_skill, self::c_alt_skill_offset, self::c_alt_skill_max_index);
+//             $larr_alt_skills = array_values($larr_alt_skills);
+//        }
+//        $this->arr_skill_matrix = $larr_skills;
         
     }
     public function doesEmpSkill_MatchSkillMatrix($fp_v_emp_skill ,$fp_v_so_skill)
     {
-        $lv_matches = false;
-        foreach($this->arr_skills_matrix as $lwa_skill_matrix)
-        {
-            if($this->arr_skills_matrix['skill'] = $fp_v_so_skill)
-            {
-                $larr_alt_skills_assoc = array_slice($lwa_skill_matrix, self::c_alt_skill_offset, self::c_alt_skill_max_index);
-                $larr_alt_skills_values =  array_values($larr_alt_skills_assoc);
-                
-            }
-            
-        }
+//        $lv_matches = false;
+//        foreach($this->arr_skills_matrix as $lwa_skill_matrix)
+//        {
+//            if($this->arr_skills_matrix['skill'] = $fp_v_so_skill)
+//            {
+//                $larr_alt_skills_assoc = array_slice($lwa_skill_matrix, self::c_alt_skill_offset, self::c_alt_skill_max_index);
+//                $larr_alt_skills_values =  array_values($larr_alt_skills_assoc);
+//                
+//            }
+//            
+//        }
     }
 }
