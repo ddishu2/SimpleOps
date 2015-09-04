@@ -1,12 +1,12 @@
 <?php
 //This class represents Open SOs for a given date range
-class cl_vo_open_so
+class cl_vo_open_sos
 {
     const C_DATE_FORMAT   = 'Y-m-d';
     const C_VIEW_OPEN_SO  = 'v_open_so';
     const C_FNAME_SO_FROM = 'so_from_date';
     const C_FNAME_SO_TO   = 'so_to_date';
-    const C_SO_ID_DB_FNAME = 'so_id';
+    const C_SO_ID_DB_FNAME = 'so_no';
     const C_DATE_COMPONENTS = 3;
     private $v_so_sdate;
     private $v_so_endate;
@@ -17,8 +17,7 @@ class cl_vo_open_so
     {
         $this->v_so_endate = $fp_v_so_endate;
         $this->v_so_sdate = $fp_v_so_sdate;
-        $this->setOpenSOs();
-        
+        $this->setOpenSOs();  
     }
     
     public function get( ) 
@@ -31,6 +30,7 @@ class cl_vo_open_so
     {
         $larr_open_sos = [];
         $larr_sos =  $this->fetchSOsForDateRange();
+//        echo json_encode($larr_sos);
         foreach ($larr_sos as $lwa_so) 
         {
             $lv_so_id = $lwa_so[self::C_SO_ID_DB_FNAME];
@@ -51,13 +51,13 @@ class cl_vo_open_so
                 . "(\n"
                 . "	new_sdate <> '0000-00-00'\n"
                 . "AND\n"
-                . "	new_sdate BETWEEN CAST('$fp_so_start_date' AS DATE) AND CAST('$fp_so_end_date' AS DATE) \n"
+                . "	new_sdate BETWEEN CAST('$this->v_so_sdate' AS DATE) AND CAST('$this->v_so_endate' AS DATE) \n"
                 . ")\n"
                 . "OR\n"
                 . "(\n"
                 . "	new_sdate = '0000-00-00'\n"
                 . "AND\n"
-                . "	so_sdate BETWEEN CAST('$fp_so_start_date' AS DATE) AND CAST('$fp_so_end_date' AS DATE) \n"
+                . "	so_sdate BETWEEN CAST('$this->v_so_sdate' AS DATE) AND CAST('$this->v_so_endate' AS DATE) \n"
                 . ")\n"
                 . "ORDER BY so_submi_date ASC;";
         $re_sos = cl_DB::getResultsFromQuery($lv_query);
