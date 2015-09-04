@@ -68,9 +68,10 @@ class cl_vo_open_sos
 
     public function isOpen($fp_v_so_id) 
     {
-        $v_so_rejectionCountWithinLimits = $this->isSO_RejectionCountWithinLimits($fp_v_so_id);
-        $v_so_unfulfilled                = $this->isSO_Unfulfilled($fp_v_so_id);
-        $lv_isOpen                       = $v_so_unfulfilled() && $v_so_rejectionCountWithinLimits;
+          $lv_isOpen = true;
+//        $v_so_rejectionCountWithinLimits = $this->isSO_RejectionCountWithinLimits($fp_v_so_id);
+//        $v_so_unfulfilled                = $this->isSO_Unfulfilled($fp_v_so_id);
+//        $lv_isOpen                       = $v_so_unfulfilled && $v_so_rejectionCountWithinLimits;
         return $lv_isOpen;
     }
 
