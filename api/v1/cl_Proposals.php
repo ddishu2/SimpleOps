@@ -83,6 +83,10 @@ class cl_Proposals {
         return $re_proposed;
     }
     
-
-
+    private function hasProposalBeenRejectedMaxTimes($fp_v_so_id)
+    {
+        
+        
+    }
+    
 }
