@@ -34,7 +34,9 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp
             $this->it_deployable_emps = $lt_data;
         }
     }
-   
+   public  function demo()
+   {
+   }
     public function get()
     {}
     
