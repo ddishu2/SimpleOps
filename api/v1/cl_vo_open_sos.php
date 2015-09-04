@@ -10,7 +10,6 @@ class cl_vo_open_sos
     const C_DATE_COMPONENTS = 3;
     private $v_so_sdate;
     private $v_so_endate;
-    private static $v_soRejectionMaxCount = 3;
     private $arr_open_sos = []; 
     
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
@@ -75,10 +74,7 @@ class cl_vo_open_sos
         return $lv_isOpen;
     }
 
-/**
-* Returns true if SO has been rejected MaxTimes 
-*@return true|false
- *  */
+
     private function isSO_RejectionCountWithinLimits()
     {
         
