@@ -13,10 +13,10 @@ class cl_vo_open_sos
     private static $v_soRejectionMaxCount = 3;
     private $arr_open_sos = []; 
     
-    function __construct($fp_v_so_sdate, $fp_v_so_endate)
+    function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
+        $this->v_so_sdate   = $fp_v_so_sdate;
         $this->v_so_endate = $fp_v_so_endate;
-        $this->v_so_sdate = $fp_v_so_sdate;
         $this->setOpenSOs();  
     }
     
