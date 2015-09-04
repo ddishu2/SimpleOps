@@ -13,7 +13,7 @@
  */
 class cl_Skills {
 
-    public function getAlternate($fp_skill_name)
+    public function getAlternate($fp_skill_name = '')
     {
         
     }

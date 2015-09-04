@@ -46,7 +46,7 @@ class cl_Proposals {
         }
         if (!is_null($lv_emp)) 
         {  
-            $lv_emp = $lo_emp->getEmpForSO(
+            $lv_emp = $lo_emp->get(
                     $lv_so_id, $lv_so_skill, $lv_so_level, $lv_so_loc);
 //            echo 'Returned' . json_encode($lv_emp);
             if (!is_null($lv_emp)) {
