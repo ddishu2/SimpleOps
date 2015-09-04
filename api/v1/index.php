@@ -1,4 +1,7 @@
 <?php
+/**
+*The controller for RMGF tool. Is responnsible for routing to appropriate models 
+*/
 
 //Include Slim Framework Library Code
 class cl_RMGTool_Globals
@@ -25,9 +28,9 @@ require __DIR__ .
         DIRECTORY_SEPARATOR .
         'Slim.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_deployableEmp.php';
+//require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableEmp.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_proposalGenerator.php';
+//require __DIR__.DIRECTORY_SEPARATOR.'cl_proposalGenerator.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -37,25 +40,19 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposalGenerator.php';
  
 // Define a HTTP GET Route
  $app->
-            get(cl_RMGTool_Globals ::GC_ROUTE_OPEN_SO, 
-               function () use ($app)
-               {
-                    $app->response->setStatus(200);
-                    $app->response->headers->set('Content-Type', 'application/json');
-                    
-                    
-                    $re_it_emps_for_sos = [];
-                    $lo_open_sos = new cl_vo_open_sos();
-                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
-                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-                            
-                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
-//                    
-                    echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
+    get(
+        cl_RMGTool_Globals ::GC_ROUTE_OPEN_SO, 
+        function () use ($app)
+        {   
+            $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+            $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+            $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
+            $lt_open_sos = $lo_open_sos->get();
             
-               }
-
-        );
+            $app->response->setStatus(200);
+            $app->response->headers->set('Content-Type', 'application/json');
+            echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
+        });
                
          $app->
             get(cl_RMGTool_Globals ::GC_ROUTE_DEPLOYABLE_EMPS, 

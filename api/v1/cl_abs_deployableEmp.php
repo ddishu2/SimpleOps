@@ -59,26 +59,4 @@
     abstract public function isDeployable();
     abstract public function get();
     abstract protected function isSoftLocked($fp_v_emp_id);
-    
-//    abstract protected function isEmpIDValid($fp_v_emp_id);
-//    
-//    public function amendStartDate()
-//    {
-//        
-//    }
-//    
-//    public function amendEndDate()
-//    {
-//        
-//    }
-//    
-//    public function amend_T_and_E()
-//    {
-//        
-//    }
-//    
-//    public function amend_skill() 
-//    {
-//        
-//    }
 }

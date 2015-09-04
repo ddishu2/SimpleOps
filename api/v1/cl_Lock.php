@@ -36,10 +36,7 @@ public function rejectProposal($fp_v_proposal_id)
     
 }
 public function rejectSoftLock($fp_v_lock_trans_id)
-{
-    
+{   
 }
-
-
-        
+       
 }
