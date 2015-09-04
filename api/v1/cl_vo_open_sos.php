@@ -77,7 +77,7 @@ class cl_vo_open_sos
 
     private function isSO_RejectionCountWithinLimits()
     {
-        
+//     
     }
     
 /**
@@ -86,6 +86,6 @@ class cl_vo_open_sos
  *  */
     private function isSO_Unfulfilled()
     {
-        
+//        
     }
 }
