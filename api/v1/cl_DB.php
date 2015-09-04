@@ -11,6 +11,7 @@ class cl_DB
     const C_DB_NAME        = "rmg_tool";
     const C_USER_NAME      = "root";
     const C_PASSWORD       = "";
+    const C_SKILLS_TABLE    = 'c_emp_skill_matrix';
 
     private static $dbhandle = null;
     private static $count    = 0;
