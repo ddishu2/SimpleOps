@@ -8,7 +8,7 @@
  * 
  */
  require __DIR__.DIRECTORY_SEPARATOR.'if_deployableEmps.php';
- abstract class cl_abs_deployableEmp implements if_deployableEmp {
+ abstract class cl_abs_deployableEmp implements if_deployableEmps {
     
     const c_emp_skill_fname = 'so_loc';
     const c_emp_loc_fname   = 'skill1_l4';
@@ -31,10 +31,10 @@
 ////        }
 //    }
     
-    public function __construct()
-    {
-        $this->setDeployableEmps();
-    }
+//    public function __construct()
+//    {
+//        $this->setDeployableEmps();
+//    }
     
    abstract protected function setDeployableEmps();
 //    {
@@ -56,7 +56,7 @@
 //    
 //    abstract public function filterByLocations($fp_arr_locations);
        
-    abstract public function isDeployable();
+    abstract public function isDeployable($fp_v_emp_id,$fp_v_so_id);
     abstract public function get();
     abstract protected function isSoftLocked($fp_v_emp_id);
 }

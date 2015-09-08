@@ -28,9 +28,9 @@ require __DIR__ .
         DIRECTORY_SEPARATOR .
         'Slim.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
+//require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableEmp.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
+//require __DIR__.DIRECTORY_SEPARATOR.'cl_proposalGenerator.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -46,12 +46,13 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
         {   
             $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
             $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-            $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
-            $lt_open_sos = $lo_open_sos->get();
-            
-            $app->response->setStatus(200);
-            $app->response->headers->set('Content-Type', 'application/json');
-            echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
+            echo json_encode($lv_so_from_date);
+//            $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
+//            $lt_open_sos = $lo_open_sos->get();
+//            
+//            $app->response->setStatus(200);
+//            $app->response->headers->set('Content-Type', 'application/json');
+//            echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
         });
                
          $app->
@@ -62,22 +63,20 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
                     $app->response->headers->set('Content-Type', 'application/json');
                     
                     
-                    $re_it_emps_for_sos = [];
-                   
+//                    $re_it_emps_for_sos = [];
+//                    $lo_open_sos = new cl_vo_open_sos();
                     $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
                     $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-                     
-                    
-                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
+                    echo $lv_so_from_date;
+                            
 //                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
-                  $lo_deployable_emp = new cl_deployableBUEmps();  
-                    
-                    $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
-                    
-                    $re_it_emps_for_sos = $c_pg->getAutoProposals();
-                    $app->response->setStatus(200);
-                    $app->response->headers->set('Content-Type', 'application/json');
-                    echo json_encode($re_it_emps_for_sos, JSON_PRETTY_PRINT);
+////                    
+//                    
+//                    $c_pg = new cl_ProposalGenerator();
+//                    $re_it_emps_for_sos = $c_pg->getAutoProposals($lt_open_sos);
+//                    $app->response->setStatus(200);
+//                    $app->response->headers->set('Content-Type', 'application/json');
+//                    echo json_encode($re_it_emps_for_sos, JSON_PRETTY_PRINT);
                    // echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
             
                }
@@ -86,25 +85,11 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
         
         
         
- $app->get('/test(/)', 
+ $app->get('/auto_propose(/)', 
                function () use($app) 
                {
      
-     $lo_deployableBUemps = new cl_deployableBUEmps();
-     //$emp_id_slocked = 15992 ;
-     $emp_id_rjm = 14761;
-     $so_no_rjm = 314429;
-     $emp_id_hlock = 62380;
-     $emp_id_rjo = 39656;
-     $so_no_rjo= 317437;
-            // $result =  $lo_deployableBUemps->isSoftLocked($emp_id_slocked);
-            //$result =  $lo_deployableBUemps->isRejectedByOps($emp_id_rjm,$so_no_rjm);
-            //$result = $lo_deployableBUemps->isHardLocked($emp_id_hlock);
-              $result = $lo_deployableBUemps->isRejectedByOps($emp_id_rjo, $so_no_rjo);
-     
-             $app->response->setStatus(200);
-                    $app->response->headers->set('Content-Type', 'application/json');
-                    echo json_encode($result, JSON_PRETTY_PRINT);
+     //Other logic
                }
     );
 

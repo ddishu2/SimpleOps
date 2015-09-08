@@ -35,6 +35,8 @@ public function rejectProposal($fp_v_proposal_id)
 {
     
 }
+//Click here to reject
+//htttp://rmt/api/vi/accept_SL/?trans_id=001;
 public function rejectSoftLock($fp_v_lock_trans_id)
 {   
 }
