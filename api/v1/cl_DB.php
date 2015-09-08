@@ -117,4 +117,18 @@ class cl_DB
             return $re_results;
         }
   }
+    public function postResultIntoTable($fp_v_query)
+    {
+      self::setDBHandle();
+      self::clearCount();
+
+      if( self::$dbhandle->query($fp_v_query) == true)
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+}
 }

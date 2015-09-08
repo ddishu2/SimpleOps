@@ -10,6 +10,7 @@ class cl_RMGTool_Globals
     const GC_ROUTE_OPEN_SO          = '/open_so(/)'; 
     const GC_ROUTE_DEPLOYABLE_EMPS  = '/deployable_emp(/)'; 
     const GC_ROUTE_EMP_FOR_SO       = '/emps_for_open_so(/)'; 
+    const GC_ROUTE_APPROVE_SOFT_LOCK = '/approve_soft_lock(/)';
     const OPEN_SO_DATE_RANGE    = 21;
 //    static public $GC_SLIM_PATH = __DIR__.
 //                                DIRECTORY_SEPARATOR.
@@ -31,6 +32,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
+require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -84,7 +86,31 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
 
         );
         
+     $app->get(cl_RMGTool_Globals ::GC_ROUTE_APPROVE_SOFT_LOCK,
+            function () use($app)   
+        {
+        $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');
+                    $lv_so_id = $app->request->get(cl_Lock::C_ARR_SO_ID);
+                    $lv_emp_id   = $app->request->get(cl_Lock::C_ARR_EMP_ID);
+                   $so_id = [];
+                   $emp_id = [];
+                   $so_id[0] = 111;
+                   $so_id[1] = 112;
+                   $so_id[2] = 113;
+                   $emp_id[0] = 221; 
+                   $emp_id[1] = 222;
+                   $emp_id[2] = 223;
+                   $lv_obj = new cl_Lock();
+                   
+                   
+                   
+                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id);
+                   
+                   echo $lv_result;
+
         
+        });    
         
  $app->get('/test(/)', 
                function () use($app) 
@@ -107,6 +133,50 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
                     echo json_encode($result, JSON_PRETTY_PRINT);
                }
     );
+
+    $app->get('/test1(/)', 
+               function () use($app) 
+               {
+                    $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');
+                    
+                    
+                    $re_it_emps_for_sos = [];
+                   
+                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+                     
+                    
+                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
+//                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
+                  $lo_deployable_emp = new cl_deployableBUEmps();  
+                    
+                    $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
+                    
+                    $re_it_emps_for_sos = $c_pg->getAutoProposals();   
+                    
+//                    print_r($re_it_emps_for_sos);
+//                    
+                    foreach($re_it_emps_for_sos as $key => $value)
+                    {
+                        //echo $key."</br>";
+                        //print_r ($value['so']);
+                         $lv_arr_so = $value['so'];
+                         foreach($lv_arr_so as $key1=>$value1)
+                         {
+                        
+//                             
+//                             if ($key1 == 'so_no')
+//                             {
+//                             $lv_so_id = $value1;
+//                             echo $lv_so_id;
+//                             }
+                         }
+//                         print_r($lv_arr_so);     
+                    }                    
+                    
+                    
+               });
 
 //Run the Slim application:
 $app->run();

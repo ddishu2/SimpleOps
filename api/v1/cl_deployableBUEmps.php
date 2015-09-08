@@ -282,13 +282,13 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp
          
          $lv_isRejectedByOps = false;
 //        
-         echo "entered empID = ". $fp_v_emp_id;
-         echo "Entered  so_no   =  ". $fp_v_so_no;
+//         echo "entered empID = ". $fp_v_emp_id;
+//         echo "Entered  so_no   =  ". $fp_v_so_no;
          
          foreach (self::$arr_proposalRejectedByOps as $key => $value) {
              
-         echo "empid   =   ".$value['emp_id'];
-         echo "so_no =    ".$value['so_id'];
+//         echo "empid   =   ".$value['emp_id'];
+//         echo "so_no =    ".$value['so_id'];
          
          
          
