@@ -78,14 +78,33 @@ public function setHardLock($fp_v_lock_trans_id)
 {
 //    
 }
-public function rejectProposal($fp_v_proposal_id)
+public function rejectProposal($fp_v_proposal_id,$fp_v_emp_id,$fp_v_so_id)
 {
-    
+   $lv_query = "update trans_proposals SET rejected = 'X' where prop_id ='$fp_v_proposal_id'
+and emp_id ='$fp_v_emp_id'
+and so_id ='$fp_v_so_id'";
+   
+    $re_sos = cl_DB::updateResultIntoTable($lv_query);
+       
+                 if ($re_sos == true)
+                       {
+                         $lv_str_success = "Record updated successfully";
+    		         return $lv_str_success;
+                       }
+
+                 else
+                      {
+                        $lv_str_fail = "Error: " . $sql . "<br>" . $conn->error;
+    		       return $lv_str_fail ;
+		      }
+   
+   
 }
 //Click here to reject
 //htttp://rmt/api/vi/accept_SL/?trans_id=001;
 public function rejectSoftLock($fp_v_lock_trans_id)
 {   
+    
 }
        
 }

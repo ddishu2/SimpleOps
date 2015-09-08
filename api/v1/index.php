@@ -12,6 +12,8 @@ class cl_RMGTool_Globals
     const GC_ROUTE_EMP_FOR_SO       = '/emps_for_open_so(/)'; 
     const GC_ROUTE_APPROVE_SOFT_LOCK = '/approve_soft_lock(/)';
     const OPEN_SO_DATE_RANGE    = 21;
+      const GC_route_proposals = '/proposals(/)';
+    
 //    static public $GC_SLIM_PATH = __DIR__.
 //                                DIRECTORY_SEPARATOR.
 //                                'libraries'.
@@ -32,7 +34,9 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
+<<<<<<< .mine
 require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
+
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -76,7 +80,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                     
                     $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
                     
-                    $re_it_emps_for_sos = $c_pg->getAutoProposals();
+                    $re_it_emps_for_sos = $c_pg->getAutoProposals();                    
                     $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');
                     echo json_encode($re_it_emps_for_sos, JSON_PRETTY_PRINT);
@@ -130,7 +134,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
      
              $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');
-                    echo json_encode($result, JSON_PRETTY_PRINT);
+                    echo json_encode($result, JSON_PRETTY_PRINT);  
                }
     );
 
@@ -179,6 +183,81 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                });
 
 //Run the Slim application:
-$app->run();
+
+$app->get(cl_RMGTool_Globals ::GC_route_proposals, 
+               function () use($app) 
+               {
+      $app->response->setStatus(200);
+      $app->response->headers->set('Content-Type', 'application/json');
+      
+      
+     // $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date); 
+     // $lo_deployableBUemps = new cl_deployableBUEmps();
+      $lo_pg = new cl_Proposals(lo_open_sos, $lo_deployableBUemps );
+      $lv_so_id = lv_so_id(5,6,7,8);      
+      $lv_emp_id = lv_emp_id(7,5,6,8);
+    
+      
+     $return_res = $c_pg->createProposal($lv_so_id , $lv_emp_id);
+      
+        if($return_res == true)
+        {
+            echo 'successfull';
+        }
+        else
+        {
+            echo 'unsuccessfull';
+        }
+               }
+               );
+
+ $app->get('/looptest(/)', 
+               function () use($app) 
+               {              
+               $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');
+                    
+                    
+                  /*  $re_it_emps_for_sos = [];
+                   
+                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+                     
+                    
+                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
+//                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
+                  $lo_deployable_emp = new cl_deployableBUEmps(); 
+                  $lo_cl_proposal = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
+                 $re_it_emps_for_sos = $lo_cl_proposal->getAutoProposals();
+                 //print_r($re_it_emps_for_sos);
+                    //print_r( $re_it_emps_for_sos);
+                  //  foreach ( $re_it_emps_for_sos as $key => $value) {
+                        
+                        //echo $key . "<br>";
+                        //print_r($value['so']);
+                        
+                        //$emp = 'emp';
+                      // if(array_key_exists ('emp',$value )){
+                        //print_r($value['emp']);
+                        // $lv_empid = $value['emp'][0]['emp_id'];
+                         // $lv_soid = $value['so']['so_no']; 
+                          // call create proposal ($lv_empid ,$lv_soid)
+                 */
+                 $lo_cl_lock = new cl_Lock();
+                 
+                 $p_id = 1;
+                 $emp_id = 318129;
+                 $so_id = 35063;
+          $lv_string = $lo_cl_lock->rejectProposal($p_id,$emp_id,$so_id);
+                  echo $lv_string;
+                       }
+                        
+                        
+                    
+               
+               
+    );
+               
+  $app->run();
 ?>
 
