@@ -97,6 +97,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                     $app->response->headers->set('Content-Type', 'application/json');
                     $lv_so_id = $app->request->get(cl_Lock::C_ARR_SO_ID);
                     $lv_emp_id   = $app->request->get(cl_Lock::C_ARR_EMP_ID);
+                    
                    $so_id = [];
                    $emp_id = [];
                    $so_id[0] = 111;
@@ -105,11 +106,16 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                    $emp_id[0] = 221; 
                    $emp_id[1] = 222;
                    $emp_id[2] = 223;
+                   $stat = [];
+                   $stat[0] = 'SoftLocked';
+                   $stat[1] = 'Rejected';
+                   $stat[2] = 'SoftLocked';
                    $lv_obj = new cl_Lock();
                    
                    
+                   $lv_prop_id = 2; 
                    
-                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id);
+                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
                    
                    echo $lv_result;
 
@@ -181,6 +187,53 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                     
                     
                });
+               
+               $app->get('/looptest(/)', 
+               function () use($app) 
+               {              
+               $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');
+                    
+                    
+                    $re_it_emps_for_sos = [];
+                   
+                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+                     
+                    
+                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
+//                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
+                  $lo_deployable_emp = new cl_deployableBUEmps(); 
+                  $lo_cl_proposal = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
+                 $re_it_emps_for_sos = $lo_cl_proposal->getAutoProposals();
+                 //print_r($re_it_emps_for_sos);
+                    //print_r( $re_it_emps_for_sos);
+                  //  foreach ( $re_it_emps_for_sos as $key => $value) {
+                        
+                        //echo $key . "<br>";
+                        //print_r($value['so']);
+                        
+                        //$emp = 'emp';
+                      // if(array_key_exists ('emp',$value )){
+                        //print_r($value['emp']);
+                        // $lv_empid = $value['emp'][0]['emp_id'];
+                         // $lv_soid = $value['so']['so_no']; 
+                          // call create proposal ($lv_empid ,$lv_soid)
+                 
+//                 $lo_cl_lock = new cl_Lock();
+//                 
+//                 $p_id = 1;
+//                 $emp_id = 318129;
+//                 $so_id = 35063;
+//          $lv_string = $lo_cl_lock->rejectProposal($p_id,$emp_id,$so_id);
+//                  echo $lv_string;
+                       }
+                        
+                        
+                    
+               
+               
+    );
 
 //Run the Slim application:
 

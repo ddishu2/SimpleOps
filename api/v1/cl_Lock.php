@@ -58,20 +58,26 @@ public function setSoftLock($fp_v_so_id,$fp_v_emp_id,$fp_v_requestor_id)
     return $lv_result;    
 }
 
-public function ApproveSoftLock($fp_arr_so,$fp_arr_emp)
+public function ApproveSoftLock($fp_arr_so,$fp_arr_emp,$fp_arr_stat,$lv_prop_id)
 {
       $count = 0;
     $lv_count = count($fp_arr_so);
      for($i = 0 ; $i< $lv_count ; $i++){
+         
+         if($fp_arr_stat[$i] == 'SoftLocked'){
      $lv_request_id = 444;//now passing Default request id but need to fetch dynamically 
         $lv_result = self::setSoftlock($fp_arr_so[$i],$fp_arr_emp[$i],$lv_request_id);                       
         if($lv_result == true)
         {
             $count++;        
         }
-       
+         }
+         elseif($fp_arr_stat[$i]== 'Rejected')
+         {
+              $lv_result = self::rejectProposal($lv_prop_id,$fp_arr_emp[$i],$fp_arr_so[$i]); 
+         }
      }
-      return $count; //returns number of rows affected
+      return $count; //returns number of employess soft locked
 }
 
 public function setHardLock($fp_v_lock_trans_id)
@@ -99,6 +105,23 @@ and so_id ='$fp_v_so_id'";
 		      }
    
    
+   $lv_query = "update trans_proposals SET rejected = 'X' where prop_id ='$fp_v_proposal_id'
+and emp_id ='$fp_v_emp_id'
+and so_id ='$fp_v_so_id'";
+   
+    $re_sos = cl_DB::updateResultIntoTable($lv_query);
+       
+                 if ($re_sos == true)
+                       {
+                         $lv_str_success = "Record updated successfully";
+    		         return $lv_str_success;
+                       }
+
+                 else
+                      {
+                        $lv_str_fail = "Error: " . $sql . "<br>" . $conn->error;
+    		       return $lv_str_fail ;
+		      }
 }
 //Click here to reject
 //htttp://rmt/api/vi/accept_SL/?trans_id=001;

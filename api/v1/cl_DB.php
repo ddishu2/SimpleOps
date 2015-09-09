@@ -150,4 +150,22 @@ class cl_DB
       }
 >>>>>>> .r57
 }
+
+public function updateResultIntoTable($fp_v_query)
+          {
+      self::setDBHandle();
+      self::clearCount();
+//      $re_results = [];
+      $lv_flag = self::$dbhandle->query($fp_v_query);
+//      echo $lv_flag;
+     if( self::$dbhandle->query($fp_v_query) == true)
+     {
+         return true;
+     }
+     else
+     {
+         return false;
+     }
+          }
+
 }
