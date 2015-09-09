@@ -34,7 +34,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
-<<<<<<< .mine
+
 require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
 
  \Slim\Slim::registerAutoloader();

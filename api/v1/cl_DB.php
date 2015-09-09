@@ -117,7 +117,6 @@ class cl_DB
             return $re_results;
         }
   }
-<<<<<<< .mine
    
      public function updateResultIntoTable($fp_v_query)
           {
@@ -134,7 +133,7 @@ class cl_DB
      }
           }
 
-=======
+
     public function postResultIntoTable($fp_v_query)
     {
       self::setDBHandle();
@@ -148,24 +147,5 @@ class cl_DB
       {
          return false;
       }
->>>>>>> .r57
-}
-
-public function updateResultIntoTable($fp_v_query)
-          {
-      self::setDBHandle();
-      self::clearCount();
-//      $re_results = [];
-      $lv_flag = self::$dbhandle->query($fp_v_query);
-//      echo $lv_flag;
-     if( self::$dbhandle->query($fp_v_query) == true)
-     {
-         return true;
-     }
-     else
-     {
-         return false;
-     }
-          }
-
+    }
 }
