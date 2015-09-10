@@ -14,6 +14,8 @@
 class cl_Lock {
  const C_ARR_SO_ID = 'so_id';
  const C_ARR_EMP_ID = 'emp_id';
+ const C_ARR_STAT = 'status';
+ const C_PROP_ID = 'prop_id';
 // const C_PARENT_PROPOS_ID = 'propos_id';
 // const C_REQUESTOR_ID = 'requestor_id';
 
@@ -82,7 +84,8 @@ public function ApproveSoftLock($fp_arr_so,$fp_arr_emp,$fp_arr_stat,$lv_prop_id)
 
 public function setHardLock($fp_v_lock_trans_id)
 {
-//    
+ $sql1 = "UPDATE trans_locks SET status='S201' WHERE trans_id = $fp_v_lock_trans_id";
+  $re_sos = cl_DB::updateResultIntoTable($sql1);
 }
 public function rejectProposal($fp_v_proposal_id,$fp_v_emp_id,$fp_v_so_id)
 {
@@ -105,29 +108,30 @@ and so_id ='$fp_v_so_id'";
 		      }
    
    
-   $lv_query = "update trans_proposals SET rejected = 'X' where prop_id ='$fp_v_proposal_id'
-and emp_id ='$fp_v_emp_id'
-and so_id ='$fp_v_so_id'";
-   
-    $re_sos = cl_DB::updateResultIntoTable($lv_query);
-       
-                 if ($re_sos == true)
-                       {
-                         $lv_str_success = "Record updated successfully";
-    		         return $lv_str_success;
-                       }
-
-                 else
-                      {
-                        $lv_str_fail = "Error: " . $sql . "<br>" . $conn->error;
-    		       return $lv_str_fail ;
-		      }
+//   $lv_query = "update trans_proposals SET rejected = 'X' where prop_id ='$fp_v_proposal_id'
+//and emp_id ='$fp_v_emp_id'
+//and so_id ='$fp_v_so_id'";
+//   
+//    $re_sos = cl_DB::updateResultIntoTable($lv_query);
+//       
+//                 if ($re_sos == true)
+//                       {
+//                         $lv_str_success = "Record updated successfully";
+//    		         return $lv_str_success;
+//                       }
+//
+//                 else
+//                      {
+//                        $lv_str_fail = "Error: " . $sql . "<br>" . $conn->error;
+//    		       return $lv_str_fail ;
+//		      }
 }
 //Click here to reject
 //htttp://rmt/api/vi/accept_SL/?trans_id=001;
 public function rejectSoftLock($fp_v_lock_trans_id)
 {   
-    
+    $sql = "UPDATE trans_locks SET status='S221' WHERE trans_id = $fp_v_lock_trans_id";
+    $re_sos = cl_DB::updateResultIntoTable($sql);
 }
        
 }

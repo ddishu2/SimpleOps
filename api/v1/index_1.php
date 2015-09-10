@@ -46,7 +46,10 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
         {   
             $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
             $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-            echo json_encode($lv_so_from_date);
+//            echo json_encode($lv_so_from_date);
+            print_r($lv_so_from_date);
+            echo "</BR>";
+//            echo json_encode($lv_so_to_date);
 //            $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
 //            $lt_open_sos = $lo_open_sos->get();
 //            
