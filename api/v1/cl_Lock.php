@@ -17,7 +17,7 @@ class cl_Lock {
     const C_ARR_EMP_ID = 'emp_id';
     const C_ARR_STAT = 'status';
     const C_PROP_ID = 'prop_id';
-
+    const C_TRANS_ID = 'trans_id';    
 // const C_PARENT_PROPOS_ID = 'propos_id';
 // const C_REQUESTOR_ID = 'requestor_id';
 
@@ -36,7 +36,7 @@ class cl_Lock {
     public function getSoftLockExpiredEmps() {
         
     }
-
+//Soft Lock
     public function setTransId() {        //find max trans_id
         $lv_sql = "select max(trans_id) from trans_locks";
         $lv_max_trans_id = cl_DB::getResultsFromQuery($lv_sql);
@@ -44,14 +44,7 @@ class cl_Lock {
     }
 
     public function setSoftLock($lv_trans_id, $fp_v_so_id, $fp_v_emp_id, $lv_prop_id, $fp_v_requestor_id) {
-        //To Generate Trans ID 
-//    echo $lv_prop_id;
-//    $lv_value =     self::setTransId();
-//    foreach($lv_value as $key => $value)
-//    {
-//        $lv_trans_id = $value['max(trans_id)'];
-//    }
-//    $lv_trans_id++;
+
         //To Retrieve lock Start & end date  
         $lv_start_date = date('y-m-d');
         $lv_end_date = date('y-m-d', strtotime('+2 days'));
@@ -63,9 +56,9 @@ class cl_Lock {
 
         $lv_result = cl_DB::postResultIntoTable($sql);
 
-        return $lv_result;
+        return $lv_result;  //return true or false
     }
-
+//Lock History
     public function setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, $status, $lv_prop_id, $lv_request_id) {
         $lv_start_date = date('y-m-d');
         $lv_end_date = date('y-m-d', strtotime('+2 days'));
@@ -115,12 +108,36 @@ class cl_Lock {
         }
         return $softlock_count; //returns number of employess soft locked
     }
-
+//HardLock
     public function setHardLock($fp_v_lock_trans_id) {
         $sql1 = "UPDATE trans_locks SET status='S201' WHERE trans_id = $fp_v_lock_trans_id";
         $re_sos = cl_DB::updateResultIntoTable($sql1);
     }
-
+public function ApproveHardLock($fp_v_lock_trans_id) {
+        $lv_obj = new cl_DB();
+        $lv_db = $lv_obj->getDBHandle();
+        $lv_trans_result = self::getTransDetails($fp_v_lock_trans_id);
+        foreach ($lv_trans_result as $key => $value) {
+            $lv_trans_id = $value['trans_id'];
+            $lv_so_id = $value['so_id'];
+            $lv_emp_id = $value['emp_id'];
+//               $lv_status = $value['status'];
+            $lv_prop_id = $value['parent_prop_id'];
+            $lv_req_id = $value['requestor_id'];
+//            $lv_start_date = $value['lock_start_date'];
+//            $lv_end_date = $value['lock_end_date'];
+//            $lv_up_by = $value['updated_by'];
+        }
+        try {
+            mysqli_begin_transaction($lv_db);
+            $lv_set_hardlock = self::setHardLock($lv_trans_id);
+            $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, 'S201', $lv_prop_id, $lv_req_id);
+            mysqli_commit($lv_db);
+        } catch (Exception $ex) {
+            mysqli_rollback($lv_db);
+            echo 'Failed-' . $ex->getMessage();
+        }
+    }
     public function rejectProposal($fp_v_proposal_id, $fp_v_emp_id, $fp_v_so_id) {
         $lv_query = "update trans_proposals SET rejected = 'X' where prop_id ='$fp_v_proposal_id'
 and emp_id ='$fp_v_emp_id'
@@ -159,9 +176,33 @@ and so_id ='$fp_v_so_id'";
 //Click here to reject
 //htttp://rmt/api/vi/accept_SL/?trans_id=001;
     public function rejectSoftLock($fp_v_lock_trans_id) {
+
         $sql = "UPDATE trans_locks SET status='S221' WHERE trans_id = $fp_v_lock_trans_id";
-        $re_sos = cl_DB::updateResultIntoTable($sql);
+        $lv_obj = new cl_DB();
+        $lv_db = $lv_obj->getDBHandle();
+        $lv_trans_result = self::getTransDetails($fp_v_lock_trans_id);
+        foreach ($lv_trans_result as $key => $value) {
+            $lv_trans_id = $value['trans_id'];
+            $lv_so_id = $value['so_id'];
+            $lv_emp_id = $value['emp_id'];
+//               $lv_status = $value['status'];
+            $lv_prop_id = $value['parent_prop_id'];
+            $lv_req_id = $value['requestor_id'];
+//            $lv_start_date = $value['lock_start_date'];
+//            $lv_end_date = $value['lock_end_date'];
+//            $lv_up_by = $value['updated_by'];
+        }
+        try {
+            mysqli_begin_transaction($lv_db);
+            $re_sos = cl_DB::updateResultIntoTable($sql);
+            $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, 'S221', $lv_prop_id, $lv_req_id);
+            mysqli_commit($lv_db);
+        } catch (Exception $ex) {
+            mysqli_rollback($lv_db);
+            echo 'Failed-' . $ex->getMessage();
+        }
     }
+    
 
     public function getTransDetails($fp_v_trans_id) {
         $sql = "SELECT * FROM `trans_locks` WHERE trans_id = $fp_v_trans_id";
