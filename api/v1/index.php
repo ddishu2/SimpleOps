@@ -11,6 +11,8 @@ class cl_RMGTool_Globals
     const GC_ROUTE_DEPLOYABLE_EMPS  = '/deployable_emp(/)'; 
     const GC_ROUTE_EMP_FOR_SO       = '/emps_for_open_so(/)'; 
     const GC_ROUTE_APPROVE_SOFT_LOCK = '/approve_soft_lock(/)';
+    const GC_ROUTE_APPROVE_HARD_LOCK = '/approve_hard_lock(/)';
+    const GC_ROUTE_REJECT_HARD_LOCK = '/reject_hard_lock(/)';
     const OPEN_SO_DATE_RANGE    = 21;
       const GC_route_proposals = '/proposals(/)';
     
@@ -123,6 +125,22 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
 
         
         });    
+        $app->get(cl_RMGTool_Globals ::GC_ROUTE_APPROVE_HARD_LOCK, function () use($app) {
+            $app->response->setStatus(200);
+            $app->response->headers->set('Content-Type', 'application/json');
+//            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);
+            $lv_obj = new cl_Lock();
+            $lv_trans_id = 4;
+            $lv_result = $lv_obj->ApproveHardLock( $lv_trans_id);//S201
+        });
+        $app->get(cl_RMGTool_Globals ::GC_ROUTE_REJECT_HARD_LOCK, function () use($app) {
+            $app->response->setStatus(200);
+            $app->response->headers->set('Content-Type', 'application/json');
+//            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);//S221
+            $lv_obj = new cl_Lock();
+            $lv_trans_id = 3;
+            $lv_obj->rejectSoftLock($lv_trans_id);
+        });
         
  $app->get('/test(/)', 
                function () use($app) 
