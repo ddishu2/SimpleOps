@@ -11,22 +11,28 @@ class cl_vo_open_sos
     private $v_so_sdate;
     private $v_so_endate;
     private $arr_open_sos = []; 
+    public static $arr_lockedso = [];
     
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
         $this->v_so_sdate   = $fp_v_so_sdate;
         $this->v_so_endate = $fp_v_so_endate;
+        $this->getLocked();
         $this->setOpenSOs();  
+        
+     
     }
     
     public function get( ) 
     {
+        
         return $this->arr_open_sos;
     }
     
     
     private function setOpenSOs()
     {
+         
         $larr_open_sos = [];
         $larr_sos =  $this->fetchSOsForDateRange();
 //        echo json_encode($larr_sos);
@@ -67,10 +73,13 @@ class cl_vo_open_sos
 
     public function isOpen($fp_v_so_id) 
     {
+      //  print_r(self::$arr_lockedso);
           $lv_isOpen = true;
 //        $v_so_rejectionCountWithinLimits = $this->isSO_RejectionCountWithinLimits($fp_v_so_id);
 //        $v_so_unfulfilled                = $this->isSO_Unfulfilled($fp_v_so_id);
 //        $lv_isOpen                       = $v_so_unfulfilled && $v_so_rejectionCountWithinLimits;
+         $lv_islocked = $this->isSOLocked($fp_v_so_id) ;
+          $lv_isOpen = $lv_isOpen && !$lv_islocked;
         return $lv_isOpen;
     }
 
@@ -88,4 +97,35 @@ class cl_vo_open_sos
     {
         
     }
+ // changes by tejas
+    
+  private function getLocked()
+  {
+      $sql = "select so_id from trans_locks where status in ('S121','S201')";
+      self::$arr_lockedso = cl_DB::getResultsFromQuery($sql);
+//             print_r(self::$arr_lockedso);
+  }
+    
+   
+    
+    private function isSOLocked($fp_v_so_id)
+    {
+      // print_r(self::$arr_lockedso);
+        $lv_slocked = false;
+        foreach (self::$arr_lockedso as $key => $value) {
+             
+         
+             if(in_array($fp_v_so_id,$value))
+         {
+             $lv_slocked = true;
+             break;
+         }
+       
+      }   
+
+        
+        $re_slocked = $lv_slocked;
+        return $re_slocked;
+    }
+    
 }

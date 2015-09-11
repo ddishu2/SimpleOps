@@ -9,14 +9,7 @@
     $comment = "mail from php";
     $subject = "this email comes from php";
     $email = "postmaster@localhost";
-    $filename = "http://localhost/email.txt";
-    $handle = fopen($filename, "r");
-    //$filesize = filesize($filename);
-    $content = fread($handle, 4096);
-    fclose($handle);
-    $headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
- $mail =  mail("dishu@localhost", "E-mail from PHP", $content, $headers);
+ $mail =  mail("tejas@localhost", "E-mail from PHP", "Please! Donot read this");
  echo('hope this works');
  if($mail)
  {

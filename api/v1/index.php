@@ -95,31 +95,31 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
         {
         $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');
-//                    $lv_arr_so_id = $app->request->get(cl_Lock::C_ARR_SO_ID);
-//                    $lv_arr_emp_id   = $app->request->get(cl_Lock::C_ARR_EMP_ID);
-//                    $lv_arr_stat = $app->request->get(cl_lock::C_ARR_STAT);
-//                    $lv_prop_id = $app->request->get(cl_lock::C_PROP_ID);
-                   $so_id = [];
-                   $emp_id = [];
-                   $so_id[0] = 111;
-                   $so_id[1] = 112;
-                   $so_id[2] = 113;
-                   $emp_id[0] = 221; 
-                   $emp_id[1] = 222;
-                   $emp_id[2] = 223;
-                   $stat = [];
-                   $stat[0] = 'SoftLocked';
-                   $stat[1] = 'Rejected';
-                   $stat[2] = 'SoftLocked';
+                    $lv_arr_so_id = $app->request->get(cl_Lock::C_ARR_SO_ID);
+                    $lv_arr_emp_id   = $app->request->get(cl_Lock::C_ARR_EMP_ID);
+                    $lv_arr_stat = $app->request->get(cl_lock::C_ARR_STAT);
+                    $lv_prop_id = $app->request->get(cl_lock::C_PROP_ID);
+//                   $so_id = [];
+//                   $emp_id = [];
+//                   $so_id[0] = 111;
+//                   $so_id[1] = 112;
+//                   $so_id[2] = 113;
+//                   $emp_id[0] = 221; 
+//                   $emp_id[1] = 222;
+//                   $emp_id[2] = 223;
+//                   $stat = [];
+//                   $stat[0] = 'SoftLocked';
+//                   $stat[1] = 'Rejected';
+//                   $stat[2] = 'SoftLocked';
                    $lv_obj = new cl_Lock();
                    
                    
                    $lv_prop_id = 2; 
                    
-                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
-///                    $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id);
+//                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
+                    $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id);
                    
-                   echo $lv_result;
+//                   echo $lv_result;
 
         
         });    
@@ -317,7 +317,7 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
     $app->get('/hardlock_test(/)', 
                function () use($app) 
                {
-                //$lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
+                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
                 $lv_trans_id1 = 1;
                 $lv_trans_id2 = 2;
                $lo_cl_Lock = new cl_Lock();
@@ -326,6 +326,30 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                
                }
      );
+  
+  $app->get('/set_hardlock(/)', 
+               function () use($app) 
+               {
+                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
+                
+               $lo_cl_Lock = new cl_Lock();
+               
+               $lo_cl_Lock->setHardLock($lv_trans_id);
+               
+               }
+     );
+     $app->get('/reject_hardlock(/)', 
+               function () use($app) 
+               {
+                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
+                
+               $lo_cl_Lock = new cl_Lock();
+               
+                $lo_cl_Lock->rejectSoftLock($lv_trans_id);
+               
+               }
+     );
+     
   $app->run();
 ?>
 
