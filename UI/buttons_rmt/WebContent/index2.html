@@ -43,13 +43,13 @@ sap.ui.getCore().attachInit(function () {
 		
 			
 	}
-	});
+	}).addStyleClass("first_page_buttons");
 	var admin_activity  = new sap.ui.commons.Button({
 		//id:'rg',
 		text : "Administration Activities. ",
 		tooltip : "Administration Activities.",
 		
-	});
+	}).addStyleClass("first_page_buttons");
 	oWelcome_Page1.createRow(oTV);
 	oWelcome_Page1.createRow(op_activities);
 	oWelcome_Page1.createRow(admin_activity);
@@ -1032,6 +1032,12 @@ var emp_form = new sap.ui.commons.layout.MatrixLayout({
          
 </script>
 <style>
+.first_page_buttons
+{
+margin-top:40px;
+
+
+}
 .sapUiBody{
 	
 	background: #fff;
