@@ -8,8 +8,76 @@
 /**
  * Description of cl_NotificationMails
  *
- * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
+ * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
+ob_start();
+?>
+<html>
+   <style>.font{font-size:15;font-family:Calibri}</style>
+   <body class="font">
+      <p>Dear GV_EMPNAME ,</p>
+      <d>You have been <b>GV_ACTION_TYPE</b> to the project <b> GV_PROJECT_NAME
+         </b>
+      </d>
+      <h4><u>Employee Details:</u></h4>
+      <table class="font" border='1'>
+         <tr>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>BU</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Sub BU</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Service Line</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Location</CENTER>
+            </td>
+         </tr>
+         <tr>
+            <td>GV_BU</td>
+            <td> GV_SBU </td>
+            <td> GV_SERV_LINE </td>
+            <td> GV_LOCATION </td>
+         </tr>
+      </table>
+      <h4><u>Assignment Details:</u></h4>
+      <table class="font" border='1'>
+         <tr>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Project Code</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>Project Name</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>Assignment Start Date</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>Assignment End Date</CENTER>
+            </td>
+         </tr>
+         <tr>
+            <td>GV_PROJECT_CODE</td>
+            <td>GV_PROJECT_NAME</td>
+            <td>
+               <CENTER>GV_SDATE</CENTER>
+            </td>
+            <td>
+               <CENTER>GV_EDATE</CENTER>
+            </td>
+         </tr>
+      </table>
+      <p><A HREF="GV_LINK">Click here</A> to Approve/Reject the lock
+      <p><font color=#FF0000><B>Note: This assignment change will be reflected in Custom applications (Time Card, Expense etc) after 1 working day</B></font>
+      <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
+      </table>
+   </body>
+</html>
+
+
+<?php
 require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 class cl_NotificationMails 
     {
@@ -18,7 +86,7 @@ class cl_NotificationMails
     private $lv_so_number,
             $lv_mode,
             $lv_link,
-            $lv_file;
+            $lv_content;
     
 // Public array which will be used to export the results fetched.
     public  $lt_so_details = [],
@@ -33,30 +101,38 @@ class cl_NotificationMails
         $this->lv_mode      = $i_mode;
         $this->lv_link      = $i_link;
         }
-    
+        
+    // Method to get the HTML from buffer and reset the buffer.    
+    public function get_html()
+        {
+        $this->lv_content = ob_get_clean();
+        }
     public function sendSoftLockNotification($fp_v_sl_tans_id)
         {
         //        Sends Mail to SO Ownner to acceot or reject lock given by trans ID
         }
-    
+        
         // Function to get email skeleton.
-    Public function get_email_html()
-        {
+    //Public function get_email_html()
+        //{
         // Reading text file which contains HTML string for the email to be read.
-            $lv_filename    = "http://localhost/email.txt";
-            $lv_handle      = fopen($lv_filename, "r");
-            $this->lv_file  = fread($lv_handle, 4096);
-            fclose($lv_handle);
-        }
+        //    $lv_filename    = "http://localhost/email.txt";
+        //    $lv_handle      = fopen($lv_filename, "r");
+         //   $this->lv_file  = fread($lv_handle, 4096);
+         //   fclose($lv_handle);
+       // }
         // Function to send notifications per SO number.
     Public function sendnotification(
             $i_so_number,
             $i_mode,
             $i_link)            
         {
+        
+        // Call function to get HTML of the email.
+            $this->get_html();
+            
         // Function to set parameters to the private variable, so they can be used in query.
-        $this->set_params($i_so_number, $i_mode, $i_link);
-        $this->get_email_html();
+        $this->set_params($i_so_number, $i_mode, $i_link);        
         $lv_query_so         = "SELECT m_so_rrs.so_no, m_so_rrs.so_proj_id, m_so_rrs.so_proj_name, m_so_rrs.so_sdate, m_so_rrs.so_endate, m_emp_ras.emp_id, m_emp_ras.emp_name, m_emp_ras.idp, m_emp_ras.svc_line, m_emp_ras.sub_bu, m_emp_ras.loc FROM m_so_rrs JOIN m_emp_ras ON m_so_rrs.emp_id = m_emp_ras.emp_id WHERE so_no = '$this->lv_so_number'";
         $lv_query_acttype    = "SELECT * FROM `t_act_type_text` WHERE action_type = '$this->lv_mode'";
         
@@ -73,7 +149,6 @@ class cl_NotificationMails
            foreach ($this->lt_act_type as $key => $lwa_act_type) 
            {
             $lv_action_text = $lwa_act_type['action_type_text'];
-            echo $lv_action_text;   
            }
                 
 // Process the selected tables and format the message to be sent.
@@ -89,7 +164,7 @@ class cl_NotificationMails
             $lv_serv_line = $lwa_result['svc_line'];
             $lv_location  = $lwa_result['loc'];
            
-            $lv_content  = $this->lv_file;
+            $lv_content  = $this->lv_content;
             $lv_content  = str_replace("GV_PROJECT_NAME", $lv_projname, $lv_content);
             $lv_content  = str_replace("GV_EMPNAME", $lv_empname, $lv_content);
             $lv_content  = str_replace("GV_ACTION_TYPE", $lv_action_text, $lv_content);
@@ -118,4 +193,4 @@ class cl_NotificationMails
     }
     $lo_email = new cl_NotificationMails();
     $lo_email->sendnotification(273468, 'SL', 'http://localhost/phpmyadmin');
-    
+ 
