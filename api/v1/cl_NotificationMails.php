@@ -111,16 +111,7 @@ class cl_NotificationMails
         {
         //        Sends Mail to SO Ownner to acceot or reject lock given by trans ID
         }
-        
-        // Function to get email skeleton.
-    //Public function get_email_html()
-        //{
-        // Reading text file which contains HTML string for the email to be read.
-        //    $lv_filename    = "http://localhost/email.txt";
-        //    $lv_handle      = fopen($lv_filename, "r");
-         //   $this->lv_file  = fread($lv_handle, 4096);
-         //   fclose($lv_handle);
-       // }
+       
         // Function to send notifications per SO number.
     Public function sendnotification(
             $i_so_number,
@@ -176,8 +167,33 @@ class cl_NotificationMails
             $lv_content  = str_replace("GV_SDATE", $lv_sdate, $lv_content);
             $lv_content  = str_replace("GV_EDATE", $lv_edate, $lv_content);
             $lv_content  = str_replace("GV_LINK", $this->lv_link, $lv_content);
-            $lv_headers  = 'MIME-Version: 1.0' . "\r\n";
+                        
+        // a random hash will be necessary to send mixed content
+            $separator = md5(time());
+
+        // carriage return type (we use a PHP end of line constant)
+            $eol = PHP_EOL;    
+            
+        // Get Resume File.
+            $lv_filename   = "Resume.docx";
+            $lv_file       = "http:\\localhost" . . $lv_filename;
+            //$lv_file_size  = filesize($lv_file);
+            $lv_handle     = fopen($lv_file, "r");
+            $lv_attachment = fread($lv_handle, 4096);
+            fclose($lv_handle);               
+            $lv_attachment = chunk_split(base64_encode($lv_attachment));
+            $lv_headers  = 'From: postmaster@localhost' . "\r\n";
+            $lv_headers .= 'Reply-To: postmaster@localhost' . "\r\n";
+            $lv_headers .= 'bcc: bcc@localhost' . "\r\n";
+            $lv_headers .= 'cc: cc@localhost' . "\r\n";
+            $lv_headers .= 'MIME-Version: 1.0' . "\r\n";
             $lv_headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $lv_headers .= "--" . $separator . $eol;
+            $lv_headers .= "Content-Type: application/octet-stream; name=\"" . $lv_filename . "\"" . $eol;
+            $lv_headers .= "Content-Transfer-Encoding: base64" . $eol;
+            $lv_headers .= "Content-Disposition: attachment" . $eol . $eol;
+            $lv_headers .= $content . $eol . $eol;
+            $lv_headers .= "--" . $separator . "--";
             $lv_mail     =  mail("dishu@localhost", "E-mail from PHP", $lv_content, $lv_headers);
             echo('hope this works...<br>');
             if($lv_mail)
