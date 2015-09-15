@@ -9,7 +9,7 @@
     $comment = "mail from php";
     $subject = "this email comes from php";
     $email = "postmaster@localhost";
- $mail =  mail("tejas@localhost", "E-mail from PHP", "Please! Donot read this");
+ $mail =  mail("dishu@localhost", "E-mail from PHP", "Please! Donot read this");
  echo('hope this works');
  if($mail)
  {
