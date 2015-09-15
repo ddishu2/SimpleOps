@@ -85,7 +85,7 @@ query.
         $lv_headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $lv_mail     =  mail("dishu@localhost", "E-mail from PHP", $lv_content, 
 $lv_headers);
-        echo('hope this works<br>');
+        echo('hope this works...<br>');
         if($lv_mail)
             {   
             echo('this works<br>');
