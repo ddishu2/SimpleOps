@@ -27,9 +27,23 @@ class cl_SOEmpSkillMatcher
     const C_EMP_SKILLS_TABLE        = 'c_emp_skill_matrix';
     const C_SO_EMP_SKILL_XREF_TABLE = 'c_so_emp_skill_xref';
     
-    
+ 
     private $o_dbhandle;
+    
+   /**
+ 
+   * 
+   * 
+   * @var array $arr_so_emp_skill_xref Cross-reference between SO and Emp. Skills.
+   * 
+   */
     private $arr_emp_skills_matrix = [];
+    
+   /**
+   * 
+   * @var array $arr_so_emp_skill_xref Cross-reference between SO and Emp. Skills.
+   * 
+   */
     private $arr_so_emp_skill_xref = []; 
    
     /**
@@ -39,7 +53,6 @@ class cl_SOEmpSkillMatcher
         $this->o_dbhandle = new cl_DB();
         $this->setEmpSkillMatrix();
         $this->set_SO_Emp_Skill_Xref();
-//        $this->o_dbhandle->closeDBHandle();
     }
     
     
@@ -71,17 +84,31 @@ class cl_SOEmpSkillMatcher
 //        echo 'Min:'.$lv_alt_skill_min_index.'Max:'.$lv_alt_skill_max_index;
 //    }
     
+    /**
+     * Gets Employee skill with upto 10 alternatives.
+     * 
+     * @return array Employee skill with upto 10 alternatives.
+     * 
+     */
     public function getEmpSkillMatrix()
     {
         return $this->arr_emp_skills_matrix;
     }
     
-    public function getSOEmpSkillMatrix()
+    /**
+     * Gets Cross-Reference(Xref) between SO and Emp Skill.
+     * 
+     * 
+     * @return array Cross-Reference(Xref) between SO and Emp Skill
+     */
+    public function getSOEmpSkillXref()
     {
         return $this->arr_so_emp_skill_xref;
     }
     
     /**
+     * Sets $this->arr_emp_skills_matrix.
+     * 
      * 
      */
     private function setEmpSkillMatrix()
@@ -103,7 +130,7 @@ class cl_SOEmpSkillMatcher
     }
     /**
      * 
-     * @return array
+     * @return array Returns Emp Skills with upto 10 aletrnatives from database
      */
     private function fetchEmpSkillMatrix()
     {
@@ -117,6 +144,8 @@ class cl_SOEmpSkillMatcher
     }
     
     /**
+     * Sets $this->arr_so_empskills_xref.
+     * 
      * 
      */
     private function set_SO_Emp_Skill_Xref()
@@ -149,7 +178,8 @@ class cl_SOEmpSkillMatcher
     
     /**
      * 
-     * @return array
+     * @return array Returns Cross-Ref between SO and Emp skills.
+     * 
      */
 
     private function fetch_SO_Emp_Skill_Xref()
@@ -166,9 +196,11 @@ class cl_SOEmpSkillMatcher
     
     /**
      * 
-     * @param string $fp_v_emp_skill
-     * @param string $fp_v_so_skill
-     * @return boolean
+     * @param string $fp_v_emp_skill Employee Skill
+     * @param string $fp_v_so_skill  Requested SO Skill
+     * @return boolean Returns true if Emp. Skill is cross-referenced 
+     *                 by SO Skill.
+     * 
      */
     public function isPerfectMatch($fp_v_so_skill = '',$fp_v_emp_skill = '' )
     {
@@ -187,7 +219,9 @@ class cl_SOEmpSkillMatcher
  * Returns true if emp skill is an alternate to requested SO skill
  * @param string $fp_v_emp_skill
  * @param string $fp_v_so_skill
- * @return boolean
+ * @return boolean Returns true if emp skill is an alternate 
+ *                 of Emp. skill cross-referenced by SO skill.
+ * 
  */
     public function isAlternative($fp_v_so_skill = '', $fp_v_emp_skill = '')
     {
@@ -210,11 +244,14 @@ class cl_SOEmpSkillMatcher
     }
 
     /**
-     * Returns true if emp skill matches requested SO skill or is an alternate to
-     * requested SO skill
+     * 
+     * 
      * @param type $fp_v_emp_skill
      * @param type $fp_v_so_skill
-     * @return type
+     * @return boolean      Returns true if emp skill is cross-referenced by
+     *                      requested SO skill or is an alternate to
+     *                      Emp Skill cross-referenced by SO skill.
+     * 
      */
     public function isMatchOrAlternative($fp_v_so_skill = '' ,$fp_v_emp_skill = '')
     {
