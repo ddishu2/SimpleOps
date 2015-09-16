@@ -1,15 +1,20 @@
 <?php
 /**
- * Summary:  Contains Logic to Map an SO Requested Skill to an Employee Skill(detailed sescription below).
+ * Summary:  Contains Logic to Map an SO Requested Skill to an Employee 
+ *           Skill(detailed sescription below).
  * 
  * 
- * Description: 1. Each skill requested by an SO is mapped(cross-referenced) to a corresponding employee skill 
- * to reconcile naming differences between skills in SO Master and in Emp. Master
- * 2. An employee skill can have upto 10 alternatives which are equivalent to that skill.
+ * Description: 1. Each skill requested by an SO is mapped(cross-referenced) 
+ *                 to a corresponding employee skill 
+ *                 to reconcile naming differences between skills in SO Master 
+ *                 & in Emp. Master.
+ * 2. An employee skill can have upto 10 alternatives which are equivalent 
+ *    to that skill.
  * 3. A Skill requested by an SO can therefore be fulfilled by:
  *      a. its cross-referenced Emp. Skill counterpart (perfect match)
  *      or
- *      b. any of it's Emp. Skill counterpart's alternative skills(alternative match).
+ *      b. any of it's Emp. Skill counterpart's alternative skills
+ *         (alternative match).
  * 
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
