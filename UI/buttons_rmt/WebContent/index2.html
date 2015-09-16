@@ -166,7 +166,7 @@ sap.ui.getCore().attachInit(function () {
 		
 
 	}).addStyleClass("for_text_style1");
-	/* 
+	
 	var so_from = new sap.ui.commons.DatePicker("date1",{
 		    width: "10em",
 		   value : {
@@ -176,28 +176,7 @@ sap.ui.getCore().attachInit(function () {
 			})
 
 		}
-		}).addStyleClass("for_fields_style1"); */
-		var oModel = new sap.ui.model.json.JSONModel();
-		oModel.setData({
-			dateValue: new Date(1330470000000)
-		});
-		sap.ui.getCore().setModel(oModel,"appView");
-		    // create DatePickers and bind to model
-		var so_from =(new sap.ui.commons.DatePicker("date2",{
-			width: "10em",
-			value: {
-				path: "appView>/dateValue",
-				type: new sap.ui.model.type.Date({pattern: "yy-MM-dd", strictParsing: true})
-		}
-		}));
-		so_from.setYyyymmdd("20100101");
-		so_from.setLocale("US");
-	/* 	so_from.placeAt("content"); */
-		    var start_date = sap.ui.getCore().getModel("appView").getProperty("/dateValue");
-		    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "yyyy-MM-dd" }); 
-		    var date = new Date(start_date);
-		    var dateStr = dateFormat.format(date);
-		    console.log(dateStr);
+		}).addStyleClass("for_fields_style1");
 	
 	
 	
