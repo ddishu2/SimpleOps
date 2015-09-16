@@ -178,7 +178,7 @@ sap.ui.getCore().attachInit(function () {
 		}
 		}).addStyleClass("for_fields_style1");
 	
-	var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY/MM/DD" });     
+	var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY/MM/DD" ,strictParsing: true});     
 	var dateFormatted = dateFormat.format(so_from);
 	
 	
