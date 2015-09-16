@@ -15,7 +15,7 @@ class cl_DB
     private static $count    = 0;
     private static $connected_flag = false;
 
-    function __construct()
+  function __construct()
   {
       self::setDBHandle();
   }
@@ -29,7 +29,7 @@ class cl_DB
   {
       $lv_count = self::$count;
       self::clearCount();
-      return self::$count;
+      return $lv_count;
   }
   
   private static function clearCount()
@@ -119,19 +119,16 @@ class cl_DB
   }
    
      public function updateResultIntoTable($fp_v_query)
-          {
-      self::setDBHandle();
-      self::clearCount();
+     {
+        self::setDBHandle();
+        self::clearCount();
 //      $re_results = [];
-     if( self::$dbhandle->query($fp_v_query) == true)
-     {
-         return true;
-     }
-     else
-     {
-         return false;
-     }
-          }
+        if (self::$dbhandle->query($fp_v_query) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     public function postResultIntoTable($fp_v_query)
