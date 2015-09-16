@@ -167,7 +167,7 @@ sap.ui.getCore().attachInit(function () {
 
 	}).addStyleClass("for_text_style1");
 	
-	var so_from = new sap.ui.commons.DatePicker("date1",{
+	/* var so_from = new sap.ui.commons.DatePicker("date1",{
 		    width: "10em",
 		   value : /* {
 			path : "date1",
@@ -176,10 +176,13 @@ sap.ui.getCore().attachInit(function () {
 			}) */
 
 		}
-		}).addStyleClass("for_fields_style1");
+		}). */
+		
+		var so_from = new sap.ui.commons.DatePicker('date1');
+		so_from.setYyyymmdd("20100101").addStyleClass("for_fields_style1");
 	
-	var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY/MM/DD" ,strictParsing: true});     
-	var dateFormatted = dateFormat.format(so_from);
+	/* var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY/MM/DD" ,strictParsing: true});     
+	var dateFormatted = dateFormat.format(so_from); */
 	
 	
 	
