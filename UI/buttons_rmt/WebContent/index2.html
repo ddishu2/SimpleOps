@@ -169,16 +169,17 @@ sap.ui.getCore().attachInit(function () {
 	
 	var so_from = new sap.ui.commons.DatePicker("date1",{
 		    width: "10em",
-		   value : {
+		   value : /* {
 			path : "date1",
 			type : new sap.ui.model.type.Date({
-				pattern : "dd.MM.yyyy"
-			})
+				pattern : ""
+			}) */
 
 		}
 		}).addStyleClass("for_fields_style1");
 	
-	
+	var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY/MM/DD" });     
+	var dateFormatted = dateFormat.format(so_from);
 	
 	
 	
