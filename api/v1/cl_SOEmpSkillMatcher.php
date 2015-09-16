@@ -18,6 +18,7 @@
  * 
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
+ * Date: 16/09/2015.
  * @uses cl_DB()->getResultsFromQuery to retrieve results. 
  * 
  */
