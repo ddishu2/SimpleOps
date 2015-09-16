@@ -88,6 +88,12 @@ sap.ui.getCore().attachInit(function () {
 		tooltip : "Amendments",
 		
 	});
+	var ext_hire = new sap.ui.commons.Button({
+		id:'eh',
+		text : "External Hiring",
+		tooltip : "Amendments",
+		
+	});
 
 	demand_fulfill.placeAt("heading");
 	report_gen.placeAt("heading")
@@ -1221,7 +1227,7 @@ height: 100%;
 padding: 0 20px;
 }
 	
-	#df,#rg,#mt,#ad{
+	#df,#rg,#mt,#ad,#eh{
 width: 24%;
 margin-top:20px;
 margin-right:8px;
