@@ -1,23 +1,28 @@
 <?php
 /**
- * 1. Each skill requested by an SO is mapped to a corresponding employee skill 
- * to align nomenclature differences between skills in SO Master and in Emp. Master
+ * Summary:  Contains Logic to Map an SO Requested Skill to an Employee Skill(detailed sescription below).
+ * 
+ * 
+ * Description: 1. Each skill requested by an SO is mapped(cross-referenced) to a corresponding employee skill 
+ * to reconcile naming differences between skills in SO Master and in Emp. Master
  * 2. An employee skill can have upto 10 alternatives which are equivalent to that skill.
- * 3. A Skill requested by an SO can therefore be fulfilled by it's Emp. Skill counterpart (perfect match)or
- * by any of it's Emp. Skill counterpart's alternative skills(alternative match)
- 
+ * 3. A Skill requested by an SO can therefore be fulfilled by:
+ *      a. its cross-referenced Emp. Skill counterpart (perfect match)
+ *      or
+ *      b. any of it's Emp. Skill counterpart's alternative skills(alternative match).
+ * 
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
+ * @uses cl_DB()->getResultsFromQuery to retrieve results. 
+ * 
  */
-
-
 class cl_SOEmpSkillMatcher 
 {
-    const C_SO_SKILL_FNAME                = 'so_skill';
-    const C_EMP_SKILL_FNAME               = 'emp_skill';
-    const C_ALTERNATE_SKILLS_COUNT         = 10;
-    const C_ALT_SKILL_MIN_INDEX           = 3;
-    private static $c_alt_skill_max_index = 12;
+    const   C_SO_SKILL_FNAME                = 'so_skill';
+    const   C_EMP_SKILL_FNAME               = 'emp_skill';
+    const   C_ALTERNATE_SKILLS_COUNT        = 10;
+    const   C_ALT_SKILL_MIN_INDEX           =  3;
+    private static $c_alt_skill_max_index   =  12;
     
     const C_EMP_SKILLS_TABLE        = 'c_emp_skill_matrix';
     const C_SO_EMP_SKILL_XREF_TABLE = 'c_so_emp_skill_xref';
@@ -27,11 +32,10 @@ class cl_SOEmpSkillMatcher
     private $arr_emp_skills_matrix = [];
     private $arr_so_emp_skill_xref = []; 
    
-    
-    
+    /**
+     * 
+     */
     public function __construct() {
-        
-        
         $this->o_dbhandle = new cl_DB();
         $this->setEmpSkillMatrix();
         $this->set_SO_Emp_Skill_Xref();
