@@ -8,14 +8,10 @@
 require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 
 class cl_Skills {
-    const C_ALT_SKILL_MIN_INDEX     = 2;
-    const C_ALT_SKILL_COUNT         = 10;
-    const C_ALT_SKILL_PREFIX        = 'alt_skill';
     const C_SO_SKILL_FNAME          = 'so_skill';
     const C_EMP_SKILL_FNAME         = 'emp_skill';
     const C_EMP_SKILLS_TABLE        = 'c_emp_skill_matrix';
     const C_SO_EMP_SKILL_XREF_TABLE = 'c_so_emp_skill_xref';
-    private static $c_alt_skill_max_index = self:: C_ALT_SKILL_MIN_INDEX + self::C_ALT_SKILL_COUNT - 1 ;
     private $o_dbhandle;
             
     private $arr_emp_skills_matrix = [];
@@ -26,6 +22,7 @@ class cl_Skills {
         $this->setEmpSkillMatrix();
         $this->set_SO_Emp_Skill_Xref();
     }
+    
     /**
      * 
      */
