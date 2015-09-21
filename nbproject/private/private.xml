@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/index_1.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/index.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_NotificationMails.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/test_email.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/if_deployableEmps.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_vo_open_sos.php</file>
         </group>
     </open-files>
 </project-private>
