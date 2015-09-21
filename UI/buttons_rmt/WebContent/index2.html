@@ -293,6 +293,17 @@ sap.ui.getCore().attachInit(function () {
 
 	custLabel.setLabelFor(custText);
 	oDetails.createRow(custLabel, custText);
+	
+	var custnameLabel = new sap.ui.commons.Label({
+		text : 'Customer Name' }).addStyleClass("for_text_style1");
+
+	var custnameText = new sap.ui.commons.TextField({
+		//tooltip : 'SO Date',
+		editable : true,
+		width : '200px' }).addStyleClass("for_fields_style1");;
+
+	custnameLabel.setLabelFor(custnameText);
+	oDetails.createRow(custnameLabel, custnameText);
 
 	var capabilityLabel = new sap.ui.commons.Label({
 		text : 'Capability' }).addStyleClass("for_text_style1");
