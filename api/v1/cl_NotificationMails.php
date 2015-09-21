@@ -116,7 +116,9 @@ class cl_NotificationMails
     Public function sendnotification(
             $i_so_number,
             $i_mode,
-            $i_link)            
+            $i_link,
+            $i_transid,
+            $i_so_details)            
         {
         
         // Call function to get HTML of the email.
@@ -154,7 +156,8 @@ class cl_NotificationMails
             $lv_sub_bu    = $lwa_result['sub_bu'];
             $lv_serv_line = $lwa_result['svc_line'];
             $lv_location  = $lwa_result['loc'];
-           
+            $lv_empid     = $lwa_result['emp_id'];
+            
             $lv_content  = $this->lv_content;
             $lv_content  = str_replace("GV_PROJECT_NAME", $lv_projname, $lv_content);
             $lv_content  = str_replace("GV_EMPNAME", $lv_empname, $lv_content);
@@ -170,13 +173,16 @@ class cl_NotificationMails
             
         // Get Resume File.
             $lv_uid = md5(uniqid(time()));
-            $lv_filename = "Resume.docx";
-            $lv_filepath = "http://localhost/";
-            $lv_file     = $lv_filepath.$lv_filename;
+            $lv_empid = ltrim($lv_empid, '0');
+            $lv_filepath =  'C:\xampp\htdocs\*'.$lv_empid.'.docx';
+            $lv_fileresult = glob($lv_filepath);            
+            if(!$lv_fileresult)
+            {
+              echo 'Resume not found';
+            }
+            else
+            {
             $lv_fileatt_type = 'application/msword'; // File Type
-//            $lv_filesize = filesize($lv_file);
-            $lv_fopen    = fopen($lv_file, "r");
-            $lv_atchmnt  = fread($lv_fopen, 12288);
            
         // Set parameters for the email.             
             $lv_headers  = 'From: postmaster@localhost' . "\r\n";
@@ -190,6 +196,11 @@ class cl_NotificationMails
             $lv_message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
             $lv_message .= $lv_content."\r\n\r\n";
             $lv_message .= "--".$lv_uid."\r\n";
+            foreach($lv_fileresult as $lv_file)
+            {
+                $lv_filesize = filesize($lv_file);
+                $lv_filename = basename($lv_file);
+            }            
             $lv_message .= "Content-Type: '$lv_fileatt_type'; name=\"".$lv_filename."\"\r\n"; 
             $lv_message .= "Content-Transfer-Encoding: base64\r\n";
             $lv_message .= "Content-Disposition: attachment\r\n\r\n";
@@ -206,8 +217,9 @@ class cl_NotificationMails
                 echo('this didnt work');
                 }
             }
+            }
         } 
     }
-    $lo_email = new cl_NotificationMails();
-    $lo_email->sendnotification(273468, 'SL', 'http://localhost/phpmyadmin');
+//    $lo_email = new cl_NotificationMails();
+//    $lo_email->sendnotification(273468, 'SL', 'http://localhost/phpmyadmin', 'abc', 'aaa');
  
