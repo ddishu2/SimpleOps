@@ -10,83 +10,17 @@
  *
  * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
-ob_start();
-?>
-<html>
-   <style>.font{font-size:15;font-family:Calibri}</style>
-   <body class="font">
-      <p>Dear GV_EMPNAME ,</p>
-      <d>You have been <b>GV_ACTION_TYPE</b> to the project <b> GV_PROJECT_NAME
-         </b>
-      </d>
-      <h4><u>Employee Details:</u></h4>
-      <table class="font" border='1'>
-         <tr>
-            <td bgcolor='blue' style='color:white'>
-               <CENTER>BU</CENTER>
-            </td>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>Sub BU</CENTER>
-            </td>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>Service Line</CENTER>
-            </td>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>Location</CENTER>
-            </td>
-         </tr>
-         <tr>
-            <td>GV_BU</td>
-            <td> GV_SBU </td>
-            <td> GV_SERV_LINE </td>
-            <td> GV_LOCATION </td>
-         </tr>
-      </table>
-      <h4><u>Assignment Details:</u></h4>
-      <table class="font" border='1'>
-         <tr>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>Project Code</CENTER>
-            </td>
-            <td bgcolor='blue' style='color:white'>
-               <CENTER>Project Name</CENTER>
-            </td>
-            <td bgcolor='blue' style='color:white'>
-               <CENTER>Assignment Start Date</CENTER>
-            </td>
-            <td bgcolor='blue' style='color:white'>
-               <CENTER>Assignment End Date</CENTER>
-            </td>
-         </tr>
-         <tr>
-            <td>GV_PROJECT_CODE</td>
-            <td>GV_PROJECT_NAME</td>
-            <td>
-               <CENTER>GV_SDATE</CENTER>
-            </td>
-            <td>
-               <CENTER>GV_EDATE</CENTER>
-            </td>
-         </tr>
-      </table>
-      <p><A HREF="GV_LINK">Click here</A> to Approve/Reject the lock
-      <p><font color=#FF0000><B>Note: This assignment change will be reflected in Custom applications (Time Card, Expense etc) after 1 working day</B></font>
-      <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
-      </table>
-   </body>
-</html>
 
-
-<?php
 require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 class cl_NotificationMails 
     {
+    const LC_ROOT = 'C:\xampp\htdocs\\';
     
 // Private class variables.    
     private $lv_so_number,
             $lv_mode,
             $lv_link,
-            $lv_content;
+            $lv_content;   
     
 // Public array which will be used to export the results fetched.
     public  $lt_so_details = [],
@@ -102,27 +36,24 @@ class cl_NotificationMails
         $this->lv_link      = $i_link;
         }
         
-    // Method to get the HTML from buffer and reset the buffer.    
-    public function get_html()
+//    // Method to get the HTML from buffer and reset the buffer.    
+    private function get_html($i_mode)
         {
-        $this->lv_content = ob_get_clean();
+        $lv_htmlpath = self::LC_ROOT.$i_mode.'.txt';
+        $this->lv_content = file_get_contents($lv_htmlpath);
         }
-    public function sendSoftLockNotification($fp_v_sl_tans_id)
-        {
-        //        Sends Mail to SO Ownner to acceot or reject lock given by trans ID
-        }
-       
+ 
         // Function to send notifications per SO number.
     Public function sendnotification(
             $i_so_number,
             $i_mode,
             $i_link,
             $i_transid,
-            $i_so_details)            
+            $i_emp_id)            
         {
         
         // Call function to get HTML of the email.
-            $this->get_html();
+            $this->get_html($i_mode);
             
         // Function to set parameters to the private variable, so they can be used in query.
         $this->set_params($i_so_number, $i_mode, $i_link);        
@@ -172,10 +103,10 @@ class cl_NotificationMails
             $lv_content  = str_replace("GV_LINK", $this->lv_link, $lv_content);                           
             
         // Get Resume File.
-            $lv_uid = md5(uniqid(time()));
-            $lv_empid = ltrim($lv_empid, '0');
-            $lv_filepath =  'C:\xampp\htdocs\*'.$lv_empid.'.docx';
-            $lv_fileresult = glob($lv_filepath);            
+            $lv_uid         = md5(uniqid(time()));
+            $lv_empid       = ltrim($lv_empid, '0');
+            $lv_filepath    = self::LC_ROOT.'*'.$lv_empid.'.docx';
+            $lv_fileresult  = glob($lv_filepath);            
             if(!$lv_fileresult)
             {
               echo 'Resume not found';
@@ -220,6 +151,6 @@ class cl_NotificationMails
             }
         } 
     }
-//    $lo_email = new cl_NotificationMails();
-//    $lo_email->sendnotification(273468, 'SL', 'http://localhost/phpmyadmin', 'abc', 'aaa');
+    $lo_email = new cl_NotificationMails();
+    $lo_email->sendnotification(273468, 'SL', 'http://localhost/phpmyadmin', 'abc', 'aaa');
  
