@@ -37,16 +37,12 @@ class cl_SOEmpSkillMatcher
     private $o_dbhandle;
     
    /**
- 
-   * 
-   * 
    * @var array $arr_so_emp_skill_xref Cross-reference between SO and Emp. Skills.
    * 
    */
     private $arr_emp_skills_matrix = [];
     
-   /**
-   * 
+   /** 
    * @var array $arr_so_emp_skill_xref Cross-reference between SO and Emp. Skills.
    * 
    */
