@@ -495,7 +495,7 @@ sap.ui.getCore().attachInit(function () {
   			var upto = $("#sto1").val();
   			$.ajax({
 	      		  method: "GET",
-	      		  url: "/rmt/api/v1/index.php/deployable_emp/?so_from_date=="+from+"&so_to_date="+upto,
+	      		  url: "/rmt/api/v1/index.php/deployable_emp/?so_from_date=2015-09-11&so_to_date=2015-09-22"
 	      		  success : function(odata){
 	      			  console.log(odata);
 	      			  var table_row;
