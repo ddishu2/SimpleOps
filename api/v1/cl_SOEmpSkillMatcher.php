@@ -55,6 +55,7 @@ class cl_SOEmpSkillMatcher
         $this->o_dbhandle = new cl_DB();
         $this->setEmpSkillMatrix();
         $this->set_SO_Emp_Skill_Xref();
+       
     }
     
     
@@ -198,6 +199,30 @@ class cl_SOEmpSkillMatcher
     
     /**
      * 
+     * @param string $fp_v_so_skill
+     * @param string $fp_v_emp_skill
+     * @return boolean Returns false if no or invalid mapping between SO 
+     *                 and Emp. skills.
+     */
+    private function isSkillMappingDefined($fp_v_so_skill = '')
+    {
+        $re_valid = false;
+        
+//        $this->arr_so_emp_skill_xref[$fp_v_so_skill]
+         if( array_key_exists($fp_v_so_skill, $this->arr_so_emp_skill_xref) )
+         {
+            $lv_so_xref_emp_skill  = $this->arr_so_emp_skill_xref[$fp_v_so_skill];
+            if( array_key_exists($lv_so_xref_emp_skill, $this->arr_emp_skills_matrix) )
+            {        
+                $re_valid = true;
+            }
+         }
+        return $re_valid;
+        
+//        
+    }
+    /**
+     * 
      * @param string $fp_v_emp_skill Employee Skill
      * @param string $fp_v_so_skill  Requested SO Skill
      * @return boolean Returns true if Emp. Skill is cross-referenced 
@@ -207,7 +232,7 @@ class cl_SOEmpSkillMatcher
     public function isPerfectMatch($fp_v_so_skill = '',$fp_v_emp_skill = '' )
     {
         $lv_matches = false;
-        if(array_key_exists($fp_v_so_skill, $this->arr_so_emp_skill_xref))
+        if($this->isSkillMappingDefined($fp_v_so_skill))
         {
             if($this->arr_so_emp_skill_xref[$fp_v_so_skill] === $fp_v_emp_skill)
             {
@@ -231,7 +256,7 @@ class cl_SOEmpSkillMatcher
 //        echo 'isAltenative'.PHP_EOL;
 //        echo 'SO Emp Skills Xref: '.json_encode($this->arr_so_emp_skill_xref,JSON_PRETTY_PRINT).PHP_EOL;
 //        echo 'Emp. Altenatives  '.json_encode($this->arr_emp_skills_matrix, JSON_PRETTY_PRINT).PHP_EOL;
-        if(array_key_exists($fp_v_so_skill, $this->arr_so_emp_skill_xref))
+        if( $this->isSkillMappingDefined($fp_v_so_skill))
         {
             $lv_so_xref_emp_skill        = $this->arr_so_emp_skill_xref[$fp_v_so_skill];
             $larr_so_xref_emp_alt_skills = $this->arr_emp_skills_matrix[ $lv_so_xref_emp_skill];
