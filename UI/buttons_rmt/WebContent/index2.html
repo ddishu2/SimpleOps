@@ -135,7 +135,7 @@ sap.ui.getCore().attachInit(function () {
 	
 	 
 	//for First Div(first)
-	/*  var demand_fulfill = new sap.ui.commons.Button({
+	 var demand_fulfill = new sap.ui.commons.Button({
 		id:'df',
 		text : "Demand Fulfill",
 		tooltip : "Demand Fulfill",	
@@ -150,33 +150,7 @@ sap.ui.getCore().attachInit(function () {
 			$("#four2").addClass("hide_div");
 			$("#first").removeClass("hide_div");			
 	}
-	}); */
-	
-	
-	var oMenuButton = new sap.ui.commons.MenuButton({text: "Demand Fulfill", icon: "images/file.gif", tooltip: "File related actions"}); 
-
-	//Create the menu
-	var oMenu1 = new sap.ui.commons.Menu("menu1", {ariaDescription: "File Menu", tooltip: "Menu containing file related actions"});
-	//Create the items and add them to the menu
-	var oMenuItem1 = new sap.ui.commons.MenuItem("item1-1",{text: "Auto", icon: "images/new.gif"}); //Icon must be not larger than 16x16 px
-	oMenu1.addItem(oMenuItem1);
-	var oMenuItem2 = new sap.ui.commons.MenuItem("item1-2",{text: "Manual"});
-	oMenu1.addItem(oMenuItem2);
-	
-	oMenuButton.setMenu(oMenu1);
-	oMenuButton.attachItemSelected(function (oEvent){
-		if(oEvent.getParameter("itemId")=="item1-1")
-			
-			{
-			
-			$("#second").removeClass("hide_div");
-			$("#first").addClass("hide_div");
-			
-			};
 	});
-	
-	
-	
 	var report_gen  = new sap.ui.commons.Button({
 		id:'rg',
 		text : "Report Generation",
@@ -196,7 +170,7 @@ sap.ui.getCore().attachInit(function () {
 		
 	});
 
-	oMenuButton.placeAt("heading"); 
+	demand_fulfill.placeAt("heading");
 	report_gen.placeAt("heading")
 	firsttenance.placeAt("heading")
 	amendments.placeAt("heading") 
@@ -208,8 +182,8 @@ sap.ui.getCore().attachInit(function () {
 		press: function display_second()
 		{
 			
-			/* $("#second").removeClass("hide_div");
-			$("#first").addClass("hide_div"); */
+			$("#second").removeClass("hide_div");
+			$("#first").addClass("hide_div");
 			
 		}
 	}).addStyleClass("buttons_style1");
