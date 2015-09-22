@@ -293,6 +293,7 @@
     
     /**
      * Resets filters.
+     * 
      */
     
     final public function resetFilters()
