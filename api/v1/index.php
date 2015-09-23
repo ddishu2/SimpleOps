@@ -13,8 +13,10 @@ class cl_RMGTool_Globals
     const GC_ROUTE_APPROVE_SOFT_LOCK = '/approve_soft_lock(/)';
     const GC_ROUTE_APPROVE_HARD_LOCK = '/approve_hard_lock(/)';
     const GC_ROUTE_REJECT_HARD_LOCK = '/reject_hard_lock(/)';
+    const GC_ROUTE_SET_HARD_LOCK = '/set_hard_lock(/)';
     const OPEN_SO_DATE_RANGE    = 21;
-      const GC_route_proposals = '/proposals(/)';
+    const GC_route_proposals = '/proposals(/)';
+    const demo = '/demo(/)';
     
 //    static public $GC_SLIM_PATH = __DIR__.
 //                                DIRECTORY_SEPARATOR.
@@ -38,7 +40,8 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
 
 require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
-
+require __DIR__.DIRECTORY_SEPARATOR.'cl_NotificationMails.php';
+require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -57,11 +60,15 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
             $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
             $lt_open_sos = $lo_open_sos->get();
             
+            
             $app->response->setStatus(200);
             $app->response->headers->set('Content-Type', 'application/json');
             echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
         });
-               
+        
+   
+        
+        
          $app->
             get(cl_RMGTool_Globals ::GC_ROUTE_DEPLOYABLE_EMPS, 
                function () use ($app)
@@ -85,6 +92,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                     $re_it_emps_for_sos = $c_pg->getAutoProposals();                    
                     $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');
+                  
                     echo json_encode($re_it_emps_for_sos, JSON_PRETTY_PRINT);
                    // echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
             
@@ -95,12 +103,15 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
      $app->get(cl_RMGTool_Globals ::GC_ROUTE_APPROVE_SOFT_LOCK,
             function () use($app)   
         {
+         
+        
         $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');
                     $lv_arr_so_id = $app->request->get(cl_Lock::C_ARR_SO_ID);
                     $lv_arr_emp_id   = $app->request->get(cl_Lock::C_ARR_EMP_ID);
                     $lv_arr_stat = $app->request->get(cl_lock::C_ARR_STAT);
                     $lv_prop_id = $app->request->get(cl_lock::C_PROP_ID);
+                    $lv_arr_link = $app->request->get(cl_lock::C_ARR_LINK);
 //                   $so_id = [];
 //                   $emp_id = [];
 //                   $so_id[0] = 111;
@@ -116,29 +127,32 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                    $lv_obj = new cl_Lock();
                    
                    
-                   $lv_prop_id = 2; 
+                   //$lv_prop_id = 2; 
                    
 //                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
-                    $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id);
+                    $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id,$lv_arr_link);
                    
 //                   echo $lv_result;
 
         
         });    
         $app->get(cl_RMGTool_Globals ::GC_ROUTE_APPROVE_HARD_LOCK, function () use($app) {
+            
             $app->response->setStatus(200);
             $app->response->headers->set('Content-Type', 'application/json');
-//            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);
+            
+            //$lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);
             $lv_obj = new cl_Lock();
-            $lv_trans_id = 4;
-            $lv_result = $lv_obj->ApproveHardLock( $lv_trans_id);//S201
+            $lv_trans_id = 1;
+            
+            $lv_result = $lv_obj->ApproveHardLock($lv_trans_id);//S201
         });
         $app->get(cl_RMGTool_Globals ::GC_ROUTE_REJECT_HARD_LOCK, function () use($app) {
             $app->response->setStatus(200);
             $app->response->headers->set('Content-Type', 'application/json');
 //            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);//S221
             $lv_obj = new cl_Lock();
-            $lv_trans_id = 3;
+            $lv_trans_id = 1;
             $lv_obj->rejectSoftLock($lv_trans_id);
         });
         
@@ -167,6 +181,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
     $app->get('/test1(/)', 
                function () use($app) 
                {
+        
                     $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');
                     
@@ -185,8 +200,8 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                     
                     $re_it_emps_for_sos = $c_pg->getAutoProposals();   
                     
-//                    print_r($re_it_emps_for_sos);
-//                    
+                    print_r($re_it_emps_for_sos);
+                    
                     foreach($re_it_emps_for_sos as $key => $value)
                     {
                         //echo $key."</br>";
@@ -226,12 +241,12 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
                   $lo_deployable_emp = new cl_deployableBUEmps(); 
                   $lo_cl_proposal = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
                  $re_it_emps_for_sos = $lo_cl_proposal->getAutoProposals();
-                 //print_r($re_it_emps_for_sos);
-                    //print_r( $re_it_emps_for_sos);
-                  //  foreach ( $re_it_emps_for_sos as $key => $value) {
+         
+                 //   print_r( $re_it_emps_for_sos);
+//                   foreach ( $re_it_emps_for_sos as $key => $value) {
                         
-                        //echo $key . "<br>";
-                        //print_r($value['so']);
+                     //   echo $key . "<br>";
+//                        print_r($value['so']);
                         
                         //$emp = 'emp';
                       // if(array_key_exists ('emp',$value )){
@@ -249,7 +264,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
 //                  echo $lv_string;
                        }
                         
-                        
+//               }  
                     
                
                
@@ -291,22 +306,22 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                     $app->response->headers->set('Content-Type', 'application/json');
                     
                     
-                  /*  $re_it_emps_for_sos = [];
-                   
-                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
-                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-                     
-                    
-                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
-//                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
-                  $lo_deployable_emp = new cl_deployableBUEmps(); 
-                  $lo_cl_proposal = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
-                 $re_it_emps_for_sos = $lo_cl_proposal->getAutoProposals();
-                 //print_r($re_it_emps_for_sos);
-                    //print_r( $re_it_emps_for_sos);
-                  //  foreach ( $re_it_emps_for_sos as $key => $value) {
-                        
-                        //echo $key . "<br>";
+//                 $re_it_emps_for_sos = [];
+//                   
+//                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+//                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+//                     
+//                    
+//                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
+////                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
+//                  $lo_deployable_emp = new cl_deployableBUEmps(); 
+//                  $lo_cl_proposal = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
+//                 $re_it_emps_for_sos = $lo_cl_proposal->getAutoProposals();
+//                 //print_r($re_it_emps_for_sos);
+//                    print_r( $re_it_emps_for_sos);
+//                    foreach ( $re_it_emps_for_sos as $key => $value) {
+//                        
+//                        echo $key . "<br>";
                         //print_r($value['so']);
                         
                         //$emp = 'emp';
@@ -315,8 +330,12 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                         // $lv_empid = $value['emp'][0]['emp_id'];
                          // $lv_soid = $value['so']['so_no']; 
                           // call create proposal ($lv_empid ,$lv_soid)
-                 */
-                 $lo_cl_lock = new cl_Lock();
+                 
+                
+                    
+                    
+                    
+                    $lo_cl_lock = new cl_Lock();
                  
                  $p_id = 1;
                  $emp_id = 318129;
@@ -326,7 +345,7 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                        }
                         
                         
-                    
+               
                
                
     );
@@ -345,29 +364,47 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                }
      );
   
-  $app->get('/set_hardlock(/)', 
+//  $app->get(cl_RMGTool_Globals ::GC_ROUTE_SET_HARD_LOCK, 
+//               function () use($app) 
+//               {
+//                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
+//                
+//               $lo_cl_Lock = new cl_Lock();
+//               
+//               $lo_cl_Lock->setHardLock($lv_trans_id);
+//               
+//               }
+//     );
+//     $app->get(cl_RMGTool_Globals ::GC_ROUTE_REJECT_HARD_LOCK, 
+//               function () use($app) 
+//               {
+//                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
+//                
+//               $lo_cl_Lock = new cl_Lock();
+//               
+//                $lo_cl_Lock->rejectSoftLock($lv_trans_id);
+//               
+//               }
+//     );
+     $app->get('/getdetails_test(/)', 
                function () use($app) 
                {
-                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
+         $fp_v_emp_id = 232;
+         $lt_empdetails = getDetails::getEmpDetails($fp_v_emp_id);
+       // print_r($lt_empdetails);
                 
-               $lo_cl_Lock = new cl_Lock();
-               
-               $lo_cl_Lock->setHardLock($lv_trans_id);
-               
+         $fp_v_so_no = 310596;
+           $lt_sodetails = getDetails::getSODetails($fp_v_so_no);
+           //print_r($lt_sodetails);
+           
+           $lv_link = cl_Lock::getLink($fp_v_so_no, $fp_v_emp_id);
+           echo $lv_link;
+           
+           
+           
                }
      );
-     $app->get('/reject_hardlock(/)', 
-               function () use($app) 
-               {
-                $lv_trans_id = $app->request->get(cl_Lock::C_TRANS_ID);
-                
-               $lo_cl_Lock = new cl_Lock();
-               
-                $lo_cl_Lock->rejectSoftLock($lv_trans_id);
-               
-               }
-     );
-     
+      
   $app->run();
 ?>
 

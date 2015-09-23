@@ -11,7 +11,6 @@
  * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
 
-require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
@@ -151,12 +150,12 @@ class cl_NotificationMails
                 $lv_edate     = $lwa_result['so_endate'];
                 $lv_empname   = $this->lt_emp_details[$key]['emp_name'];
                 $lv_empid     = $this->lt_emp_details[$key]['emp_id'];
-                $lv_pri_skill = $this->lt_emp_details[$key]['prime_skill'];
+                $lv_pri_skill = $this->lt_emp_details[$key]['skill1_l4'];
                 $lv_level     = $this->lt_emp_details[$key]['level'];
                 $lv_bu        = $this->lt_emp_details[$key]['idp'];
                 $lv_sub_bu    = $this->lt_emp_details[$key]['sub_bu'];
                 $lv_serv_line = $this->lt_emp_details[$key]['svc_line'];
-                $lv_location  = $this->lt_emp_details[$key]['loc'];
+                $lv_location  = $this->lt_emp_details[$key]['org'];
                 $lv_capability = $this->lt_emp_details[$key]['comp'];
                 $lv_date  = date('d-M-Y');
                 $lv_rel_date  = date('d-M-Y', strtotime($lv_date. ' + 2 days'));
@@ -219,7 +218,11 @@ class cl_NotificationMails
                     $lv_message .= "Content-Disposition: attachment\r\n\r\n";
                     $lv_message .=  chunk_split(base64_encode(file_get_contents($lv_file)))."\r\n";
                     $lv_message .= "--".$lv_uid."--";
-                    $lv_mail     = mail("dishu@localhost; cc@localhost", "E-mail from PHP", $lv_message, $lv_headers);        
+//<<<<<<< .mine
+                    $lv_mail     = mail("tejas@localhost", "E-mail from PHP", $lv_message, $lv_headers);        
+//=======
+//                    $lv_mail     = mail("dishu@localhost; cc@localhost", "E-mail from PHP", $lv_message, $lv_headers);        
+//>>>>>>> .r133
                     echo('hope this works...<br>');
                     if($lv_mail)
                         {   
@@ -233,6 +236,6 @@ class cl_NotificationMails
                 }
             } 
         }
-    $lo_email = new cl_NotificationMails();
-    $lo_email->sendnotification(203209, 'SL', 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 'abc', 232);
+//    $lo_email = new cl_NotificationMails();
+//    $lo_email->sendnotification(203209, 'SL', 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 'abc', 232);
  
