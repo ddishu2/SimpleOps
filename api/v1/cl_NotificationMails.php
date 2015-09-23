@@ -10,7 +10,6 @@
  *
  * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
-
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
@@ -28,7 +27,8 @@ class cl_NotificationMails
             $lv_query_capability,
             $lv_recievers,
             $lv_capability,
-            $lv_BU;
+            $lv_BU,
+            $lv_so_number;
         
 // Function to get the HTML from buffer and reset the buffer.    
     private function get_html($i_mode)
@@ -38,42 +38,79 @@ class cl_NotificationMails
             }           
  
 // Function to get the query.
-    private function  set_query($i_mode, $i_capability, $i_bu)
+    private function  set_query($i_mode)
             {           
             $this->lv_query_notifcn  = "SELECT *
                                         FROM m_notifications_config
-                                        WHERE action_type = '$i_mode' AND
-                                              capability  = '$i_capability' AND
-                                              BU          = '$i_bu'
-                                              ORDER BY action_type"; 
+                                        WHERE action_type = '$i_mode'                                              
+                                        ORDER BY action_type"; 
             
             $this->lv_query_capability = "SELECT * 
-                                          FROM   m_capability_config
-                                          WHERE  BU = '$i_bu' AND
-                                          capability = '$i_capability'";
-            
-            $this->lv_capability = $i_capability;
-            $this->lv_BU         = $i_bu;
+                                          FROM   m_capability_config";
             }
     
 // Get Email IDs.
     Private function get_emailid($i_reciever)
-    {
-        $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
+    {   
+// Get row index of capability. 
+        foreach ($this->lt_capability_email as $key => $lwa_capability_email) 
+                {          
+                if( ( $lwa_capability_email['BU'] === $this->lv_BU ) && ( $lwa_capability_email['capability'] === $this->lv_capability ) )
+                { $lv_key_cap = $key ; } 
+                elseif( ($lwa_capability_email['BU'] === $this->lv_BU ) && ( $lwa_capability_email['capability'] === 'Operations' ) )
+                { $lv_key_ops = $key ; }    
+                }
+
+// Get row index of capability.         
+        foreach ($this->lt_so_details as $key => $lwa_so_details) 
+                {                
+                if( $lwa_so_details['so_no'] === $this->lv_so_number )
+                { $lv_key_so = $key ; } 
+                }
         switch ($i_reciever) 
         {
-            case 'capability_lead':
-                return $this->lt_capability_email[0]['capability_lead'];
+            case 'capability_lead':               
+                return $this->lt_capability_email[$lv_key_cap]['lead'];                                                
                 break;
-
             case 'capability_sub_lead':
-                return $this->lt_capability_email[0]['sub_lead_1'];
-
+                return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'].';'.$this->lt_capability_email[$lv_key_cap]['sub_lead_2'];
+                break;
             case 'capability_SPOC':
-                return $this->lt_capability_email[0]['staffing_spoc_1'];
-
+                return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'].';'.$this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'];
+                break;    
             case 'capability_gen_id':
-                return $this->lt_capability_email[0]['generic_id'];                 
+                return $this->lt_capability_email[$lv_key_cap]['generic_id'];
+                break;    
+            case 'ops_lead':
+                return $this->lt_capability_email[$lv_key_ops]['lead'];
+                break;
+            case 'ops_sub_lead':
+                return $this->lt_capability_email[$lv_key_ops]['sub_lead_1'].';'.$this->lt_capability_email[$lv_key_ops]['sub_lead_2'];
+                break;
+            case 'ops_gen_id':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;
+            case 'so_creator':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;            
+            case 'proj_manager':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;
+            case 'eng_manager':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;
+            case 'resource':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;
+            case 'bu_lead':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;
+            case 'lead_other_bu':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;
+            case 'crmg':
+                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                break;            
             default:
                 break;
         }   
@@ -81,8 +118,7 @@ class cl_NotificationMails
 
 // Function to get the recievers based on the activity type, employee details etc.            
     Private function get_recievers()
-    {
-        $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+    {        
         foreach ($this->lt_recievers as $key => $lwa_values)
         {
             if ($this->lt_recievers[$key]['capability_lead'] === 'X')
@@ -120,34 +156,44 @@ class cl_NotificationMails
     Public function sendnotification(
             $i_so_number,
             $i_mode,
-            $i_link,
+            $i_link = '',
             $i_transid,
             $i_emp_id)            
             {
         
 // Call function to get HTML of the email.
-            self::get_html($i_mode);           
+            self::get_html($i_mode);      
+            
+// Call function to set queries.
+            self::set_query($i_mode);            
             
 // Create object of class CL_GET_SO_DETAILS
             $lo_so_details = new cl_get_so_details();
 
-// Get SO details
+// Get SO details            
             $lo_so_details->get_so_details($i_so_number);
             $this->lt_so_details  = $lo_so_details->lt_so_details;
             
 // Get employee details.
             $lo_so_details->get_emp_details($i_emp_id);
-            $this->lt_emp_details  = $lo_so_details->lt_emp_details;                 
+            $this->lt_emp_details  = $lo_so_details->lt_emp_details;
+            
+// Get details of all capabilities email ids.
+            $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
                 
 // Process the selected tables and format the message to be sent.
             foreach($this->lt_so_details as $key => $lwa_result)
                 {
                 $lv_so_owner  = $lwa_result['so_owner'];
                 $lv_so_no     = $lwa_result['so_no'];
+                
                 $lv_projname  = $lwa_result['so_proj_name'];
                 $lv_proj_code = $lwa_result['so_proj_id'];
                 $lv_sdate     = $lwa_result['so_sdate'];
                 $lv_edate     = $lwa_result['so_endate'];
+                
+                
                 $lv_empname   = $this->lt_emp_details[$key]['emp_name'];
                 $lv_empid     = $this->lt_emp_details[$key]['emp_id'];
                 $lv_pri_skill = $this->lt_emp_details[$key]['skill1_l4'];
@@ -158,14 +204,13 @@ class cl_NotificationMails
                 $lv_location  = $this->lt_emp_details[$key]['org'];
                 $lv_capability = $this->lt_emp_details[$key]['comp'];
                 $lv_date  = date('d-M-Y');
-                $lv_rel_date  = date('d-M-Y', strtotime($lv_date. ' + 2 days'));
-                
-// Call function to set queries.
-            self::set_query($i_mode, $lv_capability, $lv_bu); 
+                $lv_rel_date  = date('d-M-Y', strtotime($lv_date. ' + 2 days'));                 
             
 // Call function to get the recievers.
-            self::get_recievers();
-                
+                $this->lv_BU = $lv_bu;
+                $this->lv_capability = $lv_capability;
+                $this->lv_so_number  = $lv_so_no;
+                self::get_recievers();
                 $lv_content  = $this->lv_content;
                 $lv_content  = str_replace("GV_SO_OWNER", $lv_so_owner, $lv_content);
                 $lv_content  = str_replace("GV_PROJECT_NAME", $lv_projname, $lv_content);
@@ -217,12 +262,8 @@ class cl_NotificationMails
                     $lv_message .= "Content-Transfer-Encoding: base64\r\n";
                     $lv_message .= "Content-Disposition: attachment\r\n\r\n";
                     $lv_message .=  chunk_split(base64_encode(file_get_contents($lv_file)))."\r\n";
-                    $lv_message .= "--".$lv_uid."--";
-//<<<<<<< .mine
-                    $lv_mail     = mail("tejas@localhost", "E-mail from PHP", $lv_message, $lv_headers);        
-//=======
-//                    $lv_mail     = mail("dishu@localhost; cc@localhost", "E-mail from PHP", $lv_message, $lv_headers);        
-//>>>>>>> .r133
+                    $lv_message .= "--".$lv_uid."--"; 
+                    $lv_mail     = mail($this->lv_recievers, "E-mail from PHP", $lv_message, $lv_headers);
                     echo('hope this works...<br>');
                     if($lv_mail)
                         {   
@@ -236,6 +277,4 @@ class cl_NotificationMails
                 }
             } 
         }
-//    $lo_email = new cl_NotificationMails();
-//    $lo_email->sendnotification(203209, 'SL', 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 'abc', 232);
- 
+// 
