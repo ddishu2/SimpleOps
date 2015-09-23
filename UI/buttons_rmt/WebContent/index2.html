@@ -125,6 +125,15 @@ sap.ui.getCore().attachInit(function () {
 	
 	 
 	//for First Div(first)
+var cg_logo  = new sap.ui.commons.Image({
+		id:'cg_logo',
+		src: "images/Capgemini.gif",
+		//text : "Administration Activities",
+		tooltip : "Capgemini"
+		
+		
+	});
+
 var admin_act  = new sap.ui.commons.Button({
 		id:'aa11',
 		text : "Administration Activities",
@@ -225,7 +234,7 @@ demand_fulfill.attachItemSelected(function (oEvent){
 		tooltip : "External Hiring",
 		
 	});
-	
+	cg_logo.placeAt("heading");
 	logout.placeAt("heading");
 	admin_act.placeAt("heading");
 	/* demand_fulfill.placeAt("heading"); 
@@ -1426,7 +1435,7 @@ margin-top: 121px;
 	min-height:100px;
 	height:100%;
 	padding:0 20px;
-	background:#ddd;
+	background:#aaa;
 	}
 
 #first{
@@ -1478,6 +1487,9 @@ margin-right:8px;
 				font-size: 16px;
 				border: 2px solid #444;
 				border-radius: 6px;
+}
+#cg_logo{
+	margin-top:5px;
 }
 #aa11
 {
