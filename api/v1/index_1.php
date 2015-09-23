@@ -92,7 +92,8 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
                function () use($app) 
                {
      
-     //Other logic
+  
+     
                }
     );
 
