@@ -154,9 +154,13 @@ var logout  = new sap.ui.commons.Button({
 	{
 		
 		$("#first1a").removeClass("hide_div");
+		$("#third").addClass("hide_div");
+		$("#four1").addClass("hide_div");
+		$("#four2").addClass("hide_div");
 		$("#first").addClass("hide_div");
 	 	$("#heading").addClass("hide_div"); 
 	 	$("#second").addClass("hide_div");
+	 	
 	 	
 	 	
 	}
@@ -191,6 +195,8 @@ demand_fulfill.attachItemSelected(function (oEvent){
 		$("#third").addClass("hide_div");
 		$("#four1").addClass("hide_div");
 		$("#four2").addClass("hide_div");
+		$("#manual1").addClass("hide_div");
+		$("#manual2").addClass("hide_div");
 		}
 	else if(oEvent.getParameter("itemId")=="item1-2")
 		{
