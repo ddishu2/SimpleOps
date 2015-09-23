@@ -22,17 +22,7 @@ sap.ui.getCore().attachInit(function () {
 		widths : ['400px'] });
 	
 	
-	var oTV = new sap.ui.commons.TextView({
-		id:'welcome1',
-		text : 'Welcome To RMT Tool.',
-		 })
 	
-	
-	
-	var oImage = new sap.ui.commons.Image({
-		//id:'welcome1',
-		src: "../images/Picture1.png"
-		 });
 	
 	var for_login = new sap.ui.commons.layout.MatrixLayout({
 		id : 'for_log_layout',
@@ -92,12 +82,12 @@ sap.ui.getCore().attachInit(function () {
 			  var nameVisibility = sap.ui.getCore().byId("idlogin1")
 			  if(nameFirstField.getValue() === "") 
 			    {
-			        alert("Please enter First name.");
+			        alert("Please Enter Username.");
 			        return;
 			    }
 			  else  if(namePassField.getValue() ==="")
 			    	{
-			    		alert("Please enter Password");
+			    		alert("Please Enter Password");
 			    		return;
 			    		
 			    	}
@@ -135,103 +125,141 @@ sap.ui.getCore().attachInit(function () {
 	
 	 
 	//for First Div(first)
-	 var demand_fulfill = new sap.ui.commons.Button({
-		id:'df',
-		text : "Demand Fulfill",
-		tooltip : "Demand Fulfill",	
-		press: function display_first()
-	{       
-			
-			$("#first1a").addClass("hide_div");
-			$("#manual1").addClass("hide_div");
-			$("#third").addClass("hide_div");
-			$("#second").addClass("hide_div");
-			$("#four1").addClass("hide_div");
-			$("#four2").addClass("hide_div");
-			$("#first").removeClass("hide_div");			
-	}
+var admin_act  = new sap.ui.commons.Button({
+		id:'aa11',
+		text : "Administration Activities",
+		tooltip : "Administration Activities",
+		press: function admin_open()
+		{
+			$("#first").addClass("hide_div");
+			$("#admin").removeClass("hide_div");
+			$("#heading").addClass("hide_div");
+		}
+		
 	});
+var logout  = new sap.ui.commons.Button({
+	id:'lo',
+	text : "Logout",
+	tooltip : "Logout",
+	press:function back_to_login()
+	{
+		
+		$("#first1a").removeClass("hide_div");
+		$("#first").addClass("hide_div");
+	 	$("#heading").addClass("hide_div"); 
+	}
+});
+var for_head_button = new sap.ui.commons.layout.MatrixLayout({
+	id : 'fhb',
+	layoutFixed : true,
+	width : '900px',
+	columns : 5,
+	widths : ['180px','180px','180px','180px','180px',] });	
+var demand_fulfill = new sap.ui.commons.MenuButton({id:'df',text: "Demand Fulfill",  tooltip: "File related actions"}); 
+
+//Create the menu
+var oMenu1 = new sap.ui.commons.Menu("menu1", {ariaDescription: "File Menu", tooltip: "Menu containing file related actions"});
+//Create the items and add them to the menu
+var oMenuItem1 = new sap.ui.commons.MenuItem("item1-1",{text: "Auto Proposal", icon: "images/new.gif"}); //Icon must be not larger than 16x16 px
+oMenu1.addItem(oMenuItem1);
+var oMenuItem2 = new sap.ui.commons.MenuItem("item1-2",{text: "Manual Proposal"});
+oMenu1.addItem(oMenuItem2);
+
+demand_fulfill.setMenu(oMenu1);
+
+//Attach an event to raise an alert when an item is selected.
+demand_fulfill.attachItemSelected(function (oEvent){
+	/* alert("Items \"" + oEvent.getParameter("itemId") + "\" was selected.") */
+	
+	
+	if(oEvent.getParameter("itemId")=="item1-1")
+		{
+		
+		$("#second").removeClass("hide_div");
+		$("#first").addClass("hide_div");
+		$("#manual1").addClass("hide_div");
+		$("#first1a").addClass("hide_div");
+		$("#manual1").addClass("hide_div");
+		$("#third").addClass("hide_div");
+		$("#four1").addClass("hide_div");
+		$("#four2").addClass("hide_div");
+		}
+	else if(oEvent.getParameter("itemId")=="item1-2")
+		{
+		$("#manual1").removeClass("hide_div");
+		$("#second").addClass("hide_div");
+		$("#first").addClass("hide_div");
+		$("#first1a").addClass("hide_div");
+		
+		$("#third").addClass("hide_div");
+		$("#four1").addClass("hide_div");
+		$("#four2").addClass("hide_div");
+		}
+});
+
+
+
+
+	
 	var report_gen  = new sap.ui.commons.Button({
 		id:'rg',
 		text : "Report Generation",
 		tooltip : "Report Generation",
 		
 	});
-	var firsttenance = new sap.ui.commons.Button({
-		id:'mt',
-		text : "Maintenance",
-		tooltip : "maintenance",
-		
-	});
+
 	var amendments = new sap.ui.commons.Button({
 		id:'ad',
 		text : "Amendments",
 		tooltip : "Amendments",
 		
 	});
-
-	demand_fulfill.placeAt("heading");
-	report_gen.placeAt("heading")
-	firsttenance.placeAt("heading")
-	amendments.placeAt("heading") 
+	var Approvals = new sap.ui.commons.Button({
+		id:'ap',
+		text : "Approvals",
+		tooltip : "Approvals",
+		
+	});
+	var External_Hiring = new sap.ui.commons.Button({
+		id:'eh',
+		text : "External Hiring",
+		tooltip : "External Hiring",
+		
+	});
+	admin_act.placeAt("heading");
+	logout.placeAt("heading");
+	/* demand_fulfill.placeAt("heading"); 
+	report_gen.placeAt("heading");
+	amendments.placeAt("heading");
+	Approvals.placeAt("heading");
+	External_Hiring.placeAt("heading"); */
+	for_head_button.createRow(demand_fulfill,report_gen,amendments,Approvals,External_Hiring)
+	for_head_button.placeAt("heading");
+	var oTV = new sap.ui.commons.TextView({
+		id:'welcome1',
+		text : 'Welcome To RMT Tool.',
+		 })
 	
-	var auto_button= new sap.ui.commons.Button({
-		id:'auto',
-		text : "Generate Auto Proposal for Open SO",
-		tooltip : "Auto proposal",	
-		press: function display_second()
-		{
-			
-			$("#second").removeClass("hide_div");
-			$("#first").addClass("hide_div");
-			
-		}
-	}).addStyleClass("buttons_style1");
-	var  manual_button= new sap.ui.commons.Button({
-		id:'manual',
-		text : "Create Manual Proposal for Open SO",
-		tooltip : "Manual Proposal",
-		press: function display_manual()
-		{
-			
-			$("#manual1").removeClass("hide_div");
-			$("#first").addClass("hide_div");
-			
-		}	
-	}).addStyleClass("buttons_style1");
-	auto_button.placeAt("first");
-	manual_button.placeAt("first");
+	
+	
+	var oImage = new sap.ui.commons.Image({
+		//id:'welcome1',
+		src: "../images/Picture1.png"
+		 });
+	oTV.placeAt("first");
+	oImage.placeAt("first");
       
 	
-	
-	
-	var  back_to_choice= new sap.ui.commons.Button({
-		id:'back_choice',
-		text : "Back",
-		tooltip : "Back",
-		press: function back_to_choice1()
-		{
-			
-			$("#first1a").removeClass("hide_div");
-			$("#first").addClass("hide_div");
-			 $("#heading").addClass("hide_div"); 
-			
-		/* 	$("#heading").addClass("hide_div"); */
-			
-		}	
-	}).addStyleClass("for_normal_buttons_style1");
-	
-	
-	back_to_choice.placeAt("first")
+
 	///for Second Div(second)
 	
 	/* for creating form to get the details */
 	var oDetails = new sap.ui.commons.layout.MatrixLayout({
 		id : 'matrix4',
 		layoutFixed : true,
-		width : '500px',
-		columns : 2,
-		widths : ['150px', '250px'] });
+		width : '700px',
+		columns : 4,
+		widths : ['150px', '250px','100px','100px'] });
 
 	var oCell = new sap.ui.commons.layout.MatrixLayoutCell({
 		colSpan: 2 });
@@ -250,8 +278,7 @@ sap.ui.getCore().attachInit(function () {
 
 	}).addStyleClass("for_text_style1");
 	
-		/* var so_from = new sap.ui.commons.DatePicker('date1');
-		so_from.setYyyymmdd("20100101").addStyleClass("for_fields_style1"); */
+		
 		
 		var for_from_date = new sap.ui.model.json.JSONModel();
 		for_from_date.setData({
@@ -393,7 +420,7 @@ sap.ui.getCore().attachInit(function () {
 	var locationLabel = new sap.ui.commons.Label({
 		text : 'Location' }).addStyleClass("for_text_style1");
 
-	var locationText = new sap.ui.commons.DropdownBox("loci").addStyleClass("for_fields_style1");
+	/* var locationText = new sap.ui.commons.DropdownBox("loci").addStyleClass("for_fields_style1");
 	locationText.setTooltip("Location");
 	locationText.setEditable(true);
 	locationText.setWidth("200px");
@@ -417,12 +444,33 @@ sap.ui.getCore().attachInit(function () {
 	locationText.addItem(oItem);
 	oItem = new sap.ui.core.ListItem("Location7");
 	oItem.setText("Kolkata");
-	locationText.addItem(oItem);
+	locationText.addItem(oItem); */
+	
+	var oSimpleListBox = new sap.ui.commons.ListBox({
+		items : [
+		 		new sap.ui.core.ListItem({text : 'Spring'}),
+				new sap.ui.core.ListItem({text : 'Summer'}),
+				new sap.ui.core.ListItem({text : 'Autumn'}),
+				new sap.ui.core.ListItem({text : 'Winter'})
+	  ],
+	  visibleItems : 6,
+	  select : function(e) {
+		  var a;
+		  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
+		  oTextSummary.setValue(a.join(""));
+	  }
+	})
+	var oTextSummary = new sap.ui.commons.TextField();
+	var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
+			text: "MultiSelection",
+			checked : false,
+			change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
+	})
 
-	locationLabel.setLabelFor(locationText);
-	oDetails.createRow(locationLabel, locationText);
+/* 	locationLabel.setLabelFor(locationText);
+	oDetails.createRow(locationLabel, locationText); */
 
-
+oDetails.createRow(locationLabel,oSimpleListBox,oTextSummary,oMultiSelectionCheckBox);
 	
 	
 	var custnameLabel = new sap.ui.commons.Label({
@@ -491,11 +539,12 @@ sap.ui.getCore().attachInit(function () {
 			$("#second").addClass("hide_div");	
 			
 			
-  			var from = $("#sfrom1").val();
-  			var upto = $("#sto1").val();
+  			var from = $("#sfrom1-input").val();
+  			var upto = $("#sto1-input").val();
+  			console.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="+from+"&so_to_date="+upto);
   			$.ajax({
 	      		  method: "GET",
-	      		  url: "/rmt/api/v1/index.php/deployable_emp/?so_from_date=2015-09-11&so_to_date=2015-09-22"
+	      		  url: "/rmt/api/v1/index.php/deployable_emp/?so_from_date="+from+"&so_to_date="+upto,
 	      		  success : function(odata){
 	      			  console.log(odata);
 	      			  var table_row;
@@ -595,16 +644,7 @@ sap.ui.getCore().attachInit(function () {
 	back_third.placeAt("third");
 	
 	
- var aData = [
-	             
- {sname:"so111",pcode:"12345",pname:"chhss",sdate:"2113333",edate:"131313313",eid:"1211",ename:"dasds",lev:"P3",skill:"abap", eloc:"mumbai",fulfill:"",status:"",assign:"",reason:"res"},
-{sname:"so112",pcode:"12312",pname:"fdfsd",sdate:"2113223",edate:"131313313",eid:"23232",ename:"jgjl",lev:"P1",skill:"abap", eloc:"kol",fulfill:"",status:"",assign:"",reason:"res"},
-{sname:"so118",pcode:"12443",pname:"sdfs",sdate:"2111222",edate:"131313313",eid:"325425",ename:"kjkj",lev:"M2",skill:"abap", eloc:"bang",fulfill:"",status:"",assign:"",reason:"res"},
-{sname:"so121",pcode:"474754",pname:"fsdfs",sdate:"2232222",edate:"131313313",eid:"54645",ename:"kjdhak",lev:"P6",skill:"abap", eloc:"hyd",fulfill:"",status:"",assign:"",reason:"res"},
-{sname:"so155",pcode:"54775",pname:"sdff",sdate:"2323232",edate:"131313313",eid:"54554",ename:"sdasfdf",lev:"P3",skill:"abap", eloc:"goa",fulfill:"",status:"",assign:"",reason:"res"},
-{sname:"so163",pcode:"57575",pname:"sdfasdfs",sdate:"2345465",edate:"131313313",eid:"546456",ename:"sdfssd",lev:"P5",skill:"abap", eloc:"qwe",fulfill:"",status:"",assign:"",reason:"res"},
-{sname:"so711",pcode:"23423",pname:"sdfadds",sdate:"123312",edate:"131313313",eid:"21314",ename:"dsfsdf",lev:"P1",skill:"abap", eloc:"mumbai",fulfill:"",status:"",assign:"",reason:"res"},
-]; 
+
 
 //Table for suitable Match
 var suitable_match = new sap.ui.table.Table({
@@ -1395,13 +1435,14 @@ height: 100%;
 padding: 0 20px;
 text-align: center;
 margin: 0 auto;
-margin-top:90px;
+margin-top:140px;
 }
 #second,#third {
 width: 1000px;
 min-height: 100px;
 height: 100%;
-padding: 0 20px;
+padding: 75 20px !important;
+margin-top:45px;
 }
 #four1,#four2
 {
@@ -1409,6 +1450,7 @@ padding: 0 20px;
 min-height: 100px;
 height: 100%;
 padding: 0 20px;
+margin-top:45px;
 }
 	
 .normal_header_style{
@@ -1425,10 +1467,10 @@ height : 47px !important;
 padding-top: 15px !important;
 padding-bottom: 15px !important;
 }
-#df,#rg,#mt,#ad{
+#df,#rg,#mt,#ad,#ap,#eh{
 
-width: 24%;
-margin-top:20px;
+width: 100%;
+margin-top:60px!important;
 margin-right:8px;
 				height : 36px;
 				text-align: center;
@@ -1436,7 +1478,38 @@ margin-right:8px;
 				border: 2px solid #444;
 				border-radius: 6px;
 }
-#df.selected, #df:hover,#rg.selected, #rg:hover,#mt.selected, #mt:hover,#ad.selected, #ad:hover{
+#aa11
+{
+
+width: 19%;
+margin-right:8px;
+margin-top	:5px;
+				height : 36px;
+				text-align: center;
+				font-size: 16px;
+				border: 2px solid #444;
+				border-radius: 6px;
+
+}
+#lo
+{
+
+width: 19%;
+margin-left:520px;
+margin-top	:5px;
+				height : 36px;
+				text-align: center;
+				font-size: 16px;
+				border: 2px solid #444;
+				border-radius: 6px;
+
+}
+#fhb
+{
+margin-top: -27px !important;
+}
+#df.selected, #df:hover,#rg.selected, #rg:hover,#mt.selected, #mt:hover,#ad.selected, 
+#ad:hover,#aa11.selected, #aa11:hover,#lo.selected, #lo:hover{
 	background:#444;
 	color: #fff;
 	cursor: pointer;
@@ -1569,6 +1642,7 @@ margin-top:35px;
        <div id='four2' class="hide_div"><div id='fs1' class="hide_div"></div></div>
         <div id='manual1' class="hide_div"></div>
          <div id='manual2' class="hide_div"></div>
+         <div id='admin1' class="hide_div"></div>
 </div>
 </body>
 </html>
