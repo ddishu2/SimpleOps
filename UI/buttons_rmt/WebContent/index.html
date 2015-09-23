@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+<title>RMT Tool</title>
+
+<script id='sap-ui-bootstrap'
+    src='resources/sap-ui-core.js'
+    data-sap-ui-theme='sap_bluecrystal'
+    data-sap-ui-libs='sap.ui.commons,sap.ui.ux3,sap.ui.table'
+    data-sap-ui-compatVersion='edge'
+    data-sap-ui-preload='async'>
+
+</script>
+
+<script>
+sap.ui.getCore().attachInit(function () {
+	var oWelcome_Page1 = new sap.ui.commons.layout.MatrixLayout({
+		id : 'owel1',
+		layoutFixed : true,
+		width : '400px',
+		columns : 1,
+		widths : ['400px'] });
+	
+	
+	
+	
+	var for_login = new sap.ui.commons.layout.MatrixLayout({
+		id : 'for_log_layout',
+		layoutFixed : true,
+		width : '500px',
+		columns : 2,
+		widths : ['200px', '300px'] });
+
+
+	var oLabel = new sap.ui.commons.Label({
+		id : 'L-Name',
+		text : 'UserName:-' }).addStyleClass("textk");
+	
+
+	var oTF = new sap.ui.commons.TextField({
+		id : 'TF-Name',
+		tooltip : 'UserName',
+		editable : true,
+		value : '',
+		width : '200px' ,
+		});
+	
+	
+
+     
+	oLabel.setLabelFor(oTF);
+
+
+	for_login.createRow(oLabel,oTF);
+	var oLabel = new sap.ui.commons.Label({
+		id : 'L1-Name',
+		text : 'Password:-' }).addStyleClass("textk");
+
+	var oTF = new sap.ui.commons.PasswordField({
+		id : 'TF1-Name',
+		tooltip : 'Name',
+		editable : true,
+		value : '',
+		width : '200px',
+		change : function(){
+		       if(this.getValue()=='')
+		         alert("Please Enter your Password.");
+		  }
+	}); 
+
+	oLabel.setLabelFor(oTF);
+	for_login.createRow(oLabel,oTF);
+	var oButton1 = new sap.ui.commons.Button({
+		text : "LOGIN",
+		id: 'buton1',
+		tooltip : "LOGIN ",
+		press : function for_login(){
+			
+			
+			var nameFirstField = sap.ui.getCore().byId("TF-Name");
+			  var namePassField =sap.ui.getCore().byId("TF1-Name");
+			  var nameVisibility = sap.ui.getCore().byId("idlogin1")
+			  if(nameFirstField.getValue() === "") 
+			    {
+			        alert("Please Enter Username.");
+			        return;
+			    }
+			  else  if(namePassField.getValue() ==="")
+			    	{
+			    		alert("Please Enter Password");
+			    		return;
+			    		
+			    	}
+			  else
+				  {
+				  
+				  $("#first1a").addClass("hide_div");
+					$("#manual1").addClass("hide_div");
+					$("#third").addClass("hide_div");
+					$("#second").addClass("hide_div");
+					$("#four1").addClass("hide_div");
+					$("#four2").addClass("hide_div");
+					$("#first").removeClass("hide_div");
+					 $("#heading").removeClass("hide_div")
+				  
+				  }
+		}
+	
+	
+	
+	  });
+	
+	
+	for_login.createRow(oButton1);
+
+	
+	
+	oWelcome_Page1.createRow(oTV);
+	oWelcome_Page1.createRow(oImage);
+	
+	oWelcome_Page1.createRow(for_login);
+	oWelcome_Page1.placeAt("first1a");
+	
+	
+	
+	 
+	//for First Div(first)
+var cg_logo  = new sap.ui.commons.Image({
+		id:'cg_logo',
+		src: "images/Capgemini.gif",
+		//text : "Administration Activities",
+		tooltip : "Capgemini"
+		
+		
+	});
+
+var admin_act  = new sap.ui.commons.Button({
+		id:'aa11',
+		text : "Administration Activities",
+		tooltip : "Administration Activities",
+		press: function admin_open()
+		{
+			$("#first").addClass("hide_div");
+			$("#admin").removeClass("hide_div");
+			$("#heading").addClass("hide_div");
+		}
+		
+	});
+var logout  = new sap.ui.commons.Button({
+	id:'lo',
+	text : "Logout",
+	tooltip : "Logout",
+	press:function back_to_login()
+	{
+		
+		$("#first1a").removeClass("hide_div");
+		$("#first").addClass("hide_div");
+	 	$("#heading").addClass("hide_div"); 
+	 	$("#second").addClass("hide_div");
+	 	
+	 	
+	}
+});
+var for_head_button = new sap.ui.commons.layout.MatrixLayout({
+	id : 'fhb',
+	layoutFixed : true,
+	width : '900px',
+	columns : 5,
+	widths : ['180px','180px','180px','180px','180px',] });	
+var demand_fulfill = new sap.ui.commons.MenuButton({id:'df',text: "Demand Fulfill",  tooltip: "File related actions"}); 
+
+//Create the menu
+var oMenu1 = new sap.ui.commons.Menu("menu1", {ariaDescription: "File Menu", tooltip: "Menu containing file related actions"});
+//Create the items and add them to the menu
+var oMenuItem1 = new sap.ui.commons.MenuItem("item1-1",{text: "Auto Proposal", icon: "images/new.gif"}); //Icon must be not larger than 16x16 px
+oMenu1.addItem(oMenuItem1);
+var oMenuItem2 = new sap.ui.commons.MenuItem("item1-2",{text: "Manual Proposal"});
+oMenu1.addItem(oMenuItem2);
+
+demand_fulfill.setMenu(oMenu1);
+
+//Attach an event to raise an alert when an item is selected.
+demand_fulfill.attachItemSelected(function (oEvent){
+	
+ if(oEvent.getParameter("itemId")=="item1-1")
+		{
+		$("#second").removeClass("hide_div");
+		$("#first").addClass("hide_div");
+		$("#manual1").addClass("hide_div");
+		$("#first1a").addClass("hide_div");
+		$("#third").addClass("hide_div");
+		$("#four1").addClass("hide_div");
+		$("#four2").addClass("hide_div");
+		}
+	else if(oEvent.getParameter("itemId")=="item1-2")
+		{
+		$("#manual1").removeClass("hide_div");
+		$("#second").addClass("hide_div");
+		$("#first").addClass("hide_div");
+		$("#first1a").addClass("hide_div");
+		
+		$("#third").addClass("hide_div");
+		$("#four1").addClass("hide_div");
+		$("#four2").addClass("hide_div");
+		}
+});
+
+
+
+
+	
+	var report_gen  = new sap.ui.commons.Button({
+		id:'rg',
+		text : "Report Generation",
+		tooltip : "Report Generation",
+		
+	});
+
+	var amendments = new sap.ui.commons.Button({
+		id:'ad',
+		text : "Amendments",
+		tooltip : "Amendments",
+		
+	});
+	var Approvals = new sap.ui.commons.Button({
+		id:'ap',
+		text : "Approvals",
+		tooltip : "Approvals",
+		
+	});
+	var External_Hiring = new sap.ui.commons.Button({
+		id:'eh',
+		text : "External Hiring",
+		tooltip : "External Hiring",
+		
+	});
+	cg_logo.placeAt("heading");
+	logout.placeAt("heading");
+	admin_act.placeAt("heading");
+	/* demand_fulfill.placeAt("heading"); 
+	report_gen.placeAt("heading");
+	amendments.placeAt("heading");
+	Approvals.placeAt("heading");
+	External_Hiring.placeAt("heading"); */
+	for_head_button.createRow(demand_fulfill,report_gen,amendments,Approvals,External_Hiring)
+	for_head_button.placeAt("heading");
+	var oTV = new sap.ui.commons.TextView({
+		id:'welcome1',
+		text : 'Welcome To RMT Tool.',
+		 })
+	
+	
+	
+	var oImage = new sap.ui.commons.Image({
+		//id:'welcome1',
+		src: "images/Picture1.png"
+		 });
+	oTV.placeAt("first");
+	oImage.placeAt("first");
+      
+	
+
+	///for Second Div(second)
+	
+	/* for creating form to get the details */
+	var oDetails = new sap.ui.commons.layout.MatrixLayout({
+		id : 'matrix4',
+		layoutFixed : true,
+		width : '700px',
+		columns : 4,
+		widths : ['150px', '250px','100px','100px'] });
+
+	var oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+		colSpan: 2 });
+
+	var oTV = new sap.ui.commons.TextView({
+		id:'sc1',
+		text : 'Select Criteria',
+		 })
+
+	oCell.addContent(oTV);
+	oDetails.createRow(oCell);
+
+	var oLabel = new sap.ui.commons.Label({id:'so_date_from',
+		text : 'SO Date From',
+		
+
+	}).addStyleClass("for_text_style1");
+	
+		
+		
+		var for_from_date = new sap.ui.model.json.JSONModel();
+		for_from_date.setData({
+			dateValue: new Date()
+		});
+		sap.ui.getCore().setModel(for_from_date);
+
+		// create DatePickers and bind to model
+		var so_from=new sap.ui.commons.DatePicker({
+			id:'sfrom1',
+			width: "10em",
+			value: {
+				path: "/dateValue",
+				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd", strictParsing: true})
+		}
+		}).addStyleClass("for_fields_style1");
+		/* date1.placeAt("sample2"); */
+	
+	
+		
+		       
+		
+
+	oLabel.setLabelFor(so_from);
+	oDetails.createRow(oLabel, so_from);
+
+	var soDateToLabel = new sap.ui.commons.Label({
+		id:'so_date_to',
+		text : 'SO Date To',
+		
+		}).addStyleClass("for_text_style1");
+
+	
+	
+		var for_to_date = new sap.ui.model.json.JSONModel();
+		for_to_date.setData({
+			dateValue1: new Date()
+		});
+		sap.ui.getCore().setModel(for_to_date);
+
+		// create DatePickers and bind to model
+		var so_to=new sap.ui.commons.DatePicker({
+			id:'sto1',
+			width: "10em",
+			value: {
+				path: "/dateValue1",
+				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd", strictParsing: true})
+		}
+		}).addStyleClass("for_fields_style1");
+		
+	oLabel.setLabelFor(so_to);
+	oDetails.createRow(soDateToLabel, so_to);
+	
+	
+	var so_pro_bu = new sap.ui.commons.Label({
+		text : 'Location' }).addStyleClass("for_text_style1");
+
+	var so_pro_drop = new sap.ui.commons.DropdownBox("proj_bu").addStyleClass("for_fields_style1");
+	so_pro_drop.setTooltip("Project BU");
+	so_pro_drop.setEditable(true);
+	so_pro_drop.setWidth("200px");
+	var oItem = new sap.ui.core.ListItem("drops1");
+	oItem.setText("AO-Common Pool");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops2");
+	oItem.setText("Appsone SAP");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops3");
+	oItem.setText("AUS-AM");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops4");
+	oItem.setText("AUS-TS");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops5");
+	oItem.setText("NA CPRD");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops6");
+	oItem.setText("NA EUC");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops7");
+	oItem.setText("NA HTEC");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops8");
+	oItem.setText("NA MLS");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops9");
+	oItem.setText("NA-AM");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops10");
+	oItem.setText("NA OPERATION");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops11");
+	oItem.setText("SEA-TS");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops12");
+	oItem.setText("UK-AM");
+	so_pro_drop.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("drops13");
+	oItem.setText("UK-TS");
+	so_pro_drop.addItem(oItem);
+
+	so_pro_bu.setLabelFor(so_pro_drop);
+	oDetails.createRow(so_pro_bu, so_pro_drop);
+	
+	
+
+	var projectIdLabel = new sap.ui.commons.Label({
+		text : 'Project ID',
+		
+	
+	}).addStyleClass("for_text_style1");
+
+	var projectIdText = new sap.ui.commons.TextField({
+		id:'pro_id_form',
+		editable : true,
+		maxLength: 8,
+		
+		liveChange :function()
+   	{
+	},
+	
+	
+		width : '200px' }).addStyleClass("for_fields_style1");;
+
+	oLabel.setLabelFor(projectIdText);
+	oDetails.createRow(projectIdLabel, projectIdText);
+
+	var projectNameLabel = new sap.ui.commons.Label({
+		text : 'Project Name' }).addStyleClass("for_text_style1");
+
+	var projectNameText = new sap.ui.commons.TextField({
+		//tooltip : 'SO Date',
+		editable : true,
+		width : '200px' }).addStyleClass("for_fields_style1");;
+
+	projectNameLabel.setLabelFor(projectNameText);
+	oDetails.createRow(projectNameLabel, projectNameText);
+
+	var locationLabel = new sap.ui.commons.Label({
+		text : 'Location' }).addStyleClass("for_text_style1");
+
+	/* var locationText = new sap.ui.commons.DropdownBox("loci").addStyleClass("for_fields_style1");
+	locationText.setTooltip("Location");
+	locationText.setEditable(true);
+	locationText.setWidth("200px");
+	var oItem = new sap.ui.core.ListItem("Location1");
+	oItem.setText("Mumbai");
+	locationText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Location2");
+	oItem.setText("Banglore");
+	locationText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Location3");
+	oItem.setText("Chennai");
+	locationText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Location4");
+	oItem.setText("Gurgaon");
+	locationText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Location5");
+	oItem.setText("Hyderabad");
+	locationText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Location6");
+	oItem.setText("Pune");
+	locationText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Location7");
+	oItem.setText("Kolkata");
+	locationText.addItem(oItem); */
+	
+	var oSimpleListBox = new sap.ui.commons.ListBox({
+		items : [
+		 		new sap.ui.core.ListItem({text : 'Spring'}),
+				new sap.ui.core.ListItem({text : 'Summer'}),
+				new sap.ui.core.ListItem({text : 'Autumn'}),
+				new sap.ui.core.ListItem({text : 'Winter'})
+	  ],
+	  visibleItems : 6,
+	  select : function(e) {
+		  var a;
+		  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
+		  oTextSummary.setValue(a.join(""));
+	  }
+	})
+	var oTextSummary = new sap.ui.commons.TextField();
+	var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
+			text: "MultiSelection",
+			checked : false,
+			change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
+	})
+
+/* 	locationLabel.setLabelFor(locationText);
+	oDetails.createRow(locationLabel, locationText); */
+
+oDetails.createRow(locationLabel,oSimpleListBox,oTextSummary,oMultiSelectionCheckBox);
+	
+	
+	var custnameLabel = new sap.ui.commons.Label({
+		text : 'Customer Name' }).addStyleClass("for_text_style1");
+
+	var custnameText = new sap.ui.commons.TextField({
+		//tooltip : 'SO Date',
+		editable : true,
+		width : '200px' }).addStyleClass("for_fields_style1");;
+
+	custnameLabel.setLabelFor(custnameText);
+	oDetails.createRow(custnameLabel, custnameText);
+
+	var capabilityLabel = new sap.ui.commons.Label({
+		text : 'Capability' }).addStyleClass("for_text_style1");
+
+	var capabilityText =new sap.ui.commons.DropdownBox("capi").addStyleClass("for_fields_style1");
+	capabilityText.setTooltip("Location");
+	capabilityText.setEditable(true);
+	capabilityText.setWidth("200px");
+	var oItem = new sap.ui.core.ListItem("Capability1");
+	oItem.setText("DCM");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability2");
+	oItem.setText("Development");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability3");
+	oItem.setText("Finance");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability4");
+	oItem.setText("HCM");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability5");
+	oItem.setText("Misc");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability6");
+	oItem.setText("Management");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability7");
+	oItem.setText("ISU");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability8");
+	oItem.setText("Finance");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability9");
+	oItem.setText("Netweaver");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability10");
+	oItem.setText("SCM");
+	capabilityText.addItem(oItem);
+	oItem = new sap.ui.core.ListItem("Capability11");
+	oItem.setText("Retail & AFS");
+	capabilityText.addItem(oItem);
+
+
+	capabilityLabel.setLabelFor(capabilityText);
+	oDetails.createRow(capabilityLabel, capabilityText);
+
+	
+	var oTagg= new sap.ui.commons.Button({
+		text : "Get Tagging Results",
+		id:'tag_result',
+		press : function display_third() 
+	{
+			$("#third").removeClass("hide_div");
+			$("#second").addClass("hide_div");	
+			
+			
+  			var from = $("#sfrom1-input").val();
+  			var upto = $("#sto1-input").val();
+  			console.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="+from+"&so_to_date="+upto);
+  			$.ajax({
+	      		  method: "GET",
+	      		  url: "/rmt/api/v1/index.php/deployable_emp/?so_from_date="+from+"&so_to_date="+upto,
+	      		  success : function(odata){
+	      			  console.log(odata);
+	      			  var table_row;
+	      			  var res= odata;
+	      			  var res_length = 0;
+	      			  var res_completed=0;
+	      			  var res_partial=0;
+	      			  var completeData=[];
+	      		
+	      			jQuery.each( res,function( i, val ) {
+	      				
+	      				res_length++;
+	      				if(val.emp ==null){
+	      					 
+	      					
+	      					
+	      					res_partial++
+	      				}
+	      				else
+	      					{
+	      					 var tmp =  {sname:val.so.so_no, pcode:val.so.so_proj_id, pname:val.so.so_proj_name,sdate:val.so.so_cr_date,edate:val.so.so_endate,eid:val.emp[0].emp_id,ename:val.emp[0].emp_name,lev:val.emp[0].level,skill:val.emp[0].skill1_l4, eloc:val.emp[0].loc,fulfill:"",status:"",assign:"",reason:val.emp[0].reason};
+	      					completeData.push(tmp);
+	      					res_completed++;
+	      					
+	      					
+	      					
+	      					}
+	      				
+	      				
+	      			});
+	      			
+	      			var oModel2 = new sap.ui.model.json.JSONModel();
+	      			oModel2.setData({modelData: completeData});
+	      			suitable_match.setModel(oModel2);
+	      			suitable_match.bindRows("/modelData");
+	      			
+	      			 
+	      			descript.setText(res_length+" OPEN SO's are processed.\n\n\n Identified suitable match for "+res_completed+" SO's.\n\n\nIdentified Partial match for "+res_partial+" SO's.\n\n\n");
+	      		  }
+  			});
+	    
+	}
+	})
+	oDetails.createRow(oTagg);
+	oDetails.placeAt("second");
+
+	
+	
+	//for 3rd screen(third)
+	
+	var descript=new sap.ui.commons.TextView({
+		id:"desc1",
+		
+		text:"X OPEN SO's are processed.\n\n\n Identified suitable match for Y SOs.\n\n\nIdentified Partial match for Z SOs.\n\n\n"
+		
+	});
+	
+
+	descript.placeAt("third");
+	var oNav1 = new sap.ui.commons.layout.MatrixLayout({
+		id : 'matrix2',
+		layoutFixed : true,
+		width : '800px',
+		columns : 2,
+		widths : ['500px', '300px'] });
+	var oSuitable = new sap.ui.commons.Button({
+		text : "View SO's with suitable propsal",
+		press:  function fully_complete()
+		{
+			$("#four1").removeClass("hide_div");
+			$("#third").addClass("hide_div");	
+			
+		}
+	}).addStyleClass("buttons_common_style1");
+	var oPartial = new sap.ui.commons.Button({
+		text : "View SO's with partial fitment.",
+		press:  function partial_complete()
+		{
+			$("#four2").removeClass("hide_div");
+			$("#third").addClass("hide_div");	
+			
+		}
+	}).addStyleClass("buttons_common_style1");
+	oNav1.createRow(oSuitable,oPartial);
+	oNav1.placeAt("third");
+	var back_third = new sap.ui.commons.Button({
+		id:'bt1',
+		text : "Back",
+		press: function backtosecond()
+	{
+			$("#second").removeClass("hide_div");
+			$("#third").addClass("hide_div");	
+			
+			
+	}
+	}).addStyleClass("for_normal_buttons_style1");
+	back_third.placeAt("third");
+	
+	
+
+
+//Table for suitable Match
+var suitable_match = new sap.ui.table.Table({
+	id:'suitable_match1',
+	title: "Transaction List",
+	visibleRowCount: 5,
+	firstVisibleRow: 3,
+	/* selectionMode: sap.ui.table.SelectionMode.Single, */
+	navigationMode: sap.ui.table.NavigationMode.Paginator,
+
+}).addStyleClass("style_for_table");
+
+
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "SO No."}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "sname"),
+	sortProperty: "sname",
+	filterProperty: "sname",
+	width: "100px",
+	//setRowHeight:"200px"
+}));
+
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Project Code"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "pcode"),
+	sortProperty: "pcode",
+	filterProperty: "pcode",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Project Name"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "pname"),
+	sortProperty: "pname",
+	filterProperty: "pname",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Start Date"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "sdate"),
+	sortProperty: "sdate",
+	filterProperty: "sdate",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "End Date"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "edate"),
+	sortProperty: "edate",
+	filterProperty: "edate",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Emp ID"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "eid"),
+	sortProperty: "eid",
+	filterProperty: "eid",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Emp Name"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "ename"),
+	sortProperty: "ename",
+	filterProperty: "ename",
+	width: "100px"
+}));
+
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Level"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "lev"),
+	sortProperty: "lev",
+	filterProperty: "lev",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Skill"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "skill"),
+	sortProperty: "skill",
+	filterProperty: "skill",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Location"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "eloc"),
+	sortProperty: "eloc",
+	filterProperty: "eloc",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Fullfillment"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "fulfill"), 
+	 sortProperty: "",
+	filterProperty: "", 
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Status"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "status"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text:"Approve"
+	}),
+	template: new sap.ui.commons.DropdownBox({
+		tooltip: "Decision",
+		items: [new sap.ui.core.ListItem("decide",{text: "Approve", key: "Ap"}),
+		        new sap.ui.core.ListItem("decide1",{text: "Reject", key: "Re"}),
+		        new sap.ui.core.ListItem("decide2",{text: "None", key: "N"}),
+		        ]
+		}),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+suitable_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Reason"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "reason"),
+	sortProperty: "reason",
+	filterProperty: "reason",
+	width: "100px"
+}));
+
+
+
+
+suitable_match.sort(suitable_match.getColumns()[0]);
+
+
+suitable_match.placeAt("four1");
+var notify = new sap.ui.commons.Button({
+	text : "Submit & Send Notification",
+	tooltip : "notify",
+	
+}).addStyleClass("for_normal_buttons_style1");
+var refresh = new sap.ui.commons.Button({
+	text : "Refresh",
+	tooltip : "Refresh",
+	
+}).addStyleClass("for_normal_buttons_style1");
+var back = new sap.ui.commons.Button({
+	id:'bt2',
+	text : "Back",
+	tooltip : "Back",
+	press: function backtothird()
+	{
+		
+		$("#four1").addClass("hide_div");
+		$("#third").removeClass("hide_div");
+	}
+	
+}).addStyleClass("for_normal_buttons_style1");
+
+notify.placeAt("four1");
+refresh.placeAt("four1");
+back.placeAt("four1");
+        
+        
+/* for the partial fitment(four2) */
+var bData = [
+             
+{sname:"so111",lev:"P3",skill:"abap", }
+	
+];
+
+//Table for suitable Match
+var partial_match = new sap.ui.table.Table({
+	title: " Pending Transaction List",
+	visibleRowCount: 5,
+	firstVisibleRow: 3,
+	/* selectionMode: sap.ui.table.SelectionMode.Single, */
+	navigationMode: sap.ui.table.NavigationMode.Paginator,
+
+}).addStyleClass("style_for_table");
+
+
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "SO No."}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "sname"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Project Code"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "pcode"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Project Name"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "pname"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Start Date"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "sdate"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "End Date"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "edate"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Emp ID"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "eid"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Emp Name"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "ename"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Level"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "lev"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Skill"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "skill"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Location"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "eloc"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Fullfillment"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "fulfill"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Status"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "status"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.CheckBox({text:"Approve"
+	}),
+	template: new sap.ui.commons.CheckBox({
+		}),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+partial_match.addColumn(new sap.ui.table.Column({
+	label: new sap.ui.commons.Label({text: "Reason"}),
+	template: new sap.ui.commons.TextView().bindProperty("text", "reason"),
+	sortProperty: "",
+	filterProperty: "",
+	width: "100px"
+}));
+
+
+var oModel3 = new sap.ui.model.json.JSONModel();
+oModel3.setData({modelData: bData});
+partial_match.setModel(oModel3);
+partial_match.bindRows("/modelData");
+
+partial_match.sort(partial_match.getColumns()[0]);
+
+
+partial_match.placeAt("four2");
+var further_search = new sap.ui.commons.Button({
+	text : "Further Search",
+	tooltip : "Further Search",
+	press: function for_further_search1()
+	{
+		
+		$("#fs1").removeClass("hide_div");
+	}
+	
+}).addStyleClass("for_normal_buttons_style1");
+
+
+var aisehi = new sap.ui.commons.Button({
+	text : "Assign & Notify",
+	tooltip : "Assign & Notify",
+	
+});
+aisehi.placeAt("fs1");
+
+var notify1 = new sap.ui.commons.Button({
+	text : "Assign & Notify",
+	tooltip : "Assign & Notify",
+	
+}).addStyleClass("for_normal_buttons_style1");
+var refresh1 = new sap.ui.commons.Button({
+	text : "Refresh",
+	tooltip : "Refresh",
+	
+}).addStyleClass("for_normal_buttons_style1");
+var back1 = new sap.ui.commons.Button({
+	id:'bt3',
+	press:function backtothird1()
+	{
+		
+		$("#four2").addClass("hide_div");
+		$("#third").removeClass("hide_div");
+	},
+	
+	text : "Back",
+	tooltip : "Back",
+	
+}).addStyleClass("for_normal_buttons_style1");
+further_search.placeAt("four2")
+notify1.placeAt("four2");
+refresh1.placeAt("four2");
+back1.placeAt("four2");
+
+
+
+
+///for manual tagging (manual1)
+
+
+
+
+///for the form within overlay for SO's
+var SO_form = new sap.ui.commons.layout.MatrixLayout({
+		id : 'manual_so_table_form',
+		layoutFixed : true,
+		width : '400px',
+		columns : 2,
+		widths : ['200px', '200px'] });
+	
+	 var P_id = new sap.ui.commons.Label({text:"Project ID :"
+	 }).addStyleClass("manual_form_common_style"); 
+	 var p_id1_value=new sap.ui.commons.TextField();
+	 
+	 
+	 var P_Name = new sap.ui.commons.Label({text:"Project Name :"
+	 }).addStyleClass("manual_form_common_style");  
+	 var p_name_value=new sap.ui.commons.TextField();
+	 
+	 var c_Name = new sap.ui.commons.Label({text:"Customer Name :"
+	 }).addStyleClass("manual_form_common_style"); 
+	 var c_name_value=new sap.ui.commons.TextField();
+	 
+	 var sop_bu = new sap.ui.commons.Label({text:"SO Project BU :"
+	 }).addStyleClass("manual_form_common_style");  
+	 var sop_bu_value=new sap.ui.commons.TextField();
+	 
+	 
+	 
+	 var clr1  = new sap.ui.commons.Button({
+			
+			text : "CLEAR",
+			tooltip : "CLEAR",
+			
+		}).addStyleClass("manual_form_common_style_buttons");
+	 var get_results1  = new sap.ui.commons.Button({
+			
+			text : "Get SO Search Results",
+			tooltip : "Get SO Search Results",
+			
+		}).addStyleClass("manual_form_common_style_buttons");
+	 
+	 SO_form.createRow(P_id,p_id1_value);
+	 SO_form.createRow(P_Name,p_name_value);
+	 SO_form.createRow(c_Name,c_name_value);
+	 SO_form.createRow(sop_bu,sop_bu_value);
+	 SO_form.createRow(clr1,get_results1);
+
+///for the values within employees	valueHelp
+var emp_form = new sap.ui.commons.layout.MatrixLayout({
+		id : 'manual_emp_form',
+		layoutFixed : true,
+		width : '400px',
+		columns : 2,
+		widths : ['200px', '200px'] });
+	
+	 var deploy1 = new sap.ui.commons.Label({text:"Deployable :"
+	 }).addStyleClass("manual_form_common_style"); 
+	 var deploy11_value=new sap.ui.commons.ComboBox("ComboBox1");
+	 deploy11_value.setTooltip("value1");
+	 deploy11_value.setEditable(true);
+	 deploy11_value.setValue("YES");
+	 deploy11_value.setWidth("200px");
+	 var oItem = new sap.ui.core.ListItem("value1");
+	 oItem.setText("NO");
+	 deploy11_value.addItem(oItem);
+	 
+	 
+	 
+	 var Future_SO = new sap.ui.commons.Label({text:"Future SO :"
+	 }).addStyleClass("manual_form_common_style"); ; 
+	 var Future_SO_value=new sap.ui.commons.TextField();
+	 
+
+	 var capb1 = new sap.ui.commons.Label({text:"Capability :"
+	 }).addStyleClass("manual_form_common_style"); 
+	 var capb1_value=new sap.ui.commons.ComboBox("ComboBox2");
+	 capb1_value.setTooltip("value2");
+	 capb1_value.setEditable(true);
+	 capb1_value.setValue("SCM");
+	 capb1_value.setWidth("200px");
+	 var oItem = new sap.ui.core.ListItem("value2");
+	 oItem.setText("CRM");
+	 capb1_value.addItem(oItem);
+	 
+	 var skill1 = new sap.ui.commons.Label({text:"Skill :"
+	 }).addStyleClass("manual_form_common_style"); 
+	 var skill1_value=new sap.ui.commons.ComboBox("ComboBox3");
+	 skill1_value.setTooltip("Skills");
+	 skill1_value.setEditable(true);
+	 skill1_value.setValue("MM");
+	 skill1_value.setWidth("200px");
+	 var oItem = new sap.ui.core.ListItem("value3");
+	 oItem.setText("WM");
+	 skill1_value.addItem(oItem);
+	 
+	 var loci2 = new sap.ui.commons.Label({text:"Location :"
+	 }).addStyleClass("manual_form_common_style"); ; 
+	 var loci2_value=new sap.ui.commons.TextField();
+	 
+	 
+	 
+	 var clr2  = new sap.ui.commons.Button({
+			
+			text : "CLEAR",
+			tooltip : "CLEAR",
+			
+		}).addStyleClass("manual_form_common_style_buttons");
+	 var get_emp_results1  = new sap.ui.commons.Button({
+			
+			text : "Get Emp Results",
+			tooltip : "Get SO Search Results",
+			
+		}).addStyleClass("manual_form_common_style_buttons");
+	 
+	 emp_form.createRow(deploy1,deploy11_value);
+	 emp_form.createRow(Future_SO,Future_SO_value);
+	 emp_form.createRow(capb1,capb1_value);
+	 emp_form.createRow(skill1,skill1_value);
+	 emp_form.createRow(loci2,loci2_value);
+	 emp_form.createRow(clr2,get_emp_results1);
+		
+		var oTable= new sap.ui.table.Table({
+			id:'mytable',
+			visibleRowCount: 1,
+			selectionMode: sap.ui.table.SelectionMode.Single,
+			width : '100%',
+			height : '100px'
+		}).addStyleClass("style_for_table");
+		var aData = [
+						{Sl_No: "", p_id: "", p_name: "", srt_date: "", end_date: "", emp_id: "", emp_name: "", level:"" , location : ""}
+					];
+		//Define the columns and the control templates to be used
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'SO No',
+			template:  new sap.ui.commons.ValueHelpField({
+				valueHelpRequest : function(oEvent){ 
+					console.log(oEvent.getParameters('newValue').newValue);
+					
+					
+					function handler(oEvent) {
+										alert("Event '"+oEvent.getId()+"' triggered");
+									}
+					var oFor_so = new sap.ui.ux3.OverlayContainer({
+						width:'400px'
+					});
+					oFor_so.addContent(
+					new sap.ui.commons.TextView({text: "Search for SO's"})
+			);
+					 
+					oFor_so.addContent(
+							SO_form
+							);
+					
+					oFor_so.open();
+				}
+		})
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Project Id',
+			template: new sap.ui.commons.TextView().bindProperty("text", "p_id")					
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Project Name',
+			template: new sap.ui.commons.TextView().bindProperty("text", "p_name")
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Start Date',
+			template: new sap.ui.commons.TextView().bindProperty("text", "srt_date")
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'End Date',
+			template: new sap.ui.commons.TextView().bindProperty("text", "end_date")
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Emp ID'	,
+			template: new sap.ui.commons.ValueHelpField({
+					valueHelpRequest : function(oEvent){ 
+						console.log(oEvent.getParameters('newValue').newValue);
+						
+						
+						function handler(oEvent) {
+											alert("Event '"+oEvent.getId()+"' triggered");
+										}
+						var oFor_emp = new sap.ui.ux3.OverlayContainer({
+							width:'400px'
+						});
+						oFor_emp.addContent(
+						new sap.ui.commons.TextView({text: "Search for Employee's"})
+				);
+						 
+						oFor_emp.addContent(
+								emp_form
+								);
+						
+						oFor_emp.open();
+					}
+			}
+			
+			)
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Emp Name',
+			template: new sap.ui.commons.TextView().bindProperty("text", "emp_name")
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Level',
+			template: new sap.ui.commons.TextView().bindProperty("text", "level")
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label: 'Location',
+			template: new sap.ui.commons.TextView().bindProperty("text", "location")
+		}));
+		//Create a model and bind the table rows to this model
+		var oModel = new sap.ui.model.json.JSONModel();
+		oModel.setData({modelData: aData});
+		oTable.setModel(oModel);
+		oTable.bindRows("/modelData");
+		//Bring the table onto the UI 
+		oTable.placeAt("manual1");
+		
+		
+		var manual_assign = new sap.ui.commons.Button({
+			text : "Assign & Notify",
+			tooltip : "Assign & Notify",
+			
+			press: function go_to_manual2()
+		{
+				
+				$("#manual1").addClass("hide_div");
+				$("#manual2").removeClass("hide_div");
+				
+		}
+			
+		}).addStyleClass("for_normal_buttons_style1");
+		
+		
+		var manual_back = new sap.ui.commons.Button({
+			text : "Back",
+			tooltip : "Back",
+			press: function back_from_manual()
+		{
+				
+				$("#manual1").addClass("hide_div");
+				$("#first").removeClass("hide_div");		
+		}
+			
+		}).addStyleClass("for_normal_buttons_style1");
+		
+		manual_assign.placeAt("manual1");
+		manual_back.placeAt("manual1");
+		
+		
+});
+
+
+
+
+
+
+         
+</script>
+<style>
+.first_page_buttons
+{
+margin-top:10px !important;
+margin-right:10px!important;
+
+font-size:14px!important;
+}
+.sapUiBody{
+	
+	background: #fff;
+}
+#first1a{
+	padding-top: 80px;
+margin-top: -70px;
+}
+.marginLeft{
+	margin-left:100px!important;
+}
+
+#owel1{
+margin:0 auto;
+}
+#welcome1{
+	font-size:30px;
+	line-height:30px;
+}
+
+#sc1
+{
+font-size: 30px !important;
+margin-top: 5px;
+
+}
+.for_normal_buttons_style1
+{
+width: 175px !important;
+height: 40px!important;
+white-space: pre-wrap !important;
+font-size: 16px !important;
+border-radius: 10px !important;
+margin-top: 30px !important;
+}
+
+.for_normal_buttons_style1.selected, .for_normal_buttons_style1:hover{
+	background:#303030  !important;
+	color: #E0E0E0 !important;
+	cursor: pointer !important;
+}
+#suitable_match1 tr{
+	font-size: 40px !important;
+}
+#partial_match tr{
+	font-size: 40px !important;
+}
+#tag_result
+{
+margin-top: 25px;
+width: 175px;
+height: 40px;
+white-space: pre-wrap;
+font-size: 16px;
+border-radius: 10px;
+
+}
+#tag_result.selected, #tag_result:hover{
+	background:#303030  !important;
+	color: #E0E0E0 !important;
+	cursor: pointer !important;
+}
+.for_fields_style1
+{
+width: 200px !important;
+margin-top: 15px;
+height: 30px !important;
+
+}
+.for_fields_style1 input{
+font-size:18px!important;	
+}
+.for_text_style1
+{
+font-size: 20px !important;
+margin-top: 15px;
+
+}
+.manual_form_common_style
+{
+direction: inherit;
+text-align: left;
+font-size: 17px !important;
+font-weight: normal !important;
+}
+.manual_form_common_style_buttons
+{
+
+width: 90px !important;
+height: 35px !important;
+margin-top: 15px !important;
+}
+
+#manual_form
+{
+border-collapse: collapse;
+width: 400px;
+table-layout: fixed;
+margin-left: 180px;
+margin-top: 20px;
+}
+.buttons_common_style1
+{
+
+width: 271px !important;
+height: 86px !important;
+font-size: 16px !important;
+border-radius:10px !important
+}
+.buttons_common_style1.selected, .buttons_common_style1:hover{
+	background:#303030  !important;
+	color: #E0E0E0 !important;
+	cursor: pointer !important;
+}
+#matrix2
+{
+border-collapse: collapse;
+width: 800px;
+table-layout: fixed;
+margin:0 auto;
+}
+#desc1
+{
+direction: inherit;
+font-size: 21px;
+width:100%;
+text-align:center;
+}
+.content{
+width:1000px;
+margin:0 auto;
+background: #ccc;
+min-height:900px;
+ 
+-webkit-box-shadow: 2px 9px 35px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 2px 9px 35px 0px rgba(0,0,0,0.75);
+box-shadow: 2px 9px 35px 0px rgba(0,0,0,0.75);
+
+}
+
+.buttons_style1
+{
+
+display: block;
+width: 301px!important;
+background: rgba(66, 158, 192, 0.79)!important;
+width: 100%!important;
+text-align: center;
+font-size: 17px!important;
+border: 1px solid #0187b7;
+border-radius: 10px !important;
+cursor: pointer !important;
+height : 47px !important;
+padding-top: 15px !important;
+padding-bottom: 15px !important;
+}
+
+#manual
+{
+margin-top: 121px;
+
+
+}
+	#heading{
+		
+	
+	margin: 0 auto;
+	min-height:100px;
+	height:100%;
+	padding:0 20px;
+	background:#aaa;
+	}
+
+#first{
+	width: 400px;
+min-height: 100px;
+height: 100%;
+padding: 0 20px;
+text-align: center;
+margin: 0 auto;
+margin-top:140px;
+}
+#second,#third {
+width: 1000px;
+min-height: 100px;
+height: 100%;
+padding: 75 20px !important;
+margin-top:45px;
+}
+#four1,#four2
+{
+
+min-height: 100px;
+height: 100%;
+padding: 0 20px;
+margin-top:45px;
+}
+	
+.normal_header_style{
+display: block;
+width: 301px!important;
+background: #B0B0B0 !important;
+width: 40%!important;
+text-align: center;
+font-size: 17px!important;
+border: 1px solid #0187b7;
+border-radius: 10px !important;
+cursor: pointer !important;
+height : 47px !important;
+padding-top: 15px !important;
+padding-bottom: 15px !important;
+}
+#df,#rg,#mt,#ad,#ap,#eh{
+
+width: 100%;
+margin-top:60px!important;
+margin-right:8px;
+				height : 36px;
+				text-align: center;
+				font-size: 16px;
+				border: 2px solid #444;
+				border-radius: 6px;
+}
+#cg_logo{
+	margin-top:5px;
+}
+#aa11
+{
+width: 19%;
+margin-right:8px;
+margin-top	:5px;
+				height : 36px;
+				text-align: center;
+				font-size: 16px;
+				border: 2px solid #444;
+				border-radius: 6px;
+float:right;
+}
+#lo
+{
+
+width: 19%;
+float:right;
+margin-top	:5px;
+				height : 36px;
+				text-align: center;
+				font-size: 16px;
+				border: 2px solid #444;
+				border-radius: 6px;
+
+}
+#fhb
+{
+margin-top: -27px !important;
+}
+#df.selected, #df:hover,#rg.selected, #rg:hover,#mt.selected, #mt:hover,#ad.selected, 
+#ad:hover,#aa11.selected, #aa11:hover,#lo.selected, #lo:hover{
+	background:#444;
+	color: #fff;
+	cursor: pointer;
+}
+.hide_div
+{
+display:none
+}
+
+#matrix4
+{
+border-collapse: collapse;
+width: 600px;
+table-layout: fixed;
+margin: 10px auto;
+
+}
+
+
+
+.for_buttons
+{
+display: block;
+width: 300px;
+background: #f8f8f8;
+width: 25%;
+padding: 10px 0;
+text-align: center;
+font-size: 16px;
+border: 1px solid #444;
+border-radius: 10px;
+cursor: pointer;
+float: left;
+}
+#bt1
+{
+margin-left: 390px;
+margin-top: 40px;
+
+}
+
+#mytable-rows-row0{
+				background-color:#f0f0f0;
+			}
+			#__field0-col0-row0 , #__field1-col5-row0 {
+				  background-color: #fff;
+			}
+			#__container0{
+				position: fixed;
+				top: 46% !important;
+				left: 50% !important;
+				/* transform: translate(-50%, -50%); */
+				-webkit-transform: translateX(-50%) translateY(-50%);
+				-moz-transform: translateX(-50%) translateY(-50%);
+				-ms-transform: translateX(-50%) translateY(-50%);
+				transform: translateX(-50%) translateY(-50%);
+			}
+			#__container0-openNew{
+				display:none !important;
+			}
+			#__view36
+			{
+			direction: inherit;
+width: 700px;
+height: 25px;
+border-bottom-style: dotted;
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+		}
+		#sdiv
+		{
+		
+		margin-left: 195px !important;
+		}
+#scr1	
+{
+margin-top:35px;
+display: block;
+width: 301px!important;
+background: #B0B0B0 !important;
+width: 95%!important;
+text-align: center;
+font-size: 17px!important;
+border: 1px solid #0187b7;
+border-radius: 10px !important;
+cursor: pointer !important;
+height : 47px !important;
+padding-top: 15px !important;
+padding-bottom: 15px !important;
+}	
+#aa1
+{
+margin-top:35px;
+
+}
+#TF-Name,#TF1-Name
+{
+ margin-top	:30px;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+
+    /* Size and position */
+    width: 100%;
+    padding: 10px 18px 10px 45px;
+
+    /* Styles */
+    border: none; /* Remove the default border */
+    box-shadow: 
+        inset 0 0 5px rgba(0,0,0,0.1),
+        inset 0 3px 2px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    background: #f9f9f9;
+    color: #777;
+    transition: color 0.3s ease-out;
+    }
+</style>
+
+</head>
+<body class='sapUiBody'>
+<div class="content" id="content">
+    <div id='heading' class="hide_div"></div>
+    <div id='first1a'></div>
+     <div id='first' class="hide_div" ></div>
+     <div id='second' class="hide_div" ></div>
+     <div id='third' class="hide_div"></div>
+      <div id='four1' class="hide_div"></div>
+       <div id='four2' class="hide_div"><div id='fs1' class="hide_div"></div></div>
+        <div id='manual1' class="hide_div"></div>
+         <div id='manual2' class="hide_div"></div>
+         <div id='admin1' class="hide_div"></div>
+</div>
+</body>
+</html>
