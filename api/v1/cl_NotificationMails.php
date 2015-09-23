@@ -24,9 +24,12 @@ class cl_NotificationMails
     public  $lt_so_details = [],
             $lt_act_type   = [],
             $lt_recievers  = [],
+            $lt_capability_email = [],
             $lv_query_notifcn,
+            $lv_query_capability,
             $lv_recievers,
-            $lv_capability_lead;
+            $lv_capability,
+            $lv_BU;
         
 // Function to get the HTML from buffer and reset the buffer.    
     private function get_html($i_mode)
@@ -43,18 +46,35 @@ class cl_NotificationMails
                                         WHERE action_type = '$i_mode' AND
                                               capability  = '$i_capability' AND
                                               BU          = '$i_bu'
-                                              ORDER BY action_type";           
+                                              ORDER BY action_type"; 
+            
+            $this->lv_query_capability = "SELECT * 
+                                          FROM   m_capability_config
+                                          WHERE  BU = '$i_bu' AND
+                                          capability = '$i_capability'";
+            
+            $this->lv_capability = $i_capability;
+            $this->lv_BU         = $i_bu;
             }
     
 // Get Email IDs.
     Private function get_emailid($i_reciever)
     {
-        switch ($i_reciever) {
-            case $value:
-
-
+        $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
+        switch ($i_reciever) 
+        {
+            case 'capability_lead':
+                return $this->lt_capability_email[0]['capability_lead'];
                 break;
 
+            case 'capability_sub_lead':
+                return $this->lt_capability_email[0]['sub_lead_1'];
+
+            case 'capability_SPOC':
+                return $this->lt_capability_email[0]['staffing_spoc_1'];
+
+            case 'capability_gen_id':
+                return $this->lt_capability_email[0]['generic_id'];                 
             default:
                 break;
         }   
