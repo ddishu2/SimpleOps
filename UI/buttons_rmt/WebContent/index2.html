@@ -172,12 +172,9 @@ demand_fulfill.setMenu(oMenu1);
 
 //Attach an event to raise an alert when an item is selected.
 demand_fulfill.attachItemSelected(function (oEvent){
-	/* alert("Items \"" + oEvent.getParameter("itemId") + "\" was selected.") */
 	
-	
-	if(oEvent.getParameter("itemId")=="item1-1")
+ if(oEvent.getParameter("itemId")=="item1-1")
 		{
-		
 		$("#second").removeClass("hide_div");
 		$("#first").addClass("hide_div");
 		$("#manual1").addClass("hide_div");
