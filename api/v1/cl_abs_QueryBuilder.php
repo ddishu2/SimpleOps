@@ -17,11 +17,11 @@
     const C_SQL_PARENTHESES_OPEN    = ' ( ';
     const C_SQL_PARENTHESES_CLOSE    = ' ) ';
     const C_SQL_WILDCARD_ANY     = '%';
-    const C_SQL_AS           = ' AS ';
     const C_SQL_IN           = ' IN ';
     const C_SQL_CAST         = ' CAST ( ';
-    const C_SQL_AS_DATE         = ' AS DATE ) ';
+    const C_SQL_AS_DATE      = ' AS DATE ) ';
     const C_SQL_EQUALS       = ' = ';
+    const C_SQL_BETWEEN       = ' BETWEEN ';
     const C_SQL_QUOTE        = "'";
     const C_SQL_AND          = ' AND ';
     const C_SQL_LIKE         = ' LIKE ';
@@ -78,7 +78,7 @@
      * @return boolean  Success
      */
     
-    final public function addInFilterToQuery($fp_v_fname, $fp_arr_fvals)
+    final protected function addInFilterToQuery($fp_v_fname, $fp_arr_fvals)
     {
         $re_success = false;
         $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
@@ -91,10 +91,6 @@
             }
         return $re_success;
     }
-    
-    
-    
-    
     /**
      * Adds a Like Filter To Query.
      * 
@@ -102,7 +98,7 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    final public function addContainsFilterToQuery($fp_v_fname, $fp_v_fval)  
+    final protected function addContainsFilterToQuery($fp_v_fname, $fp_v_fval)  
     {
         $re_success = false;
         if($this->isValidFilter($fp_v_fname, $fp_v_fval))
@@ -129,7 +125,7 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    final public function addEqualsFilterToQuery($fp_v_fname, $fp_v_fval)
+    final protected function addEqualsFilterToQuery($fp_v_fname, $fp_v_fval)
     {
         $re_success = false;
         if($this->isValidFilter($fp_v_fname, $fp_v_fval))
@@ -139,6 +135,30 @@
             $lv_filterLine = $lv_fname
                             .self::C_SQL_EQUALS
                             .$lv_fval;
+            $this->addFilterLineToQuery($lv_filterLine);
+            $re_success = true;
+        }
+        return $re_success;
+    }
+    
+     /**
+     * Adds a Between Filter To Query.
+     * 
+     * @param string     fieldname 
+     * @param string    'From' field value
+     * @param string    'To' field value
+     * @return boolean  Success
+     */
+    final protected function addBetweenFilterToQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to)
+    {
+        $re_success = false;
+        if($this->isValidFilter($fp_v_fname, $fp_v_fval_from)&& $this->isValidFilter($fp_v_fname, $fp_v_fval_to))
+        {
+            $lv_filterLine = $lv_fname
+                            .self::C_SQL_BETWEEN
+                            .$fp_v_fval_from
+                            .self::C_SQL_AND
+                            .$fp_v_fval_to;
             $this->addFilterLineToQuery($lv_filterLine);
             $re_success = true;
         }
@@ -189,8 +209,9 @@
         $lv_filterLine = $fp_v_filterLine;
         if($this->shouldAddWhereClauseToQuery())
         {
-            $lv_filterLine = $lv_queryLinePrefix.$fp_v_filterLine;
+            $lv_queryLinePrefix = self::C_SQL_WHERE;
         }
+        $lv_filterLine = $lv_queryLinePrefix.$fp_v_filterLine;
         $this->v_query_filters .= $lv_filterLine.PHP_EOL;   
     }
     
