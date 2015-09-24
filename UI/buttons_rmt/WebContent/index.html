@@ -34,7 +34,7 @@ sap.ui.getCore().attachInit(function () {
 
 	var oLabel = new sap.ui.commons.Label({
 		id : 'L-Name',
-		text : 'UserName:-' }).addStyleClass("textk");
+		text : 'UserName:-' }).addStyleClass("style_for_login");
 	
 
 	var oTF = new sap.ui.commons.TextField({
@@ -54,7 +54,7 @@ sap.ui.getCore().attachInit(function () {
 	for_login.createRow(oLabel,oTF);
 	var oLabel = new sap.ui.commons.Label({
 		id : 'L1-Name',
-		text : 'Password:-' }).addStyleClass("textk");
+		text : 'Password:-' }).addStyleClass("style_for_login");
 
 	var oTF = new sap.ui.commons.PasswordField({
 		id : 'TF1-Name',
@@ -1421,7 +1421,13 @@ height : 47px !important;
 padding-top: 15px !important;
 padding-bottom: 15px !important;
 }
+.style_for_login
+{
+direction: inherit;
+text-align: left;
+margin-top: 30px;
 
+}
 #manual
 {
 margin-top: 121px;
