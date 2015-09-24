@@ -67,7 +67,7 @@ class cl_Proposals {
         }
         
         
-         $lo_emp->getUnfilledSoAfterPerfectProp($re_it_emps_for_sos);
+//         $lo_emp->getUnfilledSoAfterPerfectProp($re_it_emps_for_sos);
          self::genrateEmpidSoid($re_it_emps_for_sos); 
          
         return $re_it_emps_for_sos;        
