@@ -44,7 +44,8 @@ class cl_NotificationMails
             $key,
             $lwa_result,
             $lv_message,
-            $lv_headers;                 
+            $lv_headers,
+            $lv_subject;                 
 
     
 // Actual methods to be called from other PHP applications.
@@ -252,9 +253,26 @@ class cl_NotificationMails
             $this->lt_emp_details  = $lo_so_details->lt_emp_details;
             
 // Get details of all capabilities email ids.
-            $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
-            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);           
+            $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);
                 break;
+            
+            case 'SLR':
+// Get SO details            
+            $lo_so_details->get_so_details($this->lv_so_number);
+            $this->lt_so_details  = $lo_so_details->lt_so_details;
+            
+// Get employee details.
+            $lo_so_details->get_emp_details($this->lv_empid);
+            $this->lt_emp_details  = $lo_so_details->lt_emp_details;
+            
+// Get details of all capabilities email ids.
+            $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+                break;            
+            
             default:
                 break;
         }       
@@ -279,10 +297,28 @@ class cl_NotificationMails
                 $this->lv_serv_line  = $this->lt_emp_details[$this->key]['svc_line'];
                 $this->lv_location   = $this->lt_emp_details[$this->key]['org'];
                 $this->lv_capability = $this->lt_emp_details[$this->key]['comp'];
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
                 $lv_date             = date('d-M-Y');
                 $this->lv_rel_date   = date('d-M-Y', strtotime($lv_date. ' + 2 days'));
                 break;
 
+            case 'SLR':
+                $this->lv_so_owner   = $this->lwa_result['so_owner'];              
+                $this->lv_projname   = $this->lwa_result['so_proj_name'];
+                $this->lv_proj_code  = $this->lwa_result['so_proj_id'];
+                $this->lv_sdate      = $this->lwa_result['so_sdate'];
+                $this->lv_edate      = $this->lwa_result['so_endate'];                                
+                $this->lv_empname    = $this->lt_emp_details[$this->key]['emp_name'];
+                $this->lv_empid      = $this->lt_emp_details[$this->key]['emp_id'];
+                $this->lv_pri_skill  = $this->lt_emp_details[$this->key]['skill1_l4'];
+                $this->lv_level      = $this->lt_emp_details[$this->key]['level'];
+                $this->lv_BU         = $this->lt_emp_details[$this->key]['idp'];
+                $this->lv_sub_bu     = $this->lt_emp_details[$this->key]['sub_bu'];
+                $this->lv_serv_line  = $this->lt_emp_details[$this->key]['svc_line'];
+                $this->lv_location   = $this->lt_emp_details[$this->key]['org'];
+                $this->lv_capability = $this->lt_emp_details[$this->key]['comp'];
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                break;
             default:
                 break;            
         }   
@@ -326,7 +362,6 @@ class cl_NotificationMails
                 $this->lv_content  = str_replace("GV_SO_NO", $this->lv_so_number, $this->lv_content);
                 $this->lv_content  = str_replace("GV_SDATE", $this->lv_sdate, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EDATE", $this->lv_edate, $this->lv_content);
-                $this->lv_content  = str_replace("GV_LINK", $this->lv_link, $this->lv_content); 
                 $this->lv_content  = str_replace("GV_SL_REL_DATE", $this->lv_rel_date, $this->lv_content);
                 break;
             default:
@@ -379,8 +414,7 @@ class cl_NotificationMails
 // Get recievers for email.                
                 self::get_recievers();                    
                     
-                $lv_mail = mail($this->lv_recievers, "E-mail from PHP", $this->lv_message, $this->lv_headers);
-                echo('hope this works...<br>');
+                $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {   
                     return true;
@@ -392,12 +426,6 @@ class cl_NotificationMails
                 }   
             }
         } 
-      
-        
-      $lo_email = new cl_NotificationMails();
-      $lv_email = $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 232, 123546);
-      if ($lv_email) 
-          {
-            echo "YES>>>>";
-          }
-          
+
+        $lo_email = new cl_NotificationMails();
+        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 232, 132456);
