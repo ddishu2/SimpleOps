@@ -18,38 +18,25 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     const C_PROJNAME_FNAME   = ' so_proj_name ';
     const C_CUSTNAME_FNAME   = ' cust_name ';
     const C_LOCATION_FNAME   = ' so_loc ';
-    const C_REGION_FNAME     = ' region ';
-    const C_SECTOR_FNAME     = ' sector ';
+    const C_BU_FNAME         = ' so_proj_bu';
+    const C_DB_TABLE         = 'v_rrs_open_so1';
     
     const C_SO_SUBMI_DATE_FNAME    = ' so_submi_date ';
     
     private $v_so_sdate  = '2015-09-17';
     private $v_so_endate = '2015-09-30';
     
-    private $v_query_filters = [];
     
-    public function __construct()
-    {
-        $this->createOpenSOView();   
+    public function __construct($fp_v_start_date, $fp_v_end_date)
+    { 
     }
-    
-    private function createOpenSOView()
-    {
         
-    }
-    
-    public function filterByEqualsRegion($fp_v_region)
+    public function filterByEqualsProjBU($fp_v_proj_bu)
     {
-        return $this->addContainsFilterToQuery
-                      (self::C_REGION_FNAME,$fp_v_proj_id);
-    }
-    
-    public function filterByEqualsSector($fp_v_sector)
-    {
-        $fp_v_sector = $this->convertValueToSQLString($fp_v_sector);
         return $this->addEqualsFilterToQuery
-                      (self::C_SECTOR_FNAME,$fp_v_sector);
+                      (self::C_BU_FNAME,$fp_v_proj_bu);
     }
+    
     
     public function filterByInLocationList($fp_arr_locations)
     {
@@ -72,7 +59,7 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     {
         $re_query =   'SELECT'                                 .PHP_EOL
                     . '*'                                      .PHP_EOL
-                    . 'FROM  `v_open_so`'                      .PHP_EOL
+                    . 'FROM '.self::C_DB_TABLE                 .PHP_EOL
                     . self::C_SQL_WHERE
                     .'('                                       .PHP_EOL
                         .'new_sdate <> '.cl_DB::C_DATE_INITIAL .PHP_EOL
