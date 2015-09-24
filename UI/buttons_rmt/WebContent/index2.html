@@ -655,7 +655,8 @@
 																					fulfill : "",
 																					status : "",
 																					assign : "",
-																					reason : val.emp[0].reason
+																					reason : val.emp[0].reason,
+																					propose_id : val.prop_id
 																				};
 																				completeData
 																						.push(tmp);
@@ -908,6 +909,16 @@
 							filterProperty : "reason",
 							width : "100px"
 						}));
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Proposed ID"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
+							sortProperty : "propose_id",
+							filterProperty : "propose_id",
+							width : "100px"
+						}));
 
 						suitable_match.sort(suitable_match.getColumns()[0]);
 
@@ -919,6 +930,7 @@
 								var so_str = "";
 								var emp_str = "";
 								var status_str = "";
+								var p1_id = "";
 								$(".approveDropdown input").each(function(index,val){
 									
 									
@@ -928,6 +940,7 @@
 										so_str += "&so_id[]="+parent.find(".soid").text();
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
+										 p1_id += "&prop_id="+parent.find(".propo_id").text();
 										/*console.log(parent.find(".soid").text());
 										console.log(parent.find(".empoid").text());
 										console.log(parent.find(".stat11").text()); */
@@ -935,7 +948,7 @@
 										//so_str = "so_id[]="+
 									}
 								});
-								var asc= so_str + emp_str +status_str;
+								var asc= so_str + emp_str +status_str+p1_id;
 								console.log(asc);
 								$.ajax({
 						      		  method: "GET",
@@ -946,7 +959,7 @@
 						      			alert("gdgd");
 						      		}
 								});
-								//http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2
+								/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
 								
 							}
 
