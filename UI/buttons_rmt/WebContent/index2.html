@@ -301,10 +301,15 @@
 
 						}).addStyleClass("for_text_style1");
 
-						var date1 = new Date();
+						/* var date1 = new Date();
 						date1.setMonth(date1.getMonth() - 8);
 						var date2 = new Date();
-						date2.setMonth(date2.getMonth() + 4);
+						date2.setMonth(date2.getMonth() + 4); */
+						
+						var date1 = new Date();
+						              date1.setDate(date1.getDate() - 56);
+					   var date2 = new Date();
+						              date2.setDate(date2.getDate() + 28);
 
 						var for_from_date = new sap.ui.model.json.JSONModel();
 						for_from_date.setData({
