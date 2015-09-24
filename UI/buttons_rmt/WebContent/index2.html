@@ -31,7 +31,21 @@ sap.ui.getCore().attachInit(function () {
 		columns : 2,
 		widths : ['200px', '300px'] });
 
-
+	var cg_logo1  = new sap.ui.commons.Image({
+		id: "rmtLogo",
+		width:"300px",
+		src: "images/Picture1.png",
+		//text : "Administration Activities",
+		tooltip : "RMT Tool"
+		
+		
+	});
+	
+	var logoCell = new sap.ui.commons.layout.MatrixLayoutCell({
+		colSpan: 2 });
+	logoCell.addContent(cg_logo1);	
+	for_login.createRow(logoCell);
+	
 	var oLabel = new sap.ui.commons.Label({
 		id : 'L-Name',
 		text : 'UserName:-' }).addStyleClass("textk");
@@ -44,10 +58,6 @@ sap.ui.getCore().attachInit(function () {
 		value : '',
 		width : '200px' ,
 		});
-	
-	
-
-     
 	oLabel.setLabelFor(oTF);
 
 
@@ -111,7 +121,7 @@ sap.ui.getCore().attachInit(function () {
 	  });
 	
 	
-	for_login.createRow(oButton1);
+	for_login.createRow("",oButton1);
 
 	
 	
@@ -127,10 +137,10 @@ sap.ui.getCore().attachInit(function () {
 	//for First Div(first)
 var cg_logo  = new sap.ui.commons.Image({
 		id:'cg_logo',
-		src: "images/Capgemini.gif",
+		src: "images/capgemini-logo.png",
 		//text : "Administration Activities",
-		tooltip : "Capgemini"
-		
+		tooltip : "Capgemini",
+		width:"250px"
 		
 	});
 
@@ -293,27 +303,30 @@ demand_fulfill.attachItemSelected(function (oEvent){
 	
 		
 		
+
+		var date1 = new Date();
+		date1.setMonth(date1.getMonth() - 8);
+		var date2 = new Date();
+		date2.setMonth(date2.getMonth() + 4);
+		
+		
 		var for_from_date = new sap.ui.model.json.JSONModel();
 		for_from_date.setData({
-			dateValue: new Date()
+			dateValue: date1
 		});
-		sap.ui.getCore().setModel(for_from_date);
+		sap.ui.getCore().setModel(for_from_date,"fromModel");
 
 		// create DatePickers and bind to model
 		var so_from=new sap.ui.commons.DatePicker({
 			id:'sfrom1',
 			width: "10em",
 			value: {
-				path: "/dateValue",
+				path: "fromModel>/dateValue",
 				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd", strictParsing: true})
 		}
 		}).addStyleClass("for_fields_style1");
+		so_from.setDate
 		/* date1.placeAt("sample2"); */
-	
-	
-		
-		       
-		
 
 	oLabel.setLabelFor(so_from);
 	oDetails.createRow(oLabel, so_from);
@@ -328,16 +341,17 @@ demand_fulfill.attachItemSelected(function (oEvent){
 	
 		var for_to_date = new sap.ui.model.json.JSONModel();
 		for_to_date.setData({
-			dateValue1: new Date()
+			dateValue: date2
 		});
-		sap.ui.getCore().setModel(for_to_date);
+		sap.ui.getCore().setModel(for_to_date,"toModel");
+		
 
 		// create DatePickers and bind to model
 		var so_to=new sap.ui.commons.DatePicker({
 			id:'sto1',
 			width: "10em",
 			value: {
-				path: "/dateValue1",
+				path: "toModel>/dateValue",
 				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd", strictParsing: true})
 		}
 		}).addStyleClass("for_fields_style1");
@@ -459,26 +473,50 @@ demand_fulfill.attachItemSelected(function (oEvent){
 	oItem.setText("Kolkata");
 	locationText.addItem(oItem); */
 	
+	
 	var oSimpleListBox = new sap.ui.commons.ListBox({
-		items : [
-		 		new sap.ui.core.ListItem({text : 'Spring'}),
-				new sap.ui.core.ListItem({text : 'Summer'}),
-				new sap.ui.core.ListItem({text : 'Autumn'}),
-				new sap.ui.core.ListItem({text : 'Winter'})
-	  ],
-	  visibleItems : 6,
-	  select : function(e) {
-		  var a;
-		  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
-		  oTextSummary.setValue(a.join(""));
-	  }
-	})
-	var oTextSummary = new sap.ui.commons.TextField();
-	var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
-			text: "MultiSelection",
-			checked : false,
-			change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
-	})
+	width: "200px",
+	items : [
+	 		new sap.ui.core.ListItem({text : 'Spring'}),
+			new sap.ui.core.ListItem({text : 'Summer'}),
+			new sap.ui.core.ListItem({text : 'Autumn'}),
+			new sap.ui.core.ListItem({text : 'Winter'})
+  ],
+  select : function(e) {
+	  var a=[""];
+	  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
+	  oTextSummary.setText(a.join(""));
+  }
+});
+var oTextSummary = new sap.ui.commons.TextView();
+var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
+		text: "MultiSelection",
+		checked : false,
+		change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
+});
+
+	/*
+	var oSimpleListBox = new sap.ui.commons.ListBox({
+			items : [
+					 new sap.ui.core.ListItem({text : 'Spring'}),
+					new sap.ui.core.ListItem({text : 'Summer'}),
+					new sap.ui.core.ListItem({text : 'Autumn'}),
+					new sap.ui.core.ListItem({text : 'Winter'})
+		  ],
+		  visibleItems : 6,
+		  select : function(e) {
+			  var a;
+			  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
+			  oTextSummary.setValue(a.join(""));
+		  }
+		})
+		var oTextSummary = new sap.ui.commons.TextField();
+		var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
+				text: "MultiSelection",
+				checked : false,
+				change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
+		});*/
+	
 
 /* 	locationLabel.setLabelFor(locationText);
 	oDetails.createRow(locationLabel, locationText); */
@@ -578,7 +616,7 @@ oDetails.createRow(locationLabel,oSimpleListBox,oTextSummary,oMultiSelectionChec
 	      				}
 	      				else
 	      					{
-	      					 var tmp =  {sname:val.so.so_no, pcode:val.so.so_proj_id, pname:val.so.so_proj_name,sdate:val.so.so_cr_date,edate:val.so.so_endate,eid:val.emp[0].emp_id,ename:val.emp[0].emp_name,lev:val.emp[0].level,skill:val.emp[0].skill1_l4, eloc:val.emp[0].loc,fulfill:"",status:"",assign:"A",reason:val.emp[0].reason};
+	      					 var tmp =  {sname:val.so.so_no, pcode:val.so.so_proj_id, pname:val.so.so_proj_name,sdate:val.so.so_cr_date,edate:val.so.so_endate,eid:val.emp[0].emp_id,ename:val.emp[0].emp_name,lev:val.emp[0].level,skill:val.emp[0].skill1_l4, eloc:val.emp[0].loc,fulfill:"",status:"",assign:"",reason:val.emp[0].reason};
 	      					completeData.push(tmp);
 	      					res_completed++;
 	      					
@@ -601,7 +639,7 @@ oDetails.createRow(locationLabel,oSimpleListBox,oTextSummary,oMultiSelectionChec
 	    
 	}
 	})
-	oDetails.createRow(oTagg);
+	oDetails.createRow("",oTagg);
 	oDetails.placeAt("second");
 
 	
@@ -763,11 +801,11 @@ suitable_match.addColumn(new sap.ui.table.Column({
 	}),
 	template: new sap.ui.commons.DropdownBox({
 		tooltip: "Decision",
-		items: [new sap.ui.core.ListItem("decide",{text: "Approve", key: "R"}),
-		        new sap.ui.core.ListItem("decide1",{text: "Reject", key: "A"}),
+		items: [new sap.ui.core.ListItem("decide",{text: "Approve", key: "Ap"}),
+		        new sap.ui.core.ListItem("decide1",{text: "Reject", key: "Re"}),
 		        new sap.ui.core.ListItem("decide2",{text: "None", key: "N"}),
 		        ]
-		}).bindProperty("key", "assign"),
+		}),
 	sortProperty: "",
 	filterProperty: "",
 	width: "100px"
@@ -1220,13 +1258,13 @@ var emp_form = new sap.ui.commons.layout.MatrixLayout({
 			text : "Assign & Notify",
 			tooltip : "Assign & Notify",
 			
-			/* /* press: function go_to_manual2()
+			press: function go_to_manual2()
 		{
 				
 				$("#manual1").addClass("hide_div");
 				$("#manual2").removeClass("hide_div");
 				
-		} */ 
+		}
 			
 		}).addStyleClass("for_normal_buttons_style1");
 		
@@ -1234,13 +1272,13 @@ var emp_form = new sap.ui.commons.layout.MatrixLayout({
 		var manual_back = new sap.ui.commons.Button({
 			text : "Back",
 			tooltip : "Back",
-		/* 	press: function back_from_manual()
+			press: function back_from_manual()
 		{
 				
 				$("#manual1").addClass("hide_div");
 				$("#first").removeClass("hide_div");		
 		}
-		 */	
+			
 		}).addStyleClass("for_normal_buttons_style1");
 		
 		manual_assign.placeAt("manual1");
@@ -1393,7 +1431,7 @@ width:100%;
 text-align:center;
 }
 .content{
-width:100%;
+width:1000px;
 margin:0 auto;
 background: #ccc;
 min-height:900px;
@@ -1447,7 +1485,7 @@ margin: 0 auto;
 margin-top:140px;
 }
 #second,#third {
-
+width: 1000px;
 min-height: 100px;
 height: 100%;
 padding: 75 20px !important;
@@ -1617,9 +1655,16 @@ padding-bottom: 15px !important;
 margin-top:35px;
 
 }
+#rmtLogo{
+	margin-left:45px;
+}
+
+#for_log_layout td{
+	padding-bottom:10px;	
+}
 #TF-Name,#TF1-Name
 {
- margin-top	:30px;
+
   font-family: 'Lato', Calibri, Arial, sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -1627,7 +1672,7 @@ margin-top:35px;
 
     /* Size and position */
     width: 100%;
-    padding: 10px 18px 10px 45px;
+    
 
     /* Styles */
     border: none; /* Remove the default border */
