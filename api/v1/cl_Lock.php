@@ -19,6 +19,8 @@ class cl_Lock {
     const C_PROP_ID = 'prop_id';
     const C_TRANS_ID = 'trans_id';    
     const C_ARR_LINK = 'link';
+    const C_COMMENTS = 'comments';
+    const C_STATUS = 'status';
 // const C_PARENT_PROPOS_ID = 'propos_id';
 // const C_REQUESTOR_ID = 'requestor_id';
 
@@ -74,15 +76,17 @@ class cl_Lock {
         return $lv_result;
     }
 
-    public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id ,$fp_arr_link) {
+    public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id ) {
        
         $lv_obj = new cl_DB();
         $lv_db = $lv_obj->getDBHandle();
         $softlock_count = 0;
+        $rejected_proposal_count = 0;
+        $res_count =[];
         $lv_count = count($fp_arr_so);
         for ($i = 0; $i < $lv_count; $i++) {
            
-            if ($fp_arr_stat[$i] == 'SoftLocked') {
+            if ($fp_arr_stat[$i] == 'Approve') {
                 $lv_request_id = 444; //now passing Default request id but need to fetch dynamically
                 $lv_value = self::setTransId(); // find max trans_id
 
@@ -118,20 +122,40 @@ class cl_Lock {
                     
                     
                 }
-            } elseif ($fp_arr_stat[$i] == 'Rejected') {
+            } elseif ($fp_arr_stat[$i] == 'Reject') {
                 $lv_result = self::rejectProposal($lv_prop_id, $fp_arr_emp[$i], $fp_arr_so[$i]);
+                $rejected_proposal_count++;
+                
             }
         }
-        return $softlock_count; //returns number of employess soft locked
+        $res_count['softlocked'] = $softlock_count;
+        $res_count['rejected'] = $rejected_proposal_count;
+        
+        return $res_count; //returns number of employess soft locked and rejected proposals
     }
 //HardLock
     public function setHardLock($fp_v_lock_trans_id,$fp_sdate,$fp_edate) {
         
         $sql1 = "UPDATE trans_locks SET status='S201',lock_start_date ='$fp_sdate',lock_end_date = '$fp_edate' WHERE trans_id = $fp_v_lock_trans_id";
         $re_sos = cl_DB::updateResultIntoTable($sql1);
-        print_r($re_sos);
+        //print_r($re_sos);
     }
-public function ApproveHardLock($fp_v_lock_trans_id) {
+    public function setComments($lv_trans_id, $fp_v_status,$fp_v_comments)
+    {
+        
+        //$sql1 ="INSERT INTO `rmg_tool`.`trans_comment` (`trans_id`, `status`, `comment`) VALUES ($lv_trans_id, $fp_v_status, $fp_v_comments);";
+//        $sql = "insert into trans_commit('trans_id', 'status', 'comment') values($lv_trans_id, $fp_v_status,$fp_v_comments)";
+        $sql = "INSERT INTO `rmg_tool`.`trans_comment` (`trans_id`, `status`, `comment`) VALUES($lv_trans_id,'$fp_v_status','$fp_v_comments')";
+        $lv_result = cl_DB::updateResultIntoTable($sql);
+        
+        
+    }
+    
+    
+    /*hardlocks an employee  
+      returns 1 if successfull
+     returns -1 if failed     */
+public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments) {
    
       
         $lv_obj = new cl_DB();
@@ -160,15 +184,21 @@ public function ApproveHardLock($fp_v_lock_trans_id) {
             mysqli_begin_transaction($lv_db);
             $lv_set_hardlock = self::setHardLock($lv_trans_id,$fp_sdate,$fp_edate);
             $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, 'S201', $lv_prop_id, $lv_req_id);
+          
+            $lv_comments = self::setComments($lv_trans_id,'S201',$fp_v_comments);
+            
             mysqli_commit($lv_db);
+            return 1;
         } catch (Exception $ex) {
             mysqli_rollback($lv_db);
             echo 'Failed-' . $ex->getMessage();
+            return -1;
         }
         }
         else
         {
-            echo "Slock expired";
+            //echo "Slock expired";
+              return -1;            
         }
     }
     public function rejectProposal($fp_v_proposal_id, $fp_v_emp_id, $fp_v_so_id) {
@@ -208,7 +238,12 @@ and so_id ='$fp_v_so_id'";
 
 //Click here to reject
 //htttp://rmt/api/vi/accept_SL/?trans_id=001;
-    public function rejectSoftLock($fp_v_lock_trans_id) {
+    
+    /* rejects a hard lock 
+      returns 1 if successfull 
+     *returns  -1 if unsuccessful */
+    
+    public function rejectSoftLock($fp_v_lock_trans_id,$fp_v_comments) {
 
         $sql = "UPDATE trans_locks SET status='S221' WHERE trans_id = $fp_v_lock_trans_id";
         $lv_obj = new cl_DB();
@@ -230,15 +265,19 @@ and so_id ='$fp_v_so_id'";
             mysqli_begin_transaction($lv_db);
             $re_sos = cl_DB::updateResultIntoTable($sql);
             $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, 'S221', $lv_prop_id, $lv_req_id);
+            $lv_comments = self::setComments($lv_trans_id,'S221',$fp_v_comments);
             mysqli_commit($lv_db);
+            return 1;
         } catch (Exception $ex) {
             mysqli_rollback($lv_db);
-            echo 'Failed-' . $ex->getMessage();
+           // echo 'Failed-' . $ex->getMessage();
+            return -1;
         }
         }
         else
         {
-            echo 'Slock expired';
+           // echo 'Slock expired';
+            return -1;
         }
     }
     
@@ -264,7 +303,7 @@ and so_id ='$fp_v_so_id'";
     public function getsoenddate($fp_v_so_no)
     {
         
-        $sql = "SELECT so_endate FROM `v_open_so` WHERE so_no = $fp_v_so_id";
+        $sql = "SELECT so_endate FROM `v_open_so` WHERE so_no = $fp_v_so_no";
         $lv_result = cl_DB:: getResultsFromQuery($sql);
         foreach ($lv_result as $key => $value)
         {
@@ -278,6 +317,7 @@ and so_id ='$fp_v_so_id'";
     public static function getLink($fp_v_so_no,$fp_v_emp_id)
     {
         $lt_Sodetails = getDetails::getSODetails($fp_v_so_no);
+        
         $lt_empdetails = getDetails::getEmpDetails($fp_v_emp_id);
         
         foreach ($lt_Sodetails as $key => $value) {
@@ -300,7 +340,8 @@ and so_id ='$fp_v_so_id'";
             $lv_lvl = $value['level'];
         }
         
-        $lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approval.html/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
+        //$lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
+        $lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
         return $lv_link;
         
     }

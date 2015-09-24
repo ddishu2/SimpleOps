@@ -16,7 +16,7 @@ class cl_RMGTool_Globals
     const GC_ROUTE_SET_HARD_LOCK = '/set_hard_lock(/)';
     const OPEN_SO_DATE_RANGE    = 21;
     const GC_route_proposals = '/proposals(/)';
-    const demo = '/demo(/)';
+
     
 //    static public $GC_SLIM_PATH = __DIR__.
 //                                DIRECTORY_SEPARATOR.
@@ -111,7 +111,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
                     $lv_arr_emp_id   = $app->request->get(cl_Lock::C_ARR_EMP_ID);
                     $lv_arr_stat = $app->request->get(cl_lock::C_ARR_STAT);
                     $lv_prop_id = $app->request->get(cl_lock::C_PROP_ID);
-                    $lv_arr_link = $app->request->get(cl_lock::C_ARR_LINK);
+//                    $lv_arr_link = $app->request->get(cl_lock::C_ARR_LINK);
 //                   $so_id = [];
 //                   $emp_id = [];
 //                   $so_id[0] = 111;
@@ -130,10 +130,12 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
                    //$lv_prop_id = 2; 
                    
 //                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
-                    $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id,$lv_arr_link);
+                    $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id);
                    
 //                   echo $lv_result;
-
+            $app->response->setStatus(200);
+            $app->response->headers->set('Content-Type', 'application/json');
+            echo json_encode($lv_result, JSON_PRETTY_PRINT);
         
         });    
         $app->get(cl_RMGTool_Globals ::GC_ROUTE_APPROVE_HARD_LOCK, function () use($app) {
@@ -141,20 +143,51 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
             $app->response->setStatus(200);
             $app->response->headers->set('Content-Type', 'application/json');
             
-            //$lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);
+            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);
+            $lv_comments = $app->request->get(cl_lock::C_COMMENTS);
+             $lv_status = $app->request->get(cl_lock::C_STATUS);
             $lv_obj = new cl_Lock();
-            $lv_trans_id = 1;
-            
-            $lv_result = $lv_obj->ApproveHardLock($lv_trans_id);//S201
-        });
-        $app->get(cl_RMGTool_Globals ::GC_ROUTE_REJECT_HARD_LOCK, function () use($app) {
+//            $lv_trans_id = 1;
+            if ($lv_status == 'Approve')
+            {
+            $lv_result = $lv_obj->ApproveHardLock($lv_trans_id,$lv_comments);//S201
+                if($lv_result == 1)
+                {
+                $lv_msg = "resource hard locked";
+                }
+                else 
+                 if ($lv_result == -1)
+                 {
+                 $lv_msg = "Error in hard locking the resource";
+                 }
+            }
+            else 
+            if($lv_status == 'Reject')
+            {
+            $lv_result=$lv_obj->rejectSoftLock($lv_trans_id,$lv_comments);
+                if($lv_result == 1)
+                {
+                $lv_msg = "Resource Rejected";
+                }
+                else 
+                 if ($lv_result == -1)
+                 {
+                 $lv_msg = "Error in rejecting the resource";
+                 }
+            }
             $app->response->setStatus(200);
             $app->response->headers->set('Content-Type', 'application/json');
-//            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);//S221
-            $lv_obj = new cl_Lock();
-            $lv_trans_id = 1;
-            $lv_obj->rejectSoftLock($lv_trans_id);
+            echo json_encode($lv_msg, JSON_PRETTY_PRINT);
         });
+//        $app->get(cl_RMGTool_Globals ::GC_ROUTE_REJECT_HARD_LOCK, function () use($app) {
+//            $app->response->setStatus(200);
+//            $app->response->headers->set('Content-Type', 'application/json');
+//            $lv_trans_id = $app->request->get(cl_lock::C_TRANS_ID);//S221
+//            $lv_comments = $app->request->get(cl_lock::C_COMMENTS);
+//            $lv_obj = new cl_Lock();
+////            $lv_trans_id = 1;
+//            $lv_obj->rejectSoftLock($lv_trans_id,$lv_comments);
+//        });
         
  $app->get('/test(/)', 
                function () use($app) 
