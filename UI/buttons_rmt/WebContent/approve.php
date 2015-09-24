@@ -54,14 +54,14 @@
 						<th>Level</th>
 					</tr>
 					<tr>
-						<td>BU</td>
-						<td>Sub BU</td>
-						<td>Service Line</td>
-						<td>Location</td>
-						<td>Employee Id</td>
-						<td>Employee Name</td>
-						<td>Primary Skill</td>
-						<td>Level</td>
+						<td><?php echo htmlspecialchars($_GET["bu"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["subbu"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["svcline"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["loc"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["emp_id"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["emp_name"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["lv_prime_skill"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["lvl"]);?></td>
 					</tr>
 				</table>
 				<h3>Assignment Details</h3>
@@ -74,11 +74,11 @@
 						<th>Assignment End Date</th>
 					</tr>
 					<tr>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
+						<td><?php echo htmlspecialchars($_GET["proj_code"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["proj_name"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["so_no"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["sdate"]);?></td>
+						<td><?php echo htmlspecialchars($_GET["edate"]);?></td>
 					</tr>
 				</table>
 			</div>
