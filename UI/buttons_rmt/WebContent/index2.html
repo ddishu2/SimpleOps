@@ -31,21 +31,7 @@ sap.ui.getCore().attachInit(function () {
 		columns : 2,
 		widths : ['200px', '300px'] });
 
-	var cg_logo1  = new sap.ui.commons.Image({
-		id: "rmtLogo",
-		width:"300px",
-		src: "images/Picture1.png",
-		//text : "Administration Activities",
-		tooltip : "RMT Tool"
-		
-		
-	});
-	
-	var logoCell = new sap.ui.commons.layout.MatrixLayoutCell({
-		colSpan: 2 });
-	logoCell.addContent(cg_logo1);	
-	for_login.createRow(logoCell);
-	
+
 	var oLabel = new sap.ui.commons.Label({
 		id : 'L-Name',
 		text : 'UserName:-' }).addStyleClass("textk");
@@ -58,6 +44,10 @@ sap.ui.getCore().attachInit(function () {
 		value : '',
 		width : '200px' ,
 		});
+	
+	
+
+     
 	oLabel.setLabelFor(oTF);
 
 
@@ -121,7 +111,7 @@ sap.ui.getCore().attachInit(function () {
 	  });
 	
 	
-	for_login.createRow("",oButton1);
+	for_login.createRow(oButton1);
 
 	
 	
@@ -137,10 +127,10 @@ sap.ui.getCore().attachInit(function () {
 	//for First Div(first)
 var cg_logo  = new sap.ui.commons.Image({
 		id:'cg_logo',
-		src: "images/capgemini-logo.png",
+		src: "images/Capgemini.gif",
 		//text : "Administration Activities",
-		tooltip : "Capgemini",
-		width:"250px"
+		tooltip : "Capgemini"
+		
 		
 	});
 
@@ -303,30 +293,27 @@ demand_fulfill.attachItemSelected(function (oEvent){
 	
 		
 		
-
-		var date1 = new Date();
-		date1.setMonth(date1.getMonth() - 8);
-		var date2 = new Date();
-		date2.setMonth(date2.getMonth() + 4);
-		
-		
 		var for_from_date = new sap.ui.model.json.JSONModel();
 		for_from_date.setData({
-			dateValue: date1
+			dateValue: new Date()
 		});
-		sap.ui.getCore().setModel(for_from_date,"fromModel");
+		sap.ui.getCore().setModel(for_from_date);
 
 		// create DatePickers and bind to model
 		var so_from=new sap.ui.commons.DatePicker({
 			id:'sfrom1',
 			width: "10em",
 			value: {
-				path: "fromModel>/dateValue",
+				path: "/dateValue",
 				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd", strictParsing: true})
 		}
 		}).addStyleClass("for_fields_style1");
-		so_from.setDate
 		/* date1.placeAt("sample2"); */
+	
+	
+		
+		       
+		
 
 	oLabel.setLabelFor(so_from);
 	oDetails.createRow(oLabel, so_from);
@@ -341,17 +328,16 @@ demand_fulfill.attachItemSelected(function (oEvent){
 	
 		var for_to_date = new sap.ui.model.json.JSONModel();
 		for_to_date.setData({
-			dateValue: date2
+			dateValue1: new Date()
 		});
-		sap.ui.getCore().setModel(for_to_date,"toModel");
-		
+		sap.ui.getCore().setModel(for_to_date);
 
 		// create DatePickers and bind to model
 		var so_to=new sap.ui.commons.DatePicker({
 			id:'sto1',
 			width: "10em",
 			value: {
-				path: "toModel>/dateValue",
+				path: "/dateValue1",
 				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd", strictParsing: true})
 		}
 		}).addStyleClass("for_fields_style1");
@@ -473,50 +459,26 @@ demand_fulfill.attachItemSelected(function (oEvent){
 	oItem.setText("Kolkata");
 	locationText.addItem(oItem); */
 	
-	
 	var oSimpleListBox = new sap.ui.commons.ListBox({
-	width: "200px",
-	items : [
-	 		new sap.ui.core.ListItem({text : 'Spring'}),
-			new sap.ui.core.ListItem({text : 'Summer'}),
-			new sap.ui.core.ListItem({text : 'Autumn'}),
-			new sap.ui.core.ListItem({text : 'Winter'})
-  ],
-  select : function(e) {
-	  var a=[""];
-	  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
-	  oTextSummary.setText(a.join(""));
-  }
-});
-var oTextSummary = new sap.ui.commons.TextView();
-var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
-		text: "MultiSelection",
-		checked : false,
-		change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
-});
-
-	/*
-	var oSimpleListBox = new sap.ui.commons.ListBox({
-			items : [
-					 new sap.ui.core.ListItem({text : 'Spring'}),
-					new sap.ui.core.ListItem({text : 'Summer'}),
-					new sap.ui.core.ListItem({text : 'Autumn'}),
-					new sap.ui.core.ListItem({text : 'Winter'})
-		  ],
-		  visibleItems : 6,
-		  select : function(e) {
-			  var a;
-			  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
-			  oTextSummary.setValue(a.join(""));
-		  }
-		})
-		var oTextSummary = new sap.ui.commons.TextField();
-		var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
-				text: "MultiSelection",
-				checked : false,
-				change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
-		});*/
-	
+		items : [
+		 		new sap.ui.core.ListItem({text : 'Spring'}),
+				new sap.ui.core.ListItem({text : 'Summer'}),
+				new sap.ui.core.ListItem({text : 'Autumn'}),
+				new sap.ui.core.ListItem({text : 'Winter'})
+	  ],
+	  visibleItems : 6,
+	  select : function(e) {
+		  var a;
+		  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
+		  oTextSummary.setValue(a.join(""));
+	  }
+	})
+	var oTextSummary = new sap.ui.commons.TextField();
+	var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
+			text: "MultiSelection",
+			checked : false,
+			change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
+	})
 
 /* 	locationLabel.setLabelFor(locationText);
 	oDetails.createRow(locationLabel, locationText); */
@@ -639,7 +601,7 @@ oDetails.createRow(locationLabel,oSimpleListBox,oTextSummary,oMultiSelectionChec
 	    
 	}
 	})
-	oDetails.createRow("",oTagg);
+	oDetails.createRow(oTagg);
 	oDetails.placeAt("second");
 
 	
@@ -1655,16 +1617,9 @@ padding-bottom: 15px !important;
 margin-top:35px;
 
 }
-#rmtLogo{
-	margin-left:45px;
-}
-
-#for_log_layout td{
-	padding-bottom:10px;	
-}
 #TF-Name,#TF1-Name
 {
-
+ margin-top	:30px;
   font-family: 'Lato', Calibri, Arial, sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -1672,7 +1627,7 @@ margin-top:35px;
 
     /* Size and position */
     width: 100%;
-    
+    padding: 10px 18px 10px 45px;
 
     /* Styles */
     border: none; /* Remove the default border */
