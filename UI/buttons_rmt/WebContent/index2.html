@@ -578,7 +578,7 @@ oDetails.createRow(locationLabel,oSimpleListBox,oTextSummary,oMultiSelectionChec
 	      				}
 	      				else
 	      					{
-	      					 var tmp =  {sname:val.so.so_no, pcode:val.so.so_proj_id, pname:val.so.so_proj_name,sdate:val.so.so_cr_date,edate:val.so.so_endate,eid:val.emp[0].emp_id,ename:val.emp[0].emp_name,lev:val.emp[0].level,skill:val.emp[0].skill1_l4, eloc:val.emp[0].loc,fulfill:"",status:"",assign:"",reason:val.emp[0].reason};
+	      					 var tmp =  {sname:val.so.so_no, pcode:val.so.so_proj_id, pname:val.so.so_proj_name,sdate:val.so.so_cr_date,edate:val.so.so_endate,eid:val.emp[0].emp_id,ename:val.emp[0].emp_name,lev:val.emp[0].level,skill:val.emp[0].skill1_l4, eloc:val.emp[0].loc,fulfill:"",status:"",assign:"A",reason:val.emp[0].reason};
 	      					completeData.push(tmp);
 	      					res_completed++;
 	      					
@@ -763,11 +763,11 @@ suitable_match.addColumn(new sap.ui.table.Column({
 	}),
 	template: new sap.ui.commons.DropdownBox({
 		tooltip: "Decision",
-		items: [new sap.ui.core.ListItem("decide",{text: "Approve", key: "Ap"}),
-		        new sap.ui.core.ListItem("decide1",{text: "Reject", key: "Re"}),
+		items: [new sap.ui.core.ListItem("decide",{text: "Approve", key: "R"}),
+		        new sap.ui.core.ListItem("decide1",{text: "Reject", key: "A"}),
 		        new sap.ui.core.ListItem("decide2",{text: "None", key: "N"}),
 		        ]
-		}),
+		}).bindProperty("key", "assign"),
 	sortProperty: "",
 	filterProperty: "",
 	width: "100px"
