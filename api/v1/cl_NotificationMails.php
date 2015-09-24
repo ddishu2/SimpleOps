@@ -263,7 +263,7 @@ class cl_NotificationMails
                     $lv_message .= "Content-Disposition: attachment\r\n\r\n";
                     $lv_message .=  chunk_split(base64_encode(file_get_contents($lv_file)))."\r\n";
                     $lv_message .= "--".$lv_uid."--"; 
-                    $lv_mail     = mail($this->lv_recievers, "E-mail from PHP", $lv_message, $lv_headers);
+                    $lv_mail     = mail("tejas@localhost", "E-mail from PHP", $lv_message, $lv_headers);
                     echo('hope this works...<br>');
                     if($lv_mail)
                         {   
