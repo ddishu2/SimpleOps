@@ -19,8 +19,8 @@
     const C_SQL_WILDCARD_ANY     = '%';
     const C_SQL_AS           = ' AS ';
     const C_SQL_IN           = ' IN ';
-    const C_SQL_CAST         = ' CAST ';
-    const C_SQL_DATE         = ' DATE ';
+    const C_SQL_CAST         = ' CAST ( ';
+    const C_SQL_AS_DATE         = ' AS DATE ) ';
     const C_SQL_EQUALS       = ' = ';
     const C_SQL_QUOTE        = "'";
     const C_SQL_AND          = ' AND ';
@@ -91,6 +91,9 @@
             }
         return $re_success;
     }
+    
+    
+    
     
     /**
      * Adds a Like Filter To Query.
@@ -239,6 +242,26 @@
             $re_valid = true;
         }
         return $re_valid;
+    }
+    
+     /**
+     * Returns YYYY-MM-DD value as an SQL Date.
+     * 
+     * 
+     * @param string $fp_v_date YYYY-MM-DD Date
+     * @return string
+     */
+    private function convertToSQLDate($fp_v_date)
+    {
+        $lv_dummy_fname = "DUMMY";
+        $re_cast_as_date = null;
+        if($this->isValidFilter($lv_dummy_fname, $fp_v_date))
+        {
+            $re_cast_as_date = self::C_SQL_CAST
+                    .$fp_v_date
+                    .self::C_SQL_AS_DATE;
+        }
+        return $re_cast_as_date;
     }
     
     /**
