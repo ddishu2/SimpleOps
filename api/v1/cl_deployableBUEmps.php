@@ -286,7 +286,7 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
              }
             
             //print_r(self::$arr_unfilled_so_after_perfect_proposal);
-             print_r($lv_allsos);
+//             print_r($lv_allsos);
         }
     }
 
