@@ -10,7 +10,7 @@
 	data-sap-ui-compatVersion='edge' data-sap-ui-preload='async'>
 	
 </script>
-
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <script>
 	sap.ui
 			.getCore()
@@ -53,7 +53,7 @@
 						var oLabel = new sap.ui.commons.Label({
 							id : 'L-Name',
 							text : 'UserName:-'
-						}).addStyleClass("textk");
+						}).addStyleClass("for_login_css");
 
 						var oTF = new sap.ui.commons.TextField({
 							id : 'TF-Name',
@@ -61,14 +61,14 @@
 							editable : true,
 							value : '',
 							width : '200px',
-						});
+						}).addStyleClass("for_login_css");;
 						oLabel.setLabelFor(oTF);
 
 						for_login.createRow(oLabel, oTF);
 						var oLabel = new sap.ui.commons.Label({
 							id : 'L1-Name',
 							text : 'Password:-'
-						}).addStyleClass("textk");
+						}).addStyleClass("for_login_css");
 
 						var oTF = new sap.ui.commons.PasswordField({
 							id : 'TF1-Name',
@@ -80,7 +80,7 @@
 								if (this.getValue() == '')
 									alert("Please Enter your Password.");
 							}
-						});
+						}).addStyleClass("for_login_css");;
 
 						oLabel.setLabelFor(oTF);
 						for_login.createRow(oLabel, oTF);
@@ -117,7 +117,7 @@
 								}
 							}
 
-						});
+						}).addStyleClass("for_login_css");;
 
 						for_login.createRow("", oButton1);
 
@@ -188,7 +188,7 @@
 						var oMenuItem1 = new sap.ui.commons.MenuItem("item1-1",
 								{
 									text : "Auto Proposal",
-									icon : "images/new.gif"
+									
 								}); //Icon must be not larger than 16x16 px
 						oMenu1.addItem(oMenuItem1);
 						var oMenuItem2 = new sap.ui.commons.MenuItem("item1-2",
@@ -453,32 +453,7 @@
 							text : 'Location'
 						}).addStyleClass("for_text_style1");
 
-						/* var locationText = new sap.ui.commons.DropdownBox("loci").addStyleClass("for_fields_style1");
-						locationText.setTooltip("Location");
-						locationText.setEditable(true);
-						locationText.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("Location1");
-						oItem.setText("Mumbai");
-						locationText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Location2");
-						oItem.setText("Banglore");
-						locationText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Location3");
-						oItem.setText("Chennai");
-						locationText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Location4");
-						oItem.setText("Gurgaon");
-						locationText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Location5");
-						oItem.setText("Hyderabad");
-						locationText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Location6");
-						oItem.setText("Pune");
-						locationText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Location7");
-						oItem.setText("Kolkata");
-						locationText.addItem(oItem); */
-
+						
 						var oSimpleListBox = new sap.ui.commons.ListBox({
 							width : "200px",
 							items : [ new sap.ui.core.ListItem({
@@ -510,31 +485,7 @@
 									}
 								});
 
-						/*
-						var oSimpleListBox = new sap.ui.commons.ListBox({
-								items : [
-										 new sap.ui.core.ListItem({text : 'Spring'}),
-										new sap.ui.core.ListItem({text : 'Summer'}),
-										new sap.ui.core.ListItem({text : 'Autumn'}),
-										new sap.ui.core.ListItem({text : 'Winter'})
-							  ],
-							  visibleItems : 6,
-							  select : function(e) {
-								  var a;
-								  jQuery.each(oSimpleListBox.getSelectedItems(), function(idx,item) { a.push(item.getText(), ",");});
-								  oTextSummary.setValue(a.join(""));
-							  }
-							})
-							var oTextSummary = new sap.ui.commons.TextField();
-							var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox({
-									text: "MultiSelection",
-									checked : false,
-									change : function(e) { oSimpleListBox.setAllowMultiSelect(e.getSource().getChecked()); } 
-							});*/
-
-						/* 	locationLabel.setLabelFor(locationText);
-						 oDetails.createRow(locationLabel, locationText); */
-
+						
 						oDetails.createRow(locationLabel, oSimpleListBox,
 								oTextSummary, oMultiSelectionCheckBox);
 
@@ -1504,380 +1455,7 @@
 
 					});
 </script>
-<style>
-.first_page_buttons {
-	margin-top: 10px !important;
-	margin-right: 10px !important;
-	font-size: 14px !important;
-}
 
-.sapUiBody {
-	background: #fff;
-}
-
-#first1a {
-	padding-top: 80px;
-	margin-top: -70px;
-}
-
-.marginLeft {
-	margin-left: 100px !important;
-}
-
-#owel1 {
-	margin: 0 auto;
-}
-
-#welcome1 {
-	font-size: 30px;
-	line-height: 30px;
-}
-
-#sc1 {
-	font-size: 30px !important;
-	margin-top: 5px;
-}
-
-.for_normal_buttons_style1 {
-	width: 175px !important;
-	height: 40px !important;
-	white-space: pre-wrap !important;
-	font-size: 16px !important;
-	border-radius: 10px !important;
-	margin-top: 30px !important;
-}
-
-.for_normal_buttons_style1.selected, .for_normal_buttons_style1:hover {
-	background: #303030 !important;
-	color: #E0E0E0 !important;
-	cursor: pointer !important;
-}
-
-#suitable_match1 tr {
-	font-size: 40px !important;
-}
-
-#partial_match tr {
-	font-size: 40px !important;
-}
-
-#tag_result {
-	margin-top: 25px;
-	width: 175px;
-	height: 40px;
-	white-space: pre-wrap;
-	font-size: 16px;
-	border-radius: 10px;
-}
-
-#tag_result.selected, #tag_result:hover {
-	background: #303030 !important;
-	color: #E0E0E0 !important;
-	cursor: pointer !important;
-}
-
-.for_fields_style1 {
-	width: 200px !important;
-	margin-top: 15px;
-	height: 30px !important;
-}
-
-.for_fields_style1 input {
-	font-size: 18px !important;
-}
-
-.for_text_style1 {
-	font-size: 20px !important;
-	margin-top: 15px;
-}
-
-.manual_form_common_style {
-	direction: inherit;
-	text-align: left;
-	font-size: 17px !important;
-	font-weight: normal !important;
-}
-
-.manual_form_common_style_buttons {
-	width: 90px !important;
-	height: 35px !important;
-	margin-top: 15px !important;
-}
-
-#manual_form {
-	border-collapse: collapse;
-	width: 400px;
-	table-layout: fixed;
-	margin-left: 180px;
-	margin-top: 20px;
-}
-
-.buttons_common_style1 {
-	width: 271px !important;
-	height: 86px !important;
-	font-size: 16px !important;
-	border-radius: 10px !important
-}
-
-.buttons_common_style1.selected, .buttons_common_style1:hover {
-	background: #303030 !important;
-	color: #E0E0E0 !important;
-	cursor: pointer !important;
-}
-
-#matrix2 {
-	border-collapse: collapse;
-	width: 800px;
-	table-layout: fixed;
-	margin: 0 auto;
-}
-
-#desc1 {
-	direction: inherit;
-	font-size: 21px;
-	width: 100%;
-	text-align: center;
-}
-
-.content {
-	
-	margin: 0 auto;
-	background: #ccc;
-	min-height: 900px;
-	-webkit-box-shadow: 2px 9px 35px 0px rgba(0, 0, 0, 0.75);
-	-moz-box-shadow: 2px 9px 35px 0px rgba(0, 0, 0, 0.75);
-	box-shadow: 2px 9px 35px 0px rgba(0, 0, 0, 0.75);
-}
-
-.buttons_style1 {
-	display: block;
-	width: 301px !important;
-	background: rgba(66, 158, 192, 0.79) !important;
-	width: 100% !important;
-	text-align: center;
-	font-size: 17px !important;
-	border: 1px solid #0187b7;
-	border-radius: 10px !important;
-	cursor: pointer !important;
-	height: 47px !important;
-	padding-top: 15px !important;
-	padding-bottom: 15px !important;
-}
-
-#manual {
-	margin-top: 121px;
-}
-
-#heading {
-	margin: 0 auto;
-	min-height: 100px;
-	height: 100%;
-	padding: 0 20px;
-	background: #aaa;
-}
-
-#first {
-	width: 400px;
-	min-height: 100px;
-	height: 100%;
-	padding: 0 20px;
-	text-align: center;
-	margin: 0 auto;
-	margin-top: 140px;
-}
-
-#second, #third {
-	
-	min-height: 100px;
-	height: 100%;
-	padding: 75 20px !important;
-	margin-top: 45px;
-}
-
-#four1, #four2 {
-	min-height: 100px;
-	height: 100%;
-	padding: 0 20px;
-	margin-top: 45px;
-}
-
-.normal_header_style {
-	display: block;
-	width: 301px !important;
-	background: #B0B0B0 !important;
-	width: 40% !important;
-	text-align: center;
-	font-size: 17px !important;
-	border: 1px solid #0187b7;
-	border-radius: 10px !important;
-	cursor: pointer !important;
-	height: 47px !important;
-	padding-top: 15px !important;
-	padding-bottom: 15px !important;
-}
-
-#df, #rg, #mt, #ad, #ap, #eh {
-	width: 100%;
-	margin-top: 60px !important;
-	margin-right: 8px;
-	height: 36px;
-	text-align: center;
-	font-size: 16px;
-	border: 2px solid #444;
-	border-radius: 6px;
-}
-
-#cg_logo {
-	margin-top: 5px;
-}
-
-#aa11 {
-	width: 19%;
-	margin-right: 8px;
-	margin-top: 5px;
-	height: 36px;
-	text-align: center;
-	font-size: 16px;
-	border: 2px solid #444;
-	border-radius: 6px;
-	float: right;
-}
-
-#lo {
-	width: 19%;
-	float: right;
-	margin-top: 5px;
-	height: 36px;
-	text-align: center;
-	font-size: 16px;
-	border: 2px solid #444;
-	border-radius: 6px;
-}
-
-#fhb {
-	margin-top: -27px !important;
-}
-
-#df.selected, #df:hover, #rg.selected, #rg:hover, #mt.selected, #mt:hover,
-	#ad.selected, #ad:hover, #aa11.selected, #aa11:hover, #lo.selected, #lo:hover
-	{
-	background: #444;
-	color: #fff;
-	cursor: pointer;
-}
-
-.hide_div {
-	display: none
-}
-
-#matrix4 {
-	border-collapse: collapse;
-	width: 600px;
-	table-layout: fixed;
-	margin: 10px auto;
-}
-
-.for_buttons {
-	display: block;
-	width: 300px;
-	background: #f8f8f8;
-	width: 25%;
-	padding: 10px 0;
-	text-align: center;
-	font-size: 16px;
-	border: 1px solid #444;
-	border-radius: 10px;
-	cursor: pointer;
-	float: left;
-}
-
-#bt1 {
-	margin-left: 390px;
-	margin-top: 40px;
-}
-
-#mytable-rows-row0 {
-	background-color: #f0f0f0;
-}
-
-#__field0-col0-row0, #__field1-col5-row0 {
-	background-color: #fff;
-}
-
-#__container0 {
-	position: fixed;
-	top: 46% !important;
-	left: 50% !important;
-	/* transform: translate(-50%, -50%); */
-	-webkit-transform: translateX(-50%) translateY(-50%);
-	-moz-transform: translateX(-50%) translateY(-50%);
-	-ms-transform: translateX(-50%) translateY(-50%);
-	transform: translateX(-50%) translateY(-50%);
-}
-
-#__container0-openNew {
-	display: none !important;
-}
-
-#__view36 {
-	direction: inherit;
-	width: 700px;
-	height: 25px;
-	border-bottom-style: dotted;
-	text-align: center;
-	font-size: 20px;
-	font-weight: bold;
-}
-
-#sdiv {
-	margin-left: 195px !important;
-}
-
-#scr1 {
-	margin-top: 35px;
-	display: block;
-	width: 301px !important;
-	background: #B0B0B0 !important;
-	width: 95% !important;
-	text-align: center;
-	font-size: 17px !important;
-	border: 1px solid #0187b7;
-	border-radius: 10px !important;
-	cursor: pointer !important;
-	height: 47px !important;
-	padding-top: 15px !important;
-	padding-bottom: 15px !important;
-}
-
-#aa1 {
-	margin-top: 35px;
-}
-
-#rmtLogo {
-	margin-left: 45px;
-}
-
-#for_log_layout td {
-	padding-bottom: 10px;
-}
-
-#TF-Name, #TF1-Name {
-	font-family: 'Lato', Calibri, Arial, sans-serif;
-	font-size: 13px;
-	font-weight: 400;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-	/* Size and position */
-	width: 100%;
-	/* Styles */
-	border: none; /* Remove the default border */
-	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1), inset 0 3px 2px
-		rgba(0, 0, 0, 0.1);
-	border-radius: 3px;
-	background: #f9f9f9;
-	color: #777;
-	transition: color 0.3s ease-out;
-}
-</style>
 
 </head>
 <body class='sapUiBody'>
