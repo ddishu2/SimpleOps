@@ -19,6 +19,11 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     const C_CUSTNAME_FNAME   = ' cust_name ';
     const C_LOCATION_FNAME   = ' so_loc ';
     const C_BU_FNAME         = ' so_proj_bu';
+    const C_FNAME_LOC        = 'so_loc';
+    const C_FNAME_LEVEL      = 'grade';
+    const C_FNAME_SKILL      = 'skill1';
+    const C_FNAME_BU         = 'so_proj_bu';
+    const C_FNAME_CAPABILITY = 'capability';
     const C_DB_TABLE         = 'v_rrs_open_so1';
     const C_SPACE            = ' ';
     const C_INTERVAL_SUFFIX  = ' days';
