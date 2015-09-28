@@ -102,6 +102,11 @@
 								} else if (namePassField.getValue() === "") {
 									alert("Please Enter Password");
 									return;
+								/* }
+								else if(nameFirstField.getValue() !== "User1" && namePassField.getValue() !== "userpass") 
+								{
+									
+								alert("You are not a valid User"); */
 
 								} else {
 
@@ -260,11 +265,7 @@
 						cg_logo.placeAt("heading");
 						logout.placeAt("heading");
 						admin_act.placeAt("heading");
-						/* demand_fulfill.placeAt("heading"); 
-						report_gen.placeAt("heading");
-						amendments.placeAt("heading");
-						Approvals.placeAt("heading");
-						External_Hiring.placeAt("heading"); */
+						
 						for_head_button.createRow(demand_fulfill, report_gen,
 								amendments, Approvals, External_Hiring)
 						for_head_button.placeAt("heading");
@@ -288,7 +289,9 @@
 							layoutFixed : true,
 							width : '700px',
 							columns : 4,
-							widths : [ '150px', '250px', '100px', '100px' ]
+							widths : [ '150px', '250px', 
+
+							           '100px', '100px' ]
 						});
 
 						var oCell = new sap.ui.commons.layout.MatrixLayoutCell(
