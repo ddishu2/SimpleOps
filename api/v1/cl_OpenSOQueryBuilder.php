@@ -20,9 +20,11 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     const C_LOCATION_FNAME   = ' so_loc ';
     const C_BU_FNAME         = ' so_proj_bu';
     const C_DB_TABLE         = 'v_rrs_open_so1';
+    const C_SPACE            = ' ';
+    const C_INTERVAL_SUFFIX  = ' days';
     
-    const C_START_INTERVAL   = '56 days';
-    const C_END_INTERVAL     = '28 days';
+    const C_START_INTERVAL   = -56;
+    const C_END_INTERVAL     =  28;
 
     
     const C_SO_SUBMI_DATE_FNAME    = ' so_submi_date ';
@@ -30,12 +32,16 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     protected $v_so_sdate  = null;
     protected $v_so_endate = null;
     
+    /**
+     * 
+     * @param string $fp_v_start_date in the format YYYY-MM-DD
+     * @param string $fp_v_end_date   in the format YYYY-MM-DD
+     */
+    
     public function __construct($fp_v_start_date, $fp_v_end_date)
     { 
-        $lv_startDate =  $fp_v_start_date;
-        $lv_endDate =    $fp_v_end_date;
-        $re_valid = $this->isDateRangeValid($lv_startDate, $lv_endDate );
-        if($re_Valid === true)
+        $re_valid = $this->isDateRangeValid($fp_v_start_date, $fp_v_end_date);
+        if($re_valid === true)
         {
             $this->v_so_sdate  = $lv_startDate;
             $this->v_so_endate = $lv_endDate;   
@@ -53,22 +59,53 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     }
     
 
+    /**
+     * 
+     * @return string in YYYY-MM-DD format
+     */
     public function getDefaultStartDate()
     {
-        $today                   = date(parent::C_DATE_FORMAT);
-        $lv_interval             = date_interval_create_from_date_string(self::C_START_INTERVAL);
-        $startDate               = date_diff($today, $lv_interval);
-        $re_formatted_start_date = $startDate->format(parent::C_DATE_FORMAT);
-        return $re_formatted_start_date;
+        $re_start_date = $this->addDaysToDate(date(parent::C_DATE_FORMAT), self::C_START_INTERVAL);
+        return $re_start_date;
     }
     
+    /**
+     * 
+     * @return string in YYYY-MM-DD format
+     */
     public function getDefaultEndDate()
+    {  
+        $re_end_date = $this->addDaysToDate(date(parent::C_DATE_FORMAT), self::C_END_INTERVAL);
+        return $re_end_date;
+    }
+    
+    /**
+     * 
+     * @param string $fp_str_date Must be a string in YYYY-MM-DD format
+     * @param int $fp_v_days Negative values are subtracted, positive values are 
+     *                       added.
+     * @return string   in YYYY-MM-DD format
+     */
+    private function addDaysToDate($fp_str_date = '0000-00-00' , $fp_v_days = 0)
     {
-        $today                 = date(parent::C_DATE_FORMAT);
-        $lv_interval           = date_interval_create_from_date_string(self::C_END_INTERVAL);
-        $endDate               = date_add($today, $lv_interval);
-        $re_formatted_end_date = $endDate->format(parent::C_DATE_FORMAT);
-        return $re_formatted_end_date;
+        $lo_date               = date_create($fp_str_date);
+        $lo_date_plus_interval = $fp_str_date;
+        if($fp_v_days !== 0)
+        {
+            $str_interval = abs($fp_v_days).self::C_SPACE.self::C_INTERVAL_SUFFIX;
+            $date_interval = date_interval_create_from_date_string($str_interval);
+            
+            if($fp_v_days > 0)
+            {
+                $lo_date_plus_interval = date_add($lo_date, $date_interval);
+            }
+            else
+            {
+                $lo_date_plus_interval = date_sub($lo_date, $date_interval);
+            }
+        }
+        $re_date_plus_interval = date_format($lo_date_plus_interval,parent::C_DATE_FORMAT);
+        return $re_date_plus_interval;
     }
     
     public function filterByEqualsProjBU($fp_v_proj_bu)
