@@ -123,13 +123,12 @@
 
 			var stat1="" ;
 			var comm1="" ;
-			stat1 += "&status="+$(".selection1").val();;
+			var transactn="";
+			stat1 += "&status="+$(".selection1").val();
 			comm1 += "&comments="+$(".comments1").text();
 
 			var asc1= comm1 + stat1 ;
 			$.ajax({
-
-				
     		  method: "GET",
     		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
     		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
