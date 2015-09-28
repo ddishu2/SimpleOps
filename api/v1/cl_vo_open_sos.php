@@ -28,10 +28,8 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
         parent::__construct($fp_v_so_sdate , $fp_v_so_endate);
-        $this->v_so_sdate   = $fp_v_so_sdate;
-        $this->v_so_endate  = $fp_v_so_endate;
-//        $this->getLocked();
-        $this->setOpenSOs();  
+//        $this->v_so_sdate   = $fp_v_so_sdate;
+//        $this->v_so_endate  = $fp_v_so_endate;
     }
     
     private function setDefaultStartDate()
@@ -45,7 +43,7 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
     
     public function get( ) 
     {
-        
+        $this->setOpenSOs();  
         return $this->arr_open_sos;
     }
     
@@ -75,7 +73,6 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
     {
         $re_sos   = [];
         $lv_query = parent::getQuery();
-        echo $lv_query;
         $re_sos = cl_DB::getResultsFromQuery($lv_query);
         return $re_sos;
     }
