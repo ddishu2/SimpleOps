@@ -28,7 +28,7 @@
     const C_SQL_ORDER_BY     = ' ORDER BY ';
     const C_SQL_ORDER_BY_ASC = ' ASC ';
     const C_SQL_LOWER        = 'LOWER( ';
-    const C_SQL_WHERE        = ' WHERE '.PHP_EOL;
+    const C_SQL_WHERE        = 'WHERE';
 
     private $v_query_filters = '';
     
@@ -39,7 +39,6 @@
    final public function getQuery()
     {
         $lv_filters   = '';
-        echo 'Filters'.$this->v_query_filters;
         $lv_baseQuery = $this->getBaseQuery();
         $re_query = $lv_baseQuery;
         if(    $this->areFiltersSet())
@@ -315,13 +314,9 @@
         $lv_query = $lv_baseQuery. $this->v_query_filters;
         if($this->doesQueryHaveWhereClause($lv_query))
         {
-            $re_addPrefix = true;
+            $re_addWhere = false;
         }
-        elseif($this->areFiltersSet())
-        {
-            $re_addPrefix = true;
-        }
-        return $re_addPrefix;
+        return $re_addWhere;
     }
     
     /**
