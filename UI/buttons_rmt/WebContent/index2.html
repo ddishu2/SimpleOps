@@ -373,11 +373,13 @@
 						oDetails.createRow(soDateToLabel, so_to);
 
 						var so_pro_bu = new sap.ui.commons.Label({
+							
+							id:'spb',
 							text : 'SO Project BU'
 						}).addStyleClass("for_text_style1");
 
 						var so_pro_drop = new sap.ui.commons.DropdownBox(
-								"proj_bu").addStyleClass("for_fields_style1");
+								{id:'spdrop'}).addStyleClass("for_fields_style1");
 						so_pro_drop.setTooltip("Project BU");
 						so_pro_drop.setEditable(true);
 						so_pro_drop.setWidth("200px");
@@ -445,10 +447,13 @@
 						oDetails.createRow(projectIdLabel, projectIdText);
 
 						var projectNameLabel = new sap.ui.commons.Label({
+							
 							text : 'Project Name'
 						}).addStyleClass("for_text_style1");
 
 						var projectNameText = new sap.ui.commons.TextField({
+							
+							id:'Pro_id',
 							//tooltip : 'SO Date',
 							editable : true,
 							width : '200px'
@@ -464,6 +469,7 @@
 
 						
 						var oSimpleListBox = new sap.ui.commons.ListBox({
+							
 							width : "200px",
 							items : [ new sap.ui.core.ListItem({
 								text : 'Mumbai'
@@ -495,7 +501,7 @@
 								oTextSummary.setText(a.join(""));
 							}
 						});
-						var oTextSummary = new sap.ui.commons.TextView();
+						var oTextSummary = new sap.ui.commons.TextView({id: 'loci'});
 						var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox(
 								{
 									text : "MultiSelection",
@@ -515,6 +521,7 @@
 						}).addStyleClass("for_text_style1");
 
 						var custnameText = new sap.ui.commons.TextField({
+							id: 'cust_name1',
 							//tooltip : 'SO Date',
 							editable : true,
 							width : '200px'
@@ -529,7 +536,9 @@
 						}).addStyleClass("for_text_style1");
 
 						var capabilityText = new sap.ui.commons.DropdownBox(
-								"capi").addStyleClass("for_fields_style1");
+								{
+									id: 'ct_drop',
+								}).addStyleClass("for_fields_style1");
 						capabilityText.setTooltip("Location");
 						capabilityText.setEditable(true);
 						capabilityText.setWidth("200px");
@@ -577,21 +586,55 @@
 									press : function display_third() {
 										$("#third").removeClass("hide_div");
 										$("#second").addClass("hide_div");
-
+                                        
 										var from = $("#sfrom1-input").val();
 										var upto = $("#sto1-input").val();
+										var p_name=$("#Pro_id").val();
+										var p_bu=$("#spdrop-input").val();
+										var p_loc=$("#loci").val();
+										var p_id=$("#pro_id_form").val();
+										var c_name=$("#cust_name1").val();
+											var cap=$("#ct_drop-input").val();
+									
+										
+							   //			http://localhost/rmt/api/v1/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31&proj_name=&proj_bu=&proj_loc[]=Mumbai&proj_id=&cust_name=&capability=								
+										
 										console
 												.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="
 														+ from
 														+ "&so_to_date="
-														+ upto);
+														+ upto
+														+ "&proj_name="
+														+ p_name
+														+ "&proj_bu="
+														+ p_bu
+														+ "&proj_loc[]="
+														+ p_loc
+												        + "&proj_id="
+												        + p_id
+												        + "&cust_name="
+												        + c_name
+												        + "&capability="
+												        +  cap);
 										$
 												.ajax({
 													method : "GET",
 													url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-															+ from
-															+ "&so_to_date="
-															+ upto,
+														+ from
+														+ "&so_to_date="
+														+ upto
+														+ "&proj_name="
+														+ p_name
+														+ "&proj_bu="
+														+ p_bu
+														+ "&proj_loc[]="
+														+ p_loc
+												        + "&proj_id="
+												        + p_id
+												        + "&cust_name="
+												        + c_name
+												        + "&capability="
+												        +  cap,
 													success : function(odata) {
 														console.log(odata);
 														var table_row;
