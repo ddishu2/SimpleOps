@@ -32,6 +32,16 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
         $this->v_so_sdate  = $fp_v_start_date;
         $this->v_so_endate = $fp_v_end_date;   
     }
+    
+    private function setStartDate()
+    {
+        
+    }
+    
+    private function isDateValid()
+    {
+        
+    }
         
     public function filterByEqualsProjBU($fp_v_proj_bu)
     {
