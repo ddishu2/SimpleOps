@@ -102,7 +102,7 @@
 					<tr>
 						<td></td>
 						<td>
-				<input type="button" value="Submit" />
+				<input type="button" value="Submit"  onclick="submit_form()"  />
 </td>
 					</tr>
 				</table>
@@ -114,4 +114,14 @@
 
 		</div>
 	</body>
+	
+	<script type="text/javascript">
+
+	function submit_form(){
+
+alert("hii");
+	}
+
+	
+	</script>
 </html>
