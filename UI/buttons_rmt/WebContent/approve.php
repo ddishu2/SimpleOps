@@ -97,7 +97,7 @@
 					<tr>
 						<th>Comments:</th>
 						<td>
-				<textarea class="comments1" ></textarea></td>
+				<textarea class="comments1" required></textarea></td>
 					</tr>
 					<tr>
 						<td></td>
