@@ -73,6 +73,7 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
     {
         $re_sos   = [];
         $lv_query = parent::getQuery();
+//        echo $lv_query;
         $re_sos = cl_DB::getResultsFromQuery($lv_query);
         return $re_sos;
     }
