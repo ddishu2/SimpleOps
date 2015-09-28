@@ -88,7 +88,7 @@
 					<tr>
 						<th>Action:</th>
 						<td>
-							<select>
+							<select class="selection1">
 					<option>Approve</option>
 					<option>Reject</option>
 				</select>
@@ -97,7 +97,7 @@
 					<tr>
 						<th>Comments:</th>
 						<td>
-				<textarea></textarea></td>
+				<textarea class="comments1" ></textarea></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -119,9 +119,27 @@
 
 	function submit_form(){
 
-alert("hii");
-	}
+		
 
-	
+			var stat1="" ;
+			var comm1="" ;
+			stat1 += "&status="+$(".selection1").val();;
+			comm1 += "&comments="+$(".comments1").text();
+
+			var asc1= comments1 + stat1 ;
+			$.ajax({
+
+				
+    		  method: "GET",
+    		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
+    		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+    		success : function(odata){
+    			
+    			alert("Submitted");
+    		}
+		});
+
+		//http://localhost/rmt1/api/v1/index.php/approve_hard_lock/?trans_id=1&comments=helloworld&status=Approve
+			
 	</script>
 </html>
