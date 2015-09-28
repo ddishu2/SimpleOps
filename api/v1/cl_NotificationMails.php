@@ -10,7 +10,7 @@
  *
  * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
-require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
+//require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {

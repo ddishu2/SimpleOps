@@ -45,7 +45,7 @@ class cl_Lock {
         $lv_max_trans_id = cl_DB::getResultsFromQuery($lv_sql);
         return $lv_max_trans_id;
     }
-
+    
     public function setSoftLock($lv_trans_id, $fp_v_so_id, $fp_v_emp_id, $lv_prop_id, $fp_v_requestor_id) {
 
         //To Retrieve lock Start & end date  
@@ -61,6 +61,9 @@ class cl_Lock {
 
         return $lv_result;  //return true or false
     }
+    
+//    f
+//    rmt/api/v1/processLock/?lock_id=123&action='approve'&comments='Approved'
 //Lock History
     public function setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, $status, $lv_prop_id, $lv_request_id) {
         $lv_start_date = date('y-m-d');
@@ -75,6 +78,7 @@ class cl_Lock {
 
         return $lv_result;
     }
+    
 
     public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id ) {
        
@@ -97,10 +101,14 @@ class cl_Lock {
 
 
                 try {
+                    
+                    mysqli_autocommit( $lv_db,false);
                     mysqli_begin_transaction($lv_db);
-                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id);
-                    $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], 'S121', $lv_prop_id, $lv_request_id);
+                        $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], 'S121', $lv_prop_id, $lv_request_id);
+                        
+                        $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id);
                     mysqli_commit($lv_db);
+                    echo 'History'.$lv_history;
                 } catch (Exception $ex) {
                     mysqli_rollback($lv_db);
                     echo 'Failed-' . $ex->getMessage();
@@ -110,7 +118,7 @@ class cl_Lock {
                     $softlock_count++;      //counting no of soft lock
                     
                     
-                    $lv_link = self::getLink($fp_arr_so[$i], $fp_arr_emp[$i]);
+                    $lv_link = self::getLink($fp_arr_so[$i], $fp_arr_emp[$i],$lv_trans_id);
                     
                     
                      // call method to send mail 
@@ -313,8 +321,10 @@ and so_id ='$fp_v_so_id'";
         
         return $so_endate;
     }
-    
-    public static function getLink($fp_v_so_no,$fp_v_emp_id)
+    /*
+     creates a link for popup on email 
+     */
+    public static function getLink($fp_v_so_no,$fp_v_emp_id,$fp_v_trans_id)
     {
         $lt_Sodetails = getDetails::getSODetails($fp_v_so_no);
         
@@ -341,7 +351,7 @@ and so_id ='$fp_v_so_id'";
         }
         
         //$lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
-        $lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
+        $lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate&trans_id=$fp_v_trans_id";
         return $lv_link;
         
     }
