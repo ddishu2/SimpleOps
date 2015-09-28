@@ -13,34 +13,14 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
 
 class cl_vo_open_sos extends cl_OpenSOQueryBuilder
 {
-//    const cl_DB::C_DATE_FORMAT   = 'Y-m-d';
-    const C_VIEW_OPEN_SO  = 'v_open_so';
-    const C_FNAME_SO_FROM = 'so_from_date';
-    const C_FNAME_SO_TO   = 'so_to_date';
     const C_SO_ID_DB_FNAME = 'so_no';
-    const C_DATE_COMPONENTS = 3;
-//    private $v_so_sdate;
-//    private $v_so_endate;
     private $arr_open_sos = []; 
-    public static $arr_lockedso = [];
-    
     
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
         parent::__construct($fp_v_so_sdate , $fp_v_so_endate);
-//        $this->v_so_sdate   = $fp_v_so_sdate;
-//        $this->v_so_endate  = $fp_v_so_endate;
     }
-    
-    private function setDefaultStartDate()
-    {
         
-    }
-    private function setDefaultEndDate()
-    {
-        
-    }
-    
     public function get( ) 
     {
         $this->setOpenSOs();  
@@ -50,36 +30,24 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
     
     private function setOpenSOs()
     {
-         
         $larr_open_sos = [];
         $larr_sos =  $this->fetch();
-//        echo json_encode($larr_sos);
         foreach ($larr_sos as $lwa_so) 
         {
             $lv_so_id = $lwa_so[self::C_SO_ID_DB_FNAME];
-//            $lv_is_so_open = $this->isOpen($lv_so_id);
-//            if($lv_is_so_open == true)
-//            {
-                $larr_open_sos[] = $lwa_so;
-//            }
+            $larr_open_sos[] = $lwa_so;
         }
         $this->arr_open_sos =  $larr_open_sos;
     }
-    
-    
-    
-    
+
     private function fetch()
     {
         $re_sos   = [];
         $lv_query = parent::getQuery();
-//        echo $lv_query;
         $re_sos = cl_DB::getResultsFromQuery($lv_query);
         return $re_sos;
     }
     
-    
-
     public function isOpen($fp_v_so_id) 
     {
 //      //  print_r(self::$arr_lockedso);
