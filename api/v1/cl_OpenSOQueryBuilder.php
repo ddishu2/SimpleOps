@@ -20,6 +20,7 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     const C_LOCATION_FNAME   = ' so_loc ';
     const C_BU_FNAME         = ' so_proj_bu';
     const C_DB_TABLE         = 'v_rrs_open_so1';
+
     
     const C_SO_SUBMI_DATE_FNAME    = ' so_submi_date ';
     
@@ -29,29 +30,19 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     
     public function __construct($fp_v_start_date, $fp_v_end_date)
     { 
+        $re_valid = $this->isDateRangeValid($fp_v_start_date, $fp_v_end_date);
         $this->v_so_sdate  = $fp_v_start_date;
         $this->v_so_endate = $fp_v_end_date;   
     }
     
-    private function isDateRangeValid($fp_v_start_date = '', $fp_v_endate = '')
-    {
-        
-    }
+
     private function setStartDate()
     {
         
 //        $ymd = DateTime::createFromFormat('m-d-Y', '10-16-2003')->format('Y-m-d');
     }
     
-    private function isDateValid($fp_v_date)
-    {
-//        $re_valid = false;
-//        if($fp_v_date !== '' || $fp_v_date !== null)
-//        {
-//            checkdate ( int $month , int $day , int $year );
-//        }
-//        
-    }
+ 
         
     public function filterByEqualsProjBU($fp_v_proj_bu)
     {
