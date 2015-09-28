@@ -114,9 +114,8 @@
 			</div>
 
 		</div>
-	</body>
-	
-	<script type="text/javascript">
+		
+		<script type="text/javascript">
 
 	function submit_form(){
 
@@ -125,7 +124,9 @@
 
 			var stat1="" ;
 			var comm1="" ;
-			var transactn = "&trans_id"+transaction_id;
+			var transactn =""; 
+
+			transactn += "&trans_id"+$("#transaction_id").val();
 			stat1 += "&status="+$(".selection1").val();
 			comm1 += "&comments="+$(".comments1").text();
 
@@ -143,4 +144,7 @@
 		//http://localhost/rmt1/api/v1/index.php/approve_hard_lock/?trans_id=1&comments=helloworld&status=Approve
 			
 	</script>
+	</body>
+	
+	
 </html>
