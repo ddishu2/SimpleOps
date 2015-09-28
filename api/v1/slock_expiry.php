@@ -47,20 +47,14 @@ foreach ($lt_data as $key => $value) {
         mysqli_rollback($lv_db);
         echo 'Failed-' . $ex->getMessage();
     }
-      if ($lv_app_result == TRUE && $lv_history == TRUE) {
-//                    $softlock_count++;      //counting no of soft lock
-                    
-                    
-                    
-                    
+      if ($lv_app_result == TRUE && $lv_history == TRUE){
                     
                      // call method to send mail 
-                    $lv_link = 'no link required';
-                    $i_mode = 'SLR';
+                   
                     $lo_mail_noti = new cl_NotificationMails();
-                    $lo_mail_noti->sendnotification($lv_so_id, $i_mode,$lv_link ,$lv_trans_id,$lv_emp_id);
-                    // call method to send mail 
-                    
+                    //$lo_mail_noti->sendnotification($lv_so_id, $i_mode,$lv_link ,$lv_trans_id,$lv_emp_id);
+               
+                    $lo_mail_noti->sendSoftLockReleaseNotification($lv_so_id, $lv_emp_id, $lv_trans_id);
                     
                     
                 }

@@ -414,7 +414,8 @@ class cl_NotificationMails
 // Get recievers for email.                
                 self::get_recievers();                    
                     
-                $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
+             //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
+                $lv_mail = mail('tejas@localhost', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {   
                     return true;
@@ -427,5 +428,5 @@ class cl_NotificationMails
             }
         } 
 
-        $lo_email = new cl_NotificationMails();
-        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 232, 132456);
+//        $lo_email = new cl_NotificationMails();
+//        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 232, 132456);
