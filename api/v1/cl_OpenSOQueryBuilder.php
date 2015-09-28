@@ -23,12 +23,14 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     
     const C_SO_SUBMI_DATE_FNAME    = ' so_submi_date ';
     
-    private $v_so_sdate  = '2015-09-17';
-    private $v_so_endate = '2015-09-30';
+    protected $v_so_sdate  = '2015-09-17';
+    protected $v_so_endate = '2015-09-30';
     
     
     public function __construct($fp_v_start_date, $fp_v_end_date)
     { 
+        $this->v_so_sdate  = $fp_v_start_date;
+        $this->v_so_endate = $fp_v_end_date;   
     }
         
     public function filterByEqualsProjBU($fp_v_proj_bu)

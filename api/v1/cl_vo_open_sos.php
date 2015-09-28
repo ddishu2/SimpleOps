@@ -1,26 +1,46 @@
 <?php
-//This class represents Open SOs for a given date range
-class cl_vo_open_sos
+/**
+ * Summary:  Contains Logic to Process Open SOs(query).
+ * 
+ * 
+ * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
+ * Date: 16/09/2015.
+ * @uses cl_DB()->getResultsFromQuery to retrieve results. 
+ * 
+ */
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
+
+class cl_vo_open_sos extends cl_OpenSOQueryBuilder
 {
-    const C_DATE_FORMAT   = 'Y-m-d';
+//    const cl_DB::C_DATE_FORMAT   = 'Y-m-d';
     const C_VIEW_OPEN_SO  = 'v_open_so';
     const C_FNAME_SO_FROM = 'so_from_date';
     const C_FNAME_SO_TO   = 'so_to_date';
     const C_SO_ID_DB_FNAME = 'so_no';
     const C_DATE_COMPONENTS = 3;
-    private $v_so_sdate;
-    private $v_so_endate;
+//    private $v_so_sdate;
+//    private $v_so_endate;
     private $arr_open_sos = []; 
     public static $arr_lockedso = [];
     
+    
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
+        parent::__construct($fp_v_so_sdate , $fp_v_so_endate);
         $this->v_so_sdate   = $fp_v_so_sdate;
-        $this->v_so_endate = $fp_v_so_endate;
-        $this->getLocked();
+        $this->v_so_endate  = $fp_v_so_endate;
+//        $this->getLocked();
         $this->setOpenSOs();  
+    }
+    
+    private function setDefaultStartDate()
+    {
         
-     
+    }
+    private function setDefaultEndDate()
+    {
+        
     }
     
     public function get( ) 
@@ -34,37 +54,28 @@ class cl_vo_open_sos
     {
          
         $larr_open_sos = [];
-        $larr_sos =  $this->fetchSOsForDateRange();
+        $larr_sos =  $this->fetch();
 //        echo json_encode($larr_sos);
         foreach ($larr_sos as $lwa_so) 
         {
             $lv_so_id = $lwa_so[self::C_SO_ID_DB_FNAME];
-            $lv_is_so_open = $this->isOpen($lv_so_id);
-            if($lv_is_so_open == true)
-            {
+//            $lv_is_so_open = $this->isOpen($lv_so_id);
+//            if($lv_is_so_open == true)
+//            {
                 $larr_open_sos[] = $lwa_so;
-            }
+//            }
         }
         $this->arr_open_sos =  $larr_open_sos;
     }
     
-    private function fetchSOsForDateRange()
+    
+    
+    
+    private function fetch()
     {
-        $re_sos = [];
-        $lv_query = "SELECT * FROM `v_open_so` \n"
-                . "WHERE\n"
-                . "(\n"
-                . "	new_sdate <> '0000-00-00'\n"
-                . "AND\n"
-                . "	new_sdate BETWEEN CAST('$this->v_so_sdate' AS DATE) AND CAST('$this->v_so_endate' AS DATE) \n"
-                . ")\n"
-                . "OR\n"
-                . "(\n"
-                . "	new_sdate = '0000-00-00'\n"
-                . "AND\n"
-                . "	so_sdate BETWEEN CAST('$this->v_so_sdate' AS DATE) AND CAST('$this->v_so_endate' AS DATE) \n"
-                . ")\n"
-                . "ORDER BY so_submi_date ASC;";
+        $re_sos   = [];
+        $lv_query = parent::getQuery();
+        echo $lv_query;
         $re_sos = cl_DB::getResultsFromQuery($lv_query);
         return $re_sos;
     }
@@ -73,17 +84,25 @@ class cl_vo_open_sos
 
     public function isOpen($fp_v_so_id) 
     {
-      //  print_r(self::$arr_lockedso);
-          $lv_isOpen = true;
-//        $v_so_rejectionCountWithinLimits = $this->isSO_RejectionCountWithinLimits($fp_v_so_id);
-//        $v_so_unfulfilled                = $this->isSO_Unfulfilled($fp_v_so_id);
-//        $lv_isOpen                       = $v_so_unfulfilled && $v_so_rejectionCountWithinLimits;
-         $lv_islocked = $this->isSOLocked($fp_v_so_id) ;
-          $lv_isOpen = $lv_isOpen && !$lv_islocked;
-        return $lv_isOpen;
+//      //  print_r(self::$arr_lockedso);
+//          $re_open = false;
+////        $v_so_rejectionCountWithinLimits = $this->isSO_RejectionCountWithinLimits($fp_v_so_id);
+////        $v_so_unfulfilled                = $this->isSO_Unfulfilled($fp_v_so_id);
+////        $lv_isOpen                       = $v_so_unfulfilled && $v_so_rejectionCountWithinLimits;
+//        $lv_query = 'SELECT'.PHP_EOL
+//                    .'so_no'.PHP_EOL
+//                    .'FROM'.PHP_EOL
+//                    .'v_open_so'.PHP_EOL
+//                    .'LIMIT 1';
+//        $lv_so_id = cl_DB::getResultsFromQuery($lv_query);
+//        $lv_count = cl_DB::getCountAndReset();
+//        if($lv_count === 1)
+//        {
+            $re_open = true;
+//        }
+        return $re_open;
     }
-
-
+    
     private function isSO_RejectionCountWithinLimits()
     {
 //     
@@ -112,20 +131,15 @@ class cl_vo_open_sos
     {
       // print_r(self::$arr_lockedso);
         $lv_slocked = false;
-        foreach (self::$arr_lockedso as $key => $value) {
-             
-         
-             if(in_array($fp_v_so_id,$value))
-         {
-             $lv_slocked = true;
-             break;
-         }
-       
-      }   
-
-        
+        foreach (self::$arr_lockedso as $key => $value) 
+        {
+            if(in_array($fp_v_so_id,$value))
+            {
+                 $lv_slocked = true;
+                break;
+            }
+        }
         $re_slocked = $lv_slocked;
         return $re_slocked;
     }
-    
 }
