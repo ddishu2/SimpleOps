@@ -111,7 +111,9 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
   $app->get('/sofilter(/)', 
                function () use($app) 
                {
-                    $larr_so_locs    = $app->request->get('so_loc' );
+                    $lv_sdate  =  $app->request->get('so_from_date');
+                    $lv_endate =  $app->request->get('so_to_date');
+                    $larr_so_locs    = $app->request->get('so_loc');
 //                    $lv_so_region = $app->request->get('so_reg');
                     $lv_so_projid = $app->request->get('so_projid');
                     $lv_so_proj_bu = $app->request->get('so_projbu');
@@ -120,7 +122,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
                     $app->response->setStatus(200);
 //                    $app->response->headers->set('Content-Type', 'application/json');
                     
-                    $lo_openSO = new cl_vo_open_sos('2015-09-28', '2015-09-30');
+                    $lo_openSO = new cl_vo_open_sos($lv_sdate, $lv_endate);
                     $lo_openSO->filterByContainsProjectName($lv_so_projname);
                     $lo_openSO->filterByEqualsProjBU($lv_so_proj_bu);
                     $lo_openSO->filterByInLocationList($larr_so_locs);
