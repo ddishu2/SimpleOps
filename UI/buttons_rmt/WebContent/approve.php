@@ -16,6 +16,7 @@
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	
 		<style>
 			 .details_table{
 				border:1px solid;
@@ -32,6 +33,32 @@
 				padding:2px;
 			}
 		</style>
+		
+		
+		
+		<script type="text/javascript">
+
+	function submit_form(){
+			var stat1="" ;
+			var comm1="" ;
+			var transactn = "&trans_id="+$("#transaction_id").val();
+			stat1 += "&status="+$(".selection1").val();
+			comm1 += "&comments="+$(".comments1").text();
+
+			var asc1= comm1 + stat1 ;
+			$.ajax({
+    		  method: "GET",
+    		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
+    		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+    		success : function(odata){
+    			
+    			alert("Submitted");
+    		}
+		});
+
+		//http://localhost/rmt1/api/v1/index.php/approve_hard_lock/?trans_id=1&comments=helloworld&status=Approve
+	}	
+	</script>
 	</head>
 
 	<body>
@@ -114,36 +141,6 @@
 			</div>
 
 		</div>
-		
-		<script type="text/javascript">
-
-	function submit_form(){
-
-		/* transaction id blank??
-				to bolla to tejas pathvnar */
-
-			var stat1="" ;
-			var comm1="" ;
-			var transactn =""; 
-
-			transactn += "&trans_id"+$("#transaction_id").val();
-			stat1 += "&status="+$(".selection1").val();
-			comm1 += "&comments="+$(".comments1").text();
-
-			var asc1= comm1 + stat1+transactn ;
-			$.ajax({
-    		  method: "GET",
-    		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
-    		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
-    		success : function(odata){
-    			
-    			alert("Submitted");
-    		}
-		});
-
-		//http://localhost/rmt1/api/v1/index.php/approve_hard_lock/?trans_id=1&comments=helloworld&status=Approve
-			
-	</script>
 	</body>
 	
 	
