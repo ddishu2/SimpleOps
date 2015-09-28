@@ -129,7 +129,7 @@
 			stat1 += "&status="+$(".selection1").val();
 			comm1 += "&comments="+$(".comments1").text();
 
-			var asc1= comm1 + stat1 ;
+			var asc1= comm1 + stat1+transactn ;
 			$.ajax({
     		  method: "GET",
     		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
