@@ -39,6 +39,7 @@
    final public function getQuery()
     {
         $lv_filters   = '';
+        echo 'Filters'.$this->v_query_filters;
         $lv_baseQuery = $this->getBaseQuery();
         $re_query = $lv_baseQuery;
         if(    $this->areFiltersSet())
@@ -78,8 +79,9 @@
      * @return boolean  Success
      */
     
-    final protected function addInFilterToQuery($fp_v_fname, $fp_arr_fvals)
+    final public function addInFilterToQuery($fp_v_fname, $fp_arr_fvals)
     {
+        
         $re_success = false;
         $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
             if($this->isValidFilter($fp_v_fname, $lv_valueList))
@@ -98,7 +100,7 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    final protected function addContainsFilterToQuery($fp_v_fname, $fp_v_fval)  
+    final public function addContainsFilterToQuery($fp_v_fname, $fp_v_fval)  
     {
         $re_success = false;
         if($this->isValidFilter($fp_v_fname, $fp_v_fval))
@@ -125,7 +127,7 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    final protected function addEqualsFilterToQuery($fp_v_fname, $fp_v_fval)
+    final public function addEqualsFilterToQuery($fp_v_fname, $fp_v_fval)
     {
         $re_success = false;
         if($this->isValidFilter($fp_v_fname, $fp_v_fval))
@@ -149,7 +151,7 @@
      * @param string    'To' field value
      * @return boolean  Success
      */
-    final protected function addBetweenFilterToQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to)
+    final public function addBetweenFilterToQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to)
     {
         $re_success = false;
         if($this->isValidFilter($fp_v_fname, $fp_v_fval_from)&& $this->isValidFilter($fp_v_fname, $fp_v_fval_to))
@@ -184,11 +186,11 @@
      * @param  array   $fp_arr_values
      * @return string  CSV string
      */
-    final public function convertArrayToCSV($fp_arr_values)
+    final public function convertArrayToCSV(array $fp_arr_values = null)
     {
-        $re_csv = null;
+        $re_csv = '';
         $lc_comma_quote = "','";
-        if(!is_null($fp_arr_values))
+        if(!is_null($fp_arr_values)&&  is_array($fp_arr_values))
         {
             $lv_valueList = implode($lc_comma_quote, $fp_arr_values);
             $lv_valueList = self::C_SQL_QUOTE.$lv_valueList.self::C_SQL_QUOTE; 
