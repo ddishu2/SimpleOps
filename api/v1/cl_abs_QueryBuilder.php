@@ -30,6 +30,10 @@
     const C_SQL_LOWER        = 'LOWER( ';
     const C_SQL_WHERE        = 'WHERE';
     const C_DATE_DELIMITER   = '-';
+    /**
+     * YYYY-MM-DD
+     */
+    const C_DATE_FORMAT      = 'Y-m-d';
     const C_DATE_COUNT       = 3;
     const C_DATE_DD_INDEX    = 2;
     const C_DATE_MM_INDEX    = 1;
