@@ -51,12 +51,12 @@
     		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
     		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
     		success : function(odata){
-    			
-    			alert("Submitted");
+
+    		      alert("Submitted");
     		}
 		});
 
-		//http://localhost/rmt1/api/v1/index.php/approve_hard_lock/?trans_id=1&comments=helloworld&status=Approve
+		
 	}	
 	</script>
 	</head>
