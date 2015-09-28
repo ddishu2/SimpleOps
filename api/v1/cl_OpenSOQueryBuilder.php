@@ -43,8 +43,8 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
         $re_valid = $this->isDateRangeValid($fp_v_start_date, $fp_v_end_date);
         if($re_valid === true)
         {
-            $this->v_so_sdate  = $lv_startDate;
-            $this->v_so_endate = $lv_endDate;   
+            $this->v_so_sdate  = $fp_v_start_date;
+            $this->v_so_endate = $fp_v_end_date;   
         }
         else
         {
