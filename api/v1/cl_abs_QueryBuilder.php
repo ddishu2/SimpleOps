@@ -154,7 +154,7 @@
         $re_success = false;
         if($this->isValidFilter($fp_v_fname, $fp_v_fval_from)&& $this->isValidFilter($fp_v_fname, $fp_v_fval_to))
         {
-            $lv_filterLine = $lv_fname
+            $lv_filterLine = $fp_v_fname
                             .self::C_SQL_BETWEEN
                             .$fp_v_fval_from
                             .self::C_SQL_AND
@@ -310,7 +310,8 @@
     {
         $re_addPrefix = false;
         $lv_baseQuery = $this->getBaseQuery();
-        if($this->doesQueryHaveWhereClause($lv_baseQuery))
+        $lv_query = $lv_baseQuery. $this->v_query_filters;
+        if($this->doesQueryHaveWhereClause($lv_query))
         {
             $re_addPrefix = true;
         }
