@@ -29,6 +29,11 @@
     const C_SQL_ORDER_BY_ASC = ' ASC ';
     const C_SQL_LOWER        = 'LOWER( ';
     const C_SQL_WHERE        = 'WHERE';
+    const C_DATE_DELIMITER   = '-';
+    const C_DATE_COUNT       = 3;
+    const C_DATE_DD_INDEX    = 2;
+    const C_DATE_MM_INDEX    = 1;
+    const C_DATE_YY_INDEX    = 0;
 
     private $v_query_filters = '';
     
@@ -309,7 +314,7 @@
      */
     private function shouldAddWhereClauseToQuery()
     {
-        $re_addPrefix = false;
+        $re_addWhere = true;
         $lv_baseQuery = $this->getBaseQuery();
         $lv_query = $lv_baseQuery. $this->v_query_filters;
         if($this->doesQueryHaveWhereClause($lv_query))
@@ -341,5 +346,39 @@
     final public function resetFilters()
     {
         $this->v_query_filters = null;
+    }
+    
+    final public function isDateValid($fp_v_date)
+    {
+        $re_valid = false;
+        if($fp_v_date !== '' || $fp_v_date !== null)
+        {
+            $lv_dateComponents = explode(self::C_DATE_DELIMITER, $fp_v_date, self::C_DATE_COUNT);
+            if(count($lv_dateComponents) === self::C_DATE_COUNT)
+            {
+                $lv_year  = $lv_dateComponents[self::C_DATE_YY_INDEX];
+                $lv_month = $lv_dateComponents[self::C_DATE_MM_INDEX];
+                $lv_day = $lv_dateComponents[self::C_DATE_DD_INDEX];
+                $re_valid = checkdate($lv_month, $lv_day, $lv_year);
+            }
+        }
+        return $re_valid;
+    }
+    
+    final public function isDateRangeValid($fp_v_start_date = '', $fp_v_end_date = '')
+    {
+        
+        $re_valid = $this->isDateValid($fp_v_start_date) &&  $this->isDateValid($fp_v_end_date);
+        if($re_valid === true)
+        {
+            $lv_start_date = date_create($fp_v_start_date); 
+            $lv_end_date  = date_create($fp_v_end_date);    
+            $lv_date_difference = date_diff($lv_start_date, $lv_end_date);
+            if($lv_date_difference->days < 0)
+            {
+                $re_valid = false;
+            }
+        }
+        return $re_valid;
     }
 }
