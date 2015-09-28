@@ -126,7 +126,7 @@
 			stat1 += "&status="+$(".selection1").val();;
 			comm1 += "&comments="+$(".comments1").text();
 
-			var asc1= comments1 + stat1 ;
+			var asc1= comm1 + stat1 ;
 			$.ajax({
 
 				
