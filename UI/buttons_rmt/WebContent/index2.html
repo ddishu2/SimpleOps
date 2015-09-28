@@ -16,6 +16,7 @@
 			.getCore()
 			.attachInit(
 					function() {
+					
 						var oWelcome_Page1 = new sap.ui.commons.layout.MatrixLayout(
 								{
 									id : 'owel1',
@@ -153,6 +154,17 @@
 							text : "Logout",
 							tooltip : "Logout",
 							press : function back_to_login() {
+								
+								/* $("#TF-Name").val("");
+								$("#TF1-Name").val(""); */
+								 /*    inp.textinput('refresh'); */
+								 	 var nameFirstField1 = sap.ui.getCore().byId(
+									"TF-Name");
+							var namePassField1 = sap.ui.getCore().byId(
+									"TF1-Name");
+								 nameFirstField1.setValue()=="";
+								 namePassField1.setValue()=="";
+							
 
 								$("#first1a").removeClass("hide_div");
 								$("#third").addClass("hide_div");
@@ -457,14 +469,26 @@
 						var oSimpleListBox = new sap.ui.commons.ListBox({
 							width : "200px",
 							items : [ new sap.ui.core.ListItem({
-								text : 'Spring'
+								text : 'Mumbai'
 							}), new sap.ui.core.ListItem({
-								text : 'Summer'
+								text : 'Bangalore'
 							}), new sap.ui.core.ListItem({
-								text : 'Autumn'
+								text : 'Chennai'
 							}), new sap.ui.core.ListItem({
-								text : 'Winter'
-							}) ],
+								text : 'Gurgaon'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Hyderabad'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Pune'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Kolkata'
+							}),
+							
+							
+							],
 							select : function(e) {
 								var a = [ "" ];
 								jQuery.each(oSimpleListBox.getSelectedItems(),
@@ -907,7 +931,7 @@
 						      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 						      		success : function(odata){
 						      			
-						      			alert("gdgd");
+						      			alert("Notification Sent Successfully.");
 						      		}
 								});
 								/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
