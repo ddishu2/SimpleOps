@@ -498,10 +498,10 @@
 										function(idx, item) {
 											a.push(item.getText(), ",");
 										});
-								oTextSummary.setText(a.join(""));
+								oTextSummary.setValue(a.join(""));
 							}
 						});
-						var oTextSummary = new sap.ui.commons.TextView({id: 'loci'});
+						var oTextSummary = new sap.ui.commons.TextField({id: 'loci'});
 						var oMultiSelectionCheckBox = new sap.ui.commons.CheckBox(
 								{
 									text : "MultiSelection",
