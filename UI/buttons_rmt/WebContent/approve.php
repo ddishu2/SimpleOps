@@ -42,6 +42,7 @@
 			
 			<div>
 				<h3>Employee Details</h3>
+				<input type="hidden" id="transaction_id" value="<?php echo htmlspecialchars($_GET["trans_id"]);?>"/>
 				<table cellpadding="0" cellspacing="0" class="details_table">
 					<tr>
 						<th>BU</th>
@@ -119,11 +120,12 @@
 
 	function submit_form(){
 
-		
+		/* transaction id blank??
+				to bolla to tejas pathvnar */
 
 			var stat1="" ;
 			var comm1="" ;
-			var transactn="";
+			var transactn = "&trans_id"+transaction_id;
 			stat1 += "&status="+$(".selection1").val();
 			comm1 += "&comments="+$(".comments1").text();
 
