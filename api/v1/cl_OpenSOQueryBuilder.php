@@ -20,30 +20,57 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     const C_LOCATION_FNAME   = ' so_loc ';
     const C_BU_FNAME         = ' so_proj_bu';
     const C_DB_TABLE         = 'v_rrs_open_so1';
+    
+    const C_START_INTERVAL   = '56 days';
+    const C_END_INTERVAL     = '28 days';
 
     
     const C_SO_SUBMI_DATE_FNAME    = ' so_submi_date ';
     
-    protected $v_so_sdate  = '';
-    protected $v_so_endate = '';
-    
+    protected $v_so_sdate  = null;
+    protected $v_so_endate = null;
     
     public function __construct($fp_v_start_date, $fp_v_end_date)
     { 
-        $re_valid = $this->isDateRangeValid($fp_v_start_date, $fp_v_end_date);
-        $this->v_so_sdate  = $fp_v_start_date;
-        $this->v_so_endate = $fp_v_end_date;   
+        $lv_startDate =  $fp_v_start_date;
+        $lv_endDate =    $fp_v_end_date;
+        $re_valid = $this->isDateRangeValid($lv_startDate, $lv_endDate );
+        if($re_Valid === true)
+        {
+            $this->v_so_sdate  = $lv_startDate;
+            $this->v_so_endate = $lv_endDate;   
+        }
+        else
+        {
+            $this->setDefaultDates();
+        }
+    }
+    
+    private function setDefaultDates()
+    {
+        $this->v_so_sdate  = $this->getDefaultStartDate();
+        $this->v_so_endate = $this->getDefaultEndDate();
     }
     
 
-    private function setStartDate()
+    public function getDefaultStartDate()
     {
-        
-//        $ymd = DateTime::createFromFormat('m-d-Y', '10-16-2003')->format('Y-m-d');
+        $today                   = date(parent::C_DATE_FORMAT);
+        $lv_interval             = date_interval_create_from_date_string(self::C_START_INTERVAL);
+        $startDate               = date_diff($today, $lv_interval);
+        $re_formatted_start_date = $startDate->format(parent::C_DATE_FORMAT);
+        return $re_formatted_start_date;
     }
     
- 
-        
+    public function getDefaultEndDate()
+    {
+        $today                 = date(parent::C_DATE_FORMAT);
+        $lv_interval           = date_interval_create_from_date_string(self::C_END_INTERVAL);
+        $endDate               = date_add($today, $lv_interval);
+        $re_formatted_end_date = $endDate->format(parent::C_DATE_FORMAT);
+        return $re_formatted_end_date;
+    }
+    
     public function filterByEqualsProjBU($fp_v_proj_bu)
     {
         return $this->addEqualsFilterToQuery
