@@ -256,7 +256,9 @@ class cl_SOEmpSkillMatcher
 //        echo 'isAltenative'.PHP_EOL;
 //        echo 'SO Emp Skills Xref: '.json_encode($this->arr_so_emp_skill_xref,JSON_PRETTY_PRINT).PHP_EOL;
 //        echo 'Emp. Altenatives  '.json_encode($this->arr_emp_skills_matrix, JSON_PRETTY_PRINT).PHP_EOL;
-        if( $this->isSkillMappingDefined($fp_v_so_skill))
+        if( 
+            $this->isSkillValid($fp_v_emp_skill) 
+            && $this->isSkillMappingDefined($fp_v_so_skill))
         {
             $lv_so_xref_emp_skill        = $this->arr_so_emp_skill_xref[$fp_v_so_skill];
             $larr_so_xref_emp_alt_skills = $this->arr_emp_skills_matrix[ $lv_so_xref_emp_skill];
@@ -289,5 +291,15 @@ class cl_SOEmpSkillMatcher
 //      echo "Alternative Match";var_dump($lv_alternative);
         $lv_match_or_alternative = $lv_match || $lv_alternative;
         return $lv_match_or_alternative;
+    }
+    
+    private function isSkillValid($fp_v_skill)
+    {
+        $re_valid = true;
+//        if($fp_v_skill == null or $fp_v_skill == '')
+//        {
+//            $re_valid = false;
+//        }
+        return $re_valid;
     }
 }

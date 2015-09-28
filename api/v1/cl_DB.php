@@ -136,9 +136,10 @@ class cl_DB
       self::setDBHandle();
       self::clearCount();
 
-      if( self::$dbhandle->query($fp_v_query) == true)
+      if( self::$dbhandle->query($fp_v_query) === true)
       {
          return true;
+         echo 'Success';
       }
       else
       {

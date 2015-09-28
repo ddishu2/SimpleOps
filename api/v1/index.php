@@ -148,6 +148,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
              $lv_status = $app->request->get(cl_lock::C_STATUS);
             $lv_obj = new cl_Lock();
 //            $lv_trans_id = 1;
+            $lv_msg = "";
             if ($lv_status == 'Approve')
             {
             $lv_result = $lv_obj->ApproveHardLock($lv_trans_id,$lv_comments);//S201
