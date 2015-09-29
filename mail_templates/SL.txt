@@ -1,0 +1,104 @@
+<html>
+   <style>.font{font-size:15;font-family:Calibri}</style>
+   <body class="font">
+      <p>Dear GV_SO_OWNER,</p>
+      <d>Following employee is proposed for your requirement on <b> GV_PROJECT_NAME </b> project. Attached please find the resume for your evaluation. 
+      </d>
+      <h4><u>Employee Details:</u></h4>
+      <table class="font" border='1'>
+         <tr>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>BU</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Sub BU</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Service Line</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Location</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Employee Id</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Employee Name</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Primary Skill</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Level</CENTER>
+            </td>
+         </tr>
+         <tr>
+           <td>
+               <CENTER>GV_BU</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_SBU</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_SERV_LINE</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_LOCATION</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_EMPID</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_EMPNAME</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_PRI_SKILL</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_LEVEL</CENTER>
+            </td>
+         </tr>
+      </table>
+      <h4><u>Assignment Details:</u></h4>
+      <table class="font" border='1'>
+         <tr>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Project Code</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>Project Name</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>SO Number</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>Assignment Start Date</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>Assignment End Date</CENTER>
+            </td>
+         </tr>
+         <tr>
+           <td>
+               <CENTER>GV_PROJECT_CODE</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_PROJECT_NAME</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_SO_NO</CENTER>
+            </td>
+            <td>
+               <CENTER>GV_SDATE</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_EDATE</CENTER>
+            </td>
+         </tr>
+      </table>
+      <p><A HREF="GV_LINK">Click here</A> to Approve/Reject the lock
+      <p><font color=#FF0000><B>Note: Note: You have two days to evaluate the employee and confirm hard tagging. The employee will be proposed to other requirements after expiry of the soft lock at CoB on GV_SL_REL_DATE.</B></font>
+      <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
+      </table>
+   </body>
+</html>
