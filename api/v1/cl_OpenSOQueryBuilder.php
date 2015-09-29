@@ -136,6 +136,13 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
         return $this->addContainsFilterToQuery
                       (self::C_PROJNAME_FNAME, $fp_v_proj_name);
     }
+    
+    public function filterByEqualsCapability($fp_v_capability)
+    {
+       return $this->addEqualsFilterToQuery
+                      (self::C_FNAME_CAPABILITY,$fp_v_capability);
+    }
+    
             
     protected function getBaseQuery()
     {
