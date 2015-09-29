@@ -142,6 +142,7 @@
         {
             $lv_fname = $this->convertToSQLLower($fp_v_fname);
             $lv_fval  = strtolower($fp_v_fval);
+            $lv_fval = $this->convertValueToSQLString($lv_fval);
             $lv_filterLine = $lv_fname
                             .self::C_SQL_EQUALS
                             .$lv_fval;
@@ -188,6 +189,8 @@
         return $re_value;
     }
     
+       
+    
     /**
      * Converts array to a comma separated values string.
      *  
@@ -198,7 +201,11 @@
     {
         $re_csv = '';
         $lc_comma_quote = "','";
-        if(!is_null($fp_arr_values)&&  is_array($fp_arr_values))
+        /**
+         * Remove blank elements from array.
+         */
+        $fp_arr_values = array_filter($fp_arr_values);
+        if(!is_null($fp_arr_values)&&  is_array($fp_arr_values) && count($fp_arr_values) > 0)
         {
             $lv_valueList = implode($lc_comma_quote, $fp_arr_values);
             $lv_valueList = self::C_SQL_QUOTE.$lv_valueList.self::C_SQL_QUOTE; 
