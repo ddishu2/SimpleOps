@@ -51,7 +51,7 @@
 			var asc1= comm1 + stat1 + transactn;
 			$.ajax({
     		  method: "GET",
-    		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
+    		  url: "/rmt/api/v1/index.php/approve_hard_lock/?"+asc1,
     		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
     		success : function(odata){
 
