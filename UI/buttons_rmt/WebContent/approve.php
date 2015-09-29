@@ -12,6 +12,7 @@
 		<meta name="author" content="abpadalk">
 
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript" ></script>
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico">
@@ -48,9 +49,9 @@
 			var comm1="" ;
 			var transactn = "&trans_id="+$("#transaction_id").val();
 			stat1 += "&status="+$(".selection1").val();
-			comm1 += "&comments="+$(".comments1").text();
+			comm1 += "&comments="+$(".comments1").val();
 
-			var asc1= comm1 + stat1 ;
+			var asc1= comm1 + stat1 + transactn;
 			$.ajax({
     		  method: "GET",
     		  url: "/rmt1/api/v1/index.php/approve_hard_lock/?"+asc1,
@@ -130,7 +131,7 @@
 					<tr>
 						<th>Comments:</th>
 						<td>
-				<textarea class="comments1" required></textarea></td>
+				<textarea class="comments1"></textarea></td>
 					</tr>
 					<tr>
 						<td></td>
