@@ -199,7 +199,7 @@
      */
     final public function convertArrayToCSV(array $fp_arr_values = null)
     {
-        $re_csv = '';
+        $re_csv = null;
         $lc_comma_quote = "','";
         /**
          * Remove blank elements from array.
