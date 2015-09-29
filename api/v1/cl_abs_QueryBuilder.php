@@ -86,7 +86,6 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    
     final public function addInFilterToQuery($fp_v_fname, $fp_arr_fvals)
     {
         
@@ -94,6 +93,7 @@
         $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
             if($this->isValidFilter($fp_v_fname, $lv_valueList))
             {
+                $lv_fname        = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
                 $lv_inFilterList = $this->addParenthesesToString($lv_valueList); 
                 $lv_filterLine   = $fp_v_fname.self::C_SQL_IN.$lv_inFilterList;
                 $this->addFilterLineToQuery($lv_filterLine);
@@ -101,6 +101,7 @@
             }
         return $re_success;
     }
+    
     /**
      * Adds a Like Filter To Query.
      * 
@@ -310,8 +311,9 @@
      */
     private function convertToSQLLower($fp_v_fname)
     {
+        $lv_fname = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
         $re_lower = self::C_SQL_LOWER
-                    .$fp_v_fname
+                    .$lv_fname
                     .self::C_SQL_PARENTHESES_CLOSE;
         return $re_lower;
     }
