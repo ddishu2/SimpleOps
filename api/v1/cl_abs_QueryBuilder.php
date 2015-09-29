@@ -262,7 +262,6 @@
         return $re_queryHasWhereClause;
     }
     
-    
 /**
  * Returns true if filter has valid scalar string or int value,
  * Returns false for blanks, null and arrays.
@@ -321,7 +320,7 @@
      * Returns true if query should be preceded by 'WHERE'
      * 
      * @param type $fp_v_fname Fieldname
-     * @return string
+     * @return boolean
      */
     private function shouldAddWhereClauseToQuery()
     {
@@ -338,7 +337,7 @@
     /**
      * Returns string surrounded by parentheses for use in SQL 'IN' statements.
      * 
-     * @param type $fp_v_fname Fieldname
+     * @param type $fp_v_fname fieldname
      * @return string
      */
     private function addParenthesesToString($fp_v_string)
@@ -353,12 +352,16 @@
      * Resets filters.
      * 
      */
-    
     final public function resetFilters()
     {
         $this->v_query_filters = null;
     }
     
+    /**
+     * 
+     * @param string $fp_v_date in YYYY-MM-DD format
+     * @return boolean
+     */
     final public function isDateValid($fp_v_date)
     {
         $re_valid = false;
@@ -376,14 +379,21 @@
         return $re_valid;
     }
     
+    /**
+     * 
+     * @param string $fp_v_start_date in YYYY-MM-DD format
+     * @param string $fp_v_end_date  in YYYY-MM-DD format
+     * @return boolean               true if dates are valid and 
+     *                               from date <= to date.
+     */
     final public function isDateRangeValid($fp_v_start_date = '', $fp_v_end_date = '')
     {
         
         $re_valid = $this->isDateValid($fp_v_start_date) &&  $this->isDateValid($fp_v_end_date);
         if($re_valid === true)
         {
-            $lv_start_date = date_create($fp_v_start_date); 
-            $lv_end_date  = date_create($fp_v_end_date);    
+            $lv_start_date      = date_create($fp_v_start_date); 
+            $lv_end_date        = date_create($fp_v_end_date);    
             $lv_date_difference = date_diff($lv_start_date, $lv_end_date);
             if($lv_date_difference->days < 0)
             {
