@@ -39,6 +39,11 @@
 		<script type="text/javascript">
 
 	function submit_form(){
+
+		if($(".comments1").text()=="")
+		{
+              alert("HIi ")
+		}
 			var stat1="" ;
 			var comm1="" ;
 			var transactn = "&trans_id="+$("#transaction_id").val();
