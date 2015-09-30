@@ -14,7 +14,8 @@
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
-    const LC_ROOT = 'C:\xampp\htdocs\\';
+    const lc_template_path = 'C:\xampp\htdocs\rmt\mail_templates\\',
+          lc_root          = 'C:\xampp\htdocs\\';
     
 // Private class variables.    
     private $lv_content,
@@ -208,7 +209,7 @@ class cl_NotificationMails
 // Read the resume to be attached to the email.
     private function Addresume($i_uid)
         {
-        $lv_filepath    = self::LC_ROOT.'*'.$this->lv_empid.'*.docx';
+        $lv_filepath    = self::lc_root.'*'.$this->lv_empid.'*.docx';
         $lv_fileresult  = glob($lv_filepath);            
         if($lv_fileresult)
             {
@@ -231,7 +232,7 @@ class cl_NotificationMails
 // Get content based on mode.        
     private function get_content($i_mode)
     {
-        $lv_htmlpath = self::LC_ROOT.$i_mode.'.txt';
+        $lv_htmlpath = self::lc_template_path.$i_mode.'.txt';
         $this->lv_content = file_get_contents($lv_htmlpath);
     }
 
@@ -415,7 +416,7 @@ class cl_NotificationMails
                 self::get_recievers();                    
                     
              //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-                $lv_mail = mail('tejas@localhost', $this->lv_subject, $this->lv_message, $this->lv_headers);
+                $lv_mail = mail('dikshant.mishr@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {   
                     return true;
