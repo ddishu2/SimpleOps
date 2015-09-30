@@ -14,8 +14,8 @@
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
-    const lc_template_path = 'C:\xampp\htdocs\rmt\mail_templates\\',
-          lc_root          = 'C:\xampp\htdocs\\';
+    const lc_template_path = 'D:\xampp\htdocs\rmt\mail_templates\\',
+          lc_root          = 'D:\xampp\htdocs\\';
     
 // Private class variables.    
     private $lv_content,
