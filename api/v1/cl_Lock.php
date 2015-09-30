@@ -357,5 +357,23 @@ and so_id ='$fp_v_so_id'";
         
     }
     
+   public function getSoftLocked()
+   {
+       
+   }
    
+   public function getHardLocked()
+   {
+       
+   }
+   
+   public function getSoftLockReleased()
+   {
+       
+   }
+   
+   public function getHardLockReleased()
+   {
+       
+   }
 }
