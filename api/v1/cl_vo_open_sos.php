@@ -14,7 +14,26 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
 class cl_vo_open_sos extends cl_OpenSOQueryBuilder
 {
     const C_SO_ID_DB_FNAME = 'so_no';
+   
+    const C_PROJECT_NAME = 'proj_name';
+    const C_PROJECT_BU = 'proj_bu';
+    const C_LOCATION = 'proj_loc';
+    const C_PROJECT_ID = 'proj_id';
+    const C_CUST_NAME = 'cust_name';
+    const C_CAPABILITY = 'capability';
     private $arr_open_sos = []; 
+    
+    
+    const C_DATE_FORMAT   = 'Y-m-d';
+    const C_VIEW_OPEN_SO  = 'v_open_so';
+    const C_FNAME_SO_FROM = 'so_from_date';
+    const C_FNAME_SO_TO   = 'so_to_date';
+    
+    const C_DATE_COMPONENTS = 3;
+    protected $v_so_sdate;
+    protected $v_so_endate;
+   
+    public static $arr_lockedso = [];
     
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
@@ -44,6 +63,7 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
     {
         $re_sos   = [];
         $lv_query = parent::getQuery();
+//        echo $lv_query;
         $re_sos = cl_DB::getResultsFromQuery($lv_query);
         return $re_sos;
     }

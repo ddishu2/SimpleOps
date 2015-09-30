@@ -14,8 +14,11 @@ class cl_vo_open_sos
     
     function __construct($fp_v_so_sdate , $fp_v_so_endate)
     {
+     
+        
         $this->v_so_sdate   = $fp_v_so_sdate;
         $this->v_so_endate = $fp_v_so_endate;
+      
         $this->setOpenSOs();  
     }
     
