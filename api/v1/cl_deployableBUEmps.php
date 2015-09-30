@@ -65,7 +65,7 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
 
             $lv_emp_prime_skill = $lwa_deployable_emp['skill1_l4'];
             $lv_emp_level = $lwa_deployable_emp['level'];
-            $lv_emp_loc = $lwa_deployable_emp['org'];
+            $lv_emp_loc = $lwa_deployable_emp['loc'];
 //            echo $fp_v_so_id.','
 //            .$fp_v_so_skill.','
 //            .$fp_v_so_level.','
@@ -74,8 +74,11 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
 //            .$lwa_deployable_emp['skill1_l4'].','
 //            .$lwa_deployable_emp['level'].','
 //            .$lwa_deployable_emp['org'].PHP_EOL;
-            if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
-            ) {
+           // if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+           // )
+            if ($fp_v_so_skill == $lv_emp_prime_skill && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+            )
+                            {
                 $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
                 $re_wa_emp_for_so[] = $lwa_deployable_emp;
 //                    echo 'Match'.$fp_v_so_id.'--->'.$lwa_deployable_emp['emp_id'].'======'.json_encode($re_wa_emp_for_so ).PHP_EOL;
@@ -275,7 +278,7 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
         return $re_isRejectedByOps;
     }
 
-    public function getUnfilledSoAfterPerfectProp($lv_allsos) {
+    public function setUnfilledSoAfterPerfectProp($lv_allsos) {
         foreach ($lv_allsos as $key => $value) {
             
              if (in_array($key, self::$arr_perfect_proposals) == false) {

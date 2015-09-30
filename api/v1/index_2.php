@@ -131,6 +131,11 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
                     $app->response->headers->set('Content-Type', 'application/json');
                     echo json_encode($larr_open_so, JSON_PRETTY_PRINT);
                     
+//                  Direct open sos nahin dekh rahe na
+//                  Proposals mein include karke dekh
+//                  Yeh names match hone chahiye. Siddhesj se dekh sakte hain woh
+//                      SImialr code proposals mein aayega. Daala tune?
+                    
 //                    echo $lo_queryBuild->getQuery();
               }
     );

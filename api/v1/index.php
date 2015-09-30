@@ -81,13 +81,25 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
                    
                     $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
                     $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-                     
+                     $lv_so_location   = $app->request->get(cl_vo_open_sos::C_LOCATION);
+                     $lv_so_project_bu   = $app->request->get(cl_vo_open_sos::C_PROJECT_BU);
+                      $lv_so_project_name   = $app->request->get(cl_vo_open_sos::C_PROJECT_NAME);
+                      
+                      
+                      
+                      $lv_so_project_id  = $app->request->get(cl_vo_open_sos::C_PROJECT_ID);
+                      $lv_so_cust_name  = $app->request->get(cl_vo_open_sos::C_CUST_NAME);
+                       $lv_so_capability = $app->request->get(cl_vo_open_sos::C_CAPABILITY);
+                      
+                      
                     
-                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);        
+                      
+                    $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
+               
 //                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
                   $lo_deployable_emp = new cl_deployableBUEmps();  
                     
-                    $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp);
+                    $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp,$lv_so_project_name,$lv_so_project_bu,$lv_so_location,$lv_so_project_id,$lv_so_capability);
                     
                     $re_it_emps_for_sos = $c_pg->getAutoProposals();                    
                     $app->response->setStatus(200);
@@ -431,7 +443,7 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
            $lt_sodetails = getDetails::getSODetails($fp_v_so_no);
            //print_r($lt_sodetails);
            
-           $lv_link = cl_Lock::getLink($fp_v_so_no, $fp_v_emp_id);
+           $lv_link = cl_Lock::getLink($fp_v_so_no, $fp_v_emp_id,1);
            echo $lv_link;
            
            

@@ -21,9 +21,17 @@ class cl_Proposals {
     private $arr_deployableEmp;
     private $lo_deployable_emp;
     private $lv_item_id;
-    public function __construct(cl_vo_open_sos $fp_o_open_sos, cl_deployableBUEmps $fp_o_deployableEmp) 
+    public function __construct(cl_vo_open_sos $fp_o_open_sos, cl_deployableBUEmps $fp_o_deployableEmp,$lv_so_projname,$lv_so_proj_bu,$larr_so_locs,$fp_v_proj_id,$fp_v_capability) 
     {
+       
         $this->lv_prop_id = self::setProposalID();
+        
+        $fp_o_open_sos->filterByContainsProjectName($lv_so_projname);
+        $fp_o_open_sos->filterByEqualsProjBU($lv_so_proj_bu);
+        $fp_o_open_sos->filterByInLocationList($larr_so_locs);
+        $fp_o_open_sos->filterByContainsProjectID($fp_v_proj_id);
+//        $fp_o_open_sos->filterByContainsProjectName($fp_v_proj_name);
+         $fp_o_open_sos->filterByEqualsCapability($fp_v_capability);
         $this->arr_open_sos      = $fp_o_open_sos->get();
         $this->lo_deployable_emp = $fp_o_deployableEmp;
         $this->lv_item_id = 0;
@@ -66,8 +74,8 @@ class cl_Proposals {
 
         }
         
-        
-//         $lo_emp->getUnfilledSoAfterPerfectProp($re_it_emps_for_sos);
+   
+//         $lo_emp->setUnfilledSoAfterPerfectProp($re_it_emps_for_sos);
          self::genrateEmpidSoid($re_it_emps_for_sos); 
          
         return $re_it_emps_for_sos;        
