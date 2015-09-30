@@ -876,8 +876,8 @@
 							label : new sap.ui.commons.Label({
 								text : "Fullfillment"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "fulfill"),
+							template : 
+								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -886,7 +886,9 @@
 							label : new sap.ui.commons.Label({
 								text : "Status"
 							}),
-							template : new sap.ui.commons.TextView()
+							template : new sap.ui.commons.TextView({
+								id:'status_of_emp'
+							})
 									.bindProperty("text", "status"),
 							sortProperty : "",
 							filterProperty : "",
@@ -896,7 +898,9 @@
 							label : new sap.ui.commons.Label({
 								text : "Approve"
 							}),
-							template : new sap.ui.commons.DropdownBox("stat1",{
+							template : new sap.ui.commons.DropdownBox({
+								
+								id:'stat1',
 								tooltip : "Decision",
 								items : [ new sap.ui.core.ListItem("decide0", {
 									text : "",
@@ -931,7 +935,7 @@
 							label : new sap.ui.commons.Label({
 								text : "Proposed ID"
 							}),
-							template : new sap.ui.commons.TextView()
+							template : new sap.ui.commons.TextView({})
 									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
@@ -986,8 +990,21 @@
 						var refresh = new sap.ui.commons.Button({
 							text : "Refresh",
 							tooltip : "Refresh",
+							press: function()
+						{
+								$(".approveDropdown input").each(function(index,val){
 
-						}).addStyleClass("for_normal_buttons_style1");
+									if($(this).val() == "Approve" || $(this).val() == "Reject"){
+										var parent1 = $(this).parent().parent().parent();
+									parent1.find("#stat1").html("Mail Sent");
+									parent1.css("background-color","#ffccff!important");
+										
+									}
+								});
+								
+								
+						} 
+							}).addStyleClass("for_normal_buttons_style1");
 						var back = new sap.ui.commons.Button({
 							id : 'bt2',
 							text : "Back",
@@ -1015,7 +1032,9 @@
 
 						];
 
-						//Table for suitable Match
+//-----------------------------Table for Partial Match---------------------------------------------------------------//
+
+
 						var partial_match = new sap.ui.table.Table(
 								{
 									title : " Pending Transaction List",
