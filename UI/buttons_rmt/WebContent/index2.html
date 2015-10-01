@@ -733,18 +733,19 @@
 								$("#four1").removeClass("hide_div");
 								$("#third").addClass("hide_div");
                             
-                /*  $(".approveDropdown input").each(function(index,val){	
+                  $(".approveDropdown input").each(function(index,val){	
 									
 									var parent2 = $(this).parent().parent().parent().parent();	
               
-									if($(".approveDropdown input").val()=="Reject"  )
+									if($(".approveDropdown input").val()=="Reject" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="None" )
+										
 									{
 									
 									parent2.removeClass("change_color");
 									$(".approveDropdown input").val("--Select--");
 									}
                  
-                 }) */
+                 }) 
 								
 								
 								
@@ -1005,7 +1006,7 @@
 						var refresh = new sap.ui.commons.Button({
 							text : "Refresh",
 							tooltip : "Refresh",
-							/* press: function()
+							 press: function()
 						{
 								 $(".approveDropdown input").each(function(index,val){	
 									
@@ -1015,12 +1016,12 @@
 									parent1.find(".status_of_emp").html("Mail Sent");;
 									parent1.addClass("change_color");	
 									}
-							 	else if($(this).val() == "Reject") 
+							 
 									
-								});*/ 
+								}); 
 								
 								
-				//		}  */
+						}  
 							}).addStyleClass("for_normal_buttons_style1");
 						var back = new sap.ui.commons.Button({
 							id : 'bt2',
