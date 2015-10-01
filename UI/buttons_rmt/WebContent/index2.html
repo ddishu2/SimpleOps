@@ -737,10 +737,11 @@
 									
 									var parent2 = $(this).parent().parent().parent().parent();	
               
-									if($(".approveDropdown input").val()=="--Select--")
+									if($(".approveDropdown input").val()=="Reject")
 									{
 									
 									parent2.removeClass("change_color");
+									$(".approveDropdown input").val("--Select--");
 									}
                  
                  })
@@ -1019,13 +1020,8 @@
 									
 									parent1.find(".status_of_emp").html("Mail Sent");;
 									parent1.addClass("change_color");
-									$(".approveDropdown input").val("--Select--");
-
-									}else
-								if($(".approveDropdown input").val()=="--Select--")
-									{
 									
-									parent1.removeClass("change_color");
+
 									}
 								
 								});
