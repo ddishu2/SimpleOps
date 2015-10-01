@@ -732,7 +732,21 @@
 							press : function fully_complete() {
 								$("#four1").removeClass("hide_div");
 								$("#third").addClass("hide_div");
-
+                            
+                 $(".approveDropdown input").each(function(index,val){	
+									
+									var parent2 = $(this).parent().parent().parent().parent();	
+              
+									if($(".approveDropdown input").val()=="--Select--")
+									{
+									
+									parent2.removeClass("change_color");
+									}
+                 
+                 })
+								
+								
+								
 							}
 						}).addStyleClass("buttons_common_style1");
 						var oPartial = new sap.ui.commons.Button({
@@ -887,9 +901,9 @@
 								text : "Status"
 							}),
 							template : new sap.ui.commons.TextView({
-								id:'status_of_emp'
+								//id:'status_of_emp'
 							})
-									.bindProperty("text", "status"),
+									.bindProperty("text", "status").addStyleClass("status_of_emp"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -903,7 +917,7 @@
 								id:'stat1',
 								tooltip : "Decision",
 								items : [ new sap.ui.core.ListItem("decide0", {
-									text : "",
+									text : "--Select--",
 									key : "",
 								}),
 								         new sap.ui.core.ListItem("decide", {
@@ -949,7 +963,7 @@
 							text : "Submit & Send Notification",
 							tooltip : "notify",
 							press: function(){
-								alert("Notification Sent Successfully.");
+								
 								var so_str = "";
 								var emp_str = "";
 								var status_str = "";
@@ -957,7 +971,7 @@
 								$(".approveDropdown input").each(function(index,val){
 									
 									
-								
+									alert("Notification Sent Successfully.");
 									if($(this).val() == "Approve" || $(this).val() == "Reject"){
 										var parent = $(this).parent().parent().parent().parent();
 										so_str += "&so_id[]="+parent.find(".soid").text();
@@ -992,12 +1006,28 @@
 							tooltip : "Refresh",
 							press: function()
 						{
-								$(".approveDropdown input").each(function(index,val){		
-								if($(this).val() == "Approve" || $(this).val() == "Reject"){
-										var parent1 = $(this).parent().parent().parent();
-									parent1.find("#stat1").html("Mail Sent");
-									parent1.css("background-color","#ffccff!important");	
+								$(".approveDropdown input").each(function(index,val){	
+									
+									var parent1 = $(this).parent().parent().parent().parent();
+								if($(this).val() == "Approve"  ){
+										//var parent1 = $(this).parent().parent().parent().parent();
+									parent1.find(".status_of_emp").html("Mail Sent");;
+									parent1.addClass("change_color");	
 									}
+								else if($(this).val() == "Reject")
+									{
+									
+									parent1.find(".status_of_emp").html("Mail Sent");;
+									parent1.addClass("change_color");
+									$(".approveDropdown input").val("--Select--");
+
+									}else
+								if($(".approveDropdown input").val()=="--Select--")
+									{
+									
+									parent1.removeClass("change_color");
+									}
+								
 								});
 								
 								
