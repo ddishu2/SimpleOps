@@ -287,11 +287,11 @@
 						var oDetails = new sap.ui.commons.layout.MatrixLayout({
 							id : 'matrix4',
 							layoutFixed : true,
-							width : '700px',
+							width : '750px',
 							columns : 4,
 							widths : [ '150px', '250px', 
 
-							           '100px', '100px' ]
+							           '150px', '100px' ]
 						});
 
 						var oCell = new sap.ui.commons.layout.MatrixLayoutCell(
@@ -992,13 +992,11 @@
 							tooltip : "Refresh",
 							press: function()
 						{
-								$(".approveDropdown input").each(function(index,val){
-
-									if($(this).val() == "Approve" || $(this).val() == "Reject"){
+								$(".approveDropdown input").each(function(index,val){		
+								if($(this).val() == "Approve" || $(this).val() == "Reject"){
 										var parent1 = $(this).parent().parent().parent();
 									parent1.find("#stat1").html("Mail Sent");
-									parent1.css("background-color","#ffccff!important");
-										
+									parent1.css("background-color","#ffccff!important");	
 									}
 								});
 								
