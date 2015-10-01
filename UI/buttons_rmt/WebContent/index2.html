@@ -733,18 +733,18 @@
 								$("#four1").removeClass("hide_div");
 								$("#third").addClass("hide_div");
                             
-                 $(".approveDropdown input").each(function(index,val){	
+                /*  $(".approveDropdown input").each(function(index,val){	
 									
 									var parent2 = $(this).parent().parent().parent().parent();	
               
-									if($(".approveDropdown input").val()=="Reject")
+									if($(".approveDropdown input").val()=="Reject"  )
 									{
 									
 									parent2.removeClass("change_color");
 									$(".approveDropdown input").val("--Select--");
 									}
                  
-                 })
+                 }) */
 								
 								
 								
@@ -964,7 +964,7 @@
 							text : "Submit & Send Notification",
 							tooltip : "notify",
 							press: function(){
-								
+								alert("Notification Sent Successfully.");
 								var so_str = "";
 								var emp_str = "";
 								var status_str = "";
@@ -972,7 +972,7 @@
 								$(".approveDropdown input").each(function(index,val){
 									
 									
-									alert("Notification Sent Successfully.");
+									
 									if($(this).val() == "Approve" || $(this).val() == "Reject"){
 										var parent = $(this).parent().parent().parent().parent();
 										so_str += "&so_id[]="+parent.find(".soid").text();
@@ -994,7 +994,7 @@
 						      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 						      		success : function(odata){
 						      			
-						      			alert("Notification Sent Successfully.");
+						      		
 						      		}
 								});
 								/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
@@ -1005,29 +1005,22 @@
 						var refresh = new sap.ui.commons.Button({
 							text : "Refresh",
 							tooltip : "Refresh",
-							press: function()
+							/* press: function()
 						{
-								$(".approveDropdown input").each(function(index,val){	
+								 $(".approveDropdown input").each(function(index,val){	
 									
 									var parent1 = $(this).parent().parent().parent().parent();
-								if($(this).val() == "Approve"  ){
+								if($(this).val() == "Approve" || $(this).val() == "Reject" ){
 										//var parent1 = $(this).parent().parent().parent().parent();
 									parent1.find(".status_of_emp").html("Mail Sent");;
 									parent1.addClass("change_color");	
 									}
-								else if($(this).val() == "Reject")
-									{
+							 	else if($(this).val() == "Reject") 
 									
-									parent1.find(".status_of_emp").html("Mail Sent");;
-									parent1.addClass("change_color");
-									
-
-									}
-								
-								});
+								});*/ 
 								
 								
-						} 
+				//		}  */
 							}).addStyleClass("for_normal_buttons_style1");
 						var back = new sap.ui.commons.Button({
 							id : 'bt2',
