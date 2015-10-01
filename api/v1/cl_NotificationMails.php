@@ -7,7 +7,8 @@
 
 /**
  * Description of cl_NotificationMails
- *
+ * Sending emails to concerned parties about for different activities.
+ * 
  * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
 //require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
@@ -15,7 +16,12 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
     const lc_template_path = 'D:\xampp\htdocs\rmt\mail_templates\\',
-          lc_root          = 'D:\xampp\htdocs\\';
+/**
+* lc_root   Fully qualified filepath in the format
+*           \\\\<IP address>\<directory>\[<directory>]\\
+*            ntbomfs001 -> 10.75.250.149   
+*/
+          lc_root          = '\\\\10.75.250.149\Datagrp\TS_SAP_Chesapeake_Energy\\';
     
 // Private class variables.    
     private $lv_content,
@@ -48,7 +54,6 @@ class cl_NotificationMails
             $lv_headers,
             $lv_subject;                 
 
-    
 // Actual methods to be called from other PHP applications.
 // Method to send Soft lock release notification.
     public function sendSoftLockReleaseNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
@@ -186,10 +191,10 @@ class cl_NotificationMails
     private function add_header()
     {
         $lv_uid            = md5(uniqid(time())); 
-        $this->lv_headers  = 'From: postmaster@localhost' . "\r\n";
-        $this->lv_headers .= 'Reply-To: postmaster@localhost' . "\r\n";
-        $this->lv_headers .= 'bcc: bcc@localhost' . "\r\n"; 
-        $this->lv_headers .= 'cc: cc@localhost' . "\r\n";
+        $this->lv_headers  = 'From: dikshant.mishra@capgemini.com' . "\r\n";
+        $this->lv_headers .= 'Reply-To: dikshant.mishra@capgemini.com' . "\r\n";
+//        $this->lv_headers .= 'bcc: avinash.karve@capgemini.com' . "\r\n"; 
+        $this->lv_headers .= 'cc: prashanth.tellis@capgemini.com' . "\r\n";
         $this->lv_headers .= 'MIME-Version: 1.0' . "\r\n";
         $this->lv_headers .= "Content-Type: multipart/mixed; boundary=\"".$lv_uid."\"\r\n";
         return $lv_uid;
@@ -225,7 +230,6 @@ class cl_NotificationMails
         $this->lv_message .= "Content-Disposition: attachment\r\n\r\n";
         $this->lv_message .=  chunk_split(base64_encode(file_get_contents($lv_file)))."\r\n";
         $this->lv_message .= "--".$i_uid."--"; 
-        return $this->lv_message;
             }
         }
 
@@ -413,16 +417,16 @@ class cl_NotificationMails
                     { self::addresume($lv_uid); }
 
 // Get recievers for email.                
-                self::get_recievers();                    
-                    
+                self::get_recievers();
+                
              //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-                $lv_mail = mail('dikshant.mishr@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+                $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
-                    {   
-                    return true;
+                    {  
+                    return true;                    
                     }
                 else
-                    {
+                    {                    
                     return false;
                     }
                 }   
@@ -430,4 +434,5 @@ class cl_NotificationMails
         } 
 
 //        $lo_email = new cl_NotificationMails();
-//        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 232, 132456);
+//        $lo_email->sendSoftLockReleaseNotification(203209, 232, 132456);
+//        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html' , 232, 203201);
