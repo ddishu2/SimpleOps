@@ -56,8 +56,8 @@
     		success : function(odata){
 
     		      alert("Submitted");
-    		      var win = window.open(“”,”_self”); /* url = “” or “about:blank”; target=”_self” */
-    		      win.close();
+    		     /*  var win = window.open(“”,”_self”); 
+    		      win.close(); */
     		}
 		});
 
