@@ -21,6 +21,7 @@ class cl_Lock {
     const C_ARR_LINK = 'link';
     const C_COMMENTS = 'comments';
     const C_STATUS = 'status';
+    private static $arr_SO_that_rejectedemps = [];
 // const C_PARENT_PROPOS_ID = 'propos_id';
 // const C_REQUESTOR_ID = 'requestor_id';
 
@@ -158,8 +159,60 @@ class cl_Lock {
         
         
     }
-    
-    
+    public function setRejectionCount($lv_so_no)
+    {
+        echo "chk point 1" ;
+        $lv_result = false;
+        $select = "SELECT `so_no` FROM `trans_count`";
+        self::$arr_SO_that_rejectedemps = cl_DB::getResultsFromQuery($select);
+//        print_r(self::$arr_SO_that_rejectedemps);
+        foreach (self::$arr_SO_that_rejectedemps as $key => $value){
+           
+         if (in_array($lv_so_no, $value) == true) {
+              echo "chk point 2 here" ;
+             $update = "UPDATE `trans_count` SET `rej_count`= rej_count + 1 WHERE so_no = $lv_so_no";
+             $lv_result = cl_DB::updateResultIntoTable($update);
+             return $lv_result;
+         }
+        }
+         
+              echo "chk point 2 there" ;
+        $insert= "INSERT INTO `rmg_tool`.`trans_count` (`so_no`, `rej_count`) VALUES ($lv_so_no, 1)";
+        $lv_result = cl_DB::updateResultIntoTable($insert);
+         
+        
+        return $lv_result;
+    }
+    public static function getRejectionCount($lv_so_id)
+    {
+//        $count = 0;
+//        $select = "SELECT  `rej_count` FROM `trans_count` WHERE so_no = $lv_so_id";
+//        $result = cl_DB::getResultsFromQuery($select);
+//        foreach($result as $key => $value)
+//        {
+//            $count = $value['rej_count'];
+//        }
+//        return $count;
+        
+        $count = 0;
+        $select = "SELECT * FROM `trans_count`";
+         $result = cl_DB::getResultsFromQuery($select);
+         
+        foreach($result as $key => $value)
+        {
+            if (in_array($lv_so_id, $value))
+            {
+            $count = $value['rej_count'];
+            }
+        } 
+        
+        
+        return $count;
+        
+        
+        
+        
+    }
     /*hardlocks an employee  
       returns 1 if successfull
      returns -1 if failed     */
@@ -274,6 +327,15 @@ and so_id ='$fp_v_so_id'";
             $re_sos = cl_DB::updateResultIntoTable($sql);
             $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, 'S221', $lv_prop_id, $lv_req_id);
             $lv_comments = self::setComments($lv_trans_id,'S221',$fp_v_comments);
+            
+            $lv_result = self::setRejectionCount($lv_so_id);
+            $lv_Rej_count = self ::getRejectionCount($lv_so_id);
+            if($lv_Rej_count >= 3)
+            {
+                //method to send mail to so_owner to clsoe the SO
+            }
+            
+            
             mysqli_commit($lv_db);
             return 1;
         } catch (Exception $ex) {
