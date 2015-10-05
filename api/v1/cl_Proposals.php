@@ -61,7 +61,7 @@ class cl_Proposals {
             $re_it_emps_for_sos[$lv_so_id]['so'] = $open_so;
             $re_it_emps_for_sos[$lv_so_id]['prop_id'] = $this->lv_prop_id;
             
-            
+            if (!self::hasProposalBeenRejectedMaxTimes($lv_so_id)){           // find employee for SO only if 
             $lv_emp = $lo_emp->getEmpForSO(
                     $lv_so_id, $lv_so_skill, $lv_so_level, $lv_so_loc);
 //            echo 'Returned' . json_encode($lv_emp);
@@ -69,7 +69,7 @@ class cl_Proposals {
 
                 $re_it_emps_for_sos[$lv_so_id]['emp'] = $lv_emp;
         }
-            
+            } 
             
 
         }
@@ -124,10 +124,14 @@ class cl_Proposals {
              }
            }
     }
-    private static function hasProposalBeenRejectedMaxTimes($fp_v_so_id)
+    private static function hasProposalBeenRejectedMaxTimes($lv_so_id)
     {
-        
-        
+        $lv_result = false;
+        if (cl_Lock::getRejectionCount($lv_so_id) >= 3)
+        {
+            $lv_result = true;
+        }
+        return $lv_result;
     }
     
 }

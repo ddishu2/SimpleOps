@@ -451,6 +451,20 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                }
      );
       
+       $app->get('/setcount_test(/)', 
+               function () use($app) 
+               {
+                  
+                  $cl_lock = new cl_Lock ();
+                 //$lv_res =  $cl_lock->setRejectionCount(1);
+                 //echo $lv_res; 
+                 $lv_count = $cl_lock->getRejectionCount(3);
+                   echo $lv_count;
+                  
+           
+           
+               }
+                  );
   $app->run();
 ?>
 
