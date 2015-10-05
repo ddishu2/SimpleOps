@@ -56,8 +56,7 @@
     		success : function(odata){
 
     		      alert("Submitted");
-    		     /*  var win = window.open(“”,”_self”); 
-    		      win.close(); */
+    		    
     		}
 		});
 
