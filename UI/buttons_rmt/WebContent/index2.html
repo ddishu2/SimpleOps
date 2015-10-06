@@ -692,6 +692,7 @@
 																					assign : "",
 																					reason : val.emp[0].reason,
 																					propose_id : val.prop_id
+																					console.log(propose_id);
 																				};
 																				completeData
 																						.push(tmp);
@@ -974,6 +975,7 @@
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
 							width : "0%",
+							visible:false;
 							
 						}));
 
@@ -1000,6 +1002,7 @@
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
+										 console.log(p1_id);
 										/*console.log(parent.find(".soid").text());
 										console.log(parent.find(".empoid").text());
 										console.log(parent.find(".stat11").text()); */
