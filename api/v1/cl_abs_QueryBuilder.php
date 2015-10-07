@@ -89,17 +89,40 @@
     final public function addInFilterToQuery($fp_v_fname, $fp_arr_fvals)
     {
         
+//        $re_success = false;
+//        $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
+//            if($this->isValidFilter($fp_v_fname, $lv_valueList))
+//            {
+//                $lv_fname        = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
+//                $lv_inFilterList = $this->addParenthesesToString($lv_valueList); 
+//                $lv_filterLine   = $lv_fname.self::C_SQL_IN.$lv_inFilterList;
+//                $this->addFilterLineToQuery($lv_filterLine);
+//                $re_success = true;
+//            }
+//        return $re_success;
         $re_success = false;
+        $lv_filterLine = $this->getInQuery($fp_v_fname, $fp_arr_fvals);
+        if($lv_filterLine != '')
+        {
+            $this->addFilterLineToQuery($lv_filterLine);
+            $re_success = true;
+        }
+        return $re_success;
+    }
+    
+    
+    public function getInQuery($fp_v_fname, $fp_arr_fvals)
+    {
+        $re_query = '';
         $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
             if($this->isValidFilter($fp_v_fname, $lv_valueList))
             {
                 $lv_fname        = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
                 $lv_inFilterList = $this->addParenthesesToString($lv_valueList); 
-                $lv_filterLine   = $fp_v_fname.self::C_SQL_IN.$lv_inFilterList;
-                $this->addFilterLineToQuery($lv_filterLine);
-                $re_success = true;
+                $lv_filterLine   = $lv_fname.self::C_SQL_IN.$lv_inFilterList;
+                $re_query = $lv_filterLine;
             }
-        return $re_success;
+        return $re_query;
     }
     
     /**
@@ -124,7 +147,7 @@
                             .self::C_SQL_LIKE
                             .$lv_fval;
             $this->addFilterLineToQuery($lv_filterLine);
-            $re_success = true;
+            $re_success = $lv_filterLine;
         }
         return $re_success;
     }
@@ -148,7 +171,7 @@
                             .self::C_SQL_EQUALS
                             .$lv_fval;
             $this->addFilterLineToQuery($lv_filterLine);
-            $re_success = true;
+            $re_success = $lv_filterLine;
         }
         return $re_success;
     }
@@ -172,10 +195,12 @@
                             .self::C_SQL_AND
                             .$fp_v_fval_to;
             $this->addFilterLineToQuery($lv_filterLine);
-            $re_success = true;
+            $re_success = $lv_filterLine;
         }
         return $re_success;
     }
+    
+
     
     /**
      * Converts value to an SQL string.
@@ -183,7 +208,7 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    final public function convertValueToSQLString($fp_v_value)
+    final public static function convertValueToSQLString($fp_v_value)
     {
         $lv_value = $fp_v_value;
         $re_value  = self::C_SQL_QUOTE.$lv_value.self::C_SQL_QUOTE;
@@ -198,7 +223,7 @@
      * @param  array   $fp_arr_values
      * @return string  CSV string
      */
-    final public function convertArrayToCSV(array $fp_arr_values = null)
+    final public static function convertArrayToCSV(array $fp_arr_values = null)
     {
         $re_csv = null;
         $lc_comma_quote = "','";
@@ -214,6 +239,8 @@
         }
         return $re_csv;
     }
+    
+
     
     /**
      * Adds given filter line to query and apppends prefixes 'WHERE' & 'AND', 
@@ -289,7 +316,7 @@
      * @param string $fp_v_date YYYY-MM-DD Date
      * @return string
      */
-    private function convertToSQLDate($fp_v_date)
+    final public static function convertToSQLDate($fp_v_date)
     {
         $lv_dummy_fname = "DUMMY";
         $re_cast_as_date = null;
@@ -309,8 +336,11 @@
      * @param type $fp_v_fname Fieldname
      * @return string
      */
-    private function convertToSQLLower($fp_v_fname)
+    final public static function convertToSQLLower($fp_v_fname)
     {
+        /**
+         * Add space to start and end of field name
+         */
         $lv_fname = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
         $re_lower = self::C_SQL_LOWER
                     .$lv_fname
@@ -342,7 +372,7 @@
      * @param type $fp_v_fname fieldname
      * @return string
      */
-    private function addParenthesesToString($fp_v_string)
+    public static function addParenthesesToString($fp_v_string)
     {
         $re_string = self::C_SQL_PARENTHESES_OPEN
                     .$fp_v_string
@@ -364,7 +394,7 @@
      * @param string $fp_v_date in YYYY-MM-DD format
      * @return boolean
      */
-    final public function isDateValid($fp_v_date)
+    final public static function isDateValid($fp_v_date)
     {
         $re_valid = false;
         if($fp_v_date !== '' || $fp_v_date !== null)
@@ -388,7 +418,7 @@
      * @return boolean               true if dates are valid and 
      *                               from date <= to date.
      */
-    final public function isDateRangeValid($fp_v_start_date = '', $fp_v_end_date = '')
+    final public static function isDateRangeValid($fp_v_start_date = '', $fp_v_end_date = '')
     {
         
         $re_valid = $this->isDateValid($fp_v_start_date) &&  $this->isDateValid($fp_v_end_date);
