@@ -230,12 +230,21 @@ height: 35px !important;
 	margin-top: 140px;
 }
 
-#second, #third,#report_first {
+#second, #third {
 	
 	min-height: 100px;
 	height: 100%;
 	padding: 75 20px !important;
 	margin-top: 45px;
+}
+#report_first
+{
+	min-height: 100px;
+	height: 100%;
+	padding: 75 20px !important;
+	margin-top: 65px;
+	margin-left:40px;
+	
 }
 
 #four1, #four2,#amend_first {
