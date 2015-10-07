@@ -278,10 +278,397 @@
 								$("#four2").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#amend_first").removeClass("hide_div");
+								
+								//http://localhost/rmt/api/v1/index.php/amendments
+                               	console.log("/rmt/api/v1/index.php/amendments"
+														);
+                               	$
+								.ajax({
+									method : "GET",
+									url : "/rmt/api/v1/index.php/amendments",
+									success : function(odata) {
+										console.log(odata);
+										var table_row1;
+										var res = odata;
+										var completeData1 = [];
 
+										jQuery
+												.each(
+														res,
+														function(
+																i,
+																val) {
+
+															
+																var tmp1 = {
+																	am_id : val.id,
+																	am_name:val.name,
+																	am_lev:val.level,
+																	am_idp:val.IDP,
+																	am_location:val.loc,
+																	am_bilstat:val.bill_stat,
+																	am_compet:val.competency,
+																	am_currproname:val.curr_proj_name,
+																	am_startdate:val.curr_sdate,
+																	am_enddate:val.curr_edate,
+																	am_projected:val.proj_edate_projected,
+																	am_sup:val.supervisor_fname + val.supervisor_lname,
+																	am_customer:val.cust_name,
+																	am_dom:val.domain_id,
+																	am_newdate:val.new_edate,
+																	am_newcorp:val.new_sup_corp_id,
+																	am_newsupid:val.new_sup_id,
+																	am_supname:val.new_sup_name,
+																	am_reason:val.reason,
+																	am_request:val.req_by,
+																	am_status :"--Select--",
+																	am_comments:"abc"
+																};
+															
+																completeData1
+																		.push(tmp1);
+																var Model_amend = new sap.ui.model.json.JSONModel();
+																Model_amend
+																		.setData({
+																			modelData : completeData1
+																		});
+																amend_table1
+																		.setModel(Model_amend);
+																amend_table1
+																		.bindRows("/modelData");	
+
+															}
+
+														);
+
+								
+										
 							}
-
 						});
+							}
+						});
+						
+						
+						
+						
+						//--------------------------------------------for amendments-----------------------------------------------------------------//
+						
+
+						var amend_table1 = new sap.ui.table.Table(
+														{
+															id : 'for_amend_table1',
+															title : "RMT Amendment",
+															visibleRowCount : 9,
+															firstVisibleRow : 3,
+															 //selectionMode: sap.ui.table.SelectionMode.Single, 
+															//navigationMode : sap.ui.table.NavigationMode.Paginator,
+
+														}).addStyleClass("style_for_table");
+
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "ID"
+													}),
+													template : new sap.ui.commons.TextView({id:'ame_id'})
+															.bindProperty("text", "am_id"),
+															
+													sortProperty : "am_id",
+													filterProperty : "am_id",
+													width : "100px",
+												//setRowHeight:"200px"
+												}));
+
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", "am_name"),
+													sortProperty : "am_name",
+													filterProperty : "am_name",
+													width : "100px"
+												}));
+												
+												
+												
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Competency"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_compet"),
+										sortProperty : "am_compet",
+										filterProperty : "am_compet",
+										width : "100px"
+												}));
+
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Current Project Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_currproname"),
+										sortProperty : "am_currproname",
+										filterProperty : "am_currproname",
+										width : "200px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Current Start Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_startdate"),
+										sortProperty : "am_startdate",
+										filterProperty : "am_startdate",
+										width : "150px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Current End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_enddate"),
+										sortProperty : "am_enddate",
+										filterProperty : "am_enddate",
+										width : "150px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project End Date Projected "
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_projected"),
+										sortProperty : "am_projected",
+										filterProperty : "am_projected",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Supervisor Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_sup"),
+										sortProperty : "am_sup",
+										filterProperty : "am_sup",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Customer Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_customer"),
+										sortProperty : "am_customer",
+										filterProperty : "am_customer",
+										width : "100px"
+												}));
+												
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_newdate"),
+										sortProperty : "am_newdate",
+										filterProperty : "am_newdate",
+										width : "100px"
+												}));
+												
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New Supervisor ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_newsupid"),
+										sortProperty : "am_newsupid",
+										filterProperty : "am_newsupid",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New Supervisor Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_supname"),
+										sortProperty : "am_supname",
+										filterProperty : "am_supname",
+										width : "150px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Reason"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_reason"),
+										sortProperty : "am_reason",
+										filterProperty : "am_reason",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Requested by"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_request"),
+										sortProperty : "am_request",
+										filterProperty : "am_request",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Approve"
+													}),
+													template : new sap.ui.commons.DropdownBox({
+														
+														id:'stat_amend1',
+														tooltip : "Decision",
+														items : [ new sap.ui.core.ListItem("amend_decide0", {
+															text : "--Select--",
+															key : "",
+														}),
+														         new sap.ui.core.ListItem("amend_decide", {
+															text : "Approve",
+															key : "Ap"
+														}), new sap.ui.core.ListItem("amend_decide1", {
+															text : "Reject",
+															key : "Re"
+														}),  ]
+													}),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												})).addStyleClass("approveDropdown1");
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Ops Comments"
+													}),
+													template : new sap.ui.commons.TextField({})
+												.bindProperty("value", "am_comments"),
+										sortProperty : "am_comments",
+										filterProperty : "am_comments",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Level"
+													}),
+													template : new sap.ui.commons.TextView()
+												.bindProperty("text", "am_lev"),
+										sortProperty : "am_lev",
+										filterProperty : "am_lev",
+										width : "100px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "IDP"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_idp"),
+										sortProperty : "am_idp",
+										filterProperty : "am_idp",
+										//width : "1%"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Location"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_location"),
+										sortProperty : "am_location",
+										filterProperty : "am_location",
+										//width : "1%"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Billing Status"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_bilstat"),
+										sortProperty : "am_bilstat",
+										filterProperty : "am_bilstat",
+										//width : "1%"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Domain ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_dom"),
+										sortProperty : "am_dom",
+										filterProperty : "am_dom",
+										//width : "1%"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New Supervisor Corp ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_newcorp"),
+										sortProperty : "am_newcorp",
+										filterProperty : "am_newcorp",
+										//width : "1%"
+												}));
+												
+												
+												amend_table1.sort(amend_table1.getColumns()[0]);
+
+												amend_table1.placeAt("amend_first");
+												var notify = new sap.ui.commons.Button({
+													text : "Submit & Send Notification",
+													tooltip : "notify",
+													press: function(){
+														//alert("Notification Sent Successfully.");
+														
+														$(".approveDropdown1 input").each(function(index,val){
+															
+															
+															
+															if($(this).val() == "Approve" || $(this).val() == "Reject"){
+																var parent3 = $(this).parent();
+																p1=parent3.find("#ame_id").text();
+																
+																
+															}
+														});
+														var asc1=p1;
+														console.log(asc1);
+														$.ajax({
+												      		  method: "GET",
+												      		  url: "/rmt/api/v1/index.php/approve_amendments/ammend_table="+asc1,
+												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+												      		success : function(odata){
+												      			
+												      			 
+												      		}
+														
+														});
+														
+														/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
+														
+													}
+
+												}).addStyleClass("for_normal_buttons_style1");
+												var refresh = new sap.ui.commons.Button({
+													text : "Refresh",
+													tooltip : "Refresh",		
+											
+													}).addStyleClass("for_normal_buttons_style1");
+												var back = new sap.ui.commons.Button({
+													id : 'back_amend',
+													text : "Back",
+													tooltip : "Back",
+													press:function()
+													{
+														$("#amend_first").addClass("hide_div");
+														$("#first").removeClass("hide_div");
+													}
+
+												}).addStyleClass("for_normal_buttons_style1");
+
+												notify.placeAt("amend_first");
+												refresh.placeAt("amend_first");
+												back.placeAt("amend_first");
+
 						var Approvals = new sap.ui.commons.Button({
 							id : 'ap',
 							text : "Approvals",
@@ -1604,299 +1991,6 @@
 						
 						 */
 						 
-//--------------------------------------------for amendments-----------------------------------------------------------------//
-var amendData = [
-	{amendid: "1122", em_amend: "abc",lev_amend: "abc", idp_amend: "sad", loc_amend: "abc",billstat_amend: "abc",comp_amend: "abc",pname_amend: "abc",
-		start_amend: "21/02/2015",end_amend: "30/02/2015",pend_amend: "abc",superv_amend: "abc",
-		cname_amend: "abc",dom_amend: "abc",new_start_amend: "12/05/2015",new_end_amend: "22/02/2015",new_sup_cid_amend: "abc",
-		new_supid_amend: "abc",new_sup_name_amend: "abc",res_amend: "abc",request_amend: "abc",ops_amend: "abc",},]		
-
-var amend_table1 = new sap.ui.table.Table(
-								{
-									id : 'for_amend_table1',
-									title : "RMT Amendment",
-									visibleRowCount : 6,
-									firstVisibleRow : 3,
-									 //selectionMode: sap.ui.table.SelectionMode.Single, 
-									//navigationMode : sap.ui.table.NavigationMode.Paginator,
-
-								}).addStyleClass("style_for_table");
-
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "ID"
-							}),
-							template : new sap.ui.commons.TextView("id1")
-									.bindProperty("text", "amendid"),
-							sortProperty : "amendid",
-							filterProperty : "amendid",
-							width : "100px",
-						//setRowHeight:"200px"
-						}));
-
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "Apurva Mestry"),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						
-						
-						
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Competency"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Current Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "200px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Current Start Date"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "150px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Current End Date"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "150px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project End Date Projected "
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Supervisor Name"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Customer Name"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "New End Date"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "New Supervisor ID"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "New Supervisor Name"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "150px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Reason"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Requested by"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Approve"
-							}),
-							template : new sap.ui.commons.DropdownBox({
-								
-								id:'stat_amend1',
-								tooltip : "Decision",
-								items : [ new sap.ui.core.ListItem("amend_decide0", {
-									text : "--Select--",
-									key : "",
-								}),
-								         new sap.ui.core.ListItem("amend_decide", {
-									text : "Approve",
-									key : "Ap"
-								}), new sap.ui.core.ListItem("amend_decide1", {
-									text : "Reject",
-									key : "Re"
-								}),  ]
-							}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Ops Comments"
-							}),
-							template : new sap.ui.commons.TextField()
-						.bindProperty("value", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Level"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "100px"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "IDP"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "1%"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Location"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "1%"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Billing Status"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "1%"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Domain ID"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "1%"
-						}));
-						amend_table1.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "New Supervisor Corp ID"
-							}),
-							template : new sap.ui.commons.TextView()
-						.bindProperty("text", ""),
-				sortProperty : "",
-				filterProperty : "",
-				width : "1%"
-						}));
-						
-						var oModel2 = new sap.ui.model.json.JSONModel();
-						oModel2.setData({modelData: amendData});
-						/* amend_table1.setModel(oModel2);
-						amend_table1.bindRows("/modelData"); */
-						amend_table1.sort(amend_table1.getColumns()[0]);
-
-						amend_table1.placeAt("amend_first");
-						var notify = new sap.ui.commons.Button({
-							text : "Submit & Send Notification",
-							tooltip : "notify",
-
-						}).addStyleClass("for_normal_buttons_style1");
-						var refresh = new sap.ui.commons.Button({
-							text : "Refresh",
-							tooltip : "Refresh",		
-					
-							}).addStyleClass("for_normal_buttons_style1");
-						var back = new sap.ui.commons.Button({
-							id : 'back_amend',
-							text : "Back",
-							tooltip : "Back",
-							press:function()
-							{
-								$("#amend_first").addClass("hide_div");
-								$("#first").removeClass("hide_div");
-							}
-
-						}).addStyleClass("for_normal_buttons_style1");
-
-						notify.placeAt("amend_first");
-						refresh.placeAt("amend_first");
-						back.placeAt("amend_first");
 
 	/////----------------------------------For Report Generation---------------------------------------------------/////////
                       var report_matrix_layout = new sap.ui.commons.layout.MatrixLayout({
