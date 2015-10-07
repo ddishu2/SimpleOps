@@ -709,7 +709,7 @@
 																					propose_id : val.prop_id
 																				
 																				};
-																				/* console.log(propose_id); */
+																			
 																				completeData
 																						.push(tmp);
 																				res_completed++;
@@ -1804,7 +1804,66 @@ var amend_table1 = new sap.ui.table.Table(
 				filterProperty : "",
 				width : "100px"
 						}));
-						
+						amend_table1.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Level"
+							}),
+							template : new sap.ui.commons.TextView()
+						.bindProperty("text", ""),
+				sortProperty : "",
+				filterProperty : "",
+				width : "100px"
+						}));
+						amend_table1.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "IDP"
+							}),
+							template : new sap.ui.commons.TextView()
+						.bindProperty("text", ""),
+				sortProperty : "",
+				filterProperty : "",
+				width : "1%"
+						}));
+						amend_table1.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Location"
+							}),
+							template : new sap.ui.commons.TextView()
+						.bindProperty("text", ""),
+				sortProperty : "",
+				filterProperty : "",
+				width : "1%"
+						}));
+						amend_table1.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Billing Status"
+							}),
+							template : new sap.ui.commons.TextView()
+						.bindProperty("text", ""),
+				sortProperty : "",
+				filterProperty : "",
+				width : "1%"
+						}));
+						amend_table1.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Domain ID"
+							}),
+							template : new sap.ui.commons.TextView()
+						.bindProperty("text", ""),
+				sortProperty : "",
+				filterProperty : "",
+				width : "1%"
+						}));
+						amend_table1.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "New Supervisor Corp ID"
+							}),
+							template : new sap.ui.commons.TextView()
+						.bindProperty("text", ""),
+				sortProperty : "",
+				filterProperty : "",
+				width : "1%"
+						}));
 						
 						var oModel2 = new sap.ui.model.json.JSONModel();
 						oModel2.setData({modelData: amendData});
