@@ -176,6 +176,7 @@
 								$("#heading").addClass("hide_div");
 								$("#second").addClass("hide_div");
 								$("#amend_first").addClass("hide_div");
+								$("#report_first").addClass("hide_div");
 
 							}
 						});
@@ -225,6 +226,7 @@
 										// $('#second').load('demand_fullfill1.html');
 										$("#first").addClass("hide_div");
 										$("#amend_first").addClass("hide_div");
+										$("#report_first").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#third").addClass("hide_div");
@@ -246,7 +248,19 @@
 							id : 'rg',
 							text : "Report Generation",
 							tooltip : "Report Generation",
-
+                             press: function(){
+                            	 $("#second").addClass("hide_div");
+     							$("#first").addClass("hide_div");
+     								$("#manual1").addClass("hide_div");
+     								$("#first1a").addClass("hide_div");
+     								$("#third").addClass("hide_div");
+     								$("#four1").addClass("hide_div");
+     								$("#four2").addClass("hide_div");
+     								$("#report_first").removeClass("hide_div");
+     								$("#amend_first").addClass("hide_div");
+     								$("#remove_first").removeClass("hide_div");
+                            	 
+                             }
 						});
 
 						var amendments = new sap.ui.commons.Button({
@@ -262,6 +276,7 @@
 								$("#third").addClass("hide_div");
 								$("#four1").addClass("hide_div");
 								$("#four2").addClass("hide_div");
+								$("#report_first").addClass("hide_div");
 								$("#amend_first").removeClass("hide_div");
 
 							}
@@ -971,7 +986,9 @@
 							label : new sap.ui.commons.Label({
 								text : "Proposed ID"
 							}),
-							template : new sap.ui.commons.TextView({})
+							template : new sap.ui.commons.TextView({
+								id:'p_s_id'
+							})
 									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
@@ -1791,8 +1808,8 @@ var amend_table1 = new sap.ui.table.Table(
 						
 						var oModel2 = new sap.ui.model.json.JSONModel();
 						oModel2.setData({modelData: amendData});
-						amend_table1.setModel(oModel2);
-						amend_table1.bindRows("/modelData");
+						/* amend_table1.setModel(oModel2);
+						amend_table1.bindRows("/modelData"); */
 						amend_table1.sort(amend_table1.getColumns()[0]);
 
 						amend_table1.placeAt("amend_first");
@@ -1822,7 +1839,73 @@ var amend_table1 = new sap.ui.table.Table(
 						refresh.placeAt("amend_first");
 						back.placeAt("amend_first");
 
+	/////----------------------------------For Report Generation---------------------------------------------------/////////
+                      var report_matrix_layout = new sap.ui.commons.layout.MatrixLayout({
+							id : 'report_matrix',
+							layoutFixed : true,
+							width : '500px',
+							columns : 1,
+							widths : [ '400px' ]
+						});
+						var report_RB1 = new sap.ui.commons.RadioButton({
+							text : 'A',
+							tooltip : '',
+							groupName : 'Group1',	
+							}).addStyleClass("for_report_gen");
+
+						var report_RB2 = new sap.ui.commons.RadioButton({
+							text : 'B',
+							tooltip : '',
+							groupName : 'Group1',
+
+							}).addStyleClass("for_report_gen");
+						var report_RB3 = new sap.ui.commons.RadioButton({
+							text : 'C',
+							tooltip : '',
+							groupName : 'Group1',
+							
+							}).addStyleClass("for_report_gen");
+
+						var report_RB4 = new sap.ui.commons.RadioButton({
+							text : 'D',
+							tooltip : '',
+							groupName : 'Group1',
+
+							}).addStyleClass("for_report_gen");
+						report_matrix_layout.createRow(report_RB1);
+						report_matrix_layout.createRow(report_RB2)
+						report_matrix_layout.createRow(report_RB3)
+						report_matrix_layout.createRow(report_RB4)
+						
+						report_matrix_layout.placeAt("report_first");	
+						var refresh_report = new sap.ui.commons.Button({
+							text : "Download Report",
+							tooltip : "Download Report",		
+
+							}).addStyleClass("for_normal_buttons_style1");
+						var report_back = new sap.ui.commons.Button({
+							id : 'back_report',
+							text : "Back",
+							tooltip : "Back",
+							press:function()
+							{
+								$("#report_first").addClass("hide_div");
+								$("#first").removeClass("hide_div");
+							}
+
+						}).addStyleClass("for_normal_buttons_style1");
+						refresh_report.placeAt("report_first");	
+						report_back.placeAt("report_first");			
+						
+						
+						
+						
+						
+						
 					});
+	
+
+	
 </script>
 
 
@@ -1842,6 +1925,7 @@ var amend_table1 = new sap.ui.table.Table(
 		<div id='manual2' class="hide_div"></div>
 		<div id='admin1' class="hide_div"></div>
 		<div id='amend_first' class="hide_div"></div>
+		<div id='report_first' class="hide_div"></div>
 		
 	</div>
 </body>
