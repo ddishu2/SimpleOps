@@ -16,7 +16,8 @@ class cl_RMGTool_Globals
     const GC_ROUTE_SET_HARD_LOCK = '/set_hard_lock(/)';
     const OPEN_SO_DATE_RANGE    = 21;
     const GC_route_proposals = '/proposals(/)';
-
+    const GC_APPROVE_AMMENDMENTS = '/approve_amendments(/)';
+    const GC_AMMENDMENTS = '/amendments(/)';
     
 //    static public $GC_SLIM_PATH = __DIR__.
 //                                DIRECTORY_SEPARATOR.
@@ -42,6 +43,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_NotificationMails.php';
 require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
+require __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -143,7 +145,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
                    
 //                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
                     $lv_result = $lv_obj->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id);
-                   
+                 
 //                   echo $lv_result;
             $app->response->setStatus(200);
             $app->response->headers->set('Content-Type', 'application/json');
@@ -465,6 +467,93 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
            
                }
                   );
+                  
+       $app->get(cl_RMGTool_Globals ::GC_AMMENDMENTS,
+            function () use($app)   
+        {
+//                $sql = "SELECT * FROM `m_ammendment` ";
+//               $re_ammendments = cl_DB::getResultsFromQuery($sql);
+                   // $lo_ammendments = new cl_ammendments();        
+                    $re_ammendments = cl_ammendments::getAmmendments();
+                    $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');           
+                    echo json_encode($re_ammendments, JSON_PRETTY_PRINT);
+                  
+           }
+                  );       
+                  
+         $app->get(cl_RMGTool_Globals ::GC_APPROVE_AMMENDMENTS,
+            function () use($app)   
+        {         
+//                  $lv_arr_comments = $app->request->get(cl_ammendments::C_COMMENTS);
+//                  $lv_arr_emp_id = $app->request->get(cl_ammendments::C_EMP_ID);
+//                  $lv_arr_stat = $app->request->get(cl_ammendments::C_STAT);
+             $lv_arr_result = $app->request->get(cl_ammendments::C_AMMEND_TABLE);
+             
+             
+//                 $lv_arr_result = [];
+//                $lv_arr_result[0]['id'] = '14';
+//                $lv_arr_result[0]['name'] = 'Tom';
+//                $lv_arr_result[0]['level'] = 'P1';
+//                $lv_arr_result[0]['IDP'] = 'SAP APPS ONE';
+//                $lv_arr_result[0]['loc'] = 'Mumbai';
+//                $lv_arr_result[0]['bill_stat'] = 'NBT';
+//                $lv_arr_result[0]['competency'] = 'ABAP';
+//                $lv_arr_result[0]['curr_proj_name'] = 'ABC';
+//                $lv_arr_result[0]['curr_sdate'] = '31-Dec-16';
+//                $lv_arr_result[0]['curr_edate'] = '31-Dec-16';
+//                $lv_arr_result[0]['proj_edate_projected'] = '31-Dec-16';
+//                $lv_arr_result[0]['supervisor'] = 'Someone';
+//                $lv_arr_result[0]['cust_name'] = 'someone';
+//                $lv_arr_result[0]['domain_id'] = 'someone';
+//                $lv_arr_result[0]['new_edate'] = '31-Dec-16';
+//                $lv_arr_result[0]['new_sup_corp_id'] = 'someone new';
+//                $lv_arr_result[0]['new_sup_id'] = 100;
+//                $lv_arr_result[0]['new_sup_name'] = 'SomeONe new';
+//                $lv_arr_result[0]['reason'] = 'some reason';
+//                $lv_arr_result[0]['req_by'] = 'some one ';
+//                $lv_arr_result[0]['status'] = 'Approve';
+//                $lv_arr_result[0]['ops_comments'] = 'someComments';
+//                
+//                 
+//                 $lv_arr_result[1]['id'] = '16';
+//                $lv_arr_result[1]['name'] = 'Case';
+//                $lv_arr_result[1]['level'] = 'P1';
+//                $lv_arr_result[1]['IDP'] = 'SAP APPS ONE';
+//                $lv_arr_result[1]['loc'] = 'Mumbai';
+//                $lv_arr_result[1]['bill_stat'] = 'NBT';
+//                $lv_arr_result[1]['competency'] = 'ABAP';
+//                $lv_arr_result[1]['curr_proj_name'] = 'ABC';
+//                $lv_arr_result[1]['curr_sdate'] = '31-Dec-16';
+//                $lv_arr_result[1]['curr_edate'] = '31-Dec-16';
+//                $lv_arr_result[1]['proj_edate_projected'] = '31-Dec-16';
+//                $lv_arr_result[1]['supervisor'] = 'Someone';
+//                $lv_arr_result[1]['cust_name'] = 'someone';
+//                $lv_arr_result[1]['domain_id'] = 'someone';
+//                $lv_arr_result[1]['new_edate'] = '31-Dec-16';
+//                $lv_arr_result[1]['new_sup_corp_id'] = 'someone new';
+//                $lv_arr_result[1]['new_sup_id'] = 100;
+//                $lv_arr_result[1]['new_sup_name'] = 'SomeONe new';
+//                $lv_arr_result[1]['reason'] = 'some reason';
+//                $lv_arr_result[1]['req_by'] = 'some one ';
+//                $lv_arr_result[1]['status'] = 'Reject';
+//                $lv_arr_result[1]['ops_comments'] = 'someComments';
+                
+                
+                
+                
+                 
+                  $lo_ammendments = new cl_ammendments();
+                  //$re_result = $lo_ammendments->ApproveAmmendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
+                  $re_result = $lo_ammendments->ApproveAmmendments($lv_arr_result);
+                    $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');           
+                    echo json_encode($re_result, JSON_PRETTY_PRINT);
+        }
+                  );   
+                  
+                  
+                  
   $app->run();
 ?>
 
