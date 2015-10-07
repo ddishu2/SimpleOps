@@ -90,18 +90,18 @@
     {
         
 //        $re_success = false;
-//        $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
-//            if($this->isValidFilter($fp_v_fname, $lv_valueList))
+//        $lv_valueList = self::convertArrayToCSV($fp_arr_fvals);       
+//            if(self::isValidFilter($fp_v_fname, $lv_valueList))
 //            {
 //                $lv_fname        = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
-//                $lv_inFilterList = $this->addParenthesesToString($lv_valueList); 
+//                $lv_inFilterList = self::addParenthesesToString($lv_valueList); 
 //                $lv_filterLine   = $lv_fname.self::C_SQL_IN.$lv_inFilterList;
 //                $this->addFilterLineToQuery($lv_filterLine);
 //                $re_success = true;
 //            }
 //        return $re_success;
         $re_success = false;
-        $lv_filterLine = $this->getInQuery($fp_v_fname, $fp_arr_fvals);
+        $lv_filterLine = self::getInQuery($fp_v_fname, $fp_arr_fvals);
         if($lv_filterLine != '')
         {
             $this->addFilterLineToQuery($lv_filterLine);
@@ -111,14 +111,14 @@
     }
     
     
-    public function getInQuery($fp_v_fname, $fp_arr_fvals)
+    public static function getInQuery($fp_v_fname, $fp_arr_fvals)
     {
         $re_query = '';
-        $lv_valueList = $this->convertArrayToCSV($fp_arr_fvals);       
-            if($this->isValidFilter($fp_v_fname, $lv_valueList))
+        $lv_valueList = self::convertArrayToCSV($fp_arr_fvals);       
+            if(self::isValidFilter($fp_v_fname, $lv_valueList))
             {
                 $lv_fname        = str_pad($fp_v_fname, 1, ' ', STR_PAD_BOTH);
-                $lv_inFilterList = $this->addParenthesesToString($lv_valueList); 
+                $lv_inFilterList = self::addParenthesesToString($lv_valueList); 
                 $lv_filterLine   = $lv_fname.self::C_SQL_IN.$lv_inFilterList;
                 $re_query = $lv_filterLine;
             }
@@ -135,14 +135,14 @@
     final public function addContainsFilterToQuery($fp_v_fname, $fp_v_fval)  
     {
         $re_success = false;
-        if($this->isValidFilter($fp_v_fname, $fp_v_fval))
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval))
         {
-            $lv_fname = $this->convertToSQLLower($fp_v_fname);
+            $lv_fname = self::convertToSQLLower($fp_v_fname);
             $lv_fval  = strtolower($fp_v_fval); 
             $lv_fval  = self::C_SQL_WILDCARD_ANY.
                         $lv_fval.
                         self::C_SQL_WILDCARD_ANY;
-            $lv_fval = $this->convertValueToSQLString($lv_fval);
+            $lv_fval = self::convertValueToSQLString($lv_fval);
             $lv_filterLine = $lv_fname
                             .self::C_SQL_LIKE
                             .$lv_fval;
@@ -162,11 +162,11 @@
     final public function addEqualsFilterToQuery($fp_v_fname, $fp_v_fval)
     {
         $re_success = false;
-        if($this->isValidFilter($fp_v_fname, $fp_v_fval))
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval))
         {
-            $lv_fname = $this->convertToSQLLower($fp_v_fname);
+            $lv_fname = self::convertToSQLLower($fp_v_fname);
             $lv_fval  = strtolower($fp_v_fval);
-            $lv_fval = $this->convertValueToSQLString($lv_fval);
+            $lv_fval = self::convertValueToSQLString($lv_fval);
             $lv_filterLine = $lv_fname
                             .self::C_SQL_EQUALS
                             .$lv_fval;
@@ -187,7 +187,7 @@
     final public function addBetweenFilterToQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to)
     {
         $re_success = false;
-        if($this->isValidFilter($fp_v_fname, $fp_v_fval_from)&& $this->isValidFilter($fp_v_fname, $fp_v_fval_to))
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval_from)&& self::isValidFilter($fp_v_fname, $fp_v_fval_to))
         {
             $lv_filterLine = $fp_v_fname
                             .self::C_SQL_BETWEEN
@@ -214,8 +214,6 @@
         $re_value  = self::C_SQL_QUOTE.$lv_value.self::C_SQL_QUOTE;
         return $re_value;
     }
-    
-       
     
     /**
      * Converts array to a comma separated values string.
@@ -298,8 +296,7 @@
  * @param type $fp_v_fval  Fieldvalue
  * @return boolean
  */
-    
-    private function isValidFilter($fp_v_fname, $fp_v_fval)
+    final public static function isValidFilter($fp_v_fname, $fp_v_fval)
     {
         $re_valid = false;
         if($fp_v_fname != null && $fp_v_fval != null && !(is_array($fp_v_fval)))
@@ -320,7 +317,7 @@
     {
         $lv_dummy_fname = "DUMMY";
         $re_cast_as_date = null;
-        if($this->isValidFilter($lv_dummy_fname, $fp_v_date))
+        if(self::isValidFilter($lv_dummy_fname, $fp_v_date))
         {
             $re_cast_as_date = self::C_SQL_CAST
                     .$fp_v_date
@@ -420,8 +417,7 @@
      */
     final public static function isDateRangeValid($fp_v_start_date = '', $fp_v_end_date = '')
     {
-        
-        $re_valid = $this->isDateValid($fp_v_start_date) &&  $this->isDateValid($fp_v_end_date);
+        $re_valid = self::isDateValid($fp_v_start_date) &&  self::isDateValid($fp_v_end_date);
         if($re_valid === true)
         {
             $lv_start_date      = date_create($fp_v_start_date); 
