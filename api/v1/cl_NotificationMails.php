@@ -21,14 +21,16 @@ class cl_NotificationMails
 *           \\\\<IP address>\<directory>\[<directory>]\\
 *            ntbomfs001 -> 10.75.250.149   
 */
-          lc_root          = '\\\\10.75.250.149\Datagrp\TS_SAP_Chesapeake_Energy\\';
+          lc_root          = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\';
     
 // Private class variables.    
     private $lv_content,
             $lt_so_details = [],
+            $lt_emp_details = [],
             $lt_act_type   = [],
             $lt_recievers  = [],
             $lt_capability_email = [],
+            $lt_corpid_details = [],
             $lv_query_notifcn,
             $lv_query_capability,
             $lv_recievers,
@@ -48,13 +50,21 @@ class cl_NotificationMails
             $lv_location,   
             $lv_capability, 
             $lv_rel_date,
-            $key,
-            $lwa_result,
             $lv_message,
             $lv_headers,
-            $lv_subject;                 
+            $lv_subject,
+            $lv_so_creator_email,                 
+            $lv_so_creator_name;                 
 
 // Actual methods to be called from other PHP applications.
+
+// Method to send SO Rejection notification.
+    public function sendSORejectionNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
+    {        $lv_return = false;
+        $lv_return = self::sendnotification($fp_v_so_id, 'SOR', '', $fp_v_trans_id, $fp_v_emp_id);
+        return $lv_return;        
+    }
+    
 // Method to send Soft lock release notification.
     public function sendSoftLockReleaseNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
     {
@@ -76,14 +86,13 @@ class cl_NotificationMails
             {           
             $this->lv_query_notifcn  = "SELECT *
                                         FROM m_notifications_config
-                                        WHERE action_type = '$i_mode'                                              
-                                        ORDER BY action_type"; 
+                                        WHERE action_type = '$i_mode' LIMIT 1";                                                                                       
             
             $this->lv_query_capability = "SELECT * 
                                           FROM   m_capability_config";
-            $this->lv_query_act_type   = "SELECT * FROM t_act_type_text WHERE action_type = '$i_mode'";
-            }
-    
+            $this->lv_query_act_type   = "SELECT * FROM t_act_type_text WHERE action_type = '$i_mode' LIMIT 1";
+            }            
+            
 // Get Email IDs.
     Private function get_emailid($i_reciever)
     {   
@@ -95,13 +104,8 @@ class cl_NotificationMails
                 elseif( ($lwa_capability_email['BU'] === $this->lv_BU ) && ( $lwa_capability_email['capability'] === 'Operations' ) )
                 { $lv_key_ops = $key ; }    
                 }
-
-// Get row index of capability.         
-        foreach ($this->lt_so_details as $key => $lwa_so_details) 
-                {                
-                if( $lwa_so_details['so_no'] === $this->lv_so_number )
-                { $lv_key_so = $key ; } 
-                }
+                
+// Get Employee ID/Email IDs of different recievers.                
         switch ($i_reciever) 
         {
             case 'capability_lead':               
@@ -126,7 +130,7 @@ class cl_NotificationMails
                 return $this->lt_capability_email[$lv_key_ops]['generic_id'];
                 break;
             case 'so_creator':
-                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                return $this->lv_so_creator_email;
                 break;            
             case 'proj_manager':
                 return $this->lt_capability_email[$lv_key_ops]['generic_id'];
@@ -154,37 +158,37 @@ class cl_NotificationMails
 // Function to get the recievers based on the activity type, employee details etc.            
     Private function get_recievers()
     {        
-        foreach ($this->lt_recievers as $key => $lwa_values)
-        {
-            if ($this->lt_recievers[$key]['capability_lead'] === 'X')
+//        foreach ($this->lt_recievers as $key => $lwa_values)
+//        {
+            if ($this->lt_recievers[0]['capability_lead'] === 'X')
             { $this->lv_recievers .= self::get_emailid('capability_lead').';'; }
-            if ($this->lt_recievers[$key]['capability_sub_lead'] === 'X')
+            if ($this->lt_recievers[0]['capability_sub_lead'] === 'X')
             { $this->lv_recievers .= self::get_emailid('capability_sub_lead').';'; }
-            if ($this->lt_recievers[$key]['capability_SPOC'] === 'X')
+            if ($this->lt_recievers[0]['capability_SPOC'] === 'X')
             { $this->lv_recievers .= self::get_emailid('capability_SPOC').';'; }
-            if ($this->lt_recievers[$key]['capability_gen_id'] === 'X')
+            if ($this->lt_recievers[0]['capability_gen_id'] === 'X')
             { $this->lv_recievers .= self::get_emailid('capability_gen_id').';'; }
-            if ($this->lt_recievers[$key]['ops_lead'] === 'X')
+            if ($this->lt_recievers[0]['ops_lead'] === 'X')
             { $this->lv_recievers .= self::get_emailid('ops_lead').';'; }    
-            if ($this->lt_recievers[$key]['ops_sub_lead'] === 'X')
+            if ($this->lt_recievers[0]['ops_sub_lead'] === 'X')
             { $this->lv_recievers .= self::get_emailid('ops_sub_lead').';'; }
-            if ($this->lt_recievers[$key]['ops_gen_id'] === 'X')
+            if ($this->lt_recievers[0]['ops_gen_id'] === 'X')
             { $this->lv_recievers .= self::get_emailid('ops_gen_id').';'; }
-            if ($this->lt_recievers[$key]['so_creator'] === 'X')
+            if ($this->lt_recievers[0]['so_creator'] === 'X')
             { $this->lv_recievers .= self::get_emailid('so_creator').';'; } 
-            if ($this->lt_recievers[$key]['proj_manager'] === 'X')
+            if ($this->lt_recievers[0]['proj_manager'] === 'X')
             { $this->lv_recievers .= self::get_emailid('proj_manager').';'; }
-            if ($this->lt_recievers[$key]['eng_manager'] === 'X')
+            if ($this->lt_recievers[0]['eng_manager'] === 'X')
             { $this->lv_recievers .= self::get_emailid('eng_manager').';'; } 
-            if ($this->lt_recievers[$key]['resource'] === 'X')
+            if ($this->lt_recievers[0]['resource'] === 'X')
             { $this->lv_recievers .= self::get_emailid('resource').';'; }  
-            if ($this->lt_recievers[$key]['bu_lead'] === 'X')
+            if ($this->lt_recievers[0]['bu_lead'] === 'X')
             { $this->lv_recievers .= self::get_emailid('bu_lead').';'; } 
-            if ($this->lt_recievers[$key]['lead_other_bu'] === 'X')
+            if ($this->lt_recievers[0]['lead_other_bu'] === 'X')
             { $this->lv_recievers .= self::get_emailid('lead_other_bu').';'; } 
-            if ($this->lt_recievers[$key]['crmg'] === 'X')
+            if ($this->lt_recievers[0]['crmg'] === 'X')
             { $this->lv_recievers .= self::get_emailid('crmg').';'; }             
-        }
+//        }
     }
 
 // Method to set email headers    
@@ -193,8 +197,8 @@ class cl_NotificationMails
         $lv_uid            = md5(uniqid(time())); 
         $this->lv_headers  = 'From: dikshant.mishra@capgemini.com' . "\r\n";
         $this->lv_headers .= 'Reply-To: dikshant.mishra@capgemini.com' . "\r\n";
-//        $this->lv_headers .= 'bcc: avinash.karve@capgemini.com' . "\r\n"; 
-        $this->lv_headers .= 'cc: prashanth.tellis@capgemini.com' . "\r\n";
+//        $this->lv_headers .= 'bcc: tejas.nakwa@capgemini.com' . "\r\n"; 
+//        $this->lv_headers .= 'cc: prashanth.tellis@capgemini.com' . "\r\n";
         $this->lv_headers .= 'MIME-Version: 1.0' . "\r\n";
         $this->lv_headers .= "Content-Type: multipart/mixed; boundary=\"".$lv_uid."\"\r\n";
         return $lv_uid;
@@ -252,6 +256,9 @@ class cl_NotificationMails
 // Get SO details            
             $lo_so_details->get_so_details($this->lv_so_number);
             $this->lt_so_details  = $lo_so_details->lt_so_details;
+            $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+            $this->lv_so_creator_email = $lo_so_details->lt_corpid_details[0]['email'];
+            $this->lv_so_creator_name  = $lo_so_details->lt_corpid_details[0]['emp_name'];
             
 // Get employee details.
             $lo_so_details->get_emp_details($this->lv_empid);
@@ -260,13 +267,16 @@ class cl_NotificationMails
 // Get details of all capabilities email ids.
             $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
             $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
-            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);            
                 break;
             
             case 'SLR':
 // Get SO details            
             $lo_so_details->get_so_details($this->lv_so_number);
             $this->lt_so_details  = $lo_so_details->lt_so_details;
+            $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+            $this->lv_so_creator_email = $lo_so_details->lt_corpid_details[0]['email'];
+            $this->lv_so_creator_name  = $lo_so_details->lt_corpid_details[0]['emp_name'];
             
 // Get employee details.
             $lo_so_details->get_emp_details($this->lv_empid);
@@ -278,6 +288,24 @@ class cl_NotificationMails
             $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);
                 break;            
             
+            case 'SOR':
+// Get SO details            
+            $lo_so_details->get_so_details($this->lv_so_number);
+            $this->lt_so_details  = $lo_so_details->lt_so_details;
+            $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+            $this->lv_so_creator_email = $lo_so_details->lt_corpid_details[0]['email'];
+            $this->lv_so_creator_name  = $lo_so_details->lt_corpid_details[0]['emp_name'];
+            
+// Get employee details.
+            $lo_so_details->get_emp_details($this->lv_empid);
+            $this->lt_emp_details  = $lo_so_details->lt_emp_details;
+            
+// Get details of all capabilities email ids.
+            $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);                 
+                break;
+            
             default:
                 break;
         }       
@@ -288,40 +316,51 @@ class cl_NotificationMails
     {
         switch ($i_mode) {
             case 'SL':
-                $this->lv_so_owner   = $this->lwa_result['so_owner'];              
-                $this->lv_projname   = $this->lwa_result['so_proj_name'];
-                $this->lv_proj_code  = $this->lwa_result['so_proj_id'];
-                $this->lv_sdate      = $this->lwa_result['so_sdate'];
-                $this->lv_edate      = $this->lwa_result['so_endate'];                                
-                $this->lv_empname    = $this->lt_emp_details[$this->key]['emp_name'];
-                $this->lv_empid      = $this->lt_emp_details[$this->key]['emp_id'];
-                $this->lv_pri_skill  = $this->lt_emp_details[$this->key]['skill1_l4'];
-                $this->lv_level      = $this->lt_emp_details[$this->key]['level'];
-                $this->lv_BU         = $this->lt_emp_details[$this->key]['idp'];
-                $this->lv_sub_bu     = $this->lt_emp_details[$this->key]['sub_bu'];
-                $this->lv_serv_line  = $this->lt_emp_details[$this->key]['svc_line'];
-                $this->lv_location   = $this->lt_emp_details[$this->key]['org'];
-                $this->lv_capability = $this->lt_emp_details[$this->key]['comp'];
+                $this->lv_so_owner   = $this->lv_so_creator_name;              
+                $this->lv_projname   = $this->lt_so_details[0]['so_proj_name'];
+                $this->lv_proj_code  = $this->lt_so_details[0]['so_proj_id'];
+                $this->lv_sdate      = $this->lt_so_details[0]['so_sdate'];
+                $this->lv_edate      = $this->lt_so_details[0]['so_endate'];                                
+                $this->lv_empname    = $this->lt_emp_details[0]['emp_name'];
+                $this->lv_empid      = $this->lt_emp_details[0]['emp_id'];
+                $this->lv_pri_skill  = $this->lt_emp_details[0]['skill1_l4'];
+                $this->lv_level      = $this->lt_emp_details[0]['level'];
+                $this->lv_BU         = $this->lt_emp_details[0]['idp'];
+                $this->lv_sub_bu     = $this->lt_emp_details[0]['sub_bu'];
+                $this->lv_serv_line  = $this->lt_emp_details[0]['svc_line'];
+                $this->lv_location   = $this->lt_emp_details[0]['org'];
+                $this->lv_capability = $this->lt_emp_details[0]['comp'];
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
                 $lv_date             = date('d-M-Y');
                 $this->lv_rel_date   = date('d-M-Y', strtotime($lv_date. ' + 2 days'));
                 break;
 
             case 'SLR':
-                $this->lv_so_owner   = $this->lwa_result['so_owner'];              
-                $this->lv_projname   = $this->lwa_result['so_proj_name'];
-                $this->lv_proj_code  = $this->lwa_result['so_proj_id'];
-                $this->lv_sdate      = $this->lwa_result['so_sdate'];
-                $this->lv_edate      = $this->lwa_result['so_endate'];                                
-                $this->lv_empname    = $this->lt_emp_details[$this->key]['emp_name'];
-                $this->lv_empid      = $this->lt_emp_details[$this->key]['emp_id'];
-                $this->lv_pri_skill  = $this->lt_emp_details[$this->key]['skill1_l4'];
-                $this->lv_level      = $this->lt_emp_details[$this->key]['level'];
-                $this->lv_BU         = $this->lt_emp_details[$this->key]['idp'];
-                $this->lv_sub_bu     = $this->lt_emp_details[$this->key]['sub_bu'];
-                $this->lv_serv_line  = $this->lt_emp_details[$this->key]['svc_line'];
-                $this->lv_location   = $this->lt_emp_details[$this->key]['org'];
-                $this->lv_capability = $this->lt_emp_details[$this->key]['comp'];
+                $this->lv_so_owner   = $this->lv_so_creator_name;              
+                $this->lv_projname   = $this->lt_so_details[0]['so_proj_name'];
+                $this->lv_proj_code  = $this->lt_so_details[0]['so_proj_id'];
+                $this->lv_sdate      = $this->lt_so_details[0]['so_sdate'];
+                $this->lv_edate      = $this->lt_so_details[0]['so_endate'];                                
+                $this->lv_empname    = $this->lt_emp_details[0]['emp_name'];
+                $this->lv_empid      = $this->lt_emp_details[0]['emp_id'];
+                $this->lv_pri_skill  = $this->lt_emp_details[0]['skill1_l4'];
+                $this->lv_level      = $this->lt_emp_details[0]['level'];
+                $this->lv_BU         = $this->lt_emp_details[0]['idp'];
+                $this->lv_sub_bu     = $this->lt_emp_details[0]['sub_bu'];
+                $this->lv_serv_line  = $this->lt_emp_details[0]['svc_line'];
+                $this->lv_location   = $this->lt_emp_details[0]['org'];
+                $this->lv_capability = $this->lt_emp_details[0]['comp'];
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                break;
+            
+            case 'SOR':
+                $this->lv_so_owner   = $this->lv_so_creator_name;              
+                $this->lv_projname   = $this->lt_so_details[0]['so_proj_name'];
+                $this->lv_proj_code  = $this->lt_so_details[0]['so_proj_id'];
+                $this->lv_sdate      = $this->lt_so_details[0]['so_sdate'];
+                $this->lv_edate      = $this->lt_so_details[0]['so_endate'];                                
+                $this->lv_BU         = $this->lt_emp_details[0]['idp'];                                
+                $this->lv_capability = $this->lt_emp_details[0]['comp'];
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
                 break;
             default:
@@ -334,7 +373,7 @@ class cl_NotificationMails
     {
         switch ($i_mode) {
             case 'SL':
-                $this->lv_content  = str_replace("GV_SO_OWNER", $this->lv_so_owner, $this->lv_content);
+                $this->lv_content  = str_replace("GV_SO_OWNER", $this->lv_so_creator_name, $this->lv_content);
                 $this->lv_content  = str_replace("GV_PROJECT_NAME", $this->lv_projname, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EMPNAME", $this->lv_empname, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EMPID", $this->lv_empid, $this->lv_content);
@@ -353,7 +392,7 @@ class cl_NotificationMails
                 break;
             
             case 'SLR':
-                $this->lv_content  = str_replace("GV_SO_OWNER", $this->lv_so_owner, $this->lv_content);
+                $this->lv_content  = str_replace("GV_SO_OWNER", $this->lv_so_creator_name, $this->lv_content);
                 $this->lv_content  = str_replace("GV_PROJECT_NAME", $this->lv_projname, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EMPNAME", $this->lv_empname, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EMPID", $this->lv_empid, $this->lv_content);
@@ -368,6 +407,15 @@ class cl_NotificationMails
                 $this->lv_content  = str_replace("GV_SDATE", $this->lv_sdate, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EDATE", $this->lv_edate, $this->lv_content);
                 $this->lv_content  = str_replace("GV_SL_REL_DATE", $this->lv_rel_date, $this->lv_content);
+                break;
+            
+            case 'SOR':
+                $this->lv_content  = str_replace("GV_SO_OWNER", $this->lv_so_creator_name, $this->lv_content);
+                $this->lv_content  = str_replace("GV_PROJECT_NAME", $this->lv_projname, $this->lv_content);
+                $this->lv_content  = str_replace("GV_PROJECT_CODE", $this->lv_proj_code, $this->lv_content);
+                $this->lv_content  = str_replace("GV_SO_NO", $this->lv_so_number, $this->lv_content);
+                $this->lv_content  = str_replace("GV_SDATE", $this->lv_sdate, $this->lv_content);
+                $this->lv_content  = str_replace("GV_EDATE", $this->lv_edate, $this->lv_content);
                 break;
             default:
                 break;
@@ -398,8 +446,8 @@ class cl_NotificationMails
             self::get_details($i_mode);          
                 
 // Process the selected tables and format the message to be sent.
-            foreach($this->lt_so_details as $this->key => $this->lwa_result)
-                {                                                                         
+//            foreach($this->lt_so_details as $this->key => $this->lwa_result)
+//                {                                                                         
 // Read details into variables.            
                 self::read_details($i_mode);
             
@@ -429,10 +477,11 @@ class cl_NotificationMails
                     {                    
                     return false;
                     }
-                }   
+//                }   
             }
         } 
 
 //        $lo_email = new cl_NotificationMails();
 //        $lo_email->sendSoftLockReleaseNotification(203209, 232, 132456);
-//        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html' , 232, 203201);
+//      $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html' , 232, 203201);
+//        $lo_email->sendSORejectionNotification(203209, 232, 132456);
