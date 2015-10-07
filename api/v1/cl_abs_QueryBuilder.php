@@ -187,7 +187,8 @@
     final public function addBetweenFilterToQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to)
     {
         $re_success = false;
-        if(self::isValidFilter($fp_v_fname, $fp_v_fval_from)&& self::isValidFilter($fp_v_fname, $fp_v_fval_to))
+        $lv_filterLine = self::getBetweenFilterQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to);
+        if($lv_filterLine != '')
         {
             $lv_filterLine = $fp_v_fname
                             .self::C_SQL_BETWEEN
@@ -195,9 +196,35 @@
                             .self::C_SQL_AND
                             .$fp_v_fval_to;
             $this->addFilterLineToQuery($lv_filterLine);
-            $re_success = $lv_filterLine;
+            $re_success = true;
         }
         return $re_success;
+    }
+    
+    
+    
+    /**
+     * Returns a SQL BETWEEN clause.
+     * 
+     * @param string     fieldname 
+     * @param string    'From' field value
+     * @param string    'To' field value
+     * @return string   Non-blank if succesful, else blank
+     */
+    final public static function getBetweenFilterQuery($fp_v_fname, $fp_v_fval_from, $fp_v_fval_to)
+    {
+        $re_query = '';
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval_from)&& self::isValidFilter($fp_v_fname, $fp_v_fval_to))
+        {
+            $lv_filterLine = $fp_v_fname
+                            .self::C_SQL_BETWEEN
+                            .$fp_v_fval_from
+                            .self::C_SQL_AND
+                            .$fp_v_fval_to;
+            
+            $re_query = $lv_filterLine;
+        }
+        return $re_query;
     }
     
 
