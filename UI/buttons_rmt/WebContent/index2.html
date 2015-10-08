@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script>
 var Model_amend;
-var pass_data1;
+var pass_data;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -341,7 +341,7 @@ var pass_data1;
 																		.bindRows("/modelData");
 																
 																
-																pass_data1 = Model_amend.getData().modelData;
+																pass_data = Model_amend.getData().modelData;
 
 
 															}
@@ -389,7 +389,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Emp Name"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_name'})
 															.bindProperty("text", "am_name"),
 													sortProperty : "am_name",
 													filterProperty : "am_name",
@@ -402,7 +402,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Competency"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_comp'})
 												.bindProperty("text", "am_compet"),
 										sortProperty : "am_compet",
 										filterProperty : "am_compet",
@@ -413,7 +413,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Current Project Name"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_corp'})
 												.bindProperty("text", "am_currproname"),
 										sortProperty : "am_currproname",
 										filterProperty : "am_currproname",
@@ -423,7 +423,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Current Start Date"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_csd'})
 												.bindProperty("text", "am_startdate"),
 										sortProperty : "am_startdate",
 										filterProperty : "am_startdate",
@@ -433,7 +433,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Current End Date"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_ced'})
 												.bindProperty("text", "am_enddate"),
 										sortProperty : "am_enddate",
 										filterProperty : "am_enddate",
@@ -443,7 +443,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Project End Date Projected "
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_pro'})
 												.bindProperty("text", "am_projected"),
 										sortProperty : "am_projected",
 										filterProperty : "am_projected",
@@ -453,7 +453,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Supervisor Name"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_sn'})
 												.bindProperty("text", "am_sup"),
 										sortProperty : "am_sup",
 										filterProperty : "am_sup",
@@ -463,7 +463,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Customer Name"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_cn1'})
 												.bindProperty("text", "am_customer"),
 										sortProperty : "am_customer",
 										filterProperty : "am_customer",
@@ -474,7 +474,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "New End Date"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_nd'})
 												.bindProperty("text", "am_newdate"),
 										sortProperty : "am_newdate",
 										filterProperty : "am_newdate",
@@ -485,7 +485,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "New Supervisor ID"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_nsi'})
 												.bindProperty("text", "am_newsupid"),
 										sortProperty : "am_newsupid",
 										filterProperty : "am_newsupid",
@@ -495,7 +495,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "New Supervisor Name"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_nsn'})
 												.bindProperty("text", "am_supname"),
 										sortProperty : "am_supname",
 										filterProperty : "am_supname",
@@ -505,7 +505,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Reason"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_res'})
 												.bindProperty("text", "am_reason"),
 										sortProperty : "am_reason",
 										filterProperty : "am_reason",
@@ -515,7 +515,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Requested by"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_reqb'})
 												.bindProperty("text", "am_request"),
 										sortProperty : "am_request",
 										filterProperty : "am_request",
@@ -560,7 +560,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Level"
 													}),
-													template : new sap.ui.commons.TextView()
+													template : new sap.ui.commons.TextView({id:'ame_le'})
 												.bindProperty("text", "am_lev"),
 										sortProperty : "am_lev",
 										filterProperty : "am_lev",
@@ -570,7 +570,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "IDP"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_idp'})
 												.bindProperty("text", "am_idp"),
 										sortProperty : "am_idp",
 										filterProperty : "am_idp",
@@ -580,7 +580,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Location"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_loce'})
 												.bindProperty("text", "am_location"),
 										sortProperty : "am_location",
 										filterProperty : "am_location",
@@ -590,7 +590,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Billing Status"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_lbstat'})
 												.bindProperty("text", "am_bilstat"),
 										sortProperty : "am_bilstat",
 										filterProperty : "am_bilstat",
@@ -600,7 +600,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "Domain ID"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_domi'})
 												.bindProperty("text", "am_dom"),
 										sortProperty : "am_dom",
 										filterProperty : "am_dom",
@@ -610,7 +610,7 @@ var pass_data1;
 													label : new sap.ui.commons.Label({
 														text : "New Supervisor Corp ID"
 													}),
-													template : new sap.ui.commons.TextView({})
+													template : new sap.ui.commons.TextView({id:'ame_corpe'})
 												.bindProperty("text", "am_newcorp"),
 										sortProperty : "am_newcorp",
 										filterProperty : "am_newcorp",
@@ -626,28 +626,19 @@ var pass_data1;
 													tooltip : "notify",
 													press: function(){
 														//alert("Notification Sent Successfully.");
-													 	/* $.ajax({
+													 	 $.ajax({
 															          type:           'POST',
 															         // cache:          false,
 															          url:            '/rmt/api/v1/index.php/approve_amendments',
-															          data:         {pass_data: pass_data1},
-															          contentType: false,
-													                  processData: false,
+															          //data:         //pass_data,
+															          /* contentType: false,
+													                  processData: false, */
 													                  success: function(pass_data){
 													                      console.log(pass_data);
 													                  }
-															      }); */  
-														
-															  $.ajax({
-													      		  method: "GET",
-													      		  url: "/rmt/api/v1/index.php/approve_amendments/?ammend_table="+pass_data1,
-													      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
-													      		success : function(odata){
-													      			
-													      			 
-													      		}
+															      }); 
 															
-															});  
+															  
 														
 														
 													//http://localhost/rmt/api/v1/index.php/approve_amendments/ammend_table=$variable	
@@ -1414,11 +1405,7 @@ var pass_data1;
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
 										 console.log(p1_id);
-										/*console.log(parent.find(".soid").text());
-										console.log(parent.find(".empoid").text());
-										console.log(parent.find(".stat11").text()); */
 										
-										//so_str = "so_id[]="+
 									}
 								});
 								var asc= so_str + emp_str +status_str+p1_id;
