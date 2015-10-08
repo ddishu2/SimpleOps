@@ -324,7 +324,7 @@ var pass_data;
 																	am_supname:val.new_sup_name,
 																	am_reason:val.reason,
 																	am_request:val.req_by,
-																	am_status :"--Select--",
+																	am_status :"Approve",
 																	am_comments:"abc"
 																};
 															
@@ -529,10 +529,7 @@ var pass_data;
 														
 														id:'stat_amend1',
 														tooltip : "Decision",
-														items : [ new sap.ui.core.ListItem("amend_decide0", {
-															text : "--Select--",
-															key : "",
-														}),
+														items : [ 
 														         new sap.ui.core.ListItem("amend_decide", {
 															text : "Approve",
 															key : "Ap"
@@ -550,7 +547,7 @@ var pass_data;
 													label : new sap.ui.commons.Label({
 														text : "Ops Comments"
 													}),
-													template : new sap.ui.commons.TextField({})
+													template : new sap.ui.commons.TextField({id: 'ame_comm'})
 												.bindProperty("value", "am_comments"),
 										sortProperty : "am_comments",
 										filterProperty : "am_comments",
@@ -625,18 +622,34 @@ var pass_data;
 													text : "Submit & Send Notification",
 													tooltip : "notify",
 													press: function(){
-														//alert("Notification Sent Successfully.");
-													 	 $.ajax({
-															          type:           'POST',
-															         // cache:          false,
-															          url:            '/rmt/api/v1/index.php/approve_amendments',
-															          //data:         //pass_data,
-															          /* contentType: false,
-													                  processData: false, */
-													                  success: function(pass_data){
-													                      console.log(pass_data);
-													                  }
-															      }); 
+														var amend_empid = "";
+														var amend_approvedec = "";
+														var amend_opscomment = "";
+														var mod = Model_amend.getData().modelData;
+														for(i=0;i<mod.length;i++){
+															if( mod[i].am_status == "Approve" || mod[i].am_status == "Reject"){
+																
+																amend_empid += "&emp_id[]="+mod[i].am_id;
+																amend_approvedec += "&status[]="+mod[i].am_status;
+																amend_opscomment += "&comments[]="+mod[i].am_comments;
+																
+																 
+																
+															}
+														}
+														  var asc2= amend_empid + amend_approvedec +amend_opscomment;
+														  console.log(asc2);
+														   $.ajax({
+												      		  method: "GET",
+												      		  url: "/rmt/api/v1/index.php/approve_amendments/?"+asc2,
+												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+												      		success : function(odata){
+												      			
+												      			 alert("hi");
+												      		}
+														
+														}); 
+														
 															
 															  
 														
