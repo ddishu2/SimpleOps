@@ -488,7 +488,7 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                  $lv_arr_comments = $app->request->get(cl_ammendments::C_COMMENTS);
 //                  $lv_arr_emp_id = $app->request->get(cl_ammendments::C_EMP_ID);
 //                  $lv_arr_stat = $app->request->get(cl_ammendments::C_STAT);
-             $lv_arr_result = $app->request->get(cl_ammendments::C_AMMEND_TABLE);
+             //$lv_arr_result = $app->request->get(cl_ammendments::C_AMMEND_TABLE);
              
              
 //                 $lv_arr_result = [];
@@ -506,8 +506,8 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                $lv_arr_result[0]['supervisor'] = 'Someone';
 //                $lv_arr_result[0]['cust_name'] = 'someone';
 //                $lv_arr_result[0]['domain_id'] = 'someone';
-//                $lv_arr_result[0]['new_edate'] = '31-Dec-16';
-//                $lv_arr_result[0]['new_sup_corp_id'] = 'someone new';
+//                $lv_arr_result[0]['new_edate'] = '31-Jan-16';
+//                $lv_arr_result[0]['new_sup_corp_id'] = 'CASE';
 //                $lv_arr_result[0]['new_sup_id'] = 100;
 //                $lv_arr_result[0]['new_sup_name'] = 'SomeONe new';
 //                $lv_arr_result[0]['reason'] = 'some reason';
@@ -516,8 +516,8 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                $lv_arr_result[0]['ops_comments'] = 'someComments';
 //                
 //                 
-//                 $lv_arr_result[1]['id'] = '16';
-//                $lv_arr_result[1]['name'] = 'Case';
+//                 $lv_arr_result[1]['id'] = '19';
+//                $lv_arr_result[1]['name'] = 'Ram';
 //                $lv_arr_result[1]['level'] = 'P1';
 //                $lv_arr_result[1]['IDP'] = 'SAP APPS ONE';
 //                $lv_arr_result[1]['loc'] = 'Mumbai';
@@ -530,7 +530,7 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                $lv_arr_result[1]['supervisor'] = 'Someone';
 //                $lv_arr_result[1]['cust_name'] = 'someone';
 //                $lv_arr_result[1]['domain_id'] = 'someone';
-//                $lv_arr_result[1]['new_edate'] = '31-Dec-16';
+//                $lv_arr_result[1]['new_edate'] = '';
 //                $lv_arr_result[1]['new_sup_corp_id'] = 'someone new';
 //                $lv_arr_result[1]['new_sup_id'] = 100;
 //                $lv_arr_result[1]['new_sup_name'] = 'SomeONe new';
@@ -540,15 +540,18 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                $lv_arr_result[1]['ops_comments'] = 'someComments';
                 
                 
-                
-                
+                $lv_arr_result = $app->request->post(cl_ammendments::C_AMMEND_TABLE);
+               
                  
-                  $lo_ammendments = new cl_ammendments();
-                  //$re_result = $lo_ammendments->ApproveAmmendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
-                  $re_result = $lo_ammendments->ApproveAmmendments($lv_arr_result);
-                    $app->response->setStatus(200);
+                 $lo_ammendments = new cl_ammendments();
+//                  //$re_result = $lo_ammendments->ApproveAmmendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
+                 $re_result = $lo_ammendments->ApproveAmmendments($lv_arr_result);
+//                  $re_result = $lo_ammendments->popExistingAmendments();
+//                  print_r($re_result);  
+                  $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');           
-                    echo json_encode($re_result, JSON_PRETTY_PRINT);
+                    //echo json_encode($re_result, JSON_PRETTY_PRINT);
+                    echo json_encode($re_result , JSON_PRETTY_PRINT);
         }
                   );   
                   
