@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script>
 var Model_amend;
-var pass_data;
+var pass_data1;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -341,7 +341,7 @@ var pass_data;
 																		.bindRows("/modelData");
 																
 																
-																pass_data = Model_amend.getData().modelData;
+																pass_data1 = Model_amend.getData().modelData;
 
 
 															}
@@ -626,17 +626,28 @@ var pass_data;
 													tooltip : "notify",
 													press: function(){
 														//alert("Notification Sent Successfully.");
-														$.ajax({
+													 	/* $.ajax({
 															          type:           'POST',
-															          cache:          false,
+															         // cache:          false,
 															          url:            '/rmt/api/v1/index.php/approve_amendments',
-															          data:         pass_data,
+															          data:         {pass_data: pass_data1},
 															          contentType: false,
 													                  processData: false,
+													                  success: function(pass_data){
+													                      console.log(pass_data);
+													                  }
+															      }); */  
+														
+															  $.ajax({
+													      		  method: "GET",
+													      		  url: "/rmt/api/v1/index.php/approve_amendments/ammend_table="+pass_data1,
+													      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+													      		success : function(odata){
+													      			
+													      			 
+													      		}
 															
-															      });
-														
-														
+															});  
 														
 														
 													//http://localhost/rmt/api/v1/index.php/approve_amendments/ammend_table=$variable	
