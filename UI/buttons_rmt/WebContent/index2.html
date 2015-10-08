@@ -563,6 +563,7 @@ var pass_data;
 													text : "Submit & Send Notification",
 													tooltip : "notify",
 													press: function(){
+														alert("Notification sent");
 														var amend_empid = "";
 														var amend_approvedec = "";
 														var amend_opscomment = "";
@@ -586,7 +587,7 @@ var pass_data;
 												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 												      		success : function(odata){
 												      			
-												      			 alert("hi");
+												      			 alert("Notification sent");
 												      		}
 														
 														}); 
