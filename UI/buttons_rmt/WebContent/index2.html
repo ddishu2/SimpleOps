@@ -12,10 +12,12 @@
 </script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script>
+var Model_amend;
 	sap.ui
 			.getCore()
 			.attachInit(
 					function() {
+						
 					
 						var oWelcome_Page1 = new sap.ui.commons.layout.MatrixLayout(
 								{
@@ -327,7 +329,7 @@
 															
 																completeData1
 																		.push(tmp1);
-																var Model_amend = new sap.ui.model.json.JSONModel();
+																 Model_amend = new sap.ui.model.json.JSONModel();
 																Model_amend
 																		.setData({
 																			modelData : completeData1
@@ -533,7 +535,8 @@
 															text : "Reject",
 															key : "Re"
 														}),  ]
-													}),
+													
+													}).bindProperty("value","am_status"),
 													sortProperty : "",
 													filterProperty : "",
 													width : "100px"
@@ -618,33 +621,19 @@
 													tooltip : "notify",
 													press: function(){
 														//alert("Notification Sent Successfully.");
-														
-														$(".approveDropdown1 input").each(function(index,val){
-															
-															
-															
-															if($(this).val() == "Approve" || $(this).val() == "Reject"){
-																var parent3 = $(this).parent();
-																p1=parent3.find("#ame_id").text();
-																
-																
-															}
-														});
-														var asc1=p1;
-														console.log(asc1);
 														$.ajax({
-												      		  method: "GET",
-												      		  url: "/rmt/api/v1/index.php/approve_amendments/ammend_table="+asc1,
-												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
-												      		success : function(odata){
-												      			
-												      			 
-												      		}
+															          type:           'POST',
+															          cache:          false,
+															          url:            '/rmt/api/v1/index.php/approve_amendments',
+															          data:         Model_amend.completeData1,
+															
+															
+															      });
 														
-														});
 														
-														/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
 														
+														
+													//http://localhost/rmt/api/v1/index.php/approve_amendments/ammend_table=$variable	
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
