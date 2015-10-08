@@ -31,6 +31,8 @@ class cl_NotificationMails
             $lt_recievers  = [],
             $lt_capability_email = [],
             $lt_corpid_details = [],
+            $lt_pm_details = [],
+            $lt_em_details = [],
             $lv_query_notifcn,
             $lv_query_capability,
             $lv_recievers,
@@ -54,13 +56,42 @@ class cl_NotificationMails
             $lv_headers,
             $lv_subject,
             $lv_so_creator_email,                 
-            $lv_so_creator_name;                 
-
+            $lv_so_creator_name,
+            $lv_pm_email,
+            $lv_em_email;    
+    
+// Constructor of the class
+   function __construct()
+   {    $this->lt_capability_email = [];
+        $this->lt_bu               = [];
+        $this->lv_query_capability = "SELECT * 
+                                          FROM   m_capability_config";
+        $this->lv_query_bu         = "SELECT * FROM m_bu_config";
+        $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
+        $this->lt_bu               = cl_DB::getResultsFromQuery($this->lv_query_bu);
+   }
 // Actual methods to be called from other PHP applications.
+// 
+// Method to send Release date change notification.
+    public function sendReleasedateChangeNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
+    {        
+        $lv_return = false;
+        $lv_return = self::sendnotification($fp_v_so_id, 'CRD', '', $fp_v_trans_id, $fp_v_emp_id);
+        return $lv_return;        
+    }
 
+// Method to send T&E Approver Change notification.
+    public function sendTEApproverChangeNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
+    {        
+        $lv_return = false;
+        $lv_return = self::sendnotification($fp_v_so_id, 'CTE', '', $fp_v_trans_id, $fp_v_emp_id);
+        return $lv_return;        
+    }
+    
 // Method to send SO Rejection notification.
     public function sendSORejectionNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
-    {        $lv_return = false;
+    {        
+        $lv_return = false;
         $lv_return = self::sendnotification($fp_v_so_id, 'SOR', '', $fp_v_trans_id, $fp_v_emp_id);
         return $lv_return;        
     }
@@ -86,11 +117,8 @@ class cl_NotificationMails
             {           
             $this->lv_query_notifcn  = "SELECT *
                                         FROM m_notifications_config
-                                        WHERE action_type = '$i_mode' LIMIT 1";                                                                                       
-            
-            $this->lv_query_capability = "SELECT * 
-                                          FROM   m_capability_config";
-            $this->lv_query_act_type   = "SELECT * FROM t_act_type_text WHERE action_type = '$i_mode' LIMIT 1";
+                                        WHERE action_type = '$i_mode' LIMIT 1";                                                                                                               
+            $this->lv_query_act_type = "SELECT * FROM t_act_type_text WHERE action_type = '$i_mode' LIMIT 1";
             }            
             
 // Get Email IDs.
@@ -103,6 +131,13 @@ class cl_NotificationMails
                 { $lv_key_cap = $key ; } 
                 elseif( ($lwa_capability_email['BU'] === $this->lv_BU ) && ( $lwa_capability_email['capability'] === 'Operations' ) )
                 { $lv_key_ops = $key ; }    
+                }
+                
+// Get BU Lead's email-ID.
+        foreach ($this->lt_bu as $key => $lwa_bu)
+                {
+                if ( $lwa_bu['BU'] === $this->lv_bu)
+                { $lv_key_bu = $key; }
                 }
                 
 // Get Employee ID/Email IDs of different recievers.                
@@ -133,16 +168,16 @@ class cl_NotificationMails
                 return $this->lv_so_creator_email;
                 break;            
             case 'proj_manager':
-                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                return $this->lv_pm_email;
                 break;
             case 'eng_manager':
-                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                return $this->lv_em_email;
                 break;
             case 'resource':
-                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                return $this->lv_resource_email;
                 break;
             case 'bu_lead':
-                return $this->lt_capability_email[$lv_key_ops]['generic_id'];
+                return $this->lt_bu[$lv_key_bu]['lead'];
                 break;
             case 'lead_other_bu':
                 return $this->lt_capability_email[$lv_key_ops]['generic_id'];
@@ -254,55 +289,53 @@ class cl_NotificationMails
         {
             case 'SL':
 // Get SO details            
-            $lo_so_details->get_so_details($this->lv_so_number);
-            $this->lt_so_details  = $lo_so_details->lt_so_details;
-            $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
-            $this->lv_so_creator_email = $lo_so_details->lt_corpid_details[0]['email'];
-            $this->lv_so_creator_name  = $lo_so_details->lt_corpid_details[0]['emp_name'];
+            $this->lt_so_details = $lo_so_details->get_so_details($this->lv_so_number);             
+            $this->lt_corpid_details = $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+            $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
+            $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
             
 // Get employee details.
-            $lo_so_details->get_emp_details($this->lv_empid);
-            $this->lt_emp_details  = $lo_so_details->lt_emp_details;
+            $this->lt_emp_details = $lo_so_details->get_emp_details($this->lv_empid);
             
 // Get details of all capabilities email ids.
             $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
-            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
-            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);            
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type); 
+            
+// Get PM and EM details.            
+            $this->lt_pm_details       = $lo_so_details->get_emp_details($this->lt_so_details[0]['pm_id']);
+            $this->lv_pm_email         = $this->lt_pm_details[0]['email'];
+            $this->lt_em_details       = $lo_so_details->get_emp_details($this->lt_so_details[0]['em_id']);
+            $this->lv_em_email         = $this->lt_em_details[0]['email'];
                 break;
             
             case 'SLR':
 // Get SO details            
-            $lo_so_details->get_so_details($this->lv_so_number);
-            $this->lt_so_details  = $lo_so_details->lt_so_details;
-            $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
-            $this->lv_so_creator_email = $lo_so_details->lt_corpid_details[0]['email'];
-            $this->lv_so_creator_name  = $lo_so_details->lt_corpid_details[0]['emp_name'];
+            $this->lt_so_details = $lo_so_details->get_so_details($this->lv_so_number);             
+            $this->lt_corpid_details = $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+            $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
+            $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
+            
             
 // Get employee details.
-            $lo_so_details->get_emp_details($this->lv_empid);
-            $this->lt_emp_details  = $lo_so_details->lt_emp_details;
+            $this->lt_emp_details = $lo_so_details->get_emp_details($this->lv_empid);
             
 // Get details of all capabilities email ids.
             $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
-            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
-            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type); 
                 break;            
             
             case 'SOR':
 // Get SO details            
-            $lo_so_details->get_so_details($this->lv_so_number);
-            $this->lt_so_details  = $lo_so_details->lt_so_details;
-            $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
-            $this->lv_so_creator_email = $lo_so_details->lt_corpid_details[0]['email'];
-            $this->lv_so_creator_name  = $lo_so_details->lt_corpid_details[0]['emp_name'];
+            $this->lt_so_details = $lo_so_details->get_so_details($this->lv_so_number);             
+            $this->lt_corpid_details = $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+            $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
+            $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
             
 // Get employee details.
-            $lo_so_details->get_emp_details($this->lv_empid);
-            $this->lt_emp_details  = $lo_so_details->lt_emp_details;
+            $this->lt_emp_details = $lo_so_details->get_emp_details($this->lv_empid);
             
 // Get details of all capabilities email ids.
             $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
-            $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
             $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);                 
                 break;
             
@@ -444,10 +477,7 @@ class cl_NotificationMails
             
 // Call function to get details based on mode
             self::get_details($i_mode);          
-                
-// Process the selected tables and format the message to be sent.
-//            foreach($this->lt_so_details as $this->key => $this->lwa_result)
-//                {                                                                         
+                                                                                       
 // Read details into variables.            
                 self::read_details($i_mode);
             
@@ -466,7 +496,7 @@ class cl_NotificationMails
 
 // Get recievers for email.                
                 self::get_recievers();
-                
+                echo $this->lv_recievers;
              //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
                 $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
@@ -476,12 +506,11 @@ class cl_NotificationMails
                 else
                     {                    
                     return false;
-                    }
-//                }   
+                    }  
             }
         } 
 
 //        $lo_email = new cl_NotificationMails();
 //        $lo_email->sendSoftLockReleaseNotification(203209, 232, 132456);
-//      $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html' , 232, 203201);
+//        $lo_email->sendSoftLockNotification(203209, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html' , 232, 203201);
 //        $lo_email->sendSORejectionNotification(203209, 232, 132456);
