@@ -136,7 +136,7 @@ class cl_NotificationMails
 // Get BU Lead's email-ID.
         foreach ($this->lt_bu as $key => $lwa_bu)
                 {
-                if ( $lwa_bu['BU'] === $this->lv_bu)
+                if ( $lwa_bu['BU'] === $this->lv_BU)
                 { $lv_key_bu = $key; }
                 }
                 
@@ -303,9 +303,17 @@ class cl_NotificationMails
             
 // Get PM and EM details.            
             $this->lt_pm_details       = $lo_so_details->get_emp_details($this->lt_so_details[0]['pm_id']);
-            $this->lv_pm_email         = $this->lt_pm_details[0]['email'];
+            $lv_count = array_count_values($this->lt_pm_details);
+            if ($lv_count)
+            {   $this->lv_pm_email         = $this->lt_pm_details[0]['email']; }
+            else
+            {$this->lv_pm_email = 'kishor.ahire@capgemini.com';}
             $this->lt_em_details       = $lo_so_details->get_emp_details($this->lt_so_details[0]['em_id']);
-            $this->lv_em_email         = $this->lt_em_details[0]['email'];
+            $lv_count = array_count_values($this->lt_em_details);
+            if ($lv_count)
+            {  $this->lv_em_email         = $this->lt_em_details[0]['email']; }
+            else
+            {$this->lv_pm_email = 'kishor.ahire@capgemini.com';}
                 break;
             
             case 'SLR':
@@ -498,7 +506,7 @@ class cl_NotificationMails
                 self::get_recievers();
                 echo $this->lv_recievers;
              //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-                $lv_mail = mail('dikshant.mishra@capgemini.com ; tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {  
                     return true;                    
