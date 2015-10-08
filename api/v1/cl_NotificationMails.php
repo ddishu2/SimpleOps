@@ -498,7 +498,7 @@ class cl_NotificationMails
                 self::get_recievers();
                 echo $this->lv_recievers;
              //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-                $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+                $lv_mail = mail('dikshant.mishra@capgemini.com ; tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {  
                     return true;                    
