@@ -485,9 +485,9 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
          $app->get(cl_RMGTool_Globals ::GC_APPROVE_AMMENDMENTS,
             function () use($app)   
         {         
-//                  $lv_arr_comments = $app->request->get(cl_ammendments::C_COMMENTS);
-//                  $lv_arr_emp_id = $app->request->get(cl_ammendments::C_EMP_ID);
-//                  $lv_arr_stat = $app->request->get(cl_ammendments::C_STAT);
+                  $lv_arr_comments = $app->request->get(cl_ammendments::C_COMMENTS);
+                  $lv_arr_emp_id = $app->request->get(cl_ammendments::C_EMP_ID);
+                  $lv_arr_stat = $app->request->get(cl_ammendments::C_STAT);
              //$lv_arr_result = $app->request->get(cl_ammendments::C_AMMEND_TABLE);
              
              
@@ -538,20 +538,32 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                $lv_arr_result[1]['req_by'] = 'some one ';
 //                $lv_arr_result[1]['status'] = 'Reject';
 //                $lv_arr_result[1]['ops_comments'] = 'someComments';
-                
-                
-                $lv_arr_result = $app->request->post(cl_ammendments::C_AMMEND_TABLE);
+              
+                  
                
-                 
-                 $lo_ammendments = new cl_ammendments();
-//                  //$re_result = $lo_ammendments->ApproveAmmendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
-                 $re_result = $lo_ammendments->ApproveAmmendments($lv_arr_result);
-//                  $re_result = $lo_ammendments->popExistingAmendments();
-//                  print_r($re_result);  
-                  $app->response->setStatus(200);
+                  
+                  
+//                  
+//                  echo 'GET'.PHP_EOL; var_dump($_GET);
+//                $data = $_GET[cl_ammendments::C_AMMEND_TABLE];
+//                $datarow = json_decode($data);
+//                echo json_encode($datarow);
+//                echo 'amend'.PHP_EOL; var_dump($datarow);
+//                echo 'POST'; var_dump ($_POST);
+                
+//               $lv_arr_result = $app->request->post(cl_ammendments::C_AMMEND_TABLE);
+//             $lv_arr_result = $app->request->get(cl_ammendments::C_AMMEND_TABLE);
+               
+//                 
+               $lo_ammendments = new cl_ammendments();
+                  $re_result = $lo_ammendments->ApproveAmmendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
+//                 $re_result = $lo_ammendments->ApproveAmmendments($lv_arr_result);
+////                  $re_result = $lo_ammendments->popExistingAmendments();
+////                  print_r($re_result);  
+                    $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');           
-                    //echo json_encode($re_result, JSON_PRETTY_PRINT);
-                    echo json_encode($re_result , JSON_PRETTY_PRINT);
+                    echo json_encode($re_result, JSON_PRETTY_PRINT);
+//                   echo json_encode($lv_arr_result , JSON_PRETTY_PRINT);
         }
                   );   
                   
