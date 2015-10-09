@@ -107,11 +107,11 @@ var check1
 								} else if (namePassField.getValue() === "") {
 									alert("Please Enter Password");
 									return;
-								/* }
-								else if(nameFirstField.getValue() !== "User1" && namePassField.getValue() !== "userpass") 
+								 }
+								else if(nameFirstField.getValue() !== "UserDemo1" && namePassField.getValue() !== "userpass") 
 								{
 									
-								alert("You are not a valid User"); */
+								alert("You are not a valid User"); 
 
 								} else {
 
@@ -565,7 +565,7 @@ var check1
 													text : "Submit & Send Notification",
 													tooltip : "notify",
 													press: function(){
-														alert("Notification sent");
+													
 														var amend_empid = "";
 														var amend_approvedec = "";
 														var amend_opscomment = "";
@@ -573,12 +573,11 @@ var check1
 														for(i=0;i<mod.length;i++){
 															if( mod[i].am_status == "Approve" || mod[i].am_status == "Reject"){
 																
+																
 																amend_empid += "&emp_id[]="+mod[i].am_id;
 																amend_approvedec += "&status[]="+mod[i].am_status;
 																amend_opscomment += "&comments[]="+mod[i].am_comments;
-																
-																 
-																
+										
 															}
 														}
 														  var asc2= amend_empid + amend_approvedec +amend_opscomment;
@@ -1084,8 +1083,8 @@ var check1
 																		+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
 																		+ res_completed
 																		+ " SO's.\n\n\nIdentified Partial match for "
-																		+ res_partial
-																		+ " SO's.\n\n\n");
+																		
+																		+ "SO's \n\n\n");
 													}
 												});
 
