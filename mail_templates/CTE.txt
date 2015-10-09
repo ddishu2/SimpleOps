@@ -1,8 +1,8 @@
 <html>
    <style>.font{font-size:15;font-family:Calibri}</style>
    <body class="font">
-      <p>Dear GV_SO_OWNER,</p>
-      <d>This is to inform you that the soft lock for following assignment has expired and the resource will be proposed to other requirements.  
+      <p>Dear GV_UPDATED_BY,</p>
+      <d>The change in the TNE approver of the required resource has been GV_STATUS. The required details are mentioned below:  
       </d>
       <h4><u>Employee Details:</u></h4>
       <p>
@@ -65,7 +65,7 @@
                <CENTER>GV_PEDP</CENTER>
             </td>
            <td>
-               <CENTER>GV_SUPERVISER</CENTER>
+               <CENTER>GV_SUPERVISOR</CENTER>
             </td>
            <td>
                <CENTER>GV_NED</CENTER>
