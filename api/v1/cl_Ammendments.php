@@ -11,7 +11,8 @@ class cl_ammendments {
     const C_COMMENTS = 'comments';
     const C_EMP_ID = 'emp_id';
     const C_STAT = 'status';
-    const C_AMMEND_TABLE = 'pass_data';
+    //const C_AMMEND_TABLE = 'pass_data';
+    const C_AMMEND_TABLE = 'ammend_table';
     private static $arr_amendments = [];
 
     public static function getAmmendments() {
@@ -33,34 +34,156 @@ class cl_ammendments {
         return $re_ammendments;
     }
 
-    public function ApproveAmmendments($fp_Arr_result) {
+//    public function ApproveAmmendments($fp_Arr_result) {
+//
+//        $lv_Approved_count = 0;
+//        $lv_reject_count = 0;
+//        $lv_res_count = [];
+//        $lv_count = count($fp_Arr_result);
+//        // for ($i = 0; $i < $lv_count; $i++) {
+////        foreach ($fp_Arr_result as $key => $value) {
+////            //if ($fp_arr_stat[$i] == 'Approve')
+////            if ($value['status'] == 'Approve') {
+////                self::updateAmmendmentsandmail($value);
+////
+////                $lv_Approved_count ++;
+////            } else if ($value['status'] == 'Reject') {
+////                self::updateAmmendmentsandmail($value);
+////                $lv_reject_count++;
+////            }
+////        }
+//        for ($i = 0; $i < $lv_count; $i++){
+//            if($fp_Arr_result[$i]['am_status'] == 'Approve')
+//            {
+//                self::updateAmmendmentsandmail($fp_Arr_result[$i]);
+////
+//                $lv_Approved_count ++;
+//            }
+//             else if ($fp_Arr_result[$i]['am_status'] == 'Reject') {
+//               self::updateAmmendmentsandmail($fp_Arr_result[$i]);
+//                $lv_reject_count++;
+//           }
+//        }
+//        
+//        
+//        
+//        $lv_res_count['Approved'] = $lv_Approved_count;
+//        $lv_res_count['Rejected'] = $lv_reject_count;
+//
+//        return $lv_res_count;
+//    }
+
+        public function ApproveAmmendments($fp_arr_emp_id, $fp_arr_comments,$fp_arr_stat) {
+            
 
         $lv_Approved_count = 0;
         $lv_reject_count = 0;
         $lv_res_count = [];
-        //$lv_count = count($fp_Arr_result);
-        // for ($i = 0; $i < $lv_count; $i++) {
-        foreach ($fp_Arr_result as $key => $value) {
-            //if ($fp_arr_stat[$i] == 'Approve')
-            if ($value['status'] == 'Approve') {
-                self::updateAmmendmentsandmail($value);
+        $lv_count = count($fp_arr_emp_id);
+         for ($i = 0; $i < $lv_count; $i++) {
+              
+       // foreach ($fp_Arr_result as $key => $value) {
+            $value = self::getAmmendmentsdetails($fp_arr_emp_id[$i]);
+         
+            if ($fp_arr_stat[$i] == 'Approve'){
+            //if ($value['status'] == 'Approve') {
+                
+                self::updateAmmendmentsandmail($value, $fp_arr_comments[$i],$fp_arr_stat[$i]);
 
                 $lv_Approved_count ++;
-            } else if ($value['status'] == 'Reject') {
-                self::updateAmmendmentsandmail($value);
+            } 
+            //else if ($value['status'] == 'Reject') {
+            elseif ($fp_arr_stat[$i] == 'Reject'){
+                 
+                self::updateAmmendmentsandmail($value, $fp_arr_comments[$i],$fp_arr_stat[$i]);
                 $lv_reject_count++;
             }
         }
+//        for ($i = 0; $i < $lv_count; $i++){
+//            if($fp_Arr_result[$i]['am_status'] == 'Approve')
+//            {
+//                self::updateAmmendmentsandmail($fp_Arr_result[$i]);
+////
+//                $lv_Approved_count ++;
+//            }
+//             else if ($fp_Arr_result[$i]['am_status'] == 'Reject') {
+//               self::updateAmmendmentsandmail($fp_Arr_result[$i]);
+//                $lv_reject_count++;
+//           }
+//        }
+        
+        
+        
         $lv_res_count['Approved'] = $lv_Approved_count;
         $lv_res_count['Rejected'] = $lv_reject_count;
 
         return $lv_res_count;
     }
-
-    private function updateAmmendmentsandmail($fp_arr_result) {
+    
+    
+    
+    
+    
+    private function updateAmmendmentsandmail($fp_arr_result,$fp_comments,$fp_stat) {
         $this->popExistingAmendments();
 
-        $lv_id = $fp_arr_result['id'];
+//        $lv_id = $fp_arr_result['am_id'];
+//        $lv_name = $fp_arr_result['am_name'];
+//        $lv_level = $fp_arr_result['am_lev'];
+//        $lv_IDP = $fp_arr_result['am_idp'];
+//        $lv_loc = $fp_arr_result['am_location'];
+//        $lv_bill_stat = $fp_arr_result['am_bilstat'];
+//        $lv_competency = $fp_arr_result['am_compet'];
+//        $lv_curr_proj_name = $fp_arr_result['am_currproname'];
+//
+//
+//
+//
+//        //change string date to date format 
+//        $lv_csdate = $fp_arr_result['am_startdate'];
+//        $lv_curr_sdate = date('y-m-d', strtotime($lv_csdate));
+//
+//
+//        //change string date to date format 
+//        $lv_cedate = $fp_arr_result['am_enddate'];
+//        $lv_curr_edate = date('y-m-d', strtotime($lv_cedate));
+//
+//
+//
+//
+//         //change string date to date format 
+//        $lv_proj_edate = $fp_arr_result['am_projected'];
+//        $lv_proj_edate_projected = date('y-m-d', strtotime($lv_proj_edate));
+//
+//
+//
+//
+//        $lv_supervisor = $fp_arr_result['am_sup'];
+//        $lv_cust_name = $fp_arr_result['am_customer'];
+//        $lv_domain_id = $fp_arr_result['am_dom'];
+//
+//
+//
+//        $lv_nedate = $fp_arr_result['am_newdate'];
+//        $lv_new_edate = date('y-m-d', strtotime($lv_nedate));
+//
+//
+//
+//
+//        $lv_new_sup_corp_id = $fp_arr_result['am_newcorp'];
+//        $lv_new_sup_id = $fp_arr_result['am_newsupid'];
+//        $lv_new_sup_name = $fp_arr_result['am_supname'];
+//        $lv_reason = $fp_arr_result['am_reason'];
+//        $lv_req_by = $fp_arr_result['am_request'];
+//
+//        $lv_status = $fp_arr_result['am_status'];
+//        $lv_ops_comments = $fp_arr_result['am_comments'];
+        
+        
+        
+        
+        
+                $lv_id = $fp_arr_result['id'];
         $lv_name = $fp_arr_result['name'];
         $lv_level = $fp_arr_result['level'];
         $lv_IDP = $fp_arr_result['IDP'];
@@ -91,7 +214,11 @@ class cl_ammendments {
 
 
 
-        $lv_supervisor = $fp_arr_result['supervisor'];
+//        $lv_supervisor_lname = $fp_arr_result['supervisor_lname'];
+//        $lv_supervisor_fname = $fp_arr_result['supervisor_fname'];
+         
+        $lv_supervisor = $fp_arr_result['supervisor_lname'].$fp_arr_result['supervisor_fname'];
+        
         $lv_cust_name = $fp_arr_result['cust_name'];
         $lv_domain_id = $fp_arr_result['domain_id'];
 
@@ -109,8 +236,17 @@ class cl_ammendments {
         $lv_reason = $fp_arr_result['reason'];
         $lv_req_by = $fp_arr_result['req_by'];
 
-        $lv_status = $fp_arr_result['status'];
-        $lv_ops_comments = $fp_arr_result['ops_comments'];
+        $lv_status = $fp_stat;
+        $lv_ops_comments = $fp_comments;
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -148,6 +284,8 @@ class cl_ammendments {
         if ($re_result && $re_result1) {
             if ($lv_new_edate == '') {
                 // send mail for  change in supervisor;
+                $lo_mail = new cl_NotificationMails();
+              //  $lo_mail->sendTEApproverChangeNotification($value,  $lv_status, $lv_ops_comments);
             } else if ($lv_new_sup_corp_id == '') {
                 // send mail for  change in enddate;
             } elseif (!$lv_new_edate == '' && !$lv_new_sup_corp_id == '') {
@@ -164,4 +302,21 @@ class cl_ammendments {
         //return self::$arr_amendments;
     }
 
+    public function getAmmendmentsdetails($fp_emp_id)
+    {
+       
+        $sql = "SELECT * FROM `m_ammendment` WHERE id = $fp_emp_id ";
+        $result= cl_DB::getResultsFromQuery($sql);
+       
+        foreach ($result as $key => $value) {
+            $re_result = $value;
+            
+        }
+        
+        
+        
+        return $re_result;
+    }
+    
+    
 }

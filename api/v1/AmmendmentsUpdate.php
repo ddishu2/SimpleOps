@@ -22,7 +22,7 @@ $table = 'm_ammendment';
 
 //$table = 'demo1';
 $query1 = "TRUNCATE TABLE $table";
-$lv_result = cl_DB::updateResultIntoTable($query1);
+$lv_result1 = cl_DB::updateResultIntoTable($query1);
 
 
 
@@ -30,5 +30,5 @@ $lv_result = cl_DB::updateResultIntoTable($query1);
 $query2 = "load data infile '$csv_file' into table $table fields terminated by ',' ignore 1 lines";
 
 
-$lv_result = cl_DB::updateResultIntoTable($query2);
+$lv_result2 = cl_DB::updateResultIntoTable($query2);
 fclose($csvfile);
