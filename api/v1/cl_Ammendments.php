@@ -14,17 +14,43 @@ class cl_ammendments {
     //const C_AMMEND_TABLE = 'pass_data';
     const C_AMMEND_TABLE = 'ammend_table';
     private static $arr_amendments = [];
+    private static $arr_amendments_decision_taken = [];
+    
+    public static function get_ammendments_decision_taken()
+    {
+//        $date = date('y-m-d');
+//        $sql = "SELECT id FROM `trans_ammendment` WHERE 'Updated On' = $date ";
+          $sql = "SELECT `id` FROM `trans_ammendment` WHERE `Updated On` = CURRENT_DATE";
+        self::$arr_amendments_decision_taken = cl_DB::getResultsFromQuery($sql);
+        //return self::$arr_amendments_decision_taken;
+    }
+    
+   public static function isProcessed($fp_emp_id)
+   {
+      
+       $lv_result = false;
+       foreach (self::$arr_amendments_decision_taken as $key => $value) {
+           if(in_array($fp_emp_id, $value))
+           {
+               $lv_result = true;
+               break;
+           }
+       }
+       return $lv_result;
+   }
 
     public static function getAmmendments() {
+        self::get_ammendments_decision_taken();
         $re_ammendments = [];
         $sql = "SELECT * FROM `m_ammendment` ";
         $re_result = cl_DB::getResultsFromQuery($sql);
 //      print_r($re_ammendments);
 
+        
         foreach ($re_result as $key => $value) {
 
 
-            if ((!$value['new_edate'] == '') || (!$value['new_sup_id'] == 0)) {
+            if (((!$value['new_edate'] == '') || (!$value['new_sup_id'] == 0)) && (!self::isProcessed($value['id']))) {
                 $re_ammendments[] = $value;
             }
         }
