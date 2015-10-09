@@ -27,6 +27,8 @@ class cl_NotificationMails
     private $lv_content,
             $lt_so_details = [],
             $lt_emp_details = [],
+            $lt_crd_details = [],
+            $lt_cte_details = [],
             $lt_act_type   = [],
             $lt_recievers  = [],
             $lt_capability_email = [],
@@ -58,7 +60,10 @@ class cl_NotificationMails
             $lv_so_creator_email,                 
             $lv_so_creator_name,
             $lv_pm_email,
-            $lv_em_email;    
+            $lv_em_email,
+            $lv_status,
+            $lv_supervisor,
+            $lv_comments;    
     
 // Constructor of the class
    function __construct()
@@ -73,18 +78,18 @@ class cl_NotificationMails
 // Actual methods to be called from other PHP applications.
 // 
 // Method to send Release date change notification.
-    public function sendReleasedateChangeNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
+    public function sendReleasedateChangeNotification($fp_v_crd, $fp_v_status, $fp_v_comments)
     {        
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_so_id, 'CRD', '', $fp_v_trans_id, $fp_v_emp_id);
+        $lv_return = self::sendnotification($fp_v_crd, 'CRD', '', $fp_v_status, $fp_v_comments);
         return $lv_return;        
     }
 
 // Method to send T&E Approver Change notification.
-    public function sendTEApproverChangeNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id)
+    public function sendTEApproverChangeNotification($fp_v_cte, $fp_v_status, $fp_v_comments)
     {        
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_so_id, 'CTE', '', $fp_v_trans_id, $fp_v_emp_id);
+        $lv_return = self::sendnotification($fp_v_cte, 'CTE', '', $fp_v_status, $fp_v_comments);
         return $lv_return;        
     }
     
@@ -193,8 +198,6 @@ class cl_NotificationMails
 // Function to get the recievers based on the activity type, employee details etc.            
     Private function get_recievers()
     {        
-//        foreach ($this->lt_recievers as $key => $lwa_values)
-//        {
             if ($this->lt_recievers[0]['capability_lead'] === 'X')
             { $this->lv_recievers .= self::get_emailid('capability_lead').';'; }
             if ($this->lt_recievers[0]['capability_sub_lead'] === 'X')
@@ -223,7 +226,6 @@ class cl_NotificationMails
             { $this->lv_recievers .= self::get_emailid('lead_other_bu').';'; } 
             if ($this->lt_recievers[0]['crmg'] === 'X')
             { $this->lv_recievers .= self::get_emailid('crmg').';'; }             
-//        }
     }
 
 // Method to set email headers    
@@ -347,6 +349,23 @@ class cl_NotificationMails
             $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);                 
                 break;
             
+            case 'CRD':
+// Get employee details.
+            $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_crd_details[0]['id']);
+                
+// Get details of all capabilities email ids.
+            $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);                
+                break;
+            
+            case 'CTE':
+            // Get employee details.
+            $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_cte_details[0]['id']);
+                
+// Get details of all capabilities email ids.
+            $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+            $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);  
+                break;
             default:
                 break;
         }       
@@ -404,6 +423,16 @@ class cl_NotificationMails
                 $this->lv_capability = $this->lt_emp_details[0]['comp'];
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
                 break;
+            
+            case 'CRD':
+                $this->lv_BU         = $this->lt_crd_details[0]['idp'];                                
+                $this->lv_capability = $this->lt_crd_details[0]['competency'];
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                
+            case 'CTE':
+                $this->lv_BU         = $this->lt_cte_details[0]['idp'];                                
+                $this->lv_capability = $this->lt_cte_details[0]['competency'];
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
             default:
                 break;            
         }   
@@ -458,6 +487,44 @@ class cl_NotificationMails
                 $this->lv_content  = str_replace("GV_SDATE", $this->lv_sdate, $this->lv_content);
                 $this->lv_content  = str_replace("GV_EDATE", $this->lv_edate, $this->lv_content);
                 break;
+            
+            case 'CRD':
+                $this->lv_content  = str_replace("GV_UPDATED_BY", $this->lt_crd_details[0]['req_by'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_STATUS", $this->lv_status, $this->lv_content);
+                $this->lv_content  = str_replace("GV_ID", $this->lt_crd_details[0]['id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_EMPNAME", $this->lt_crd_details[0]['name'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_COMPETENCY", $this->lt_crd_details[0]['competency'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_CPN", $this->lt_crd_details[0]['curr_proj_name'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_CSD", $this->lt_crd_details[0]['curr_sdate'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_CED", $this->lt_crd_details[0]['curr_edate'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_PEDP", $this->lt_crd_details[0]['proj_edate_projected'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_PEDP", $this->lt_crd_details[0]['proj_edate_projected'], $this->lv_content);
+                $this->lv_supervisor_name = $this->lt_crd_details[0]['supervisor_lname'].', '.$this->lt_crd_details[0]['supervisor_fname'];
+                $this->lv_content  = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
+                $this->lv_content  = str_replace("GV_NED", $this->lt_crd_details[0]['new_edate'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_NSID", $this->lt_crd_details[0]['new_sup_corp_id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_NSN", $this->lt_crd_details[0]['new_sup_id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);                
+                break;
+            
+            case 'CTE':
+                $this->lv_content  = str_replace("GV_UPDATED_BY", $this->lt_cte_details[0]['req_by'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_STATUS", $this->lv_status, $this->lv_content);
+                $this->lv_content  = str_replace("GV_ID", $this->lt_cte_details[0]['id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_EMPNAME", $this->lt_cte_details[0]['name'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_COMPETENCY", $this->lt_cte_details[0]['competency'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_CPN", $this->lt_cte_details[0]['curr_proj_name'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_CSD", $this->lt_cte_details[0]['curr_sdate'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_CED", $this->lt_cte_details[0]['curr_edate'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_PEDP", $this->lt_cte_details[0]['proj_edate_projected'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_PEDP", $this->lt_cte_details[0]['proj_edate_projected'], $this->lv_content);
+                $this->lv_supervisor_name = $this->lt_cte_details[0]['supervisor_lname'].', '.$this->lt_cte_details[0]['supervisor_fname'];
+                $this->lv_content  = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
+                $this->lv_content  = str_replace("GV_NED", $this->lt_cte_details[0]['new_edate'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_NSID", $this->lt_cte_details[0]['new_sup_corp_id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_NSN", $this->lt_cte_details[0]['new_sup_id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);
+                break;
             default:
                 break;
         }
@@ -473,9 +540,24 @@ class cl_NotificationMails
             {    
 
 //  Set the SO number and empid to global variables.
+            if($i_mode = 'CRD')
+            {
+            $this->lt_crd_details = $i_so_number;
+            $this->lv_status      = $i_transid;
+            $this->lv_comments    = $i_emp_id;
+            }
+            elseif($i_mode = 'CTE')
+            {
+            $this->lt_cte_details = $i_so_number;
+            $this->lv_status      = $i_transid;
+            $this->lv_comments    = $i_emp_id;   
+            }
+            else
+            {
             $this->lv_so_number = $i_so_number;
             $this->lv_empid     = $i_emp_id;
             $this->lv_link      = $i_link;
+            }
         
 // Get the email contetnt.
             self::get_content($i_mode);
@@ -506,7 +588,7 @@ class cl_NotificationMails
                 self::get_recievers();
                 echo $this->lv_recievers;
              //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;ahire.kishor@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {  
                     return true;                    
