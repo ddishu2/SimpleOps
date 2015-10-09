@@ -14,6 +14,8 @@
 <script>
 var Model_amend;
 var pass_data;
+var check="A";
+var check1
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -281,7 +283,7 @@ var pass_data;
 								$("#four2").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#amend_first").removeClass("hide_div");
-								
+								$("#for_amend_table1-table").removeClass("change_color")
 								//http://localhost/rmt/api/v1/index.php/amendments
                                	console.log("/rmt/api/v1/index.php/amendments"
 														);
@@ -325,7 +327,7 @@ var pass_data;
 																	am_reason:val.reason,
 																	am_request:val.req_by,
 																	am_status :"Approve",
-																	am_comments:"abc"
+																	am_comments:"Enter Comments"
 																};
 															
 																completeData1
@@ -593,26 +595,26 @@ var pass_data;
 														}); 
 														
 															
-															  
+													
+													//	console.log(check);
+														
 														
 														
 													//http://localhost/rmt/api/v1/index.php/approve_amendments/ammend_table=$variable	
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
+										
+												
 												var refresh = new sap.ui.commons.Button({
 													text : "Refresh",
 													tooltip : "Refresh",
-													/* press: function()
+													 press: function()
 													{
-														var mod1 = Model_amend.getData().modelData;
-														for(i=0;i<mod1.length;i++){
-															if( mod1[i].am_status == "Approve" || mod1[i].am_status == "Reject"){
-																
-														     
-															}
-														}
-													} */
+														
+														 $("#for_amend_table1-table").addClass("change_color");
+														 
+													} 
 											
 													}).addStyleClass("for_normal_buttons_style1");
 												var back = new sap.ui.commons.Button({
