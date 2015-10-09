@@ -9,7 +9,7 @@
 .change_color
 {
 	
-	background: #787878 ;
+	background: #787878  !important;
 }
 #loci
 {
@@ -345,7 +345,7 @@ height: 35px !important;
 }
 
 #bt1 {
-	margin-left: 640px;
+	margin-left: 500px;
 	margin-top: 40px;
 }
 
