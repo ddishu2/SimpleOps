@@ -369,8 +369,8 @@ var check1
 															title : "RMT Amendment",
 															visibleRowCount : 9,
 															firstVisibleRow : 3,
-															 //selectionMode: sap.ui.table.SelectionMode.Single, 
-															//navigationMode : sap.ui.table.NavigationMode.Paginator,
+															 selectionMode: sap.ui.table.SelectionMode.Single, 
+															//navigationMode :  sap.ui.table.NavigationMode (default: Scrollbar),
 
 														}).addStyleClass("style_for_table");
 
@@ -1164,8 +1164,8 @@ var check1
 									title : "Transaction List",
 									visibleRowCount : 5,
 									firstVisibleRow : 3,
-									/* selectionMode: sap.ui.table.SelectionMode.Single, */
-									navigationMode : sap.ui.table.NavigationMode.Paginator,
+									selectionMode: sap.ui.table.SelectionMode.Single,
+									//navigationMode : sap.ui.table.NavigationMode.Paginator,
 
 								}).addStyleClass("style_for_table");
 
@@ -1577,10 +1577,28 @@ var check1
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.CheckBox({
+							label : new sap.ui.commons.Label({
 								text : "Approve"
 							}),
-							template : new sap.ui.commons.CheckBox({}),
+							template :  new sap.ui.commons.DropdownBox({
+								
+								id:'stat_partial',
+								tooltip : "Decision",
+								items : [ new sap.ui.core.ListItem("decidep1", {
+									text : "--Select--",
+									key : "",
+								}),
+								         new sap.ui.core.ListItem("decidep2", {
+									text : "Approve",
+									key : "Ap"
+								}), new sap.ui.core.ListItem("decidep3", {
+									text : "Reject",
+									key : "Re"
+								}), new sap.ui.core.ListItem("decidep4", {
+									text : "None",
+									key : "N"
+								}), ]
+							}).addStyleClass("approveDropdown2"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
