@@ -927,7 +927,10 @@ var check1
 						capabilityText.setTooltip("Location");
 						capabilityText.setEditable(true);
 						capabilityText.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("Capability1");
+						var oItem = new sap.ui.core.ListItem("Capability0");
+						oItem.setText("");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability1");
 						oItem.setText("DCM");
 						capabilityText.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("Capability2");
@@ -982,7 +985,7 @@ var check1
 											var cap=$("#ct_drop-input").val();
 									
 										 sap.ui.core.BusyIndicator.show(0);
-							   //			http://localhost/rmt/api/v1/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31&proj_name=&proj_bu=&proj_loc[]=Mumbai&proj_id=&cust_name=&capability=								
+							 			
 										
 										console
 												.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="
