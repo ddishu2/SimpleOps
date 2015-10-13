@@ -981,7 +981,7 @@ var check1
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
 									
-										var bi1=new sap.ui.core.BusyIndicator.show(0);
+										 sap.ui.core.BusyIndicator.show(0);
 							   //			http://localhost/rmt/api/v1/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31&proj_name=&proj_bu=&proj_loc[]=Mumbai&proj_id=&cust_name=&capability=								
 										
 										console
@@ -1580,27 +1580,14 @@ var check1
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Approve"
+								text : "Select"
 							}),
-							template :  new sap.ui.commons.DropdownBox({
-								
-								id:'stat_partial',
-								tooltip : "Decision",
-								items : [ new sap.ui.core.ListItem("decidep1", {
-									text : "--Select--",
-									key : "",
+							template :  new sap.ui.commons.RadioButton({
+								text : '',
+								tooltip : 'Select',
+								groupName : 'decision_partial',
+									
 								}),
-								         new sap.ui.core.ListItem("decidep2", {
-									text : "Approve",
-									key : "Ap"
-								}), new sap.ui.core.ListItem("decidep3", {
-									text : "Reject",
-									key : "Re"
-								}), new sap.ui.core.ListItem("decidep4", {
-									text : "None",
-									key : "N"
-								}), ]
-							}).addStyleClass("approveDropdown2"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -1972,6 +1959,81 @@ var check1
 						 
 
 	/////----------------------------------For Report Generation---------------------------------------------------/////////
+	var report_matrix_layout_dates1 = new sap.ui.commons.layout.MatrixLayout({
+		
+						//	id : 'report_matrix',
+							layoutFixed : true,
+							width : '740px',
+							columns : 4,
+							widths : [ '120px','250px','120px','250px', ]
+						});
+	    var repo_from1 = new sap.ui.commons.Label({
+							
+							text : 'From Date\t\t\t\t',
+
+						}).addStyleClass("for_text_style1");
+
+						
+						
+						var dateformat1 = new Date();
+						              dateformat1.setDate(dateformat1.getDate());
+					   var dateformat2 = new Date();
+						              dateformat2.setDate(dateformat2.getDate());
+
+						var for_from_date1 = new sap.ui.model.json.JSONModel();
+						for_from_date1.setData({
+							dateValue : dateformat1
+						});
+						sap.ui.getCore().setModel(for_from_date1, "fromModel1");
+
+						// create DatePickers and bind to model
+						var from_datepick = new sap.ui.commons.DatePicker({
+							//id : 'sfrom1',
+							width : "10em",
+							value : {
+								path : "fromModel1>/dateValue",
+								type : new sap.ui.model.type.Date({
+									pattern : "yyyy-MM-dd",
+									strictParsing : true
+								})
+							}
+						}).addStyleClass("for_fields_style1");
+						from_datepick.setDate
+						
+						
+var repo_to1 = new sap.ui.commons.Label({
+							
+							text : 'To Date\t\t\t\t',
+
+						}).addStyleClass("for_text_style1");
+						var for_to_date1 = new sap.ui.model.json.JSONModel();
+						for_to_date1.setData({
+							dateValue : dateformat2
+						});
+						sap.ui.getCore().setModel(for_to_date1, "fromModel2");
+						
+						var to_datepick = new sap.ui.commons.DatePicker({
+							//id : 'sfrom1',
+							width : "10em",
+							value : {
+								path : "fromModel2>/dateValue",
+								type : new sap.ui.model.type.Date({
+									pattern : "yyyy-MM-dd",
+									strictParsing : true
+								})
+							}
+						}).addStyleClass("for_fields_style1");
+						from_datepick.setDate
+						
+						
+						
+						report_matrix_layout_dates1.createRow(repo_from1,from_datepick,repo_to1,to_datepick);
+						report_matrix_layout_dates1.placeAt("report_first")
+	
+	
+	
+	
+	
                       var report_matrix_layout = new sap.ui.commons.layout.MatrixLayout({
 							id : 'report_matrix',
 							layoutFixed : true,
