@@ -251,8 +251,8 @@ var check1
 
 						var report_gen = new sap.ui.commons.Button({
 							id : 'rg',
-							text : "Report Generation",
-							tooltip : "Report Generation",
+							text : "Reports",
+							tooltip : "Reports",
                              press: function(){
                             	 $("#second").addClass("hide_div");
      							$("#first").addClass("hide_div");
@@ -981,7 +981,7 @@ var check1
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
 									
-										
+										var bi1=new sap.ui.core.BusyIndicator.show(0);
 							   //			http://localhost/rmt/api/v1/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31&proj_name=&proj_bu=&proj_loc[]=Mumbai&proj_id=&cust_name=&capability=								
 										
 										console
@@ -1021,6 +1021,8 @@ var check1
 												        + "&capability="
 												        +  cap,
 													success : function(odata) {
+														
+														sap.ui.core.BusyIndicator.hide(0);
 														console.log(odata);
 														var table_row;
 														var res = odata;
