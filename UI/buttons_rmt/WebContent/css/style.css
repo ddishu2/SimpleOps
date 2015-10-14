@@ -241,7 +241,7 @@ height: 35px !important;
 	padding: 75 20px !important;
 	margin-top: 45px;
 }
-#report_first
+#report_first,#report_first_open
 {
 	min-height: 100px;
 	height: 100%;
@@ -251,7 +251,7 @@ height: 35px !important;
 	
 }
 
-#four1, #four2,#amend_first {
+#four1, #four2_core,#amend_first {
 	min-height: 100px;
 	height: 100%;
 	padding: 0 20px;
