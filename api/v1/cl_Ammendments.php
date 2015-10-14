@@ -152,6 +152,8 @@ class cl_ammendments {
     
     private function updateAmmendmentsandmail($fp_arr_result,$fp_comments,$fp_stat) {
         $this->popExistingAmendments();
+        
+    
 
 //        $lv_id = $fp_arr_result['am_id'];
 //        $lv_name = $fp_arr_result['am_name'];
@@ -209,7 +211,7 @@ class cl_ammendments {
         
         
         
-                $lv_id = $fp_arr_result['id'];
+        $lv_id = $fp_arr_result['id'];
         $lv_name = $fp_arr_result['name'];
         $lv_level = $fp_arr_result['level'];
         $lv_IDP = $fp_arr_result['IDP'];
@@ -290,32 +292,41 @@ class cl_ammendments {
         // if existing then update else insert
        if($flag == "false"){
         $sql = "INSERT INTO `rmg_tool`.`trans_ammendment` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
-                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate', '$lv_new_sup_corp_id', $lv_new_sup_id, '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
        }
        else 
        {
-          $sql = "UPDATE `trans_ammendment` SET `new_edate`='$lv_new_edate',`new_sup_corp_id`= '$lv_new_sup_corp_id',`new_sup_id`=$lv_new_sup_id,`new_sup_name`='$lv_new_sup_name',`reason`='$lv_reason',`req_by`='$lv_req_by',`status`='$lv_status',`ops_comments`='$lv_ops_comments',`Updated On`='$lv_Updated_On' WHERE id = $lv_id"; 
+          $sql = "UPDATE `trans_ammendment` SET `new_edate`='$lv_new_edate',`new_sup_corp_id`= '$lv_new_sup_corp_id',`new_sup_id`='$lv_new_sup_id',`new_sup_name`='$lv_new_sup_name',`reason`='$lv_reason',`req_by`='$lv_req_by',`status`='$lv_status',`ops_comments`='$lv_ops_comments',`Updated On`='$lv_Updated_On' WHERE id = $lv_id"; 
        }
 
 
         $re_result = cl_DB::updateResultIntoTable($sql);
-        
+            
         $sql1 = "INSERT INTO `rmg_tool`.`trans_ammendment_history` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
-                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate', '$lv_new_sup_corp_id', $lv_new_sup_id, '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
         
         
         
         $re_result1 = cl_DB::updateResultIntoTable($sql1);
         
+         $lo_mail = new cl_NotificationMails();
+         
+         
+//         echo "lv_date". $lv_new_edate;
+//         echo "corpid".$lv_new_sup_corp_id;
         if ($re_result && $re_result1) {
-            if ($lv_new_edate == '') {
+            if (($lv_nedate == '') && ($lv_new_sup_corp_id != '')) {
                 // send mail for  change in supervisor;
-                $lo_mail = new cl_NotificationMails();
-              //  $lo_mail->sendTEApproverChangeNotification($value,  $lv_status, $lv_ops_comments);
-            } else if ($lv_new_sup_corp_id == '') {
+              
+               $lo_mail->sendTEApproverChangeNotification($fp_arr_result,$fp_stat,$fp_comments);
+            } else if ($lv_nedate != '' && $lv_new_sup_corp_id == '') {
                 // send mail for  change in enddate;
-            } elseif (!$lv_new_edate == '' && !$lv_new_sup_corp_id == '') {
+              
+                $lo_mail->sendReleasedateChangeNotification($fp_arr_result,$fp_stat,$fp_comments);
+            } elseif (!$lv_nedate == '' && !$lv_new_sup_corp_id == '') {
                 // send mail for both change in supervisor and change in end  date
+                $lo_mail->sendTEApproverChangeNotification($fp_arr_result,$fp_stat,$fp_comments);
+                $lo_mail->sendReleasedateChangeNotification($fp_arr_result,$fp_stat,$fp_comments);
             }
         }
         return $re_result;
