@@ -14,7 +14,7 @@
 <script>
 var Model_amend;
 var pass_data;
-var check="A";
+var check=true;
 var check1
 	sap.ui
 			.getCore()
@@ -191,6 +191,7 @@ var check1
 								$("#amend_first").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
+								$("#report_first_zero").addClass("hide_div");
 
 							}
 						});
@@ -242,6 +243,7 @@ var check1
 										$("#amend_first").addClass("hide_div");
 										$("#report_first").addClass("hide_div");
 										$("#report_first_open").addClass("hide_div");
+										$("#report_first_zero").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#third").addClass("hide_div");
@@ -272,6 +274,7 @@ var check1
      								$("#four1").addClass("hide_div");
      								$("#four2_core").addClass("hide_div");
      								$("#report_first").removeClass("hide_div");
+     								$("#report_first_zero").removeClass("hide_div");
      								$("#amend_first").addClass("hide_div");
      								$("#remove_first").removeClass("hide_div");
                             	 
@@ -293,6 +296,7 @@ var check1
 								$("#four2_core").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
+								$("#report_first_zero").addClass("hide_div");
 								$("#amend_first").removeClass("hide_div");
 								$("#for_amend_table1-table").removeClass("change_color")
 								//http://localhost/rmt/api/v1/index.php/amendments
@@ -338,7 +342,7 @@ var check1
 																	am_reason:val.reason,
 																	am_request:val.req_by,
 																	am_status :"Approve",
-																	am_comments:"Enter Comments"
+																	am_comments:""
 																};
 															
 																completeData1
@@ -387,7 +391,8 @@ var check1
 
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "ID"
+														text : "ID",
+														tooltip : "ID"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_id'})
 															.bindProperty("text", "am_id"),
@@ -400,7 +405,8 @@ var check1
 
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Emp Name"
+														text : "Emp Name",
+														tooltip : "Emp Name"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_name'})
 															.bindProperty("text", "am_name"),
@@ -413,7 +419,8 @@ var check1
 												
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Competency"
+														text : "Competency",
+														tooltip : "Competency"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_comp'})
 												.bindProperty("text", "am_compet"),
@@ -424,7 +431,8 @@ var check1
 
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Current Project Name"
+														text : "Current Project Name",
+														tooltip : "Current Project Name"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_corp'})
 												.bindProperty("text", "am_currproname"),
@@ -434,7 +442,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Current Start Date"
+														text : "Current Start Date",
+														tooltip : "Current Start Date"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_csd'})
 												.bindProperty("text", "am_startdate"),
@@ -444,7 +453,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Current End Date"
+														text : "Current End Date",
+														tooltip : "Current End Date"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_ced'})
 												.bindProperty("text", "am_enddate"),
@@ -454,7 +464,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Project End Date Projected "
+														text : "Project End Date Projected ",
+														tooltip : "Project End Date Projected"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_pro'})
 												.bindProperty("text", "am_projected"),
@@ -464,7 +475,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Supervisor Name"
+														text : "Supervisor Name",
+														tooltip:"Supervisor Name"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_sn'})
 												.bindProperty("text", "am_sup"),
@@ -474,7 +486,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Customer Name"
+														text : "Customer Name",
+														tooltip:"Customer Name"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_cn1'})
 												.bindProperty("text", "am_customer"),
@@ -485,7 +498,8 @@ var check1
 												
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "New End Date"
+														text : "New End Date",
+														tooltip:"New End Date"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_nd'})
 												.bindProperty("text", "am_newdate"),
@@ -496,7 +510,8 @@ var check1
 												
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "New Supervisor ID"
+														text : "New Supervisor ID" ,
+														tooltip:"New Supervisor ID"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_nsi'})
 												.bindProperty("text", "am_newsupid"),
@@ -506,7 +521,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "New Supervisor Name"
+														text : "New Supervisor Name",
+														tooltip: "New Supervisor Name"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_nsn'})
 												.bindProperty("text", "am_supname"),
@@ -516,7 +532,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Reason"
+														text : "Reason",
+														tooltip:"Reason"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_res'})
 												.bindProperty("text", "am_reason"),
@@ -526,7 +543,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Requested by"
+														text : "Requested by" ,
+														tooltip :"Requested by"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_reqb'})
 												.bindProperty("text", "am_request"),
@@ -536,7 +554,8 @@ var check1
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Approve"
+														text : "Approve",
+														tooltip :"Approve"
 													}),
 													template : new sap.ui.commons.DropdownBox({
 														
@@ -558,9 +577,10 @@ var check1
 												})).addStyleClass("approveDropdown1");
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Ops Comments"
+														text : "Ops Comments",
+														tooltip : "Ops Comments"
 													}),
-													template : new sap.ui.commons.TextField({id: 'ame_comm'})
+													template : new sap.ui.commons.TextArea({id: 'ame_comm', maxLength: 255})
 												.bindProperty("value", "am_comments"),
 										sortProperty : "am_comments",
 										filterProperty : "am_comments",
@@ -600,6 +620,7 @@ var check1
 												      		success : function(odata){
 												      			
 												      			 alert("Notification sent");
+												      			$("#for_amend_table1-table").addClass("change_color");
 												      		}
 														
 														}); 
@@ -614,19 +635,7 @@ var check1
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
-										
-												
-												var refresh = new sap.ui.commons.Button({
-													text : "Refresh",
-													tooltip : "Refresh",
-													 press: function()
-													{
-														
-														 $("#for_amend_table1-table").addClass("change_color");
-														 
-													} 
-											
-													}).addStyleClass("for_normal_buttons_style1");
+
 												var back = new sap.ui.commons.Button({
 													id : 'back_amend',
 													text : "Back",
@@ -640,7 +649,7 @@ var check1
 												}).addStyleClass("for_normal_buttons_style1");
 
 												notify.placeAt("amend_first");
-												refresh.placeAt("amend_first");
+												
 												back.placeAt("amend_first");
 
 						var Approvals = new sap.ui.commons.Button({
@@ -1198,14 +1207,15 @@ var check1
 									title : "Transaction List",
 									visibleRowCount : 4,
 									//firstVisibleRow : 5,
-									selectionMode: sap.ui.table.SelectionMode.Single,
-									navigationMode : sap.ui.table.NavigationMode.Scrollbar,
+									//selectionMode: sap.ui.table.SelectionMode.Single,
+									navigationMode : sap.ui.table.NavigationMode.Paginator,
 
 								}).addStyleClass("style_for_table");
 
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "SO No."
+								text : "SO No.",
+								tooltip :"SO No"
 							}),
 							template : new sap.ui.commons.TextView("so_no")
 									.bindProperty("text", "sname").addStyleClass("soid"),
@@ -1217,7 +1227,8 @@ var check1
 
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Project Code"
+								text : "Project Code" ,
+								tooltip : "Project Code"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "pcode"),
@@ -1227,7 +1238,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Project Name"
+								text : "Project Name" ,
+								tooltip : "Project Name"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "pname"),
@@ -1237,7 +1249,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Start Date"
+								text : "Start Date",
+								tooltip : "Start Date"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "sdate"),
@@ -1247,7 +1260,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "End Date"
+								text : "End Date" ,
+								tooltip :"End Date"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "edate"),
@@ -1257,7 +1271,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Emp ID"
+								text : "Emp ID" ,
+								tooltip :"Emp ID"
 							}),
 							template : new sap.ui.commons.TextView("emp_id")
 									.bindProperty("text", "eid").addStyleClass("empoid")
@@ -1268,7 +1283,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Emp Name"
+								text : "Emp Name" ,
+								tooltip :"Emp Name"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "ename"),
@@ -1279,7 +1295,8 @@ var check1
 
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Level"
+								text : "Level" ,
+								tooltip : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "lev"),
@@ -1289,7 +1306,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Skill"
+								text : "Skill",
+								tooltip :"Skill"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "skill"),
@@ -1299,7 +1317,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Location"
+								text : "Location" ,
+								tooltip : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "eloc"),
@@ -1309,7 +1328,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Fullfillment"
+								text : "Fullfillment" ,
+								tooltip :"Fullfillment"
 							}),
 							template : 
 								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
@@ -1319,7 +1339,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Status"
+								text : "Status" ,
+								tooltip :"Status"
 							}),
 							template : new sap.ui.commons.TextView({
 								//id:'status_of_emp'
@@ -1331,7 +1352,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Approve"
+								text : "Approve",
+								tooltip : "Approve"
 							}),
 							template : new sap.ui.commons.DropdownBox({
 								
@@ -1358,7 +1380,9 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Reason"
+								text : "Reason" ,
+								tooltip: "Reason"
+								
 							}),
 							template : new sap.ui.commons.TextView()
 									.bindProperty("text", "reason"),
@@ -1368,7 +1392,8 @@ var check1
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Proposed ID"
+								text : "Proposed ID" ,
+								tooltip : "Proposed ID"
 							}),
 							template : new sap.ui.commons.TextView({
 								//id:'p_s_id'
@@ -1388,12 +1413,13 @@ var check1
 							id: 'noti_suitable',
 							text : "Submit & Send Notification",
 							tooltip : "notify",
-							press: function(){
+							press: function(check){
 								alert("Notification Sent Successfully.");
 								var so_str = "";
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
+								var index=suitable_match._oPaginator.getCurrentPage()  
 								$(".approveDropdown input").each(function(index,val){
 									
 									
@@ -1420,12 +1446,14 @@ var check1
 						      		}
 								
 								});
-								
+							check=false
+							return check ;
 								/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
-								
+									console.log(check)
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
+						console.log(check)
 						var refresh = new sap.ui.commons.Button({
 							id:'ref_suitable',
 							text : "Refresh",
@@ -1651,6 +1679,10 @@ var check1
 							press : function for_further_search1() {
 
 								$("#fs1").removeClass("hide_div");
+								$("#fs2").removeClass("hide_div");
+								$("#fs3").addClass("hide_div");
+								$("#fs4").addClass("hide_div");
+								
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
@@ -1723,46 +1755,7 @@ var check1
 						//setRowHeight:"200px"
 						}));
 
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Code"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Start Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "End Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+					
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Emp ID"
@@ -1901,58 +1894,7 @@ var check1
 
 								}).addStyleClass("style_for_table");
 
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "SO No."
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "sname",
-							filterProperty : "sname",
-							width : "100px",
-						//setRowHeight:"200px"
-						}));
-
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Code"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Start Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "End Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+						
 						report_loan_sheet.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Emp ID"
@@ -2078,6 +2020,18 @@ var check1
 						}).addStyleClass("for_normal_buttons_style1");
 						partial_new.placeAt("fs1");
 						
+						var partial_back1 = new sap.ui.commons.Button({
+							text : "Back",
+							tooltip : "Back",
+                            press: function()
+                            {
+                            	$("#fs3").addClass("hide_div");
+                            	$("#fs1").addClass("hide_div");
+								$("#fs2").addClass("hide_div");
+								$("#fs4").addClass("hide_div");
+                            }
+						}).addStyleClass("for_normal_buttons_style1");
+						partial_back1.placeAt("fs1");
 				/////////////////////////////////from new hire List///////////////////////////////////////
 				
 				var report_new_hires = new sap.ui.table.Table(
@@ -2091,58 +2045,7 @@ var check1
 
 								}).addStyleClass("style_for_table");
 
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "SO No."
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "sname",
-							filterProperty : "sname",
-							width : "100px",
-						//setRowHeight:"200px"
-						}));
-
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Code"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Start Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "End Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+						
 						report_new_hires.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Emp ID"
@@ -2627,7 +2530,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						
 						
 						report_matrix_layout_dates1.createRow(repo_from1,from_datepick,repo_to1,to_datepick);
-						report_matrix_layout_dates1.placeAt("report_first")
+						report_matrix_layout_dates1.placeAt("report_first_zero")
 	
 	
 	
@@ -2716,84 +2619,6 @@ var repo_to1 = new sap.ui.commons.Label({
 
 							           '150px', '100px' ]
 						});
-
-						var oCell1 = new sap.ui.commons.layout.MatrixLayoutCell(
-								{
-									colSpan : 2
-								});
-
-						var oText_select = new sap.ui.commons.TextView({
-							//id : 'sc1',
-							text : 'Select Criteria',
-						})
-
-						oCell1.addContent(oText_select);
-						odetails_open.createRow(oCell1);
-
-						var oLabel_sel = new sap.ui.commons.Label({
-							id : 'so_date_from_sel',
-							text : 'SO Date From',
-
-						}).addStyleClass("for_text_style1");
-
-						
-						
-						var date1_sel = new Date();
-						              date1.setDate(date1_sel.getDate() - 56);
-					   var date2_sel = new Date();
-						              date2.setDate(date2_sel.getDate() + 28);
-
-						var for_from_date_sel = new sap.ui.model.json.JSONModel();
-						for_from_date_sel.setData({
-							dateValue : date1_sel
-						});
-						sap.ui.getCore().setModel(for_from_date, "fromModel_sel");
-
-						// create DatePickers and bind to model
-						var so_from_sel = new sap.ui.commons.DatePicker({
-							//id : 'sfrom1',
-							width : "10em",
-							value : {
-								path : "fromModel_sel>/dateValue",
-								type : new sap.ui.model.type.Date({
-									pattern : "yyyy-MM-dd",
-									strictParsing : true
-								})
-							}
-						}).addStyleClass("for_fields_style1");
-						so_from_sel.setDate
-						/* date1.placeAt("sample2"); */
-
-						oLabel_sel.setLabelFor(so_from_sel);
-						odetails_open.createRow(oLabel_sel, so_from_sel);
-
-						var soDateToLabel_sel = new sap.ui.commons.Label({
-							//id : 'so_date_to',
-							text : 'SO Date To',
-
-						}).addStyleClass("for_text_style1");
-
-						var for_to_date_sel = new sap.ui.model.json.JSONModel();
-						for_to_date_sel.setData({
-							dateValue : date2_sel
-						});
-						sap.ui.getCore().setModel(for_to_date, "toModel_sel");
-
-						// create DatePickers and bind to model
-						var so_to_sel = new sap.ui.commons.DatePicker({
-							//id : 'sto1',
-							width : "10em",
-							value : {
-								path : "toModel_sel>/dateValue",
-								type : new sap.ui.model.type.Date({
-									pattern : "yyyy-MM-dd",
-									strictParsing : true
-								})
-							}
-						}).addStyleClass("for_fields_style1");
-
-						oLabel_sel.setLabelFor(so_to_sel);
-						odetails_open.createRow(soDateToLabel_sel, so_to_sel);
 
 						var so_pro_bu_sel = new sap.ui.commons.Label({
 							
@@ -3049,6 +2874,7 @@ var repo_to1 = new sap.ui.commons.Label({
 		<div id='manual2' class="hide_div"></div>
 		<div id='admin1' class="hide_div"></div>
 		<div id='amend_first' class="hide_div"></div>
+		<div id='report_first_zero' class="hide_div"></div>
 		<div id='report_first' class="hide_div"></div>
 		<div id='report_first_open' class="hide_div"></div>
 		
