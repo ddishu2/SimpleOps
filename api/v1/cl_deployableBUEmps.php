@@ -63,9 +63,9 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
             $lv_emp_id = $lwa_deployable_emp['emp_id'];
 
 
-            $lv_emp_prime_skill = $lwa_deployable_emp['skill1_l4'];
-            $lv_emp_level = $lwa_deployable_emp['level'];
-            $lv_emp_loc = $lwa_deployable_emp['loc'];
+            $lv_emp_prime_skill = strtolower($lwa_deployable_emp['skill1_l4']);
+            $lv_emp_level = strtolower($lwa_deployable_emp['level']);
+            $lv_emp_loc = strtolower($lwa_deployable_emp['loc']);
 //            echo $fp_v_so_id.','
 //            .$fp_v_so_skill.','
 //            .$fp_v_so_level.','
@@ -76,7 +76,7 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
 //            .$lwa_deployable_emp['org'].PHP_EOL;
            // if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
            // )
-            if ($fp_v_so_skill == $lv_emp_prime_skill && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
             )
                             {
                 $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
