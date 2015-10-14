@@ -21,7 +21,7 @@ class cl_Proposals {
     private $arr_deployableEmp;
     private $lo_deployable_emp;
     private $lv_item_id;
-    public function __construct(cl_vo_open_sos $fp_o_open_sos, cl_deployableBUEmps $fp_o_deployableEmp,$lv_so_projname,$lv_so_proj_bu,$larr_so_locs,$fp_v_proj_id,$fp_v_capability) 
+    public function __construct(cl_vo_open_sos $fp_o_open_sos, cl_deployableBUEmps $fp_o_deployableEmp,$lv_so_projname,$lv_so_proj_bu,$larr_so_locs,$fp_v_proj_id,$fp_v_capability,$fp_v_cust_name) 
     {
        
         $this->lv_prop_id = self::setProposalID();
@@ -30,8 +30,9 @@ class cl_Proposals {
         $fp_o_open_sos->filterByEqualsProjBU($lv_so_proj_bu);
         $fp_o_open_sos->filterByInLocationList($larr_so_locs);
         $fp_o_open_sos->filterByContainsProjectID($fp_v_proj_id);
-
+      
          $fp_o_open_sos->filterByEqualsCapability($fp_v_capability);
+          $fp_o_open_sos->filterByContainsCustomerName($fp_v_cust_name);
         $this->arr_open_sos      = $fp_o_open_sos->get();
         $this->lo_deployable_emp = $fp_o_deployableEmp;
         $this->lv_item_id = 0;
