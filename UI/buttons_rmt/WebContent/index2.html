@@ -108,12 +108,20 @@ var check1
 									alert("Please Enter Password");
 									return;
 								 }
-								else if(nameFirstField.getValue() !== "UserDemo1" && namePassField.getValue() !== "userpass") 
+								else if(nameFirstField.getValue() !== "UserDemo1" ) 
 								{
 									
 								alert("You are not a valid User"); 
 
-								} else {
+								}
+								else if(namePassField.getValue() !== "userpass") 
+								{
+									
+								alert("You are not a valid User"); 
+
+								} 
+								
+								else {
 
 									$("#first1a").addClass("hide_div");
 									$("#manual1").addClass("hide_div");
@@ -164,7 +172,7 @@ var check1
 							tooltip : "Logout",
 							press : function back_to_login() {
 								
-								
+								location.reload();
 								 	 var nameFirstField1 = sap.ui.getCore().byId(
 									"TF-Name");
 							var namePassField1 = sap.ui.getCore().byId(
@@ -772,7 +780,10 @@ var check1
 						so_pro_drop.setTooltip("Project BU");
 						so_pro_drop.setEditable(true);
 						so_pro_drop.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("drops1");
+						var oItem = new sap.ui.core.ListItem("drops0");
+						oItem.setText("");
+						so_pro_drop.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops1");
 						oItem.setText("AO-Common Pool");
 						so_pro_drop.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("drops2");
