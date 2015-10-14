@@ -14,11 +14,11 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_abs_QueryBuilder.php';
 
 class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
 {
-    const C_PROJID_FNAME     = ' so_proj_id ';
-    const C_PROJNAME_FNAME   = ' so_proj_name ';
-    const C_CUSTNAME_FNAME   = ' cust_name ';
-    const C_LOCATION_FNAME   = ' so_loc ';
-    const C_BU_FNAME         = ' so_proj_bu';
+    const C_PROJID_FNAME     = 'so_proj_id';
+    const C_PROJNAME_FNAME   = 'so_proj_name';
+    const C_CUSTNAME_FNAME   = 'cust_name';
+    const C_LOCATION_FNAME   = 'so_loc';
+    const C_BU_FNAME         = 'so_proj_bu';
     const C_FNAME_LOC        = 'so_loc';
     const C_FNAME_LEVEL      = 'grade';
     const C_FNAME_SKILL      = 'skill1';
@@ -31,8 +31,9 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     const C_START_INTERVAL   = -56;
     const C_END_INTERVAL     =  28;
 
-    
-    const C_SO_SUBMI_DATE_FNAME    = ' so_submi_date ';
+    const C_FNAME_NEW_SO_SDATE     = 'new_sdate';
+    const C_FNAME_SO_SDATE         = 'so_sdate';
+    const C_SO_SUBMI_DATE_FNAME    = 'so_submi_date';
     
     protected $v_so_sdate  = null;
     protected $v_so_endate = null;
@@ -129,6 +130,12 @@ class cl_OpenSOQueryBuilder extends cl_abs_QueryBuilder
     {
         return $this->addContainsFilterToQuery
                       (self::C_PROJID_FNAME,$fp_v_proj_id);
+    }
+    
+    public function filterByContainsCustomerName($fp_v_cust_name)
+    {
+        return $this->addContainsFilterToQuery
+                      (self::C_CUSTNAME_FNAME,$fp_v_cust_name);
     }
     
     public function filterByContainsProjectName($fp_v_proj_name)
