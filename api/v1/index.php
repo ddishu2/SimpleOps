@@ -101,7 +101,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
 //                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
                   $lo_deployable_emp = new cl_deployableBUEmps();  
                     
-                    $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp,$lv_so_project_name,$lv_so_project_bu,$lv_so_location,$lv_so_project_id,$lv_so_capability);
+                    $c_pg = new cl_Proposals($lo_open_sos,$lo_deployable_emp,$lv_so_project_name,$lv_so_project_bu,$lv_so_location,$lv_so_project_id,$lv_so_capability,$lv_so_cust_name);
                     
                     $re_it_emps_for_sos = $c_pg->getAutoProposals();                    
                     $app->response->setStatus(200);
@@ -569,6 +569,18 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                   
                   
                   
+          $app->get('/amm(/)', 
+               function () use($app) 
+               {        
+                  $lo_ammendments = new cl_ammendments();
+                 // $re_result = $lo_ammendments->get_ammendments_decision_taken();
+                  $re_result = $lo_ammendments->isProcessed(1189);
+                   $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');           
+                    echo json_encode($re_result, JSON_PRETTY_PRINT);
+                  
+                  }
+                  );   
   $app->run();
 ?>
 
