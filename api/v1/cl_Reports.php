@@ -7,7 +7,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_abs_QueryBuilder.php';
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
-class cl_ReportGenerator
+class cl_Reports
 {
     const C_HDR_LINE1          = 'Content-Type: text/csv; charset=utf-8';
 /**
@@ -28,11 +28,13 @@ class cl_ReportGenerator
     const C_MODE_FILE_WRITE   = 'w';
     const C_FILENAME_SUFFIX   = '.csv';
     const C_FILENAME_DELIMITER = '_';
-    const C_TYPE_SL         = 'SoftLock';
-    const C_TYPE_SL_RELEASE = 'SoftLockRelease';
-    const C_TYPE_HL         = 'HardLock';
-    const C_TYPE_HL_RELEASE = 'HardLockRelease';
-    const C_EX_INVALID    = 'Invalid Mail Type';
+    const C_TYPE_SL         = 'Soft_Lock';
+    const C_TYPE_SL_RELEASE = 'Soft_Lock_Release';
+    const C_TYPE_HL         = 'Hard_Lock';
+    const C_TYPE_HL_RELEASE = 'Hard_Lock_Release';
+    CONST C_TYPE_REJ_EMP    = 'Rejected_Employees';
+    const C_TYPE_REJ_SO     = 'Rejected_SO';
+    const C_EX_INVALID      = 'Invalid Mail Type';
     
     private $v_report_type = '';
     private $v_start_date;
@@ -88,7 +90,7 @@ class cl_ReportGenerator
         }
         else
         {
-            $this->setDefaultDates();
+            $this->_setDefaultDates();
         }
     }
     
@@ -96,7 +98,7 @@ class cl_ReportGenerator
      * Sets Start and End Date to today's date in YYYY-MM-DD format
      */
     
-    private function setDefaultDates()
+    private function _setDefaultDates()
     {
         $this->v_start_date  = date(cl_abs_QueryBuilder::C_DATE_FORMAT);
         $this->v_end_date = $this->v_start_date;
@@ -142,6 +144,7 @@ class cl_ReportGenerator
             header("Pragma: no-cache");
             header("Expires: 0");
         }
+
 
         private function getData()
         {
