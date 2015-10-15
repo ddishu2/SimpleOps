@@ -1,3 +1,7 @@
+.hideMe { 
+   visibility: hidden; 
+   } 
+
 #fs2,#fs3,#fs4
 {
 	
@@ -21,7 +25,11 @@ margin-left: 40px !important;
 	height: 35px !important;
 	font-size: 18px !important;
 }
-
+.change_color1
+{
+	
+	background: white  !important;
+}
 .change_color
 {
 	
@@ -190,6 +198,7 @@ height: 35px !important;
 	width: 800px;
 	table-layout: fixed;
 	margin: 0 auto;
+	margin-top : 70px !important
 }
 
 #desc1 {
