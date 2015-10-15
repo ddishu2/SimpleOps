@@ -61,12 +61,18 @@ class cl_get_so_details
     public function get_corpid_details($i_emp_alias)
         {       
         
-        $this->lt_corpid_details  = [];
-//            $i_emp_alias = 'vgannama';
+        $this->lt_corpid_details  = [];     
             self::set_query('','', $i_emp_alias);
             
 // Get Corp-ID Details            
-            $this->lt_corpid_details = cl_DB::getResultsFromQuery($this->lv_query_alias);
-            return $this->lt_corpid_details;
+            if ( $this->lt_corpid_details = cl_DB::getResultsFromQuery($this->lv_query_alias) )
+            { return $this->lt_corpid_details; }
+            else
+            { 
+                $i_emp_alias = 'vgannama';
+                self::set_query('','', $i_emp_alias);
+                $this->lt_corpid_details = cl_DB::getResultsFromQuery($this->lv_query_alias);
+                return $this->lt_corpid_details;             
+            }
         }    
 }
