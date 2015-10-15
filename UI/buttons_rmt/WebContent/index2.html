@@ -533,8 +533,8 @@ var index;
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Reason",
-														tooltip:"Reason"
+														text : "PM Comments",
+														tooltip:"PM Comments"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_res'})
 												.bindProperty("text", "am_reason"),
@@ -1009,11 +1009,8 @@ var index;
 										var upto = $("#sto1-input").val();
 										var p_name=$("#Pro_id").val();
 										var p_bu=$("#spdrop-input").val();
-										var p_loc1=$("#loci").val();
-										var p_loc = new Array();
-										// this will return an array with strings "1", "2", etc.
-										p_loc = p_loc1.split(",");
-										
+										var p_loc=$("#loci").val();
+										console.log(p_loc);
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
@@ -1122,9 +1119,7 @@ var index;
 																.setText(res_length
 																		+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
 																		+ res_completed
-																		+ " SO's.\n\n\nIdentified Partial match for "
-																		
-																		+ "SO's \n\n\n");
+																		);
 													}
 												});
 
@@ -1173,15 +1168,19 @@ var index;
                             
                   $(".approveDropdown input").each(function(index,val){	
 									
-									var parent2 = $(this).parent().parent().parent().parent();	
+									var parent1 = $(this).parent().parent().parent().parent();	
               
-									if($(".approveDropdown input").val()=="Reject" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="None" )
+									if($(".approveDropdown input").val()=="Done" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="None" )
 										
 									{
 									
-									parent2.removeClass("change_color");
-									$(".approveDropdown input").val("--Select--");
-									parent2.find(".status_of_emp").html("");
+									
+									
+									parent1.find(".status_of_emp").html("");
+									var a1=	parent1.find( ".approveDropdown input" );
+									$(a1).val("--Select--");
+									var b1=parent1.find( ".approveDropdown");
+									$(b1).show();
 									}
                  
                  }) 
@@ -1336,17 +1335,7 @@ var index;
 							filterProperty : "eloc",
 							width : "100px"
 						}));
-						suitable_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Fullfillment" ,
-								tooltip :"Fullfillment"
-							}),
-							template : 
-								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+						
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Status" ,
@@ -1383,7 +1372,7 @@ var index;
 									text : "None",
 									key : "N"
 								}), ]
-							}).bindProperty("value","approve1").addStyleClass("approveDropdown").addStyleClass("stat11"),
+							}).bindProperty("value","approve1").addStyleClass("approveDropdown"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -1438,10 +1427,16 @@ var index;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
+										 parent.find(".status_of_emp").html("Mail Sent");
+											//parent.addClass("change_color");
+											
+										 	
+										var a=	parent.find( ".approveDropdown input" );
+										$(a).val("Done");
+										var b=parent.find( ".approveDropdown");
+										$(b).hide();
 										
-											parent.find(".status_of_emp").html("Mail Sent");
-											parent.addClass("change_color");
-											//document.getElementById("stat1").disabled=true;
+										
 											
 									}
 								});
@@ -1616,26 +1611,8 @@ var index;
 							filterProperty : "",
 							width : "100px"
 						}));
-						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Fullfillment"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "fulfill"),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Status"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "status"),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+						
+						
 						partial_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Select"
@@ -1714,8 +1691,8 @@ var index;
 						back1.placeAt("four2");
 
 						var partial_ras = new sap.ui.commons.Button({
-							text : "Results from RAS",
-							tooltip : "Results from RAS",
+							text : "AppsOne SAP",
+							tooltip : "AppsOne SAP",
 							press: function()
 							{
 								$("#fs2").removeClass("hide_div");
@@ -1733,7 +1710,7 @@ var index;
 					var report_ras_tab = new sap.ui.table.Table(
 								{
 									id : 'report_ras_tab1',
-									title : "Results from RAS",
+									title : "Results from AppsOne SAP",
 									visibleRowCount : 2,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
@@ -1741,17 +1718,7 @@ var index;
 
 								}).addStyleClass("style_for_table");
 
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "SO No."
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "sname",
-							filterProperty : "sname",
-							width : "100px",
-						//setRowHeight:"200px"
-						}));
+						
 
 					
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -1806,31 +1773,11 @@ var index;
 							filterProperty : "",
 							width : "100px"
 						}));
+						
+						
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Fullfillment"
-							}),
-							template : 
-								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Status"
-							}),
-							template : new sap.ui.commons.TextView({
-								//id:'status_of_emp'
-							})
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Approve"
+								text : "Select"
 							}),
 							template :new sap.ui.commons.RadioButton({
 								text : '',
@@ -1867,8 +1814,8 @@ var index;
 						
 						//////////////////////////////////////////////////////////
 						var partial_loan = new sap.ui.commons.Button({
-							text : "Results from Loan Sheets",
-							tooltip : "Results from Loan Sheets",
+							text : "Loan Employees",
+							tooltip : "Loan Employees",
                             press: function()
                             {
                             	$("#fs3").removeClass("hide_div");
@@ -1879,12 +1826,12 @@ var index;
 						partial_loan.placeAt("fs1");
 						
 						
-			///////////////////////////////table for loan sheets////////////////////////////////////////////
+			///////////////////////////////Table for loan sheets////////////////////////////////////////////
 			
 			var report_loan_sheet = new sap.ui.table.Table(
 								{
 									id : 'report_loan_sheet1',
-									title : "Results from Loan Sheets",
+									title : "Loan Employees",
 									visibleRowCount : 2,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
@@ -1945,31 +1892,11 @@ var index;
 							filterProperty : "",
 							width : "100px"
 						}));
+						
+						
 						report_loan_sheet.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Fullfillment"
-							}),
-							template : 
-								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Status"
-							}),
-							template : new sap.ui.commons.TextView({
-								//id:'status_of_emp'
-							})
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_loan_sheet.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Approve"
+								text : "Select"
 							}),
 							template :new sap.ui.commons.RadioButton({
 								text : '',
@@ -2007,8 +1934,8 @@ var index;
 						
 						
 						var partial_new = new sap.ui.commons.Button({
-							text : "Results from New Hire List",
-							tooltip : "Results from New Hire List",
+							text : "New Hires",
+							tooltip : "New Hires",
 							press: function()
                             {
                             	$("#fs4").removeClass("hide_div");
@@ -2035,7 +1962,7 @@ var index;
 				var report_new_hires = new sap.ui.table.Table(
 								{
 									id : 'report_new_hires1',
-									title : "Result for New Hires List ",
+									title : "Result for New Hires ",
 									visibleRowCount : 2,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
@@ -2096,31 +2023,11 @@ var index;
 							filterProperty : "",
 							width : "100px"
 						}));
+						
+						
 						report_new_hires.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Fullfillment"
-							}),
-							template : 
-								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Status"
-							}),
-							template : new sap.ui.commons.TextView({
-								//id:'status_of_emp'
-							})
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						report_new_hires.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Approve"
+								text : "Select"
 							}),
 							template :new sap.ui.commons.RadioButton({
 								text : '',
@@ -2599,6 +2506,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							{
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
+								$("#report_first_zero").addClass("hide_div");
 								$("#first").removeClass("hide_div");
 							}
 
