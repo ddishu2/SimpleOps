@@ -534,7 +534,7 @@ var index;
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
 														text : "PM Comments",
-														tooltip:"PM Comments"
+														tooltip:"Reason"
 													}),
 													template : new sap.ui.commons.TextView({id:'ame_res'})
 												.bindProperty("text", "am_reason"),
@@ -1119,7 +1119,9 @@ var index;
 																.setText(res_length
 																		+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
 																		+ res_completed
-																		);
+																		+ " SO's.\n\n\nIdentified Partial match for "
+																		
+																		+ "SO's \n\n\n");
 													}
 												});
 
@@ -1168,19 +1170,15 @@ var index;
                             
                   $(".approveDropdown input").each(function(index,val){	
 									
-									var parent1 = $(this).parent().parent().parent().parent();	
+									var parent2 = $(this).parent().parent().parent().parent();	
               
-									if($(".approveDropdown input").val()=="Done" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="None" )
+									if($(".approveDropdown input").val()=="Reject" || $(".approveDropdown input").val()=="Approve" || $(".approveDropdown input").val()=="None" )
 										
 									{
 									
-									
-									
-									parent1.find(".status_of_emp").html("");
-									var a1=	parent1.find( ".approveDropdown input" );
-									$(a1).val("--Select--");
-									var b1=parent1.find( ".approveDropdown");
-									$(b1).show();
+									parent2.removeClass("change_color");
+									$(".approveDropdown input").val("--Select--");
+									parent2.find(".status_of_emp").html("");
 									}
                  
                  }) 
@@ -1335,7 +1333,17 @@ var index;
 							filterProperty : "eloc",
 							width : "100px"
 						}));
-						
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Fullfill?" ,
+								tooltip :"Fullfill?"
+							}),
+							template : 
+								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
+							sortProperty : "",
+							filterProperty : "",
+							width : "100px"
+						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Status" ,
@@ -1372,7 +1380,7 @@ var index;
 									text : "None",
 									key : "N"
 								}), ]
-							}).bindProperty("value","approve1").addStyleClass("approveDropdown"),
+							}).bindProperty("value","approve1").addStyleClass("approveDropdown").addStyleClass("stat11"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -1400,7 +1408,7 @@ var index;
 									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
-							width : "100px",
+							width : "1px",
 							/* visible:false, */
 							
 						}));
@@ -1427,16 +1435,12 @@ var index;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 parent.find(".status_of_emp").html("Mail Sent");
-											//parent.addClass("change_color");
+										  
+											parent.find(".status_of_emp").html("Mail Sent");
+											parent.addClass("change_color");
 											
-										 	
-										var a=	parent.find( ".approveDropdown input" );
-										$(a).val("Done");
-										var b=parent.find( ".approveDropdown");
-										$(b).hide();
-										
-										
+											
+											//document.getElementById("stat1").disabled=true;
 											
 									}
 								});
@@ -1611,7 +1615,7 @@ var index;
 							filterProperty : "",
 							width : "100px"
 						}));
-						
+					
 						
 						partial_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -1710,7 +1714,7 @@ var index;
 					var report_ras_tab = new sap.ui.table.Table(
 								{
 									id : 'report_ras_tab1',
-									title : "Results from AppsOne SAP",
+									title : "AppsOne SAP",
 									visibleRowCount : 2,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
@@ -1831,7 +1835,7 @@ var index;
 			var report_loan_sheet = new sap.ui.table.Table(
 								{
 									id : 'report_loan_sheet1',
-									title : "Loan Employees",
+									title : "Results from Loan Employees",
 									visibleRowCount : 2,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
@@ -2027,7 +2031,7 @@ var index;
 						
 						report_new_hires.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Select"
+								text : "Status"
 							}),
 							template :new sap.ui.commons.RadioButton({
 								text : '',
