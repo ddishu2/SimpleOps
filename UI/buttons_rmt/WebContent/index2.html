@@ -595,7 +595,7 @@ var check1
 												var notify = new sap.ui.commons.Button({
 													text : "Submit & Send Notification",
 													tooltip : "notify",
-													press: function(){
+													press: function amend_send(){
 													
 														var amend_empid = "";
 														var amend_approvedec = "";
@@ -621,6 +621,11 @@ var check1
 												      			
 												      			 alert("Notification sent");
 												      			$("#for_amend_table1-table").addClass("change_color");
+												      			function amend_send()
+												      			{
+												      			    return false;
+												      			}
+												      			$("#stat_amend1").prop("disabled",true);
 												      		}
 														
 														}); 
