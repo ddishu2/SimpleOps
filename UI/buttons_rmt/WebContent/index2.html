@@ -15,7 +15,8 @@
 var Model_amend;
 var pass_data;
 var check=true;
-var check1
+var check1;
+var index;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -1008,7 +1009,11 @@ var check1
 										var upto = $("#sto1-input").val();
 										var p_name=$("#Pro_id").val();
 										var p_bu=$("#spdrop-input").val();
-										var p_loc=$("#loci").val();
+										var p_loc1=$("#loci").val();
+										var p_loc = new Array();
+										// this will return an array with strings "1", "2", etc.
+										p_loc = p_loc1.split(",");
+										
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
@@ -1089,6 +1094,7 @@ var check1
 																					fulfill : "",
 																					status : "",
 																					assign : "",
+																					approve1 : "--Select--",
 																					reason : val.emp[0].reason,
 																					propose_id : val.prop_id
 																				
@@ -1210,9 +1216,9 @@ var check1
 								{
 									id : 'suitable_match1',
 									title : "Transaction List",
-									visibleRowCount : 4,
+									//visibleRowCount : 4,
 									
-									navigationMode : sap.ui.table.NavigationMode.Paginator,
+									//navigationMode : sap.ui.table.NavigationMode.Paginator,
 
 								}).addStyleClass("style_for_table");
 
@@ -1377,7 +1383,7 @@ var check1
 									text : "None",
 									key : "N"
 								}), ]
-							}).addStyleClass("approveDropdown").addStyleClass("stat11"),
+							}).bindProperty("value","approve1").addStyleClass("approveDropdown").addStyleClass("stat11"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -1423,21 +1429,20 @@ var check1
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								var index=
-									
-									($("#suitable_match1").index()+((sap.ui.getCore().byId("suitable_match1")._oPaginator.getCurrentPage() )));
+								 
 								$(".approveDropdown input").each(function(index,val){
-									
-									
-									
+				
 									if($(this).val() == "Approve" || $(this).val() == "Reject"){
 										var parent = $(this).parent().parent().parent().parent();
 										so_str += "&so_id[]="+parent.find(".soid").text();
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 console.log(p1_id);
 										
+											parent.find(".status_of_emp").html("Mail Sent");
+											parent.addClass("change_color");
+											//document.getElementById("stat1").disabled=true;
+											
 									}
 								});
 								var asc= so_str + emp_str +status_str+p1_id;
@@ -1460,28 +1465,15 @@ var check1
 
 						}).addStyleClass("for_normal_buttons_style1");
 						console.log(check)
-						var refresh = new sap.ui.commons.Button({
-							id:'ref_suitable',
-							text : "Refresh",
-							tooltip : "Refresh",
-							 press: function()
-						{
-								 $(".approveDropdown input").each(function(index,val){	
+						 
+								 
+								 
+								 
 									
-									var parent1 = $(this).parent().parent().parent().parent();
-								if($(this).val() == "Approve" || $(this).val() == "Reject" ){
-										//var parent1 = $(this).parent().parent().parent().parent();
-									parent1.find(".status_of_emp").html("Mail Sent");
-									parent1.addClass("change_color");	
-									}
-							 
 									
-								}); 
 								
 								
-								
-						}  
-							}).addStyleClass("for_normal_buttons_style1");
+					
 						var back = new sap.ui.commons.Button({
 							id : 'bt2',
 							text : "Back",
@@ -1495,7 +1487,7 @@ var check1
 						}).addStyleClass("for_normal_buttons_style1");
 
 						notify.placeAt("four1");
-						refresh.placeAt("four1");
+						//refresh.placeAt("four1");
 						back.placeAt("four1");
 
 						/* for the partial fitment(four2) */
