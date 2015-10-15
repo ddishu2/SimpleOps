@@ -384,8 +384,8 @@ var check1
 															title : "RMT Amendment",
 															visibleRowCount : 9,
 															firstVisibleRow : 3,
-															 selectionMode: sap.ui.table.SelectionMode.Single, 
-															 navigationMode : sap.ui.table.NavigationMode.Scrollbar,
+															// selectionMode: sap.ui.table.SelectionMode.Single, 
+															 //navigationMode : sap.ui.table.NavigationMode.Scrollbar,
 
 														}).addStyleClass("style_for_table");
 
@@ -1206,8 +1206,7 @@ var check1
 									id : 'suitable_match1',
 									title : "Transaction List",
 									visibleRowCount : 4,
-									//firstVisibleRow : 5,
-									//selectionMode: sap.ui.table.SelectionMode.Single,
+									
 									navigationMode : sap.ui.table.NavigationMode.Paginator,
 
 								}).addStyleClass("style_for_table");
@@ -1419,7 +1418,9 @@ var check1
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								var index=suitable_match._oPaginator.getCurrentPage()  
+								var index=
+									
+									($("#suitable_match1").index()+((sap.ui.getCore().byId("suitable_match1")._oPaginator.getCurrentPage() )));
 								$(".approveDropdown input").each(function(index,val){
 									
 									
