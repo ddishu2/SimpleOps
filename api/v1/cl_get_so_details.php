@@ -62,7 +62,7 @@ class cl_get_so_details
         {       
         
         $this->lt_corpid_details  = [];
-            $i_emp_alias = 'vgannama';
+//            $i_emp_alias = 'vgannama';
             self::set_query('','', $i_emp_alias);
             
 // Get Corp-ID Details            

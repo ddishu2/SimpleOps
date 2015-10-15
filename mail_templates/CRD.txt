@@ -24,6 +24,9 @@
                <CENTER>Current Start Date</CENTER>
             </td>
             <td bgcolor='blue'style='color:white'>
+               <CENTER>Current End Date</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
                <CENTER>Project End Date Projected</CENTER>
             </td>
             <td bgcolor='blue'style='color:white'>
@@ -37,9 +40,6 @@
             </td>
             <td bgcolor='blue'style='color:white'>
                <CENTER>New Supervisor Name</CENTER>
-            </td>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>RMG Comments</CENTER>
             </td>		
          </tr>
          <tr>
@@ -76,12 +76,23 @@
            <td>
                <CENTER>GV_NSN</CENTER>
             </td>
+         </tr>
+      </table>
+      </p>
+      <h4><u>RMG Comments:</u></h4>
+      <p>
+      <table class="font" border='1'>
+         <tr>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>RMG Comments</CENTER>
+            </td>
+         </tr>
+	 <tr>
            <td>
                <CENTER>GV_RMGC</CENTER>
             </td>
          </tr>
       </table>
-      </p>
       <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
       </table>
    </body>

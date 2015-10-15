@@ -15,20 +15,13 @@
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
-//    const lc_template_path = 'D:\xampp\htdocs\rmt\mail_templates\\',
-    const lc_template_path = 'C:\xampp\htdocs\rmt\mail_templates\\',
+    const lc_template_path = 'D:\xampp\htdocs\rmt\mail_templates\\',    
 /**
 * lc_root   Fully qualified filepath in the format
 *           \\\\<IP address>\<directory>\[<directory>]\\
 *            ntbomfs001 -> 10.75.250.149   
 */
-//          lc_root          = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\';
-
-//          lc_root          = '\\\\10.75.250.149\Datagrp\TS_SAP_Chesapeake_Energy\\';
-            lc_root          = 'C:\xampp\htdocs';
-//=======
-//          lc_root          = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\';
-//>>>>>>> .r257
+          lc_root          = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\';            
     
 // Private class variables.    
     private $lv_content,
@@ -42,6 +35,7 @@ class cl_NotificationMails
             $lt_corpid_details = [],
             $lt_pm_details = [],
             $lt_em_details = [],
+            $lt_req_details = [],
             $lv_query_notifcn,
             $lv_query_capability,
             $lv_recievers,
@@ -69,7 +63,8 @@ class cl_NotificationMails
             $lv_pm_email,
             $lv_em_email,
             $lv_status,
-            $lv_supervisor,
+            $lv_req_by,
+            $lv_req_email,
             $lv_comments;    
     
 // Constructor of the class
@@ -241,8 +236,8 @@ class cl_NotificationMails
     private function add_header()
     {
         $lv_uid            = md5(uniqid(time())); 
-        $this->lv_headers  = 'From: dikshant.mishra@capgemini.com' . "\r\n";
-        $this->lv_headers .= 'Reply-To: dikshant.mishra@capgemini.com' . "\r\n";
+        $this->lv_headers  = 'From: appsonesap.in@capgemini.com' . "\r\n";
+        $this->lv_headers .= 'Reply-To: appsonesap.in@capgemini.com' . "\r\n";
 //        $this->lv_headers .= 'bcc: tejas.nakwa@capgemini.com' . "\r\n"; 
 //        $this->lv_headers .= 'cc: prashanth.tellis@capgemini.com' . "\r\n";
         $this->lv_headers .= 'MIME-Version: 1.0' . "\r\n";
@@ -362,6 +357,9 @@ class cl_NotificationMails
 // Get employee details.
             $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_crd_details['id']);
                 
+// Get requested by details               
+            $this->lt_req_details = $lo_so_details->get_corpid_details($this->lt_crd_details['req_by']);
+                
 // Get details of all capabilities email ids.
             $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
             $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);                
@@ -370,7 +368,10 @@ class cl_NotificationMails
             case 'CTE':
             // Get employee details.
             $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_cte_details['id']);
-                
+
+// Get requested by details
+            $this->lt_req_details = $lo_so_details->get_corpid_details($this->lt_cte_details['req_by']);
+            
 // Get details of all capabilities email ids.
             $this->lt_recievers        = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
             $this->lt_act_type         = cl_DB::getResultsFromQuery($this->lv_query_act_type);  
@@ -437,11 +438,15 @@ class cl_NotificationMails
                 $this->lv_BU         = $this->lt_crd_details['IDP'];                                
                 $this->lv_capability = $this->lt_crd_details['competency'];
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                $this->lv_req_by     = $this->lt_req_details[0]['emp_name'];
+                $this->lv_req_email  = $this->lt_req_details[0]['email'];
                 break;
             case 'CTE':
                 $this->lv_BU         = $this->lt_cte_details['IDP'];                                
                 $this->lv_capability = $this->lt_cte_details['competency'];
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                $this->lv_req_by     = $this->lt_req_details[0]['emp_name'];
+                $this->lv_req_email  = $this->lt_req_details[0]['email'];
                 break;
             default:
                 break;            
@@ -499,27 +504,26 @@ class cl_NotificationMails
                 break;
             
             case 'CRD':
-                $this->lv_content  = str_replace("GV_UPDATED_BY", $this->lt_crd_details['req_by'], $this->lv_content);
-                $this->lv_content  = str_replace("GV_STATUS", $this->lv_status, $this->lv_content);
+                $this->lv_content  = str_replace("GV_UPDATED_BY", $this->lv_req_by, $this->lv_content);
+                $this->lv_content  = str_replace("GV_STATUS", $this->lv_status.'ed', $this->lv_content);
                 $this->lv_content  = str_replace("GV_ID", $this->lt_crd_details['id'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_EMPNAME", $this->lt_crd_details['name'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_COMPETENCY", $this->lt_crd_details['competency'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_CPN", $this->lt_crd_details['curr_proj_name'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_CSD", $this->lt_crd_details['curr_sdate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_CED", $this->lt_crd_details['curr_edate'], $this->lv_content);
-                $this->lv_content  = str_replace("GV_PEDP", $this->lt_crd_details['proj_edate_projected'], $this->lv_content);
-                $this->lv_content  = str_replace("GV_PEDP", $this->lt_crd_details['proj_edate_projected'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_PEDP", $this->lt_crd_details['proj_edate_projected'], $this->lv_content);                
                 $this->lv_supervisor_name = $this->lt_crd_details['supervisor_lname'].', '.$this->lt_crd_details['supervisor_fname'];
                 $this->lv_content  = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
                 $this->lv_content  = str_replace("GV_NED", $this->lt_crd_details['new_edate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_NSID", $this->lt_crd_details['new_sup_corp_id'], $this->lv_content);
-                $this->lv_content  = str_replace("GV_NSN", $this->lt_crd_details['new_sup_id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_NSN", $this->lt_crd_details['new_sup_name'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);                
                 break;
             
             case 'CTE':
-                $this->lv_content  = str_replace("GV_UPDATED_BY", $this->lt_cte_details['req_by'], $this->lv_content);
-                $this->lv_content  = str_replace("GV_STATUS", $this->lv_status, $this->lv_content);
+                $this->lv_content  = str_replace("GV_UPDATED_BY", $this->lv_req_by, $this->lv_content);
+                $this->lv_content  = str_replace("GV_STATUS", $this->lv_status.'ed', $this->lv_content);
                 $this->lv_content  = str_replace("GV_ID", $this->lt_cte_details['id'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_EMPNAME", $this->lt_cte_details['name'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_COMPETENCY", $this->lt_cte_details['competency'], $this->lv_content);
@@ -532,7 +536,7 @@ class cl_NotificationMails
                 $this->lv_content  = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
                 $this->lv_content  = str_replace("GV_NED", $this->lt_cte_details['new_edate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_NSID", $this->lt_cte_details['new_sup_corp_id'], $this->lv_content);
-                $this->lv_content  = str_replace("GV_NSN", $this->lt_cte_details['new_sup_id'], $this->lv_content);
+                $this->lv_content  = str_replace("GV_NSN", $this->lt_cte_details['new_sup_name'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);
                 break;
             default:
@@ -595,18 +599,10 @@ class cl_NotificationMails
                     { self::addresume($lv_uid); }
 
 // Get recievers for email.                
-                self::get_recievers();
-                echo $this->lv_recievers;
-             //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
+                self::get_recievers();                
+                //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
 
-
-//                $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-  $lv_mail = mail('tejas@localhost', $this->lv_subject, $this->lv_message, $this->lv_headers);              
-
-               // $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-//=======
-//                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;ahire.kishor@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-//>>>>>>> .r287
+                $lv_mail = mail('dikshant.mishra@capgemini.com;', $this->lv_subject, $this->lv_message, $this->lv_headers);
                 if($lv_mail)
                     {  
                     return true;                    
