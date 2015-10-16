@@ -60,35 +60,6 @@ class cl_SOEmpSkillMatcher
         $this->_set_SO_Emp_Skill_Xref();
     }
     
-    
-//    private function getAlternativeSkillMinAndMaxIndex(array &$fp_arr_emp_skills_matrix)
-//    {
-//        $lv_first_alt_skill = 'alt_skill1';
-//        $lv_last_alt_skill  = 'alt_skill10';
-//        $larr_keys = array_keys($fp_arr_emp_skills_matrix);
-//        echo 'Keys'.json_encode($larr_keys,JSON_PRETTY_PRINT);
-//        $lv_alt_skill_min_index = array_search($lv_first_alt_skill,$larr_keys);
-//        $lv_alt_skill_max_index = array_search($lv_last_alt_skill, $larr_keys);
-//        
-//        $this->v_alt_skill_min_index = $lv_alt_skill_min_index;
-//        $this->v_alt_skill_max_index = $lv_alt_skill_max_index;
-//        echo 'Min:'.$lv_alt_skill_min_index.'Max:'.$lv_alt_skill_max_index;
-//    }
-//    
-//    private function getAlternativeSkillMinAndMaxIndex(array &$fp_arr_emp_skills_matrix)
-//    {
-//        $lv_first_alt_skill = 'alt_skill1';
-//        $lv_last_alt_skill  = 'alt_skill10';
-//        $larr_keys = array_keys($fp_arr_emp_skills_matrix);
-//        echo 'Keys'.json_encode($larr_keys,JSON_PRETTY_PRINT);
-//        $lv_alt_skill_min_index = array_search($lv_first_alt_skill,$larr_keys);
-//        $lv_alt_skill_max_index = array_search($lv_last_alt_skill, $larr_keys);
-//        
-//        $this->v_alt_skill_min_index = $lv_alt_skill_min_index;
-//        $this->v_alt_skill_max_index = $lv_alt_skill_max_index;
-//        echo 'Min:'.$lv_alt_skill_min_index.'Max:'.$lv_alt_skill_max_index;
-//    }
-    
     /**
      * Gets Employee skill with upto 10 alternatives.
      * 
