@@ -24,14 +24,13 @@
  */
 class cl_SOEmpSkillMatcher 
 {
-    const   C_SO_SKILL_FNAME                = 'so_skill';
-    const   C_EMP_SKILL_FNAME               = 'emp_skill';
-    const   C_ALTERNATE_SKILLS_COUNT        = 10;
-    const   C_ALT_SKILL_MIN_INDEX           =  3;
-    private static $c_alt_skill_max_index   =  12;
-    
-    const C_EMP_SKILLS_TABLE        = 'c_emp_skill_matrix';
-    const C_SO_EMP_SKILL_XREF_TABLE = 'c_so_emp_skill_xref';
+    const   C_SO_SKILL_FNAME         = 'so_skill';
+    const   C_EMP_SKILL_FNAME        = 'emp_skill';
+    const   C_ALTERNATE_SKILLS_COUNT = 10;
+    const   C_ALT_SKILL_MIN_INDEX    =  3;
+    const   C_ALT_SKILL_MAX_INDEX    =  12;
+    const   C_EMP_SKILLS_TABLE         = 'c_emp_skill_matrix';
+    const   C_SO_EMP_SKILL_XREF_TABLE  = 'c_so_emp_skill_xref';
     
  
     private $o_dbhandle;
@@ -124,7 +123,7 @@ class cl_SOEmpSkillMatcher
         {
 //            echo 'Emp Skills WA'.json_encode($lwa_skill,JSON_PRETTY_PRINT).PHP_EOL;
             $lv_prime_skill = $lwa_skill[self::C_EMP_SKILL_FNAME]; 
-            $larr_alt_skills = array_slice($lwa_skill, self::C_ALT_SKILL_MIN_INDEX, self::$c_alt_skill_max_index);
+            $larr_alt_skills = array_slice($lwa_skill, self::C_ALT_SKILL_MIN_INDEX, self::C_ALT_SKILL_MAX_INDEX);
             $larr_alt_skills = array_values($larr_alt_skills);
             $larr_emp_skills_matrix[$lv_prime_skill] =  $larr_alt_skills;
         }
