@@ -61,7 +61,7 @@ class cl_SOEmpSkillMatcher
     }
     
     /**
-     * Gets Employee skill with upto 10 alternatives.
+     * Gets Employee skill with upto 10 alternates
      * 
      * @return array Employee skill with upto 10 alternatives.
      * 
@@ -226,9 +226,6 @@ class cl_SOEmpSkillMatcher
     public function isAlternative($fp_v_so_skill = '', $fp_v_emp_skill = '')
     {
         $lv_alternative = false;
-//        echo 'isAltenative'.PHP_EOL;
-//        echo 'SO Emp Skills Xref: '.json_encode($this->arr_so_emp_skill_xref,JSON_PRETTY_PRINT).PHP_EOL;
-//        echo 'Emp. Altenatives  '.json_encode($this->arr_emp_skills_matrix, JSON_PRETTY_PRINT).PHP_EOL;
         if( 
             $this->isSkillValid($fp_v_emp_skill) 
             && $this->isSkillMappingDefined($fp_v_so_skill))
