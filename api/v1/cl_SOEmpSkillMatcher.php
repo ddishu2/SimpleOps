@@ -27,6 +27,10 @@ class cl_SOEmpSkillMatcher
     const   C_SO_SKILL_FNAME         = 'so_skill';
     const   C_EMP_SKILL_FNAME        = 'emp_skill';
     const   C_ALTERNATE_SKILLS_COUNT = 10;
+    /**
+     * @var C_ALT_SKILL_MIN_INDEX Col. no. of first alt. skill(starts from 0)
+     * @var C_ALT_SKILL_MAX_INDEX Col. no. of last alt. skill (starts from 0)
+     */
     const   C_ALT_SKILL_MIN_INDEX    =  3;
     const   C_ALT_SKILL_MAX_INDEX    =  12;
     const   C_EMP_SKILLS_TABLE         = 'c_emp_skill_matrix';
@@ -52,9 +56,8 @@ class cl_SOEmpSkillMatcher
      */
     public function __construct() {
         $this->o_dbhandle = new cl_DB();
-        $this->setEmpSkillMatrix();
-        $this->set_SO_Emp_Skill_Xref();
-       
+        $this->_setEmpSkillMatrix();
+        $this->_set_SO_Emp_Skill_Xref();
     }
     
     
@@ -113,7 +116,7 @@ class cl_SOEmpSkillMatcher
      * 
      * 
      */
-    private function setEmpSkillMatrix()
+    private function _setEmpSkillMatrix()
     {
         $larr_emp_skills_matrix = [];
         $larr_skills = $this->fetchEmpSkillMatrix();
@@ -150,7 +153,7 @@ class cl_SOEmpSkillMatcher
      * 
      * 
      */
-    private function set_SO_Emp_Skill_Xref()
+    private function _set_SO_Emp_Skill_Xref()
     {
         $larr_so_emp_skills_xref = [];
         $larr_so_emp_skills_matrix = $this->fetch_SO_Emp_Skill_Xref();
