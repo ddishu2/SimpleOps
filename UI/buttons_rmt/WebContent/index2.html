@@ -21,6 +21,13 @@ var index;
 			.getCore()
 			.attachInit(
 					function() {
+						var image_mail=new sap.ui.commons.Image({
+							id : "im_suit",
+						//	width : "",
+							src : "images/fulfill.JPG",	
+							tooltip : "Suitable Match Done"
+
+						});
 						
 					
 						var oWelcome_Page1 = new sap.ui.commons.layout.MatrixLayout(
@@ -174,6 +181,7 @@ var index;
 							press : function back_to_login() {
 								
 								location.reload();
+								$(" #amend_first ").load()
 								 	 var nameFirstField1 = sap.ui.getCore().byId(
 									"TF-Name");
 							var namePassField1 = sap.ui.getCore().byId(
@@ -181,7 +189,7 @@ var index;
 								 nameFirstField1.setValue()=="";
 								 namePassField1.setValue()=="";
 							
-
+                                    
 								$("#first1a").removeClass("hide_div");
 								$("#third").addClass("hide_div");
 								$("#four1").addClass("hide_div");
@@ -621,12 +629,9 @@ var index;
 												      		success : function(odata){
 												      			
 												      			 alert("Notification sent");
-												      			$("#for_amend_table1-table").addClass("change_color");
-												      			function amend_send()
-												      			{
-												      			    return false;
-												      			}
-												      			$("#stat_amend1").prop("disabled",true);
+												      			
+												      			$("#stat_amend1").remove();
+												      			
 												      		}
 														
 														}); 
@@ -1011,6 +1016,13 @@ var index;
 										var p_bu=$("#spdrop-input").val();
 										var p_loc=$("#loci").val();
 										console.log(p_loc);
+										var temp = new Array();			
+										temp = p_loc.split(",");
+										
+										/* console.log(pass1) */
+										console.log(temp);
+										console.log(temp.length)
+										console.log(temp[0])
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
@@ -1018,7 +1030,7 @@ var index;
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
 										
-										console
+										 console
 												.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="
 														+ from
 														+ "&so_to_date="
@@ -1028,13 +1040,13 @@ var index;
 														+ "&proj_bu="
 														+ p_bu
 														+ "&proj_loc[]="
-														+ p_loc
+														+ temp
 												        + "&proj_id="
 												        + p_id
 												        + "&cust_name="
 												        + c_name
 												        + "&capability="
-												        +  cap);
+												        +  cap); 
 										$
 												.ajax({
 													method : "GET",
@@ -1046,8 +1058,10 @@ var index;
 														+ p_name
 														+ "&proj_bu="
 														+ p_bu
-														+ "&proj_loc[]="
-														+ p_loc
+														
+             											+ "&proj_loc[]="
+														+ temp
+														
 												        + "&proj_id="
 												        + p_id
 												        + "&cust_name="
@@ -1203,6 +1217,8 @@ var index;
 							press : function backtosecond() {
 								$("#second").removeClass("hide_div");
 								$("#third").addClass("hide_div");
+								$(" #four1 ").load()
+								
 
 							}
 						}).addStyleClass("for_normal_buttons_style1");
@@ -1213,9 +1229,9 @@ var index;
 								{
 									id : 'suitable_match1',
 									title : "Transaction List",
-									//visibleRowCount : 4,
-									
-									//navigationMode : sap.ui.table.NavigationMode.Paginator,
+									selectionMode: sap.ui.table.SelectionMode.Single,
+									visibleRowCount :100,
+									 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto
 
 								}).addStyleClass("style_for_table");
 
@@ -1333,17 +1349,7 @@ var index;
 							filterProperty : "eloc",
 							width : "100px"
 						}));
-						suitable_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Fullfill?" ,
-								tooltip :"Fullfill?"
-							}),
-							template : 
-								new sap.ui.commons.Image({src:"images/fulfill.JPG"}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+						
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Status" ,
@@ -1362,7 +1368,7 @@ var index;
 								text : "Approve",
 								tooltip : "Approve"
 							}),
-							template : new sap.ui.commons.DropdownBox({
+							template : new sap.ui.commons.ComboBox({
 								
 								id:'stat1',
 								tooltip : "Decision",
@@ -1380,7 +1386,7 @@ var index;
 									text : "None",
 									key : "N"
 								}), ]
-							}).bindProperty("value","approve1").addStyleClass("approveDropdown").addStyleClass("stat11"),
+							}).bindProperty("value","approve1").addStyleClass("approveDropdown"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
@@ -1399,6 +1405,36 @@ var index;
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
+								text : "Projected End Date" ,
+								tooltip : "Projected End Date"
+							}),
+							template : new sap.ui.commons.TextView({
+								//id:'p_s_id'
+							})
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "100%",
+							/* visible:false, */
+							
+						}));
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Skill Category" ,
+								tooltip : "Skill Category"
+							}),
+							template : new sap.ui.commons.TextView({
+								
+							})
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "100%",
+							
+							
+						}));
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
 								text : "Proposed ID" ,
 								tooltip : "Proposed ID"
 							}),
@@ -1408,7 +1444,7 @@ var index;
 									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
-							width : "1px",
+							width : "3px",
 							/* visible:false, */
 							
 						}));
@@ -1421,7 +1457,11 @@ var index;
 							text : "Submit & Send Notification",
 							tooltip : "notify",
 							press: function(check){
+								if($(".approveDropdown input").val() == "Approve" || $(".approveDropdown input").val() == "Reject" )
+									{
+								
 								alert("Notification Sent Successfully.");
+									}
 								var so_str = "";
 								var emp_str = "";
 								var status_str = "";
@@ -1437,10 +1477,10 @@ var index;
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
 										  
 											parent.find(".status_of_emp").html("Mail Sent");
-											parent.addClass("change_color");
+											parent.find(".status_of_emp").addClass("change_color");
+											parent.find(".approveDropdown input").val("Done");
+											parent.find(".approveDropdown input").remove();
 											
-											
-											//document.getElementById("stat1").disabled=true;
 											
 									}
 								});
@@ -1481,6 +1521,7 @@ var index;
 
 								$("#four1").addClass("hide_div");
 								$("#third").removeClass("hide_div");
+								
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
