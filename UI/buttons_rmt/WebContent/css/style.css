@@ -113,6 +113,7 @@ height: 35px !important;
 	font-size: 16px !important;
 	border-radius: 10px !important;
 	margin-top: 30px !important;
+	background-color: #AAAAAA !important
 }
 
 .for_normal_buttons_style1.selected, .for_normal_buttons_style1:hover,#buton1.selected,#buton1:hover {
@@ -136,6 +137,7 @@ height: 35px !important;
 	white-space: pre-wrap;
 	font-size: 16px;
 	border-radius: 10px;
+	background-color: #AAAAAA !important
 }
 
 #tag_result.selected, #tag_result:hover {
@@ -184,7 +186,8 @@ height: 35px !important;
 	width: 271px !important;
 	height: 86px !important;
 	font-size: 16px !important;
-	border-radius: 10px !important
+	border-radius: 10px !important;
+	background-color: #AAAAAA !important
 }
 
 .buttons_common_style1.selected, .buttons_common_style1:hover {
