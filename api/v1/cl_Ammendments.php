@@ -12,6 +12,7 @@ class cl_ammendments {
     const C_EMP_ID = 'emp_id';
     const C_STAT = 'status';
     //const C_AMMEND_TABLE = 'pass_data';
+    const AMENDMENTS_TABNAME = 'm_ammendment';
     const C_AMMEND_TABLE = 'ammend_table';
     private static $arr_amendments = [];
     private static $arr_amendments_decision_taken = [];
