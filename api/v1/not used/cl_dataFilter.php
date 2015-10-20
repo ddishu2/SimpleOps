@@ -7,6 +7,7 @@
 class cl_dataFilter {
     private   $arr_filters = [];
     private   $arr_dataToBeFiltered = [];
+    private   $arr_dataToBeFilteredKeys = [];
     private   $arr_filteredData = [];
     private   $v_filteredDataCount = 0;
     
@@ -81,6 +82,30 @@ class cl_dataFilter {
         return $larr_dataToBeFiltered;
     }
     
+    
+    private function buildQuery()
+    {
+        
+        
+        
+        
+        
+        
+    }
+    
+    private function filterByProject($fp_v_project = '')
+    {
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     private function doesDataRowMatchFilters($fp_arr_dataRowToBeFiltered)
     {
         $lv_rowMatchesAllFilters = true;
@@ -100,7 +125,7 @@ class cl_dataFilter {
     }
 
 /**   
-* @return void
+*
 */
     public function resetFilters()
     {

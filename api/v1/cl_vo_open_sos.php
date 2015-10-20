@@ -121,7 +121,7 @@ class cl_vo_open_sos extends cl_OpenSOQueryBuilder
         {
             if(in_array($fp_v_so_id,$value))
             {
-                 $lv_slocked = true;
+                $lv_slocked = true;
                 break;
             }
         }

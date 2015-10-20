@@ -1,18 +1,16 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of cl_Lock
  *
  * @author ptellis
  */
+
+require_once 'cl_abs_QueryBuilder.php';
+require_once 'cl_DB.php';
 class cl_Lock {
 
+    const C_TABLE_NAME = 'trans_locks';
+    const C_STATUS_SL = 'S';
     const C_ARR_SO_ID = 'so_id';
     const C_ARR_EMP_ID = 'emp_id';
     const C_ARR_STAT = 'status';
@@ -20,7 +18,15 @@ class cl_Lock {
     const C_TRANS_ID = 'trans_id';    
     const C_ARR_LINK = 'link';
     const C_COMMENTS = 'comments';
-    const C_STATUS = 'status';
+    const C_FNAME_STATUS = 'status';
+    const C_FNAME_LOCK_END_DATE = 'lock_end_date';
+    
+    const C_STATUS_HARD_LOCK = 'S201';
+//    const C_STATUS_HARD_LOCK_EXPIRED = ;
+    const C_STATUS_SOFT_LOCK = 'S121';
+    const C_STATUS_SOFT_LOCK_REJECTED = 'S221';
+    const C_STATUS_SOFT_LOCK_EXPIRED = 'S300';
+    
     private static $arr_SO_that_rejectedemps = [];
 // const C_PARENT_PROPOS_ID = 'propos_id';
 // const C_REQUESTOR_ID = 'requestor_id';
@@ -33,17 +39,32 @@ class cl_Lock {
         
     }
 
-    public function getHardLockedEmps() {
-        
+    public function getHardLockedEmps($fp_v_start_date = null, $fp_v_end_date =  null) 
+    {
+        $lv_query = cl_abs_QueryBuilder::C_SQL_SELECT
+                   .cl_abs_QueryBuilder::C_SQL_ALL
+                   .cl_abs_QueryBuilder::C_SQL_FROM
+                   .self::C_TABLE_NAME.PHP_EOL
+                   .cl_abs_QueryBuilder::C_SQL_WHERE
+                   .self::C_FNAME_STATUS.cl_abs_QueryBuilder::C_SQL_EQUALS.self::C_STATUS_SOFT_LOCK_EXPIRED
+                   .cl_abs_QueryBuilder;
     }
 
     public function getSoftLockExpiredEmps() {
+        $lv_query = cl_abs_QueryBuilder::C_SQL_SELECT
+                   .cl_abs_QueryBuilder::C_SQL_ALL
+                   .cl_abs_QueryBuilder::C_SQL_FROM
+                   .self::C_TABLE_NAME.PHP_EOL
+                   .cl_abs_QueryBuilder::C_SQL_WHERE
+                   .self::C_FNAME_STATUS.cl_abs_QueryBuilder::C_SQL_EQUALS.self::C_STATUS_SOFT_LOCK_EXPIRED;
         
     }
 //Soft Lock
     public function setTransId() {        //find max trans_id
-        $lv_sql = "select max(trans_id) from trans_locks";
-        $lv_max_trans_id = cl_DB::getResultsFromQuery($lv_sql);
+//        $lv_sql = 'SELECT'.PHP_EOL
+//                 .'MAX(trans_id)'.PHP_EOL
+//                . 'FROM '.self::C_TABLE_NAME.PHP_EOL;
+//        $lv_max_trans_id = cl_DB::getResultsFromQuery($lv_sql);
         return $lv_max_trans_id;
     }
     
@@ -419,23 +440,69 @@ and so_id ='$fp_v_so_id'";
         
     }
     
-   public function getSoftLocked()
+   public function getSoftLocked($fp_v_start_date, $fp_v_end_date)
+   {
+       $lv_query = 'SELECT '.PHP_EOL
+                   . '* '.PHP_EOL
+                   . 'FROM'.PHP_EOL
+                   . self::C_TABLE_NAME.PHP_EOL
+                   . 'WHERE'.PHP_EOL
+                   . self::C_FNAME_STATUS.' = '.self::C_STATUS_SOFT_LOCK.PHP_EOL
+                   . 'AND'.PHP_EOL 
+                   . self::C_FNAME_LOCK_END_DATE.PHP_EOL
+                   .'BETWEEN '.PHP_EOL
+                   . 'CAST('."'$fp_v_start_date'".') AS DATE'.PHP_EOL
+                   . 'AND CAST('."'$fp_v_end_date'".') AS DATE'.PHP_EOL;
+       $lo_DB   = new cl_DB();
+       $re_data = $lo_DB->getResultsFromQuery($lv_query);
+       return $re_data;
+   }
+   
+   public function getHardLocked($fp_v_start_date, $fp_v_end_date)
    {
        
    }
    
-   public function getHardLocked()
+   public function getSoftLockReleased($fp_v_start_date, $fp_v_end_date)
    {
        
    }
    
-   public function getSoftLockReleased()
+   public function getHardLockReleased($fp_v_start_date, $fp_v_end_date)
    {
        
    }
    
-   public function getHardLockReleased()
+   private function getLockData(array $fp_arr_statuses, $fp_v_start_date, $fp_v_end_date)
    {
-       
-   }
+       $lv_startDate = $fp_v_start_date;
+       $lv_endDate   = $fp_v_end_date;
+       /**
+        * If dates are invalid, default start and end dates to today's date
+        */
+       if(cl_abs_QueryBuilder::isDateRangeValid($fp_v_start_date, $fp_v_end_date)=== false)
+       {
+           $lv_startDate = date(cl_abs_QueryBuilder::C_DATE_FORMAT);
+           $lv_endDate   = $lv_startDate;
+       }
+       $lv_startDate = cl_abs_QueryBuilder::convertToSQLDate($lv_startDate);
+       $lv_endDate   = cl_abs_QueryBuilder::convertToSQLDate($lv_endDate);
+        
+       $lv_statusClause    = cl_abs_QueryBuilder::getInQuery(self::C_FNAME_STATUS, $fp_arr_statuses);
+       $lv_end_date_clause = cl_abs_QueryBuilder::getBetweenFilterQuery
+                            (self::C_FNAME_LOCK_END_DATE,$lv_startDate,$lv_endDate );        
+       $lv_query = 'SELECT'.PHP_EOL
+                    .'*'   .PHP_EOL
+                   .'FROM' .PHP_EOL
+                   .self::C_TABLE_NAME.PHP_EOL
+                   .'WHERE'.PHP_EOL
+                   .    $lv_statusClause.PHP_EOL
+                   .    cl_abs_QueryBuilder::C_SQL_AND.PHP_EOL
+                   .    $lv_end_date_clause.PHP_EOL;
+       $lo_DB = new cl_DB(); 
+       $re_data = $lo_DB->getResultsFromQuery($lv_query);
+       return $re_data;
+   }    
+   
+   
 }
