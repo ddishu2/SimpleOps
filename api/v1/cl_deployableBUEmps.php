@@ -11,7 +11,8 @@
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
-require __DIR__ . DIRECTORY_SEPARATOR . 'cl_SOEmpSkillMatcher.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'cl_SOEmpSkillMatcher.php';
+require_once __DIR__. DIRECTORY_SEPARATOR . 'cl_vo_open_sos.php';
 require __DIR__ . DIRECTORY_SEPARATOR . 'cl_abs_deployableEmps.php';
 
 class cl_deployableBUEmps extends cl_abs_deployableEmp {

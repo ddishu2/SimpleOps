@@ -57,8 +57,8 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
         cl_RMGTool_Globals ::GC_ROUTE_OPEN_SO, 
         function () use ($app)
         {   
-            $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
-            $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+            $lv_so_from_date = $app->request->get('so_from_date');
+            $lv_so_to_date   = $app->request->get('so_to_date');
             $lo_open_sos = new cl_vo_open_sos($lv_so_from_date, $lv_so_to_date);
             $lt_open_sos = $lo_open_sos->get();
             
@@ -81,8 +81,8 @@ require __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
                     
                     $re_it_emps_for_sos = [];
                    
-                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
-                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+                    $lv_so_from_date = $app->request->get('so_from_date');
+                    $lv_so_to_date   = $app->request->get('so_to_date');
                      $lv_so_location   = $app->request->get(cl_vo_open_sos::C_LOCATION);
                      $lv_so_project_bu   = $app->request->get(cl_vo_open_sos::C_PROJECT_BU);
                       $lv_so_project_name   = $app->request->get(cl_vo_open_sos::C_PROJECT_NAME);
