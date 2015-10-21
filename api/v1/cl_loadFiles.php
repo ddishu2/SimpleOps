@@ -49,9 +49,13 @@ class cl_loadFiles
                                     . " OPTIONALLY ENCLOSED BY '\"' " 
                                     . "LINES TERMINATED BY '\\r\\n'"
                                     . "IGNORE 1 LINES ;";
-            echo $query_load_table ;
+//            echo $query_load_table ;
             $lv_result2 = cl_DB::updateResultIntoTable($query_load_table);
-            $re_success = $lv_result1 && $lv_result2;
+            
+            $query_delete_blanks  = "delete from m_ammendment where m_ammendment.id = 0";
+            $lv_result3 = cl_DB::updateResultIntoTable($query_delete_blanks);
+            echo $lv_result1.$lv_result2.$lv_result3;
+            $re_success = $lv_result1 && $lv_result2 && $lv_result3;
         }
         return $re_success;
     }
