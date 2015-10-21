@@ -47,7 +47,7 @@ class cl_loadFiles
                                     . "INTO TABLE $fp_v_table_name "
                                     . "FIELDS TERMINATED BY ','  "
                                     . " OPTIONALLY ENCLOSED BY '\"' " 
-                                    . "LINES TERMINATED BY ',,,\\r\\n'"
+                                    . "LINES TERMINATED BY '\\r\\n'"
                                     . "IGNORE 1 LINES ;";
             echo $query_load_table ;
             $lv_result2 = cl_DB::updateResultIntoTable($query_load_table);
