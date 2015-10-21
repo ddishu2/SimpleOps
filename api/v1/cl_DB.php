@@ -1,4 +1,13 @@
 <?php
+/**
+ * Summary:  Reusable Logic for interacting with the database.
+ *           
+ * 
+ * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
+ * Date: 16/09/2015.
+ * @uses cl_DB()->getResultsFromQuery to retrieve results. 
+ * 
+ */
 class cl_DB
 {
     const DB_EXCEPTION     = "Could not connect to database";
@@ -120,16 +129,15 @@ class cl_DB
    
      public function updateResultIntoTable($fp_v_query)
      {
-        self::setDBHandle();
-        self::clearCount();
+//        self::setDBHandle();
+//        self::clearCount();
 //      $re_results = [];
+        $re_success = false; 
         if (self::$dbhandle->query($fp_v_query) == true) {
-            return true;
-        } else {
-            return false;
+            $re_success = true;
         }
+        return $re_success;
     }
-
 
     public function postResultIntoTable($fp_v_query)
     {
@@ -146,4 +154,5 @@ class cl_DB
          return false;
       }
     }
+    
 }
