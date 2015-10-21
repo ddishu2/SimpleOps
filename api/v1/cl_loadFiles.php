@@ -19,7 +19,7 @@ class cl_loadFiles
 
     private static function copyAmendmentToLocal()
     {
-        $v_date = date('d_m_Y_H_i_s');
+        $v_date = date('Y_m_d_H_i_s');
         self::$v_amendment_local_file  = self::AMENDMENT_DEST_DIR.'amendment'.$v_date.'.csv';
         $v_remote_filename = self::AMENDMENT_SRC_DIR.self::AMENDMENT_SRC_FILENAME; 
         $v_copy_success_flag = copy($v_remote_filename, self::$v_amendment_local_file);
