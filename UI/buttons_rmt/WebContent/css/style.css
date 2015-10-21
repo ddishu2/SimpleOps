@@ -190,6 +190,12 @@ height: 35px !important;
 	background-color: #AAAAAA !important
 }
 
+#matrix_search_amend1
+{
+	margin-top: 35px !important;
+margin-left: 50px !important;
+	
+}
 .buttons_common_style1.selected, .buttons_common_style1:hover {
 	background: #303030 !important;
 	color: #E0E0E0 !important;
