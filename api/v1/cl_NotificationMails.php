@@ -15,7 +15,8 @@
 require __DIR__.DIRECTORY_SEPARATOR.'cl_get_so_details.php';
 class cl_NotificationMails 
     {
-    const lc_template_path = 'D:\xampp\htdocs\rmt\mail_templates\\',    
+//    const lc_template_path = 'D:\xampp\htdocs\rmt\mail_templates\\',    
+             const lc_template_path = 'C:\xampp\htdocs\rmt\mail_templates\\',    
 /**
 * lc_root   Fully qualified filepath in the format
 *           \\\\<IP address>\<directory>\[<directory>]\\
@@ -513,7 +514,9 @@ class cl_NotificationMails
                 $this->lv_content  = str_replace("GV_CSD", $this->lt_crd_details['curr_sdate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_CED", $this->lt_crd_details['curr_edate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_PEDP", $this->lt_crd_details['proj_edate_projected'], $this->lv_content);                
-                $this->lv_supervisor_name = $this->lt_crd_details['supervisor_lname'].', '.$this->lt_crd_details['supervisor_fname'];
+//                $this->lv_supervisor_name = $this->lt_crd_details['supervisor_lname'].', '.$this->lt_crd_details['supervisor_fname'];
+                $this->lv_supervisor_name = $this->lt_crd_details['supervisor'];
+                
                 $this->lv_content  = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
                 $this->lv_content  = str_replace("GV_NED", $this->lt_crd_details['new_edate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_NSID", $this->lt_crd_details['new_sup_corp_id'], $this->lv_content);
@@ -532,7 +535,8 @@ class cl_NotificationMails
                 $this->lv_content  = str_replace("GV_CED", $this->lt_cte_details['curr_edate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_PEDP", $this->lt_cte_details['proj_edate_projected'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_PEDP", $this->lt_cte_details['proj_edate_projected'], $this->lv_content);
-                $this->lv_supervisor_name = $this->lt_cte_details['supervisor_lname'].', '.$this->lt_cte_details['supervisor_fname'];
+               // $this->lv_supervisor_name = $this->lt_cte_details['supervisor_lname'].', '.$this->lt_cte_details['supervisor_fname'];
+                $this->lv_supervisor_name = $this->lt_cte_details['supervisor'];
                 $this->lv_content  = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
                 $this->lv_content  = str_replace("GV_NED", $this->lt_cte_details['new_edate'], $this->lv_content);
                 $this->lv_content  = str_replace("GV_NSID", $this->lt_cte_details['new_sup_corp_id'], $this->lv_content);
@@ -602,7 +606,9 @@ class cl_NotificationMails
                 self::get_recievers();                
                 //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
                 
-                $lv_mail = mail('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', 'Test: '.$this->lv_subject, $this->lv_message, $this->lv_headers);
+               // $lv_mail = mail('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', 'Test: '.$this->lv_subject, $this->lv_message, $this->lv_headers);
+                 $lv_mail = mail('tejas@localhost', 'Test: '.$this->lv_subject, $this->lv_message, $this->lv_headers);
+                
                 if($lv_mail)
                     {  
                     return true;                    
