@@ -35,15 +35,15 @@ require __DIR__ .
         'Slim' .
         DIRECTORY_SEPARATOR .
         'Slim.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_proposals.php';
 
-require __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_NotificationMails.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
-require __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_NotificationMails.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -474,6 +474,7 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
 //                $sql = "SELECT * FROM `m_ammendment` ";
 //               $re_ammendments = cl_DB::getResultsFromQuery($sql);
                    // $lo_ammendments = new cl_ammendments();        
+           
                     $re_ammendments = cl_ammendments::getAmmendments();
                     $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');           
