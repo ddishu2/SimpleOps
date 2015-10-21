@@ -13,12 +13,14 @@ class cl_ammendments {
     const C_STAT = 'status';
     //const C_AMMEND_TABLE = 'pass_data';
     const AMENDMENTS_TABNAME = 'm_ammendment';
+   
     const C_AMMEND_TABLE = 'ammend_table';
     private static $arr_amendments = [];
     private static $arr_amendments_decision_taken = [];
     
     public static function get_ammendments_decision_taken()
     {
+        
 //        $date = date('y-m-d');
 //        $sql = "SELECT id FROM `trans_ammendment` WHERE 'Updated On' = $date ";
           $sql = "SELECT `id` FROM `trans_ammendment` WHERE `Updated On` = CURRENT_DATE";
@@ -43,6 +45,7 @@ class cl_ammendments {
     public static function getAmmendments() {
         self::get_ammendments_decision_taken();
         $re_ammendments = [];
+        
         $sql = "SELECT * FROM `m_ammendment` ";
         $re_result = cl_DB::getResultsFromQuery($sql);
 //      print_r($re_ammendments);
@@ -246,7 +249,8 @@ class cl_ammendments {
 //        $lv_supervisor_lname = $fp_arr_result['supervisor_lname'];
 //        $lv_supervisor_fname = $fp_arr_result['supervisor_fname'];
          
-        $lv_supervisor = $fp_arr_result['supervisor_lname'].$fp_arr_result['supervisor_fname'];
+//        $lv_supervisor = $fp_arr_result['supervisor_lname'].$fp_arr_result['supervisor_fname'];
+        $lv_supervisor = $fp_arr_result['supervisor'];
         
         $lv_cust_name = $fp_arr_result['cust_name'];
         $lv_domain_id = $fp_arr_result['domain_id'];

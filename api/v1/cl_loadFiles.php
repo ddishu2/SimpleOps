@@ -12,7 +12,7 @@ class cl_loadFiles
     const AMENDMENT_SRC_DIR  = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\\';
     const AMENDMENT_SRC_FILENAME = 'RMT_Amendment.csv';
     const RESUME_SRC_DIR     = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\'; 
-    const AMENDMENT_DEST_DIR = 'D:\rmt\loadFiles\\';
+    const AMENDMENT_DEST_DIR = 'D:\\\\rmt\\\\loadFiles\\\\';
     const EX_FILE            = 'Could not copy file';
     
     private static $v_amendment_local_file = null;
@@ -45,8 +45,11 @@ class cl_loadFiles
             $lv_result1             = cl_DB::updateResultIntoTable($query_empty_table);
             $query_load_table       = "LOAD DATA INFILE '$fp_v_file_name' "
                                     . "INTO TABLE $fp_v_table_name "
-                                    . "FIELDS TERMINATED BY ',' "
+                                    . "FIELDS TERMINATED BY ','  "
+                                    . " OPTIONALLY ENCLOSED BY '\"' " 
+                                    . "LINES TERMINATED BY ',,,\\r\\n'"
                                     . "IGNORE 1 LINES ;";
+            echo $query_load_table ;
             $lv_result2 = cl_DB::updateResultIntoTable($query_load_table);
             $re_success = $lv_result1 && $lv_result2;
         }
