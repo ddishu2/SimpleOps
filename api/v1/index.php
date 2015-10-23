@@ -473,9 +473,13 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
         {
 //                $sql = "SELECT * FROM `m_ammendment` ";
 //               $re_ammendments = cl_DB::getResultsFromQuery($sql);
-                   // $lo_ammendments = new cl_ammendments();        
+                   // $lo_ammendments = new cl_ammendments();       
+                    $lv_cust_name = $app->request->get(cl_ammendments::C_CUST_NAME);
+                    $lv_proj_name = $app->request->get(cl_ammendments::C_PROJ_NAME);
+                    
+                    $lv_arr_competency = $app->request->get(cl_ammendments::C_COMPETENCY);
            
-                    $re_ammendments = cl_ammendments::getAmmendments();
+                    $re_ammendments = cl_ammendments::getAmmendments($lv_cust_name,$lv_proj_name,$lv_arr_competency);
                     $app->response->setStatus(200);
                     $app->response->headers->set('Content-Type', 'application/json');           
                     echo json_encode($re_ammendments, JSON_PRETTY_PRINT);
