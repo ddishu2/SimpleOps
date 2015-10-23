@@ -17,6 +17,7 @@ var pass_data;
 var check=true;
 var check1;
 var index;
+var amend_table1;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -536,7 +537,7 @@ var index;
 						
 						oDetails_amend_search.placeAt("amend_zero");
 						
-						var amend_table1 = new sap.ui.table.Table(
+						 amend_table1 = new sap.ui.table.Table(
 														{
 															id : 'for_amend_table1',
 															title : "RMT Amendment",
@@ -751,7 +752,7 @@ var index;
 															key : "Re"
 														}),  ]
 													
-													}).bindProperty("value","am_status"),
+													}).bindProperty("value","am_status").addStyleClass("for_amend_dropdown"),
 													sortProperty : "",
 													filterProperty : "",
 													width : "100px"
@@ -788,6 +789,8 @@ var index;
 						                                    	amend_empid += "&emp_id[]="+mod[i].am_id;
 																amend_approvedec += "&status[]="+mod[i].am_status;
 																amend_opscomment += "&comments[]="+mod[i].am_comments;
+																
+																
 										
 															}
 														}
@@ -799,17 +802,16 @@ var index;
 												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 												      		success : function(odata){
 												      			
-												      			 alert("Notification sent");
-												      			
-
-												      			$("#stat_amend1").remove();
-												      			$("for_amend_table1-table").addClass("change_color");
+												      			 alert("Notification Sent");     			
 												      		}
 														
 														}); 
 														
-															
+														 /*   $(".for_amend_dropdown").remove();
 													
+											      			$("#for_amend_table1").addClass("change_color");	
+													         */
+													         sap.ui.getCore().byId("for_amend_table1").getModel().refresh(true);
 													//	console.log(check);
 														
 														
@@ -827,7 +829,8 @@ var index;
 													{
 														$("#amend_first").addClass("hide_div");
 														$("#amend_zero").removeClass("hide_div");
-														
+														$("#for_amend_table1").load();
+														$("#amend_first").load();
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
