@@ -437,22 +437,30 @@ var amend_table1;
 								var pass_cust_name = $("#cust_name_amend").val();
 								var pass_pro_name = $("#pro_name_amend").val();
 								var pass_cap = $("#summary_amend").val();
+								var temp1 = new Array();			
+								temp1 = pass_cap.split(",");
 								console.log("/rmt/api/v1/index.php/amendments?competency[]="+pass_cap+
 										"&proj_name="
 										+pass_pro_name+
 										"&cust_name="
 										+pass_cust_name
 								);
+								if(temp1.length==1)	
+								{
        	$
 		.ajax({
 			method : "GET",
-			url : "/rmt/api/v1/index.php/amendments?competency[]="+pass_cap+
+			url : 
+				
+			
+				
+				
+				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
 			"&proj_name="
 			+pass_pro_name+
 			"&cust_name="
 			+pass_cust_name,
-			
-			//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
+//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
 				var table_row1;
@@ -518,6 +526,349 @@ var amend_table1;
 				
 	}
 });
+								}
+								
+								
+								if(temp1.length==2)	
+								{
+       	$
+		.ajax({
+			method : "GET",
+			url : 
+				
+			
+				
+				
+				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
+						"&competency[]="+temp1[1]+
+			"&proj_name="
+			+pass_pro_name+
+			"&cust_name="
+			+pass_cust_name,
+//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
+			success : function(odata) {
+				console.log(odata);
+				var table_row1;
+				var res = odata;
+				var completeData1 = [];
+
+				jQuery
+						.each(
+								res,
+								function(
+										i,
+										val) {
+
+									
+										var tmp1 = {
+											am_id : val.id,
+											am_name:val.name,
+											am_lev:val.level,
+											am_idp:val.IDP,
+											am_location:val.loc,
+											am_bilstat:val.bill_stat,
+											am_compet:val.competency,
+											am_currproname:val.curr_proj_name,
+											am_startdate:val.curr_sdate,
+											am_enddate:val.curr_edate,
+											am_projected:val.proj_edate_projected,
+											am_sup:val.supervisor,
+											am_customer:val.cust_name,
+											am_dom:val.domain_id,
+											am_newdate:val.new_edate,
+											am_newcorp:val.new_sup_corp_id,
+											am_newsupid:val.new_sup_id,
+											am_supname:val.new_sup_name,
+											am_reason :val.reason,
+											am_request :val.req_by,
+											am_status :"Approve",
+											am_comments:"",
+											am_extn : val.act,
+											am_notice : val.Date_chng_noti ,
+										};
+									
+										completeData1
+												.push(tmp1);
+										 Model_amend = new sap.ui.model.json.JSONModel();
+										Model_amend
+												.setData({
+													modelData : completeData1
+												});
+										amend_table1
+												.setModel(Model_amend);
+										amend_table1
+												.bindRows("/modelData");
+										
+										
+										pass_data = Model_amend.getData().modelData;
+
+
+									}
+
+								);
+
+		
+				
+	}
+});
+								}
+								
+								
+								if(temp1.length==3)	
+								{
+       	$
+		.ajax({
+			method : "GET",
+			url : 
+				
+			
+				
+				
+				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
+						"&competency[]="+temp1[1]+"&competency[]="+temp1[2]
+		+
+			"&proj_name="
+			+pass_pro_name+
+			"&cust_name="
+			+pass_cust_name,
+//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
+			success : function(odata) {
+				console.log(odata);
+				var table_row1;
+				var res = odata;
+				var completeData1 = [];
+
+				jQuery
+						.each(
+								res,
+								function(
+										i,
+										val) {
+
+									
+										var tmp1 = {
+											am_id : val.id,
+											am_name:val.name,
+											am_lev:val.level,
+											am_idp:val.IDP,
+											am_location:val.loc,
+											am_bilstat:val.bill_stat,
+											am_compet:val.competency,
+											am_currproname:val.curr_proj_name,
+											am_startdate:val.curr_sdate,
+											am_enddate:val.curr_edate,
+											am_projected:val.proj_edate_projected,
+											am_sup:val.supervisor,
+											am_customer:val.cust_name,
+											am_dom:val.domain_id,
+											am_newdate:val.new_edate,
+											am_newcorp:val.new_sup_corp_id,
+											am_newsupid:val.new_sup_id,
+											am_supname:val.new_sup_name,
+											am_reason :val.reason,
+											am_request :val.req_by,
+											am_status :"Approve",
+											am_comments:"",
+											am_extn : val.act,
+											am_notice : val.Date_chng_noti ,
+										};
+									
+										completeData1
+												.push(tmp1);
+										 Model_amend = new sap.ui.model.json.JSONModel();
+										Model_amend
+												.setData({
+													modelData : completeData1
+												});
+										amend_table1
+												.setModel(Model_amend);
+										amend_table1
+												.bindRows("/modelData");
+										
+										
+										pass_data = Model_amend.getData().modelData;
+
+
+									}
+
+								);
+
+		
+				
+	}
+});
+								}
+								
+								if(temp1.length==4)	
+								{
+       	$
+		.ajax({
+			method : "GET",
+			url : 
+				
+			
+				
+				
+				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
+						"&competency[]="+temp1[1]+"&competency[]="+temp1[2]+"&competency[]="+temp1[3]
+		+
+			"&proj_name="
+			+pass_pro_name+
+			"&cust_name="
+			+pass_cust_name,
+//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
+			success : function(odata) {
+				console.log(odata);
+				var table_row1;
+				var res = odata;
+				var completeData1 = [];
+
+				jQuery
+						.each(
+								res,
+								function(
+										i,
+										val) {
+
+									
+										var tmp1 = {
+											am_id : val.id,
+											am_name:val.name,
+											am_lev:val.level,
+											am_idp:val.IDP,
+											am_location:val.loc,
+											am_bilstat:val.bill_stat,
+											am_compet:val.competency,
+											am_currproname:val.curr_proj_name,
+											am_startdate:val.curr_sdate,
+											am_enddate:val.curr_edate,
+											am_projected:val.proj_edate_projected,
+											am_sup:val.supervisor,
+											am_customer:val.cust_name,
+											am_dom:val.domain_id,
+											am_newdate:val.new_edate,
+											am_newcorp:val.new_sup_corp_id,
+											am_newsupid:val.new_sup_id,
+											am_supname:val.new_sup_name,
+											am_reason :val.reason,
+											am_request :val.req_by,
+											am_status :"Approve",
+											am_comments:"",
+											am_extn : val.act,
+											am_notice : val.Date_chng_noti ,
+										};
+									
+										completeData1
+												.push(tmp1);
+										 Model_amend = new sap.ui.model.json.JSONModel();
+										Model_amend
+												.setData({
+													modelData : completeData1
+												});
+										amend_table1
+												.setModel(Model_amend);
+										amend_table1
+												.bindRows("/modelData");
+										
+										
+										pass_data = Model_amend.getData().modelData;
+
+
+									}
+
+								);
+
+		
+				
+	}
+});
+								}	
+								
+								if(temp1.length==4)	
+								{
+       	$
+		.ajax({
+			method : "GET",
+			url : 
+				
+			
+				
+				
+				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
+						"&competency[]="+temp1[1]+"&competency[]="+temp1[2]+"&competency[]="+temp1[3]
+		+"&competency[]="+temp1[4]+
+			"&proj_name="
+			+pass_pro_name+
+			"&cust_name="
+			+pass_cust_name,
+//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
+			success : function(odata) {
+				console.log(odata);
+				var table_row1;
+				var res = odata;
+				var completeData1 = [];
+
+				jQuery
+						.each(
+								res,
+								function(
+										i,
+										val) {
+
+									
+										var tmp1 = {
+											am_id : val.id,
+											am_name:val.name,
+											am_lev:val.level,
+											am_idp:val.IDP,
+											am_location:val.loc,
+											am_bilstat:val.bill_stat,
+											am_compet:val.competency,
+											am_currproname:val.curr_proj_name,
+											am_startdate:val.curr_sdate,
+											am_enddate:val.curr_edate,
+											am_projected:val.proj_edate_projected,
+											am_sup:val.supervisor,
+											am_customer:val.cust_name,
+											am_dom:val.domain_id,
+											am_newdate:val.new_edate,
+											am_newcorp:val.new_sup_corp_id,
+											am_newsupid:val.new_sup_id,
+											am_supname:val.new_sup_name,
+											am_reason :val.reason,
+											am_request :val.req_by,
+											am_status :"Approve",
+											am_comments:"",
+											am_extn : val.act,
+											am_notice : val.Date_chng_noti ,
+										};
+									
+										completeData1
+												.push(tmp1);
+										 Model_amend = new sap.ui.model.json.JSONModel();
+										Model_amend
+												.setData({
+													modelData : completeData1
+												});
+										amend_table1
+												.setModel(Model_amend);
+										amend_table1
+												.bindRows("/modelData");
+										
+										
+										pass_data = Model_amend.getData().modelData;
+
+
+									}
+
+								);
+
+		
+				
+	}
+});
+								}	
+								
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
@@ -807,16 +1158,11 @@ var amend_table1;
 														
 														}); 
 														
-														   $(".for_amend_dropdown").remove();
+														   $(".for_amend_dropdown-input").remove();
 													
-											      			$("#for_amend_table1").addClass("change_color");	
+											      			$("#for_amend_table1-table").addClass("change_color");	
 													         
-													         sap.ui.getCore().byId("for_amend_table1").getModel().refresh(true);
-													//	console.log(check);
-														
-														
-														
-													//http://localhost/rmt/api/v1/index.php/approve_amendments/ammend_table=$variable	
+													      	
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
@@ -829,8 +1175,7 @@ var amend_table1;
 													{
 														$("#amend_first").addClass("hide_div");
 														$("#amend_zero").removeClass("hide_div");
-														$("#for_amend_table1").load();
-														$("#amend_first").load();
+														$(" #amend_first ").load();
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
@@ -1224,14 +1569,9 @@ var amend_table1;
 										console.log(p_loc);
 										var temp = new Array();			
 										temp = p_loc.split(",");
-										var animalString;
-										for (var i = 0; i < temp. length; i++) {
-											   animalString += temp[i] + " ";
-											}
-											console.log(animalString);
-											
-											
+										
 									
+				
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
@@ -1239,6 +1579,9 @@ var amend_table1;
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
 										
+										var lincv= "";
+											
+										  
 										 console
 												.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="
 														+ from
