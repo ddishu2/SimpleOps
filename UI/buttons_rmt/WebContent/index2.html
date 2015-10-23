@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv='X-UA-Compatible' content='IE=edge' />
 <title>RMT Tool</title>
-
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script id='sap-ui-bootstrap' src='resources/sap-ui-core.js'
 	data-sap-ui-theme='sap_bluecrystal'
 	data-sap-ui-libs='sap.ui.commons,sap.ui.ux3,sap.ui.table'
@@ -21,14 +21,14 @@ var index;
 			.getCore()
 			.attachInit(
 					function() {
-						var image_mail=new sap.ui.commons.Image({
-							id : "im_suit",
-						//	width : "",
-							src : "images/fulfill.JPG",	
-							tooltip : "Suitable Match Done"
-
+						
+						
+						var welcomme_text=new sap.ui.commons.TextView({id: 'wel_text' ,
+							text: "AppsOne SAP RMT Tool"
+							
 						});
 						
+						welcomme_text.placeAt("first1a");
 					
 						var oWelcome_Page1 = new sap.ui.commons.layout.MatrixLayout(
 								{
@@ -38,7 +38,8 @@ var index;
 									columns : 1,
 									widths : [ '400px' ]
 								});
-
+						
+						
 						var for_login = new sap.ui.commons.layout.MatrixLayout(
 								{
 									id : 'for_log_layout',
@@ -47,7 +48,10 @@ var index;
 									columns : 2,
 									widths : [ '200px', '300px' ]
 								});
+						
+						
 
+						
 						var cg_logo1 = new sap.ui.commons.Image({
 							id : "rmtLogo",
 							width : "300px",
@@ -181,7 +185,7 @@ var index;
 							press : function back_to_login() {
 								
 								location.reload();
-								$(" #amend_first ").load()
+								
 								 	 var nameFirstField1 = sap.ui.getCore().byId(
 									"TF-Name");
 							var namePassField1 = sap.ui.getCore().byId(
@@ -210,9 +214,9 @@ var index;
 									id : 'fhb',
 									layoutFixed : true,
 									width : '900px',
-									columns : 5,
+									columns : 6,
 									widths : [ '180px', '180px', '180px',
-											'180px', '180px', ]
+											'180px', '180px','180px' ]
 								});
 						var demand_fulfill = new sap.ui.commons.MenuButton({
 							id : 'df',
@@ -324,9 +328,9 @@ var index;
 						 var oDetails_amend_search = new sap.ui.commons.layout.MatrixLayout({
 							id : 'matrix_search_amend1',
 							layoutFixed : true,
-							width : '400px',
-							columns : 2,
-							widths : [ '200px', '200px' 
+							width : '850px',
+							columns : 4,
+							widths : [ '200px', '250px','200px' , '200px' 
 
 							           ]
 						});	
@@ -336,7 +340,7 @@ var index;
 						}).addStyleClass("for_text_style1");
 
 						var custnameText_amend = new sap.ui.commons.TextField({
-							//id: 'cust_name1',
+							id: 'cust_name_amend',
 							//tooltip : 'SO Date',
 							editable : true,
 							width : '200px'
@@ -350,29 +354,72 @@ var index;
 						}).addStyleClass("for_text_style1");
 
 						var pronameText_amend = new sap.ui.commons.TextField({
-							//id: 'cust_name1',
-							//tooltip : 'SO Date',
+							id : 'pro_name_amend',
 							editable : true,
 							width : '200px'
 						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						
-						oDetails_amend_search.createRow(pronameLabel_amend,pronameText_amend)
+						oDetails_amend_search.createRow(pronameLabel_amend,pronameText_amend);
 						
-						var proidLabel_amend = new sap.ui.commons.Label({
-							text : 'Project ID',
-							
+						var capLabel_amend = new sap.ui.commons.Label({
+							text : 'Capability'
 						}).addStyleClass("for_text_style1");
 
-						var proidText_amend = new sap.ui.commons.TextField({
-							//id: 'cust_name1',
-							//tooltip : 'SO Date',
-							maxLength : 8,
-							editable : true,
-							width : '200px'
-						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						var oSimpleListBox_amend = new sap.ui.commons.ListBox({
+							
+							width : "200px",
+							items : [ new sap.ui.core.ListItem({
+								text : 'DCM'
+							}), new sap.ui.core.ListItem({
+								text : 'Development'
+							}), new sap.ui.core.ListItem({
+								text : 'Finance'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'HCM'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Misc'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'ISU'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Netweaver'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'SCM'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Retail & AFS'
+							}),
+							
+							],
+							select : function(e) {
+								var a2 = [ "" ];
+								jQuery.each(oSimpleListBox_amend.getSelectedItems(),
+										function(idx, item) {
+											a2.push(item.getText(), ",");
+										});
+								oTextSummary_amend.setValue(a2.join(""));
+							}
+						});
+						var oTextSummary_amend = new sap.ui.commons.TextField({id: 'summary_amend'});
+						var oMultiSelectionCheckBox_amend = new sap.ui.commons.CheckBox(
+								
+								{
+									id : 'check_amend',
+									text : "MultiSelection",
+									checked : false,
+									change : function(e) {
+										oSimpleListBox_amend.setAllowMultiSelect(e
+												.getSource().getChecked());
+									}
+								});
+
 						
-						
-						oDetails_amend_search.createRow(proidLabel_amend,proidText_amend)
+						oDetails_amend_search.createRow(capLabel_amend, oSimpleListBox_amend,
+								oTextSummary_amend, oMultiSelectionCheckBox_amend); 
 						
 						var get_amend = new sap.ui.commons.Button({
 							
@@ -380,17 +427,30 @@ var index;
 							tooltip : "Get Amendments Results",
 							press:function()
 							{
+								
+								
 								$("#amend_zero").addClass("hide_div");
 								$("#amend_first").removeClass("hide_div");
 								
-								
-								
-								console.log("/rmt/api/v1/index.php/amendments"
+								var pass_cust_name = $("#cust_name_amend").val();
+								var pass_pro_name = $("#pro_name_amend").val();
+								var pass_cap = $("#summary_amend").val();
+								console.log("/rmt/api/v1/index.php/amendments?competency[]="+pass_cap+
+										"&proj_name="
+										+pass_pro_name+
+										"&cust_name="
+										+pass_cust_name
 								);
        	$
 		.ajax({
 			method : "GET",
-			url : "/rmt/api/v1/index.php/amendments",
+			url : "/rmt/api/v1/index.php/amendments?competency[]="+pass_cap+
+			"&proj_name="
+			+pass_pro_name+
+			"&cust_name="
+			+pass_cust_name,
+			
+			//http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
 				var table_row1;
@@ -713,6 +773,7 @@ var index;
 
 												amend_table1.placeAt("amend_first");
 												var notify = new sap.ui.commons.Button({
+													id: 'amend_notify',
 													text : "Submit & Send Notification",
 													tooltip : "notify",
 													press: function amend_send(){
@@ -723,9 +784,7 @@ var index;
 														var mod = Model_amend.getData().modelData;
 														for(i=0;i<mod.length;i++){
 															if( mod[i].am_status == "Approve" || mod[i].am_status == "Reject"){
-																
-																
-																amend_empid += "&emp_id[]="+mod[i].am_id;
+						                                    	amend_empid += "&emp_id[]="+mod[i].am_id;
 																amend_approvedec += "&status[]="+mod[i].am_status;
 																amend_opscomment += "&comments[]="+mod[i].am_comments;
 										
@@ -740,9 +799,8 @@ var index;
 												      		success : function(odata){
 												      			
 												      			 alert("Notification sent");
-												      			/* $("#for_amend_table1-table").addClass("change_color")
-												      			$("#stat_amend1").remove();
-												      			 */
+												      			$(" #amend_first ").load();
+												      			 
 												      		}
 														
 														}); 
@@ -786,12 +844,23 @@ var index;
 							tooltip : "External Hiring",
 
 						});
+						var soft_lock_exp = new sap.ui.commons.Button({
+							id : 'sle',
+							text : "Soft Lock Expiry",
+							tooltip : "Soft Lock Expiry",
+                            press: function()
+                            {
+                            	
+                            	$("#second").removeClass("hide_div");
+								$("#soft_expiry").addClass("hide_div");
+                            }
+						});
 						cg_logo.placeAt("heading");
 						logout.placeAt("heading");
 						admin_act.placeAt("heading");
 						
 						for_head_button.createRow(demand_fulfill, report_gen,
-								amendments, Approvals, External_Hiring)
+								amendments, Approvals, External_Hiring,soft_lock_exp)
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
@@ -812,11 +881,11 @@ var index;
 						var oDetails = new sap.ui.commons.layout.MatrixLayout({
 							id : 'matrix4',
 							layoutFixed : true,
-							width : '750px',
+							width : '800px',
 							columns : 4,
 							widths : [ '150px', '250px', 
 
-							           '150px', '100px' ]
+							           '150px', '150px' ]
 						});
 
 						var oCell = new sap.ui.commons.layout.MatrixLayoutCell(
@@ -964,7 +1033,7 @@ var index;
 						var projectIdText = new sap.ui.commons.TextField({
 							id : 'pro_id_form',
 							editable : true,
-							maxLength : 8,
+							maxLength : 9,
 
 							
 							width : '200px'
@@ -1006,14 +1075,12 @@ var index;
 						so_type_select.setEditable(true);
 						so_type_select.setWidth("200px");
 						var oItem = new sap.ui.core.ListItem("so_type0");
-						oItem.setText("");
+						oItem.setText("Project");
 						so_type_select.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("so_type1");
 						oItem.setText("Persuit");
 						so_type_select.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("so_type2");
-						oItem.setText("Project");
-						so_type_select.addItem(oItem);
+						
 						
 						
 						var locationLabel = new sap.ui.commons.Label({
@@ -1120,10 +1187,7 @@ var index;
 						capabilityText.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("Capability7");
 						oItem.setText("ISU");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability8");
-						oItem.setText("Finance");
-						capabilityText.addItem(oItem);
+						capabilityText.addItem(oItem);	
 						oItem = new sap.ui.core.ListItem("Capability9");
 						oItem.setText("Netweaver");
 						capabilityText.addItem(oItem);
@@ -1153,11 +1217,14 @@ var index;
 										console.log(p_loc);
 										var temp = new Array();			
 										temp = p_loc.split(",");
-										
-										/* console.log(pass1) */
-										console.log(temp);
-										console.log(temp.length)
-										console.log(temp[0])
+										var animalString;
+										for (var i = 0; i < temp. length; i++) {
+											   animalString += temp[i] + " ";
+											}
+											console.log(animalString);
+											
+											
+									
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
@@ -1367,9 +1434,10 @@ var index;
 									id : 'suitable_match1',
 									title : "Transaction List",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :100,
-									 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
-									 navigationMode: sap.ui.table.NavigationMode.Scrollbar,
+									visibleRowCount :20,
+									firstVisibleRow: 3,
+								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
 
 								}).addStyleClass("style_for_table");
 
@@ -1488,7 +1556,7 @@ var index;
 							width : "100px"
 						}));
 						
-						suitable_match.addColumn(new sap.ui.table.Column({
+						/* suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Status" ,
 								tooltip :"Status"
@@ -1500,7 +1568,7 @@ var index;
 							sortProperty : "",
 							filterProperty : "",
 							width : "100px"
-						}));
+						})); */
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Projected End Date" ,
@@ -1571,6 +1639,35 @@ var index;
 							filterProperty : "reason",
 							width : "100px"
 						}));
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Multiproposal" ,
+								tooltip : "Multiproposal"
+							}),
+							template : new sap.ui.commons.CheckBox({
+								//id:'p_s_id'
+							}),
+									/* .bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",*/
+							width : "100px", 
+						
+							
+						}));
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Already Proposed" ,
+								tooltip : "Already Proposed"
+							}),
+							template : new sap.ui.commons.Link({
+								text: "View",
+								Tooltip:"View"
+								
+							}),
+							width : "100px",
+							
+							
+						}));
 						
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -1583,10 +1680,11 @@ var index;
 									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
-							width : "10px",
+							width : "90px",
 							/* visible:false, */
 							
 						}));
+						
 
 						suitable_match.sort(suitable_match.getColumns()[0]);
 
@@ -1617,10 +1715,10 @@ var index;
 										 
 										 
 								
-										  
-											 /* parent.find(".status_of_emp").html("Mail Sent");
-											parent.find(".status_of_emp").addClass("change_color");  
-											$(this).val("Done");
+										// $('#suitable_match1').draggable(); 
+										 parent.find(".status_of_emp").html("Mail Sent");
+											parent.addClass("change_color");  
+										/*	$(this).val("Done");
 											$(this).remove();
 										  */
 									/* 		parent.find(".approveDropdown input").val("Done");
@@ -2647,34 +2745,41 @@ var repo_to1 = new sap.ui.commons.Label({
 							widths : [ '400px' ]
 						});
 						var report_RB1 = new sap.ui.commons.RadioButton({
-							text : 'Soft Locks',
-							tooltip : '',
+							text : 'Current Soft Locks',
+							tooltip : 'Current Soft Locks',
 							groupName : 'Group1',	
 							}).addStyleClass("for_report_gen");
 
 						var report_RB2 = new sap.ui.commons.RadioButton({
-							text : 'Released/Expired Soft Locks',
-							tooltip : '',
+							text : 'Expired Soft Locks',
+							tooltip : 'Expired Soft Locks',
 							groupName : 'Group1',
 
 							}).addStyleClass("for_report_gen");
 						var report_RB3 = new sap.ui.commons.RadioButton({
 							text : 'Hard Locks',
-							tooltip : '',
+							tooltip : 'Hard Locks',
 							groupName : 'Group1',
 							
 							}).addStyleClass("for_report_gen");
 
 						var report_RB4 = new sap.ui.commons.RadioButton({
 							text : 'Expired Hard Locks',
-							tooltip : '',
+							tooltip : 'Expired Hard Locks',
 							groupName : 'Group1',
 
 							}).addStyleClass("for_report_gen");
 						
 						var report_RB5 = new sap.ui.commons.RadioButton({
+							text : 'Amendments',
+							tooltip : 'Amendments',
+							groupName : 'Group1',
+
+							}).addStyleClass("for_report_gen");
+						
+						var report_RB6 = new sap.ui.commons.RadioButton({
 							text : 'OPEN SO Report ',
-							tooltip : '',
+							tooltip : 'OPEN SO Report',
 							select: function()
 							{
 								$("#report_first").addClass("hide_div");
@@ -2985,6 +3090,8 @@ var repo_to1 = new sap.ui.commons.Label({
 		<div id='report_first' class="hide_div"></div>
 		<div id='report_first_open' class="hide_div"></div>
 		
+		
+		<div id='soft_expiry1' class="hide_div"></div>
 	
 	</div>
 </body>
