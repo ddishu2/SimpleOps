@@ -329,6 +329,7 @@ var index;
 							id : 'matrix_search_amend1',
 							layoutFixed : true,
 							width : '850px',
+							rowHeight : '10px',
 							columns : 4,
 							widths : [ '200px', '250px','200px' , '200px' 
 
@@ -488,8 +489,8 @@ var index;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
-											am_extn : "",
-											am_notice : "" ,
+											am_extn : val.act,
+											am_notice : val.Date_chng_noti ,
 										};
 									
 										completeData1
@@ -799,8 +800,10 @@ var index;
 												      		success : function(odata){
 												      			
 												      			 alert("Notification sent");
-												      			$(" #amend_first ").load();
-												      			 
+												      			
+
+												      			$("#stat_amend1").remove();
+												      			$("for_amend_table1-table").addClass("change_color");
 												      		}
 														
 														}); 
@@ -824,6 +827,7 @@ var index;
 													{
 														$("#amend_first").addClass("hide_div");
 														$("#amend_zero").removeClass("hide_div");
+														
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
@@ -1355,7 +1359,7 @@ var index;
 									{
 										$("#first").removeClass("hide_div");
 										$("#second").addClass("hide_div");
-										
+										$("#for_amend_table1").load();
 									}
 								}).addStyleClass("for_normal_buttons_style1");
 						
