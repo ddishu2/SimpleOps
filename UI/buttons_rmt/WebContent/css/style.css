@@ -1,3 +1,19 @@
+#__label2
+{
+	
+	margin-top: -65px !important;
+}
+#check_amend
+{
+	font-size : 17px !important
+}
+#summary_amend
+{	
+	width: 160px !important;
+height: 30px !important;
+font-size: 19px  !important;
+}
+
 .hideMe { 
    visibility: hidden; 
    } 
@@ -303,7 +319,7 @@ margin-left: 50px !important;
 	padding-bottom: 15px !important;
 }
 
-#df, #rg, #mt, #ad, #ap, #eh {
+#df, #rg, #mt, #ad, #ap, #eh,#sle {
 	width: 100%;
 	margin-top: 60px !important;
 	margin-right: 8px;
@@ -346,7 +362,7 @@ margin-left: 50px !important;
 }
 
 #df.selected, #df:hover, #rg.selected, #rg:hover, #mt.selected, #mt:hover,
-	#ad.selected, #ad:hover, #aa11.selected, #aa11:hover, #lo.selected, #lo:hover
+	#ad.selected, #ad:hover, #aa11.selected, #aa11:hover, #lo.selected, #lo:hover,#sle.selected, #sle:hover
 	{
 	background: #444;
 	color: #fff;
@@ -455,8 +471,8 @@ margin-left: 50px !important;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 	/* Size and position */
 	width: 100%;
-	/* Styles */
-	border: none; /* Remove the default border */
+	
+	border: none; 
 	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1), inset 0 3px 2px
 		rgba(0, 0, 0, 0.1);
 	border-radius: 3px;
