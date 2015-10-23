@@ -42,7 +42,8 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
     protected function setDeployableEmps() {
 
         $lt_data = [];
-        $lv_query = "SELECT * FROM v_deployable_emps ORDER BY hire_date ASC";
+       // $lv_query = "SELECT * FROM v_deployable_emps ORDER BY hire_date ASC";
+        $lv_query = "SELECT * FROM v_deployable_emps1 ORDER BY hire_date ASC";
         $lt_data = cl_DB::getResultsFromQuery($lv_query);
 //        $this->deployable_emp_count = cl_DB::getCountAndReset();
 //        echo $this->deployable_emp_count;
@@ -64,7 +65,8 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
             $lv_emp_id = $lwa_deployable_emp['emp_id'];
 
 
-            $lv_emp_prime_skill = strtolower($lwa_deployable_emp['skill1_l4']);
+         //   $lv_emp_prime_skill = strtolower($lwa_deployable_emp['skill1_l4']);
+             $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
             $lv_emp_level = strtolower($lwa_deployable_emp['level']);
             $lv_emp_loc = strtolower($lwa_deployable_emp['loc']);
 //            echo $fp_v_so_id.','
@@ -75,8 +77,8 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
 //            .$lwa_deployable_emp['skill1_l4'].','
 //            .$lwa_deployable_emp['level'].','
 //            .$lwa_deployable_emp['org'].PHP_EOL;
-           // if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
-           // )
+//            if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+//            )
             if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
             )
                             {

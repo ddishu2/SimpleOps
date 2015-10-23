@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+require_once 'cl_abs_QueryBuilder.php';
 class cl_ammendments {
 
     const C_COMMENTS = 'comments';
@@ -13,8 +13,14 @@ class cl_ammendments {
     const C_STAT = 'status';
     //const C_AMMEND_TABLE = 'pass_data';
     const AMENDMENTS_TABNAME = 'm_ammendment';
+    
+    
+    
+    const C_COMPETENCY = 'competency';
+    const C_CUST_NAME = 'cust_name';
+    const C_PROJ_NAME = 'proj_name';
    
-    const C_AMMEND_TABLE = 'ammend_table';
+//    const C_AMMEND_TABLE = 'ammend_table';
     private static $arr_amendments = [];
     private static $arr_amendments_decision_taken = [];
     
@@ -41,12 +47,100 @@ class cl_ammendments {
        }
        return $lv_result;
    }
-
-    public static function getAmmendments() {
+ 
+   private static function isfilterset($fp_filtervalue)
+   {
+       $filter_set = false;
+       if(!($fp_filtervalue == ''|| $fp_filtervalue == null)){
+            $filter_set = true;
+       }
+       return $filter_set;
+   }
+   private static function getQuery($fp_cust_name,$fp_proj_name,$fp_arr_competency)
+   {
+        $sql  = "SELECT * FROM `v_amendment`";
+         
+         
+         
+         
+         $filter_cust_name  = self::isfilterset($fp_cust_name);
+         $filter_curr_proj_name = self::isfilterset($fp_proj_name);
+         $filter_competency = self::isfilterset($fp_arr_competency); 
+         
+//         echo $filter_competency;
+//         print_r($fp_arr_competency);
+         
+         
+         if($filter_cust_name){
+             $sql = $sql."where  v_amendment.cust_name = '$fp_cust_name'";
+             
+             //$filter_cust_name = true;
+         }
+         
+         
+         
+         
+         if($filter_curr_proj_name){
+              if($filter_cust_name){
+                $sql = $sql."and v_amendment.curr_proj_name = '$fp_proj_name'";  
+              }
+              else
+              {
+             $sql = $sql."where  v_amendment.curr_proj_name = '$fp_proj_name' ";
+              }
+            // $filter_curr_proj_name = true;
+         }
+         
+         
+         
+         
+         if($filter_competency)
+         {
+             
+             
+             
+//             $arr_competency_count = count($fp_arr_competency);
+//             $arr_values = "(";
+//             for($i=0 ; $i<$arr_competency_count ; $i++)
+//             {
+//                 
+//                 $value = $fp_arr_competency[$i];
+//                 $arr_values = $arr_values.'$value' .",";
+//             }
+//            rtrim($arr_values, ",");
+//            $arr_values = $arr_values.")";
+//            
+            
+            
+            
+            $in_query = cl_abs_querybuilder::getInquery('competency',$fp_arr_competency);
+              if( !($in_query== '' || $in_query== null))
+              {
+             if($filter_cust_name || $filter_curr_proj_name)
+             {
+                 $sql = $sql."and v_amendment.".$in_query;
+             }
+             else 
+             {
+                 $sql = $sql."where v_amendment. ".$in_query;
+             }
+         }
+         }
+         
+         return $sql;
+   }
+   
+    public static function getAmmendments($fp_cust_name,$fp_proj_name,$fp_arr_competency) {
         self::get_ammendments_decision_taken();
         $re_ammendments = [];
         
-        $sql = "SELECT * FROM `m_ammendment` ";
+//        $sql = "SELECT * FROM `m_ammendment` ";
+        
+        $sql = self::getQuery($fp_cust_name,$fp_proj_name,$fp_arr_competency);
+        
+//         echo $sql;
+         
+         
         $re_result = cl_DB::getResultsFromQuery($sql);
 //      print_r($re_ammendments);
 
@@ -54,7 +148,8 @@ class cl_ammendments {
         foreach ($re_result as $key => $value) {
 
 
-            if (((!$value['new_edate'] == '') || (!$value['new_sup_id'] == 0)) && (!self::isProcessed($value['id']))) {
+//            if (((!$value['new_edate'] == '') || (!$value['new_sup_id'] == 0)) && (!self::isProcessed($value['id']))) {
+                if (!self::isProcessed($value['id'])){
                 $re_ammendments[] = $value;
             }
         }
@@ -63,7 +158,9 @@ class cl_ammendments {
 
         return $re_ammendments;
     }
-
+     
+    
+    
 //    public function ApproveAmmendments($fp_Arr_result) {
 //
 //        $lv_Approved_count = 0;
