@@ -14,8 +14,12 @@
  */
  abstract class cl_abs_QueryBuilder {
     const C_SQL_INIT_DATE           = '0000-00-00';
+    const C_SQL_MAX                 = 'MAX';
     const C_SQL_PARENTHESES_OPEN    = ' ( ';
     const C_SQL_PARENTHESES_CLOSE    = ' ) ';
+    const C_SQL_SELECT           = 'SELECT'.PHP_EOL;
+    const C_SQL_ALL              = '*'.PHP_EOL;
+    const C_SQL_FROM             = 'FROM'.PHP_EOL;
     const C_SQL_WILDCARD_ANY     = '%';
     const C_SQL_IN           = ' IN ';
     const C_SQL_CAST         = ' CAST ( ';
@@ -28,8 +32,12 @@
     const C_SQL_ORDER_BY     = ' ORDER BY ';
     const C_SQL_ORDER_BY_ASC = ' ASC ';
     const C_SQL_LOWER        = 'LOWER( ';
-    const C_SQL_WHERE        = 'WHERE';
+    const C_SQL_WHERE        = 'WHERE'.PHP_EOL;
     const C_DATE_DELIMITER   = '-';
+    const C_COMMA_QUOTE      = "','";
+    const C_COMMA            = ',';
+    const C_BLANK            = '';
+    const C_SPACE            = ' ';
     /**
      * YYYY-MM-DD
      */
@@ -41,6 +49,19 @@
 
     private $v_query_filters = '';
     
+    
+    final public function max($fp_v_fname)
+    {
+        $re_max = '';
+        if($fp_v_fname !== '' && $fp_v_fname !== null)
+        {
+            $re_max =  self::C_SQL_MAX
+                      .self::C_SQL_PARENTHESES_OPEN
+                      .$fp_v_fname
+                      .self::C_SQL_PARENTHESES_CLOSE;
+        }
+        return $re_max;
+    }
     /**
      * 
      * @return string Query with filters added.
@@ -132,7 +153,7 @@
      * @param string    field value 
      * @return boolean  Success
      */
-    final public function addContainsFilterToQuery($fp_v_fname, $fp_v_fval)  
+    final public function addContainsFilterToQuery($fp_v_fname, $fp_v_fval, $lv_is_num = false)  
     {
         $re_success = false;
         if(self::isValidFilter($fp_v_fname, $fp_v_fval))
@@ -142,7 +163,10 @@
             $lv_fval  = self::C_SQL_WILDCARD_ANY.
                         $lv_fval.
                         self::C_SQL_WILDCARD_ANY;
-            $lv_fval = self::convertValueToSQLString($lv_fval);
+            if($lv_is_num === false)
+            {
+                $lv_fval = self::convertValueToSQLString($lv_fval);
+            }
             $lv_filterLine = $lv_fname
                             .self::C_SQL_LIKE
                             .$lv_fval;
@@ -152,6 +176,36 @@
         return $re_success;
     }
     
+    /**
+     * 
+     * @param string $fp_v_fname
+     * @param string $fp_v_fval
+     * @param boolean $lv_is_num
+     * @return string
+     */
+    final public static function getContainsQuery($fp_v_fname, $fp_v_fval, $lv_is_num = false)  
+    {
+        $re_query = null;
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval))
+        {
+            $lv_fname = $fp_v_fname;
+            $lv_fval  = $fp_v_fval; 
+            if($lv_is_num === false)
+            {
+                $lv_fname = self::convertToSQLLower($fp_v_fname);
+                $lv_fval  = strtolower($fp_v_fval); 
+                $lv_fval = self::convertValueToSQLString($lv_fval);
+            }
+            $lv_fval  = self::C_SQL_WILDCARD_ANY
+                       .$lv_fval
+                       .self::C_SQL_WILDCARD_ANY;
+            $lv_filterLine = $lv_fname
+                            .self::C_SQL_LIKE
+                            .$lv_fval;
+            $re_query = $lv_filterLine;
+        }
+        return $re_query;
+    }
      /**
      * Adds an Equals Filter To Query.
      * 
@@ -174,6 +228,29 @@
             $re_success = $lv_filterLine;
         }
         return $re_success;
+    }
+    
+    
+    final public function getEqualsClauseQuery($fp_v_fname, $fp_v_fval, $fp_v_is_num = false)
+    {
+        $re_query = false;
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval))
+        {
+            $lv_fname = $fp_v_fname;
+            $lv_fval  = $fp_v_fval;
+            if($fp_v_is_num === true)
+            {
+                $lv_fname = self::convertToSQLLower($fp_v_fname);
+                $lv_fval  = strtolower($fp_v_fval);
+                $lv_fval = self::convertValueToSQLString($lv_fval);
+            }
+
+            $lv_filterLine = $lv_fname
+                            .self::C_SQL_EQUALS
+                            .$lv_fval;
+            $re_query = $lv_filterLine;
+        }
+        return $re_query;
     }
     
      /**
@@ -216,11 +293,11 @@
         $re_query = '';
         if(self::isValidFilter($fp_v_fname, $fp_v_fval_from)&& self::isValidFilter($fp_v_fname, $fp_v_fval_to))
         {
-            $lv_filterLine = $fp_v_fname
-                            .self::C_SQL_BETWEEN
-                            .$fp_v_fval_from
-                            .self::C_SQL_AND
-                            .$fp_v_fval_to;
+            $lv_filterLine = $fp_v_fname.        PHP_EOL
+                            .self::C_SQL_BETWEEN.PHP_EOL
+                            .$fp_v_fval_from.    PHP_EOL
+                            .self::C_SQL_AND.    PHP_EOL
+                            .$fp_v_fval_to.      PHP_EOL;
             
             $re_query = $lv_filterLine;
         }
@@ -243,25 +320,76 @@
     }
     
     /**
-     * Converts array to a comma separated values string.
-     *  
-     * @param  array   $fp_arr_values
-     * @return string  CSV string
+     * 
+     * @param array $fp_arr_values
+     * @param string $fp_v_delimiter
+     * @param string $fp_v_prefix_and_suffix
+     * @return string
      */
-    final public static function convertArrayToCSV(array $fp_arr_values = null)
+    final private static function getCSVFromArray($fp_arr_values, $fp_v_delimiter = self::C_COMMA_QUOTE, $fp_v_prefix_and_suffix = self::C_SQL_QUOTE)
     {
         $re_csv = null;
-        $lc_comma_quote = "','";
         /**
          * Remove blank elements from array.
          */
-        $fp_arr_values = array_filter($fp_arr_values);
-        if(!is_null($fp_arr_values)&&  is_array($fp_arr_values) && count($fp_arr_values) > 0)
+        if(    (!is_null($fp_arr_values))
+           &&  is_array($fp_arr_values) 
+           &&  count($fp_arr_values) > 0)
         {
-            $lv_valueList = implode($lc_comma_quote, $fp_arr_values);
-            $lv_valueList = self::C_SQL_QUOTE.$lv_valueList.self::C_SQL_QUOTE; 
-            $re_csv = $lv_valueList;
+            $larr_non_blank_values = array_filter($fp_arr_values);
+            if (count($$larr_non_blank_values) > 0)
+            {
+                $lv_valueList = implode($fp_v_delimiter, $larr_non_blank_values);
+            
+//            $lv_valueList = self::C_SQL_QUOTE.$lv_valueList.self::C_SQL_QUOTE; 
+                $lv_valueList = $fp_v_prefix_and_suffix
+                           .$lv_valueList
+                           .$fp_v_prefix_and_suffix; 
+                $re_csv = $lv_valueList;
+            }
         }
+        return $re_csv;
+    }
+    
+    /**
+     * Converts array to a comma separated values string.
+     *  
+     * @param  array   $fp_arr_values
+     * @param  boolean $lv_is_num True if array has number values 
+     * @return string  CSV string
+     */
+    final public static function convertArrayToCSV(array $fp_arr_values = null, $lv_is_num = false)
+    {
+        $re_csv = null;
+        /**
+         * Default delimiter for array of strings
+         */
+        $lv_delimiter = self::C_COMMA_QUOTE;
+        $lv_prefix_and_suffix = self::C_SQL_QUOTE;
+        
+        /**
+         * Delimiters and prefix, suffix for Numeric values
+         */
+        if($lv_is_num === true)
+        {
+            $lv_delimiter         = self::C_COMMA;
+            $lv_prefix_and_suffix = self::C_BLANK;
+        }
+        $re_csv = self::getCSVFromArray($fp_arr_values, $lv_delimiter, $lv_prefix_and_suffix);
+//        /**
+//         * Remove blank elements from array.
+//         */
+//        $fp_arr_values = array_filter($fp_arr_values);
+//        if(!is_null($fp_arr_values)&&  is_array($fp_arr_values) && count($fp_arr_values) > 0)
+//        {
+//            $lv_valueList = implode($lv_delimiter, $fp_arr_values);
+//            
+////            $lv_valueList = self::C_SQL_QUOTE.$lv_valueList.self::C_SQL_QUOTE; 
+//            $lv_valueList = $lv_prefix_and_suffix
+//                           .$lv_valueList
+//                           .$lv_prefix_and_suffix; 
+//            $re_csv = $lv_valueList;
+//        }
         return $re_csv;
     }
     
@@ -347,7 +475,7 @@
         if(self::isValidFilter($lv_dummy_fname, $fp_v_date))
         {
             $re_cast_as_date = self::C_SQL_CAST
-                    .$fp_v_date
+                    ."'".$fp_v_date."'"
                     .self::C_SQL_AS_DATE;
         }
         return $re_cast_as_date;
@@ -393,7 +521,7 @@
     /**
      * Returns string surrounded by parentheses for use in SQL 'IN' statements.
      * 
-     * @param type $fp_v_fname fieldname
+     * @param type $fp_v_string fieldname
      * @return string
      */
     public static function addParenthesesToString($fp_v_string)
