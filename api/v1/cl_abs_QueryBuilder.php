@@ -13,6 +13,7 @@
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
  abstract class cl_abs_QueryBuilder {
+     const C_SQL_DATE_FORMAT        = "'%Y-%m-%d'";
     const C_SQL_INIT_DATE           = '0000-00-00';
     const C_SQL_MAX                 = 'MAX';
     const C_SQL_PARENTHESES_OPEN    = ' ( ';
@@ -463,21 +464,25 @@
     }
     
      /**
-     * Returns YYYY-MM-DD value as an SQL Date.
+     * Returns Fieldname converted to date.
      * 
      * 
-     * @param string $fp_v_date YYYY-MM-DD Date
+     * @param string $fp_v_fname Field Name
      * @return string
      */
-    final public static function convertToSQLDate($fp_v_date)
+    final public static function getSQLDateFromString($fp_v_fname)
     {
-        $lv_dummy_fname = "DUMMY";
-        $re_cast_as_date = null;
-        if(self::isValidFilter($lv_dummy_fname, $fp_v_date))
+        $lv_dummy_fvalue = "DUMMY";
+        $re_cast_as_date = '';
+        if(self::isValidFilter($fp_v_fname, $lv_dummy_fvalue))
         {
-            $re_cast_as_date = self::C_SQL_CAST
-                    ."'".$fp_v_date."'"
-                    .self::C_SQL_AS_DATE;
+            $re_cast_as_date = self::C_SQL_STR_TO_DATE.
+                               self::C_SQL_PARENTHESES_OPEN
+                               .$fp_v_fname
+                               .self::C_COMMA
+                               .self::C_SQL_DATE_FORMAT
+                               .self::C_SQL_PARENTHESES_CLOSE;
+                                
         }
         return $re_cast_as_date;
     }
