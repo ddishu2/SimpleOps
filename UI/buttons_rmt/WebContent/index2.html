@@ -1137,10 +1137,7 @@ var amend_table1;
 						                                    	amend_empid += "&emp_id[]="+mod[i].am_id;
 																amend_approvedec += "&status[]="+mod[i].am_status;
 																amend_opscomment += "&comments[]="+mod[i].am_comments;
-																
-																
-										
-															}
+}
 														}
 														  var asc2= amend_empid + amend_approvedec +amend_opscomment;
 														  console.log(asc2);
@@ -1150,14 +1147,14 @@ var amend_table1;
 												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 												      		success : function(odata){
 												      			
-												      			 alert("Notification Sent");     			
+												      			 alert("Notification Sent");  
+												      			 $(".for_amend_dropdown-input").remove();
+													      			$("#for_amend_table1-table").addClass("change_color");
 												      		}
 														
 														}); 
 														
-														   $(".for_amend_dropdown-input").remove();
-													
-											      			$("#for_amend_table1-table").addClass("change_color");	
+														  	
 													         
 													      	
 													}
@@ -2421,10 +2418,10 @@ var amend_table1;
 							template : new sap.ui.commons.TextView({
 								//id:'p_s_id'
 							})
-									.bindProperty("text", "propose_id").addStyleClass("propo_id"),
+									.bindProperty("text", "propose_id").addStyleClass("propo_id").addStyleClass("hide_proposed"),
 							sortProperty : "propose_id",
 							filterProperty : "propose_id",
-							width : "100px",
+							width : "10px",
 							/* visible:false, */
 							
 						}));
