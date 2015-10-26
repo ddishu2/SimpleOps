@@ -536,11 +536,7 @@ var amend_table1;
 		.ajax({
 			method : "GET",
 			url : 
-				
-			
-				
-				
-				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
+		"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
 						"&competency[]="+temp1[1]+
 			"&proj_name="
 			+pass_pro_name+
@@ -1197,23 +1193,13 @@ var amend_table1;
 							tooltip : "External Hiring",
 
 						});
-						var soft_lock_exp = new sap.ui.commons.Button({
-							id : 'sle',
-							text : "Soft Lock Expiry",
-							tooltip : "Soft Lock Expiry",
-                            press: function()
-                            {
-                            	
-                            	$("#second").removeClass("hide_div");
-								$("#soft_expiry").addClass("hide_div");
-                            }
-						});
+						
 						cg_logo.placeAt("heading");
 						logout.placeAt("heading");
 						admin_act.placeAt("heading");
 						
 						for_head_button.createRow(demand_fulfill, report_gen,
-								amendments, Approvals, External_Hiring,soft_lock_exp)
+								amendments, Approvals, External_Hiring)
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
@@ -1571,7 +1557,7 @@ var amend_table1;
 										var temp = new Array();			
 										temp = p_loc.split(",");
 										
-									
+									console.log(temp.length);
 				
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
@@ -1580,7 +1566,6 @@ var amend_table1;
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
 										
-										var lincv= "";
 											
 										  
 										 console
@@ -1600,6 +1585,10 @@ var amend_table1;
 												        + c_name
 												        + "&capability="
 												        +  cap); 
+										 
+										 
+										 if(temp.length == 1)
+											 {
 										$
 												.ajax({
 													method : "GET",
@@ -1613,7 +1602,7 @@ var amend_table1;
 														+ p_bu
 														
              											+ "&proj_loc[]="
-														+ temp
+														+ temp[0]
 														
 												        + "&proj_id="
 												        + p_id
@@ -1693,6 +1682,410 @@ var amend_table1;
 																		+ "SO's \n\n\n");
 													}
 												});
+											 }
+										 
+										 else if(temp.length == 2)
+										 {
+									$
+											.ajax({
+												method : "GET",
+												url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
+													+ from
+													+ "&so_to_date="
+													+ upto
+													+ "&proj_name="
+													+ p_name
+													+ "&proj_bu="
+													+ p_bu
+													
+         											+ "&proj_loc[]="
+													+ temp[0]
+										        	+ "&proj_loc[]="
+										    	     + temp[1]
+													
+											        + "&proj_id="
+											        + p_id
+											        + "&cust_name="
+											        + c_name
+											        + "&capability="
+											        +  cap,
+												success : function(odata) {
+													
+													sap.ui.core.BusyIndicator.hide(0);
+													console.log(odata);
+													var table_row;
+													var res = odata;
+													var res_length = 0;
+													var res_completed = 0;
+													var res_partial = 0;
+													var completeData = [];
+
+													jQuery
+															.each(
+																	res,
+																	function(
+																			i,
+																			val) {
+
+																		res_length++;
+																		if (val.emp == null) {
+
+																			res_partial++
+																		} else {
+																			var tmp = {
+																				sname : val.so.so_no,
+																				pcode : val.so.so_proj_id,
+																				pname : val.so.so_proj_name,
+																				sdate : val.so.so_cr_date,
+																				edate : val.so.so_endate,
+																				eid : val.emp[0].emp_id,
+																				ename : val.emp[0].emp_name,
+																				lev : val.emp[0].level,
+																				skill : val.emp[0].skill1_l4,
+																				eloc : val.emp[0].loc,
+																				fulfill : "",
+																				status : "",
+																				assign : "",
+																				approve1 : "--Select--",
+																				pro_enddate : "" ,
+																				skill_cat : "" ,
+																				reason : val.emp[0].reason,
+																				propose_id : val.prop_id
+																			
+																			};
+																		
+																			completeData
+																					.push(tmp);
+																			res_completed++;
+
+																		}
+
+																	});
+
+													var oModel2 = new sap.ui.model.json.JSONModel();
+													oModel2
+															.setData({
+																modelData : completeData
+															});
+													suitable_match
+															.setModel(oModel2);
+													suitable_match
+															.bindRows("/modelData");
+
+													descript
+															.setText(res_length
+																	+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																	+ res_completed
+																	+ " SO's.\n\n\nIdentified Partial match for "
+																	
+																	+ "SO's \n\n\n");
+												}
+											});
+										 }
+										 else if(temp.length == 3)
+										 {
+									$
+											.ajax({
+												method : "GET",
+												url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
+													+ from
+													+ "&so_to_date="
+													+ upto
+													+ "&proj_name="
+													+ p_name
+													+ "&proj_bu="
+													+ p_bu
+													
+         											+ "&proj_loc[]="
+													+ temp[0]
+										        	+ "&proj_loc[]="
+										    	     + temp[1]
+											+ "&proj_loc[]="
+								    	     + temp[2]
+													
+											        + "&proj_id="
+											        + p_id
+											        + "&cust_name="
+											        + c_name
+											        + "&capability="
+											        +  cap,
+												success : function(odata) {
+													
+													sap.ui.core.BusyIndicator.hide(0);
+													console.log(odata);
+													var table_row;
+													var res = odata;
+													var res_length = 0;
+													var res_completed = 0;
+													var res_partial = 0;
+													var completeData = [];
+
+													jQuery
+															.each(
+																	res,
+																	function(
+																			i,
+																			val) {
+
+																		res_length++;
+																		if (val.emp == null) {
+
+																			res_partial++
+																		} else {
+																			var tmp = {
+																				sname : val.so.so_no,
+																				pcode : val.so.so_proj_id,
+																				pname : val.so.so_proj_name,
+																				sdate : val.so.so_cr_date,
+																				edate : val.so.so_endate,
+																				eid : val.emp[0].emp_id,
+																				ename : val.emp[0].emp_name,
+																				lev : val.emp[0].level,
+																				skill : val.emp[0].skill1_l4,
+																				eloc : val.emp[0].loc,
+																				fulfill : "",
+																				status : "",
+																				assign : "",
+																				approve1 : "--Select--",
+																				pro_enddate : "" ,
+																				skill_cat : "" ,
+																				reason : val.emp[0].reason,
+																				propose_id : val.prop_id
+																			
+																			};
+																		
+																			completeData
+																					.push(tmp);
+																			res_completed++;
+
+																		}
+
+																	});
+
+													var oModel2 = new sap.ui.model.json.JSONModel();
+													oModel2
+															.setData({
+																modelData : completeData
+															});
+													suitable_match
+															.setModel(oModel2);
+													suitable_match
+															.bindRows("/modelData");
+
+													descript
+															.setText(res_length
+																	+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																	+ res_completed
+																	+ " SO's.\n\n\nIdentified Partial match for "
+																	
+																	+ "SO's \n\n\n");
+												}
+											});
+										 }			 else if(temp.length == 4)
+										 {
+												$
+														.ajax({
+															method : "GET",
+															url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
+																+ from
+																+ "&so_to_date="
+																+ upto
+																+ "&proj_name="
+																+ p_name
+																+ "&proj_bu="
+																+ p_bu
+																
+			         											+ "&proj_loc[]="
+																+ temp[0]
+													        	+ "&proj_loc[]="
+													    	     + temp[1]
+														+ "&proj_loc[]="
+											    	     + temp[2]
+														+ "&proj_loc[]="
+											    	     + temp[3]
+																
+														        + "&proj_id="
+														        + p_id
+														        + "&cust_name="
+														        + c_name
+														        + "&capability="
+														        +  cap,
+															success : function(odata) {
+																
+																sap.ui.core.BusyIndicator.hide(0);
+																console.log(odata);
+																var table_row;
+																var res = odata;
+																var res_length = 0;
+																var res_completed = 0;
+																var res_partial = 0;
+																var completeData = [];
+
+																jQuery
+																		.each(
+																				res,
+																				function(
+																						i,
+																						val) {
+
+																					res_length++;
+																					if (val.emp == null) {
+
+																						res_partial++
+																					} else {
+																						var tmp = {
+																							sname : val.so.so_no,
+																							pcode : val.so.so_proj_id,
+																							pname : val.so.so_proj_name,
+																							sdate : val.so.so_cr_date,
+																							edate : val.so.so_endate,
+																							eid : val.emp[0].emp_id,
+																							ename : val.emp[0].emp_name,
+																							lev : val.emp[0].level,
+																							skill : val.emp[0].skill1_l4,
+																							eloc : val.emp[0].loc,
+																							fulfill : "",
+																							status : "",
+																							assign : "",
+																							approve1 : "--Select--",
+																							pro_enddate : "" ,
+																							skill_cat : "" ,
+																							reason : val.emp[0].reason,
+																							propose_id : val.prop_id
+																						
+																						};
+																					
+																						completeData
+																								.push(tmp);
+																						res_completed++;
+
+																					}
+
+																				});
+
+																var oModel2 = new sap.ui.model.json.JSONModel();
+																oModel2
+																		.setData({
+																			modelData : completeData
+																		});
+																suitable_match
+																		.setModel(oModel2);
+																suitable_match
+																		.bindRows("/modelData");
+
+																descript
+																		.setText(res_length
+																				+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																				+ res_completed
+																				+ " SO's.\n\n\nIdentified Partial match for "
+																				
+																				+ "SO's \n\n\n");
+															}
+														});
+													 }			 else if(temp.length == 5)
+													 {
+															$
+																	.ajax({
+																		method : "GET",
+																		url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
+																			+ from
+																			+ "&so_to_date="
+																			+ upto
+																			+ "&proj_name="
+																			+ p_name
+																			+ "&proj_bu="
+																			+ p_bu
+																			
+						         											+ "&proj_loc[]="
+																			+ temp[0]
+																        	+ "&proj_loc[]="
+																    	     + temp[1]
+																	+ "&proj_loc[]="
+														    	     + temp[2]
+																	+ "&proj_loc[]="
+														    	     + temp[3]
+																	+ "&proj_loc[]="
+														    	     + temp[4]
+																			
+																	        + "&proj_id="
+																	        + p_id
+																	        + "&cust_name="
+																	        + c_name
+																	        + "&capability="
+																	        +  cap,
+																		success : function(odata) {
+																			
+																			sap.ui.core.BusyIndicator.hide(0);
+																			console.log(odata);
+																			var table_row;
+																			var res = odata;
+																			var res_length = 0;
+																			var res_completed = 0;
+																			var res_partial = 0;
+																			var completeData = [];
+
+																			jQuery
+																					.each(
+																							res,
+																							function(
+																									i,
+																									val) {
+
+																								res_length++;
+																								if (val.emp == null) {
+
+																									res_partial++
+																								} else {
+																									var tmp = {
+																										sname : val.so.so_no,
+																										pcode : val.so.so_proj_id,
+																										pname : val.so.so_proj_name,
+																										sdate : val.so.so_cr_date,
+																										edate : val.so.so_endate,
+																										eid : val.emp[0].emp_id,
+																										ename : val.emp[0].emp_name,
+																										lev : val.emp[0].level,
+																										skill : val.emp[0].skill1_l4,
+																										eloc : val.emp[0].loc,
+																										fulfill : "",
+																										status : "",
+																										assign : "",
+																										approve1 : "--Select--",
+																										pro_enddate : "" ,
+																										skill_cat : "" ,
+																										reason : val.emp[0].reason,
+																										propose_id : val.prop_id
+																									
+																									};
+																								
+																									completeData
+																											.push(tmp);
+																									res_completed++;
+
+																								}
+
+																							});
+
+																			var oModel2 = new sap.ui.model.json.JSONModel();
+																			oModel2
+																					.setData({
+																						modelData : completeData
+																					});
+																			suitable_match
+																					.setModel(oModel2);
+																			suitable_match
+																					.bindRows("/modelData");
+
+																			descript
+																					.setText(res_length
+																							+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																							+ res_completed
+																							+ " SO's.\n\n\nIdentified Partial match for "
+																							
+																							+ "SO's \n\n\n");
+																		}
+																	});
+																 }
 
 									}
 								});
@@ -2845,7 +3238,7 @@ var amend_table1;
 							id : 'mytable',
 							visibleRowCount : 1,
 							selectionMode : sap.ui.table.SelectionMode.Single,
-							width : '100%',
+							width : '100px',
 							height : '100px'
 						}).addStyleClass("style_for_table");
 						var aData = [ {
@@ -3144,7 +3537,9 @@ var repo_to1 = new sap.ui.commons.Label({
 						report_matrix_layout.createRow(report_RB2);
 						report_matrix_layout.createRow(report_RB3);
 						report_matrix_layout.createRow(report_RB4);
-						report_matrix_layout.createRow(report_RB5)
+						report_matrix_layout.createRow(report_RB5);
+						report_matrix_layout.createRow(report_RB6);
+						
 						
 						report_matrix_layout.placeAt("report_first");	
 						var refresh_report = new sap.ui.commons.Button({
