@@ -329,13 +329,14 @@
     final private static function getCSVFromArray($fp_arr_values, $fp_v_delimiter = self::C_COMMA_QUOTE, $fp_v_prefix_and_suffix = self::C_SQL_QUOTE)
     {
         $re_csv = null;
-        /**
-         * Remove blank elements from array.
-         */
+
         if(    (!is_null($fp_arr_values))
            &&  is_array($fp_arr_values) 
            &&  count($fp_arr_values) > 0)
         {
+            /**
+            * Remove blank elements from array.
+            */
             $larr_non_blank_values = array_filter($fp_arr_values);
             if (count($$larr_non_blank_values) > 0)
             {
