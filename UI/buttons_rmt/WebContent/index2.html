@@ -18,10 +18,74 @@ var check=true;
 var check1;
 var index;
 var amend_table1;
+var oOverlayContainer;
+
 	sap.ui
 			.getCore()
 			.attachInit(
 					function() {
+						
+						
+						
+						var popup_detail = new sap.ui.table.Table(
+								{
+									id : 'popup_detail1',
+									title : "Already Proposed Details",
+									selectionMode: sap.ui.table.SelectionMode.Single,
+									
+									firstVisibleRow: 3,
+								
+
+								}).addStyleClass("style_for_table");
+
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "SO No.",
+								tooltip :"SO No"
+							}),
+							template : new sap.ui.commons.TextView("v_so_no")
+									.bindProperty("text", "").addStyleClass("soid"),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px",
+						//setRowHeight:"200px"
+						}));
+
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project Code" ,
+								tooltip : "Project Code"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px"
+						}));
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project Name" ,
+								tooltip : "Project Name"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px"
+						}));
+						
+						popup_detail.sort(popup_detail.getColumns()[0]);
+						 
+						function handler(oEvent) {
+							
+						}
+                        
+						var oOverlayContainer = new sap.ui.ux3.OverlayContainer({ id: 'oCont_popup'});
+						oOverlayContainer.addContent(popup_detail);			
+						oOverlayContainer.attachClose(handler);
+						oOverlayContainer.attachOpen(handler);
+						oOverlayContainer.attachOpenNew(handler);
+						
 						
 						
 						var welcomme_text=new sap.ui.commons.TextView({id: 'wel_text' ,
@@ -2402,12 +2466,14 @@ var amend_table1;
 							}),
 							template : new sap.ui.commons.Link({
 								text: "View",
-								Tooltip:"View"
-								
+								Tooltip:"View",
+								press: function(oEvent){ 
+									if(!oOverlayContainer.isOpen()){
+										oOverlayContainer.open();
+									}
+								}
 							}),
 							width : "100px",
-							
-							
 						}));
 						
 						suitable_match.addColumn(new sap.ui.table.Column({
