@@ -17,7 +17,9 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'cl_abs_deployableEmps.php';
 
 class cl_deployableBUEmps extends cl_abs_deployableEmp {
 
+    const C_TABNAME = 'v_deployable_emps';
     const c_emp_skill_fname = 'so_loc';
+    const C_FNAME_BENCH_AGING = 'bench_aging';
     const c_emp_loc_fname = 'skill1_l4';
     const c_emp_level_fname = 'level';
 
@@ -42,8 +44,8 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
     protected function setDeployableEmps() {
 
         $lt_data = [];
-       // $lv_query = "SELECT * FROM v_deployable_emps ORDER BY hire_date ASC";
-        $lv_query = "SELECT * FROM v_deployable_emps1 ORDER BY hire_date ASC";
+        $lv_query =  'SELECT * FROM '.self::C_TABNAME.PHP_EOL
+                    .'ORDER BY '     .self::C_FNAME_BENCH_AGING.' DESC';
         $lt_data = cl_DB::getResultsFromQuery($lv_query);
 //        $this->deployable_emp_count = cl_DB::getCountAndReset();
 //        echo $this->deployable_emp_count;
@@ -97,6 +99,8 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
     }
 
     public function get() {
+        
+        return $this->it_deployable_emps;
         
     }
 
