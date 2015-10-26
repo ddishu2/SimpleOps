@@ -41,9 +41,9 @@ class open_so_query_builder extends cl_abs_QueryBuilder{
     const C_FNAME_REGION           = 'so_region';
     const C_FNAME_LEVEL            = 'so_level';
     
-    const C_TABNAME         = 'm_so_fulfill_stat';
-    const C_SPACE            = ' ';
-    const C_INTERVAL_SUFFIX  = ' days';
+    const C_TABNAME                = 'v_fulfill_stat_open';
+    const C_SPACE                  = ' ';
+    const C_INTERVAL_SUFFIX        = ' days';
     
     const C_START_INTERVAL   = -56;
     const C_END_INTERVAL     =  28;
@@ -174,12 +174,15 @@ class open_so_query_builder extends cl_abs_QueryBuilder{
         $lv_from_date      = cl_abs_QueryBuilder::convertValueToSQLString($this->v_so_sdate);
         $lv_to_date        = cl_abs_QueryBuilder::convertValueToSQLString($this->v_so_endate);
         $lv_start_date_between_clause = cl_abs_QueryBuilder::getBetweenFilterQuery($lv_start_date_sql, $lv_from_date, $lv_to_date);
-        $re_query =  cl_abs_QueryBuilder::C_SQL_SELECT
-                    .cl_abs_QueryBuilder::C_SQL_ALL
-                    .cl_abs_QueryBuilder::C_SQL_FROM
+        $re_query =  'SELECT'.PHP_EOL
+                    .'*'.PHP_EOL
+                    .'FROM'.PHP_EOL
                     .self::C_TABNAME.PHP_EOL
-                    .self::C_SQL_WHERE
+                    .'WHERE'.PHP_EOL
                     .$lv_start_date_between_clause;
+                    
+                
+                    
         return $re_query;
     }
     
