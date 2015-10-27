@@ -579,8 +579,11 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
           $app->get(cl_RMGTool_Globals::GC_GETAMMENDMENTSREPORT, 
                function () use($app) 
                {
+              $fp_v_start_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+              $fp_v_end_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+              
               $lo_ammendments = new cl_ammendments();
-               $re_result = $lo_ammendments->getAmmendmentsReport();
+               $re_result = $lo_ammendments->getAmmendmentsReport($fp_v_start_date,$fp_v_end_date);
                $app->response->setStatus(200);
                $app->response->headers->set('Content-Type', 'application/json');           
                echo json_encode($re_result, JSON_PRETTY_PRINT);
