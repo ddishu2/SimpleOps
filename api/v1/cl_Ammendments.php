@@ -457,5 +457,11 @@ class cl_ammendments {
         return $re_result;
     }
     
+    public function getAmmendmentsReport()
+    {
+        $sql = "SELECT * FROM `trans_ammendment` where trans_ammendment.`Updated On` = CURRENT_DATE and trans_ammendment.status = 'Approve'";
+         $result= cl_DB::getResultsFromQuery($sql);
+         return $result;
+    }
     
 }

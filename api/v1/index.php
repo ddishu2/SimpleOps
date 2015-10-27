@@ -18,6 +18,8 @@ class cl_RMGTool_Globals
     const GC_route_proposals = '/proposals(/)';
     const GC_APPROVE_AMMENDMENTS = '/approve_amendments(/)';
     const GC_AMMENDMENTS = '/amendments(/)';
+    const GC_GETAMMENDMENTSREPORT = '/getAmmendmentReport(/)';
+    const GC_DWN_REPORT = '/download_report(/)';
     
 //    static public $GC_SLIM_PATH = __DIR__.
 //                                DIRECTORY_SEPARATOR.
@@ -44,6 +46,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_NotificationMails.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Reports.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -573,7 +576,33 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                   );   
                   
                   
+          $app->get(cl_RMGTool_Globals::GC_GETAMMENDMENTSREPORT, 
+               function () use($app) 
+               {
+              $lo_ammendments = new cl_ammendments();
+               $re_result = $lo_ammendments->getAmmendmentsReport();
+               $app->response->setStatus(200);
+               $app->response->headers->set('Content-Type', 'application/json');           
+               echo json_encode($re_result, JSON_PRETTY_PRINT);
+              
+               }
+                  );
                   
+                  
+               $app->get(cl_RMGTool_Globals::GC_DWN_REPORT, 
+               function () use($app) 
+               {    
+                   $fp_v_report_type = $app->request->get(cl_Reports::C_RTYPE);
+                    $fp_v_start_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
+                    $fp_v_end_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
+                    
+                  $lo_Report = new cl_Reports($fp_v_report_type, $fp_v_start_date, $fp_v_end_date);
+                  $lo_Report->download();
+                   
+               }
+                );
+                
+                
           $app->get('/amm(/)', 
                function () use($app) 
                {        
@@ -586,6 +615,11 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                   
                   }
                   );   
+                  
+                  
+                  
+                  
+                  
   $app->run();
 ?>
 
