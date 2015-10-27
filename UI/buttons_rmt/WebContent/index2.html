@@ -3641,13 +3641,14 @@ var repo_to1 = new sap.ui.commons.Label({
 															+from_amend_report+
 															"&so_to_date="
 															+to_amend_report,
-													success : function(odata) {
+													 success : function(odata) {
 														
-														alert("hii");
+														alert("Ammendments Report Downloading...");
+											             console.log(odata);
 													}
 												
 													})
-							
+						
 								}
 								
 								//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
@@ -3663,12 +3664,33 @@ var repo_to1 = new sap.ui.commons.Label({
 							{
 								if($("#amend_check-RB").is(":checked") == true)
 									{
+									
 									$("#report_first").addClass("hide_div");
 									$("#report_first_open").addClass("hide_div");
 									$("#report_first_zero").addClass("hide_div");
 									$("#first").addClass("hide_div");
 									$("#amend_report_view").removeClass("hide_div");
-							
+									var from_amend_report1 = $("#__picker0-input").val();
+									var to_amend_report1 = $("#__picker1-input").val();
+							      console.log("/rmt/api/v1/index.php/getAmmendmentReport?so_from_date="
+										+from_amend_report1+
+										"&so_to_date="+
+										to_amend_report1)
+									$
+									.ajax({
+										method : "GET",
+										url : "/rmt/api/v1/index.php/getAmmendmentReport?so_from_date="
+												+from_amend_report1+
+												"&so_to_date="+
+												to_amend_report1,
+												
+										success : function(odata) {
+											
+											console.log(odata);
+										}
+									
+										})	
+									
 									}
 								
 								
