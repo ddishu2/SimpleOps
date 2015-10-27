@@ -3623,7 +3623,36 @@ var repo_to1 = new sap.ui.commons.Label({
 						report_matrix_layout.placeAt("report_first");	
 						var refresh_report = new sap.ui.commons.Button({
 							text : "Download Report",
-							tooltip : "Download Report",		
+							tooltip : "Download Report",	
+							
+							press: function()
+							{
+								
+								if($("#amend_check-RB").is(":checked") == true)
+								{
+								
+								var from_amend_report = $("#__picker0-input").val();
+								var to_amend_report = $("#__picker1-input").val();
+								console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
+								$
+												.ajax({
+													method : "GET",
+													url : "/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
+															+from_amend_report+
+															"&so_to_date="
+															+to_amend_report,
+													success : function(odata) {
+														
+														alert("hii");
+													}
+												
+													})
+							
+								}
+								
+								//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
+
+							}
 
 							}).addStyleClass("for_normal_buttons_style1");
 						
@@ -3661,8 +3690,9 @@ var repo_to1 = new sap.ui.commons.Label({
 
 						}).addStyleClass("for_normal_buttons_style1");
 						refresh_report.placeAt("report_first");	
-						report_back.placeAt("report_first");	
 						view_report_sel.placeAt("report_first");
+						report_back.placeAt("report_first");	
+						
 						
 ///////////////////////////////////////////////////report_first_open///////////////////////////////////////////////////
 
@@ -3885,7 +3915,8 @@ var repo_to1 = new sap.ui.commons.Label({
 						
 						var refresh_report_sel = new sap.ui.commons.Button({
 							text : "Download Report",
-							tooltip : "Download Report",		
+							tooltip : "Download Report",
+						
 
 							}).addStyleClass("for_normal_buttons_style1");
 						
@@ -4136,7 +4167,7 @@ var repo_to1 = new sap.ui.commons.Label({
 													{
 														$("#report_first").removeClass("hide_div");
 														$("#report_first_open").addClass("hide_div");
-														$("#report_first_zero").addClass("hide_div");
+														$("#report_first_zero").removeClass("hide_div");
 														$("#amend_report_view").addClass("hide_div");
 														
 													}
