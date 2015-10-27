@@ -167,6 +167,12 @@ class open_so_query_builder extends cl_abs_QueryBuilder{
                       (self::C_FNAME_CAPABILITY,$fp_v_capability);
     }
     
+    public function filterByInCapabilityList($fp_arr_capability)
+    {
+       return $this->addInFilterToQuery
+                      (self::C_FNAME_CAPABILITY,$fp_arr_capability);
+    }
+    
             
     public function getBaseQuery()
     {
