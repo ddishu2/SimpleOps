@@ -1572,9 +1572,67 @@ var  amend_table_report_gen;
 							text : 'Capability'
 						}).addStyleClass("for_text_style1");
 
-					
-						
+/////////////////////////////////////////////multi selection capability starts here///////////////////////////////////////
+                   
+                      var oSimpleListBox_demand = new sap.ui.commons.ListBox({
+							
+							width : "200px",
+							items : [ new sap.ui.core.ListItem({
+								text : 'DCM'
+							}), new sap.ui.core.ListItem({
+								text : 'Development'
+							}), new sap.ui.core.ListItem({
+								text : 'Finance'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'HCM'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Misc'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'ISU'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Netweaver'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'SCM'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Retail & AFS'
+							}),
+							
+							],
+							select : function(e) {
+								var a2 = [ "" ];
+								jQuery.each(oSimpleListBox_demand.getSelectedItems(),
+										function(idx, item) {
+											a2.push(item.getText(), ",");
+										});
+								oTextSummary_demand.setValue(a2.join(""));
+							}
+						});
+						var oTextSummary_demand = new sap.ui.commons.TextField({id: 'summary_demand'});
+						var oMultiSelectionCheckBox_demand = new sap.ui.commons.CheckBox(
+								
+								{
+									id : 'check_demand',
+									text : "MultiSelection",
+									checked : false,
+									change : function(e) {
+										oSimpleListBox_demand.setAllowMultiSelect(e
+												.getSource().getChecked());
+									}
+								});
 
+						
+						oDetails.createRow(capabilityLabel, oSimpleListBox_demand,
+								oTextSummary_demand, oMultiSelectionCheckBox_demand); 
+
+
+						
+///////////////////////////////////////////////////multi selection capability Ends here////////////////////////////////////
 						var oTagg = new sap.ui.commons.Button(
 								{
 									text : "Get Tagging Results",
@@ -1596,7 +1654,10 @@ var  amend_table_report_gen;
 				
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
-											var cap=$("#ct_drop-input").val();
+										
+											var cap=$("#summary_demand").val();
+											var temp_cap = new Array();			
+											temp_cap = cap.split(",");
 									
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
@@ -1619,7 +1680,7 @@ var  amend_table_report_gen;
 												        + "&cust_name="
 												        + c_name
 												        + "&capability="
-												        +  cap); 
+												        +  cap ); 
 										 
 										 
 										 if(temp.length == 1)
