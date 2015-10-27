@@ -1572,49 +1572,8 @@ var  amend_table_report_gen;
 							text : 'Capability'
 						}).addStyleClass("for_text_style1");
 
-						var capabilityText = new sap.ui.commons.DropdownBox(
-								{
-									id: 'ct_drop',
-								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
-						capabilityText.setTooltip("Location");
-						capabilityText.setEditable(true);
-						capabilityText.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("Capability0");
-						oItem.setText("");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability1");
-						oItem.setText("DCM");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability2");
-						oItem.setText("Development");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability3");
-						oItem.setText("Finance");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability4");
-						oItem.setText("HCM");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability5");
-						oItem.setText("Misc");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability6");
-						oItem.setText("Management");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability7");
-						oItem.setText("ISU");
-						capabilityText.addItem(oItem);	
-						oItem = new sap.ui.core.ListItem("Capability9");
-						oItem.setText("Netweaver");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability10");
-						oItem.setText("SCM");
-						capabilityText.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability11");
-						oItem.setText("Retail & AFS");
-						capabilityText.addItem(oItem);
-
-						capabilityLabel.setLabelFor(capabilityText);
-						oDetails.createRow(capabilityLabel, capabilityText);
+					
+						
 
 						var oTagg = new sap.ui.commons.Button(
 								{
