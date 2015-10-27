@@ -357,7 +357,8 @@ class cl_ammendments {
         $lv_nedate = $fp_arr_result['new_edate'];
         $lv_new_edate = date('y-m-d', strtotime($lv_nedate));
 
-
+         $lv_act = $fp_arr_result['act'];
+         $lv_date_chng_noti = $fp_arr_result['Date_chng_noti'];
 
 
         $lv_new_sup_corp_id = $fp_arr_result['new_sup_corp_id'];
@@ -393,8 +394,8 @@ class cl_ammendments {
         }
         // if existing then update else insert
        if($flag == "false"){
-        $sql = "INSERT INTO `rmg_tool`.`trans_ammendment` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
-                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+        $sql = "INSERT INTO `rmg_tool`.`trans_ammendment` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`date_chng_noti`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
+                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
        }
        else 
        {
@@ -404,10 +405,11 @@ class cl_ammendments {
 
         $re_result = cl_DB::updateResultIntoTable($sql);
             
-        $sql1 = "INSERT INTO `rmg_tool`.`trans_ammendment_history` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
-                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+//        $sql1 = "INSERT INTO `rmg_tool`.`trans_ammendment_history` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`,`act`,`date_chng_noti`,`proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
+//                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti','$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
         
-        
+         $sql1 = "INSERT INTO `rmg_tool`.`trans_ammendment_history`(`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`date_chng_noti`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
+                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
         
         $re_result1 = cl_DB::updateResultIntoTable($sql1);
         
@@ -456,10 +458,11 @@ class cl_ammendments {
         
         return $re_result;
     }
-    
-    public function getAmmendmentsReport()
+//    public function getAmmendmentsReport()
+    public function getAmmendmentsReport($from_date,$to_date)
     {
-        $sql = "SELECT * FROM `trans_ammendment` where trans_ammendment.`Updated On` = CURRENT_DATE and trans_ammendment.status = 'Approve'";
+       // $sql = "SELECT * FROM `trans_ammendment` where trans_ammendment.`Updated On` = CURRENT_DATE and trans_ammendment.status = 'Approve'";
+       $sql = "SELECT * FROM `trans_ammendment` where trans_ammendment.`Updated On` >= '$from_date' and trans_ammendment.`Updated On` <= '$to_date' and trans_ammendment.status = 'Approve'";
          $result= cl_DB::getResultsFromQuery($sql);
          return $result;
     }

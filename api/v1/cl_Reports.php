@@ -139,7 +139,7 @@ class cl_Reports
         $lo_csv_output = fopen(self::C_PHP_OUT_STREAM, self::C_MODE_FILE_WRITE);
         // output the column headings
     // fputcsv($lo_csv_output, array('Column 1', 'Column 2', 'Column 3'));
-         fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));
+         fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','Action','date change notification','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));
         
         $arr_data = $this->getData();
         for($i=0;$i<count($arr_data);$i++)
@@ -182,7 +182,7 @@ class cl_Reports
                     break;
                 case self::C_TYPE_AMMENDMENTS:
                             $lo_ammendments = new cl_ammendments();
-                            $re_data = $lo_ammendments->getAmmendmentsReport();
+                            $re_data = $lo_ammendments->getAmmendmentsReport($this->v_start_date,$this->v_end_date);
                     
                     break;
                 default:
