@@ -98,6 +98,7 @@
       </table>
       <p><A HREF="GV_LINK">Click here</A> to Approve/Reject the lock
       <p><font color=#FF0000><B>Note: Note: You have two days to evaluate the employee and confirm hard tagging. The employee will be proposed to other requirements after expiry of the soft lock at CoB on GV_SL_REL_DATE.</B></font>
+      <p><font color=#FF0000><B>If the required resume is not appended with the mail, kindly get in touch with the RMG team at <a href="mailto:appsonesap@capgemini.com">Appsone SAP</a></B></font>
       <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
       </table>
    </body>
