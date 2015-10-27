@@ -19,6 +19,7 @@ var check1;
 var index;
 var amend_table1;
 var oOverlayContainer;
+var  amend_table_report_gen;
 
 	sap.ui
 			.getCore()
@@ -3685,8 +3686,65 @@ var repo_to1 = new sap.ui.commons.Label({
 												to_amend_report1,
 												
 										success : function(odata) {
-											
 											console.log(odata);
+											var table_row_report1;
+											var res_report1 = odata;
+											var completeData_report1 = [];
+
+											jQuery
+													.each(
+															res_report1,
+															function(
+																	i,
+																	val) {
+
+																
+																	var tmp_report1 = {
+																		am_id_report1 : val.id,
+																		am_name_report1 :val.name,
+																		am_lev_report1 :val.level,
+																		am_idp_report1 :val.IDP,
+																		am_location_report1 :val.loc,
+																		am_bilstat_report1 :val.bill_stat,
+																		am_compet_report1 :val.competency,
+																		am_currproname_report1 :val.curr_proj_name,
+																		am_startdate_report1 :val.curr_sdate,
+																		am_enddate_report1 :val.curr_edate,
+																		am_projected_report1 :val.proj_edate_projected,
+																		am_sup_report1 :val.supervisor,
+																		am_customer_report1 :val.cust_name,
+																		am_dom_report1 :val.domain_id,
+																		am_newdate_report1 :val.new_edate,
+																		am_newcorp_report1 :val.new_sup_corp_id,
+																		am_newsupid_report1 :val.new_sup_id,
+																		am_supname_report1 :val.new_sup_name,
+																		am_reason_report1 :val.reason,
+																		am_request_report1  :val.req_by,
+																	//	am_comments_report1 :,
+																		am_extn : val.act,
+																		am_notice : val.Date_chng_noti ,
+																	};
+																
+																	completeData_report1
+																			.push(tmp_report1);
+																	 Model_amend_report1 = new sap.ui.model.json.JSONModel();
+																	Model_amend_report1
+																			.setData({
+																				modelData : completeData_report1
+																			});
+																	amend_table_report_gen
+																			.setModel(Model_amend_report1);
+																	amend_table_report_gen
+																			.bindRows("/modelData");
+																	
+																	
+																	pass_data_report1  = Model_amend_report1.getData().modelData;
+
+
+																}
+
+															);
+
 										}
 									
 										})	
@@ -3964,7 +4022,7 @@ var repo_to1 = new sap.ui.commons.Label({
 ///////////////////////////////////////////////// Report First Amendments Part////////////////////////////////////////////////
 
 						
-						var amend_table_report_gen = new sap.ui.table.Table(
+						 amend_table_report_gen = new sap.ui.table.Table(
 														{
 															id : 'for_amend_table_report_gen',
 															title : "RMT Amendment Report View",
@@ -4167,8 +4225,8 @@ var repo_to1 = new sap.ui.commons.Label({
 														text : "Ops Comments",
 														tooltip : "Ops Comments"
 													}),
-													template : new sap.ui.commons.TextArea({})
-												.bindProperty("value", ""),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
 										sortProperty : "",
 										filterProperty : "",
 										width : "100px"
