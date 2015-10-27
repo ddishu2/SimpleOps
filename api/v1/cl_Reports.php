@@ -2,6 +2,7 @@
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Lock.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_abs_QueryBuilder.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
 /**
  * Description of cl_ReportGenerator
  *
@@ -23,6 +24,9 @@ class cl_Reports
     /**
      * C_DATE_FORMAT DD-MM-YYYY_HH:MM:SS
      */
+    const C_RTYPE = 'type';
+                
+    
     const C_PHP_OUT_STREAM    = 'php://output';
     const C_DATE_FORMAT       = 'd-m-Y_H:i:s';
     const C_MODE_FILE_WRITE   = 'w';
@@ -35,6 +39,9 @@ class cl_Reports
     CONST C_TYPE_REJ_EMP    = 'Rejected_Employees';
     const C_TYPE_REJ_SO     = 'Rejected_SO';
     const C_EX_INVALID      = 'Invalid Mail Type';
+    const C_TYPE_AMMENDMENTS = 'Amendment_Report';
+    
+    
     
     private $v_report_type = '';
     private $v_start_date;
@@ -68,7 +75,8 @@ class cl_Reports
         if(     $fp_v_report_type === self::C_TYPE_SL
             ||  $fp_v_report_type === self::C_TYPE_SL_RELEASE
             ||  $fp_v_report_type === self::C_TYPE_HL
-            ||  $fp_v_report_type === self::C_TYPE_HL_RELEASE)
+            ||  $fp_v_report_type === self::C_TYPE_HL_RELEASE
+            ||  $fp_v_report_type == self::C_TYPE_AMMENDMENTS)
         {
             $re_valid = true;
         }
@@ -130,8 +138,16 @@ class cl_Reports
          */
         $lo_csv_output = fopen(self::C_PHP_OUT_STREAM, self::C_MODE_FILE_WRITE);
         // output the column headings
-        fputcsv($lo_csv_output, array('Column 1', 'Column 2', 'Column 3'));
-         // make php send the generated csv lines to the browser
+    // fputcsv($lo_csv_output, array('Column 1', 'Column 2', 'Column 3'));
+         fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));
+        
+        $arr_data = $this->getData();
+        for($i=0;$i<count($arr_data);$i++)
+        {
+           $row = $arr_data[$i]; 
+        fputcsv($lo_csv_output,$row);
+        }
+        // make php send the generated csv lines to the browser
         fpassthru($lo_csv_output);
         fclose($lo_csv_output);
     }
@@ -163,6 +179,11 @@ class cl_Reports
                     break;
                 case self::C_TYPE_SL_RELEASE:
                 
+                    break;
+                case self::C_TYPE_AMMENDMENTS:
+                            $lo_ammendments = new cl_ammendments();
+                            $re_data = $lo_ammendments->getAmmendmentsReport();
+                    
                     break;
                 default:
                     $re_data = [];
