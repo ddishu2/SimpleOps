@@ -24,57 +24,65 @@ var oOverlayContainer;
 			.getCore()
 			.attachInit(
 					function() {
-						
-						
-						
-						var popup_detail = new sap.ui.table.Table(
-								{
-									id : 'popup_detail1',
-									title : "Already Proposed Details",
-									selectionMode: sap.ui.table.SelectionMode.Single,
-									
-									firstVisibleRow: 3,
-								
+						var popup_detail = new sap.ui.table.Table({
+							title: "Already Proposed Details",
+							visibleRowCount: 7,
+							firstVisibleRow: 3,
+							selectionMode: sap.ui.table.SelectionMode.Single,
+							
+						});
 
-								}).addStyleClass("style_for_table");
-
+						//Define the columns and the control templates to be used
+						var oColumn = new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "SO NO."  ,tooltip :"SO NO"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "70px"
+						});
+					
+						popup_detail.addColumn(oColumn);
 						popup_detail.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "SO No.",
-								tooltip :"SO No"
-							}),
-							template : new sap.ui.commons.TextView("v_so_no")
-									.bindProperty("text", "").addStyleClass("soid"),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px",
-						//setRowHeight:"200px"
+							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width :"50px"
+						}));
+						/* popup_detail.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "50px"
+						})); */
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "60px"
+						}));
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Start Date" ,tooltip :"Start Date"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "50px"
+						}));
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "End Date" ,tooltip :"End Date"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "50px"
 						}));
 
-						popup_detail.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Code" ,
-								tooltip : "Project Code"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
-						popup_detail.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Name" ,
-								tooltip : "Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
 						
-						popup_detail.sort(popup_detail.getColumns()[0]);
+						popup_detail.sort(popup_detail.getColumns()[0]);	
+						
+						
+					
 						 
 						function handler(oEvent) {
 							
@@ -207,7 +215,8 @@ var oOverlayContainer;
 									$("#four1").addClass("hide_div");
 									$("#four2_core").addClass("hide_div");
 									$("#first").removeClass("hide_div");
-									$("#heading").removeClass("hide_div")
+									$("#heading").removeClass("hide_div");
+									$("#amend_report_view").addClass("hide_div");
 
 								}
 							}
@@ -240,6 +249,7 @@ var oOverlayContainer;
 								$("#first").addClass("hide_div");
 								$("#admin").removeClass("hide_div");
 								$("#heading").addClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
 							}
 
 						});
@@ -271,6 +281,7 @@ var oOverlayContainer;
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
 
 							}
 						});
@@ -325,6 +336,7 @@ var oOverlayContainer;
 										$("#report_first").addClass("hide_div");
 										$("#report_first_open").addClass("hide_div");
 										$("#report_first_zero").addClass("hide_div");
+										$("#amend_report_view").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#third").addClass("hide_div");
@@ -335,7 +347,7 @@ var oOverlayContainer;
 										$("#second").addClass("hide_div");
 										$("#first").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
-
+										$("#amend_report_view").addClass("hide_div");
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
@@ -358,6 +370,7 @@ var oOverlayContainer;
      								$("#report_first_zero").removeClass("hide_div");
      								$("#amend_zero").addClass("hide_div");
      								$("#amend_first").addClass("hide_div");
+     								$("#amend_report_view").addClass("hide_div");
      								$("#remove_first").removeClass("hide_div");
                             	 
                              }
@@ -381,6 +394,7 @@ var oOverlayContainer;
 								$("#report_first_zero").addClass("hide_div");
 								$("#amend_first").addClass("hide_div");
 								$("#amend_zero").removeClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
 								//$("#for_amend_table1-table").removeClass("change_color")
 								//http://localhost/rmt/api/v1/index.php/amendments
                                
@@ -3578,6 +3592,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							}).addStyleClass("for_report_gen");
 						
 						var report_RB5 = new sap.ui.commons.RadioButton({
+							id: 'amend_check',
 							text : 'Amendments',
 							tooltip : 'Amendments',
 							groupName : 'Group1',
@@ -3589,6 +3604,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : 'OPEN SO Report',
 							select: function()
 							{
+								$("#amend_report_view").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").removeClass("hide_div");
 								
@@ -3610,6 +3626,26 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Download Report",		
 
 							}).addStyleClass("for_normal_buttons_style1");
+						
+						var view_report_sel = new sap.ui.commons.Button({
+							text : "View Report",
+							tooltip : "View Report",
+							press : function()
+							{
+								if($("#amend_check-RB").is(":checked") == true)
+									{
+									$("#report_first").addClass("hide_div");
+									$("#report_first_open").addClass("hide_div");
+									$("#report_first_zero").addClass("hide_div");
+									$("#first").addClass("hide_div");
+									$("#amend_report_view").removeClass("hide_div");
+							
+									}
+								
+								
+							}
+
+							}).addStyleClass("for_normal_buttons_style1");
 						var report_back = new sap.ui.commons.Button({
 							id : 'back_report',
 							text : "Back",
@@ -3619,12 +3655,14 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
 								$("#first").removeClass("hide_div");
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
 						refresh_report.placeAt("report_first");	
-						report_back.placeAt("report_first");			
+						report_back.placeAt("report_first");	
+						view_report_sel.placeAt("report_first");
 						
 ///////////////////////////////////////////////////report_first_open///////////////////////////////////////////////////
 
@@ -3850,12 +3888,15 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Download Report",		
 
 							}).addStyleClass("for_normal_buttons_style1");
+						
+						
 						var report_back_sel = new sap.ui.commons.Button({
 							id : 'back_report_sel',
 							text : "Back",
 							tooltip : "Back",
 							press: function()
 							{
+								$("#amend_report_view").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first").removeClass("hide_div");
 								
@@ -3863,8 +3904,245 @@ var repo_to1 = new sap.ui.commons.Label({
 						}).addStyleClass("for_normal_buttons_style1");
 						
 						refresh_report_sel.placeAt("report_first_open");
-						report_back_sel.placeAt("report_first_open")
-					});
+						
+						report_back_sel.placeAt("report_first_open");
+						
+						
+///////////////////////////////////////////////// Report First Amendments Part////////////////////////////////////////////////
+
+						
+						var amend_table_report_gen = new sap.ui.table.Table(
+														{
+															id : 'for_amend_table_report_gen',
+															title : "RMT Amendment Report View",
+															//visibleRowCount : 9,
+															//firstVisibleRow : 3,
+															selectionMode: sap.ui.table.SelectionMode.Single,
+															
+															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+
+														}).addStyleClass("style_for_table");
+
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "ID",
+														tooltip : "ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												//setRowHeight:"200px"
+												}));
+
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp Name",
+														tooltip : "Emp Name"
+													}),
+													template : new sap.ui.commons.TextView({id:''})
+															.bindProperty("text", ""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												
+												
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Competency",
+														tooltip : "Competency"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Current Project Name",
+														tooltip : "Current Project Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Current Start Date",
+														tooltip : "Current Start Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "150px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Current End Date",
+														tooltip : "Current End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project End Date Projected ",
+														tooltip : "Project End Date Projected"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Supervisor Name",
+														tooltip:"Supervisor Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Customer Name",
+														tooltip:"Customer Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New End Date",
+														tooltip:"New End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Action" ,
+														tooltip :"Action"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Date Change Notice" ,
+														tooltip :"Date Change Notice"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New Supervisor ID" ,
+														tooltip:"New Supervisor ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "New Supervisor Name",
+														tooltip: "New Supervisor Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "150px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "PM Comments",
+														tooltip:"PM Comments"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Requested by" ,
+														tooltip :"Requested by"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												
+												
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Ops Comments",
+														tooltip : "Ops Comments"
+													}),
+													template : new sap.ui.commons.TextArea({})
+												.bindProperty("value", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												
+												
+												
+												amend_table_report_gen.sort(amend_table_report_gen.getColumns()[0]);
+
+												amend_table_report_gen.placeAt("amend_report_view");
+                                 
+												
+												var report_back_amend = new sap.ui.commons.Button({
+													id : 'back_report_amend',
+													text : "Back",
+													tooltip : "Back",
+													press:function()
+													{
+														$("#report_first").removeClass("hide_div");
+														$("#report_first_open").addClass("hide_div");
+														$("#report_first_zero").addClass("hide_div");
+														$("#amend_report_view").addClass("hide_div");
+														
+													}
+					}).addStyleClass("for_normal_buttons_style1");
+												report_back_amend.placeAt("amend_report_view")
+					})
 </script>
 
 
@@ -3899,8 +4177,8 @@ var repo_to1 = new sap.ui.commons.Label({
 		<div id='report_first' class="hide_div"></div>
 		<div id='report_first_open' class="hide_div"></div>
 		
-		
-		<div id='soft_expiry1' class="hide_div"></div>
+	
+		<div id='amend_report_view' class ="hide_div">
 	
 	</div>
 </body>
