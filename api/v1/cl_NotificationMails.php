@@ -75,8 +75,8 @@ class cl_NotificationMails {
         $this->lt_capability_email = [];
         $this->lt_bu = [];
         $this->lv_query_capability = "SELECT * 
-                                          FROM   m_capability_config";
-        $this->lv_query_bu = "SELECT * FROM m_bu_config";
+                                          FROM   c_capability_config";
+        $this->lv_query_bu = "SELECT * FROM c_bu_config";
         $this->lt_capability_email = cl_DB::getResultsFromQuery($this->lv_query_capability);
         $this->lt_bu = cl_DB::getResultsFromQuery($this->lv_query_bu);
     }
@@ -123,9 +123,9 @@ class cl_NotificationMails {
 // Function to get the query.
     private function set_query($i_mode) {
         $this->lv_query_notifcn = "SELECT *
-                                        FROM m_notifications_config
+                                        FROM c_notifications_config
                                         WHERE action_type = '$i_mode' LIMIT 1";
-        $this->lv_query_act_type = "SELECT * FROM t_act_type_text WHERE action_type = '$i_mode' LIMIT 1";
+        $this->lv_query_act_type = "SELECT * FROM c_act_type_text WHERE action_type = '$i_mode' LIMIT 1";
     }
 
 // Get Email IDs.
@@ -152,13 +152,19 @@ class cl_NotificationMails {
                 return $this->lt_capability_email[$lv_key_cap]['lead'];
                 break;
             case 'capability_sub_lead':
+                if(array_key_exists($lv_key_cap, $this->lt_capability_email))
+                { return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'].';'.$this->lt_capability_email[$lv_key_cap]['sub_lead_2']; }
                 return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'] . ';' . $this->lt_capability_email[$lv_key_cap]['sub_lead_2'];
                 break;
             case 'capability_SPOC':
+                if(array_key_exists($lv_key_cap, $this->lt_capability_email))
+                { return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'].';'.$this->lt_capability_email[$lv_key_cap]['staffing_spoc_1']; }
+                break;    
                 return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'] . ';' . $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'];
                 break;
             case 'capability_gen_id':
-                return $this->lt_capability_email[$lv_key_cap]['generic_id'];
+                if(array_key_exists($lv_key_cap, $this->lt_capability_email))
+                { return $this->lt_capability_email[$lv_key_cap]['generic_id']; }
                 break;
             case 'ops_lead':
                 return $this->lt_capability_email[$lv_key_ops]['lead'];
@@ -182,7 +188,8 @@ class cl_NotificationMails {
                 return $this->lv_resource_email;
                 break;
             case 'bu_lead':
-                return $this->lt_bu[$lv_key_bu]['lead'];
+                if(array_key_exists($lv_key_bu, $this->lt_bu))
+                { return $this->lt_bu[$lv_key_bu]['lead']; }
                 break;
             case 'lead_other_bu':
                 return $this->lt_capability_email[$lv_key_ops]['generic_id'];
@@ -346,7 +353,7 @@ class cl_NotificationMails {
                 $this->lt_so_details = $lo_so_details->get_so_details($this->lv_so_number);
                 $this->lt_corpid_details = $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
                 $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
-                $this->lv_so_creator_name = $this->lt_corpid_details[0]['emp_name'];
+                $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
 
 // Get employee details.
                 $this->lt_emp_details = $lo_so_details->get_emp_details($this->lv_empid);
@@ -599,7 +606,7 @@ class cl_NotificationMails {
 //                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
-        $lv_mail = mail('dikshant.mishra@capgemini.com;', $this->lv_subject, $this->lv_message, $this->lv_headers);
+        $lv_mail = mail('dishu@locahost', $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
         // $lv_mail = mail('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', 'Test: '.$this->lv_subject, $this->lv_message, $this->lv_headers);
