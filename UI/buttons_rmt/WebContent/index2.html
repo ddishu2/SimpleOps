@@ -228,8 +228,11 @@ var  amend_table_report_gen;
 									$("#amend_report_view").addClass("hide_div");
 									$("#soft_report_view").addClass("hide_div");
 									$("#hard_report_view").addClass("hide_div");
+									$("#soft_expiry_report_view").addClass("hide_div");
 
 								}
+								
+								var e =window.event
 							}
 
 						}).addStyleClass("for_login_css");;
@@ -295,6 +298,7 @@ var  amend_table_report_gen;
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 
 							}
 						});
@@ -352,6 +356,7 @@ var  amend_table_report_gen;
 										$("#amend_report_view").addClass("hide_div");
 										$("#soft_report_view").addClass("hide_div");
 										$("#hard_report_view").addClass("hide_div");
+										$("#soft_expiry_report_view").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#third").addClass("hide_div");
@@ -365,6 +370,7 @@ var  amend_table_report_gen;
 										$("#amend_report_view").addClass("hide_div");
 										$("#soft_report_view").addClass("hide_div");
 										$("#hard_report_view").addClass("hide_div");
+										$("#soft_expiry_report_view").addClass("hide_div");
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
@@ -390,6 +396,7 @@ var  amend_table_report_gen;
      								$("#amend_report_view").addClass("hide_div");
      								$("#soft_report_view").addClass("hide_div");
     								$("#hard_report_view").addClass("hide_div");
+    								$("#soft_expiry_report_view").addClass("hide_div");
      								$("#remove_first").removeClass("hide_div");
                             	 
                              }
@@ -416,6 +423,7 @@ var  amend_table_report_gen;
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 								//$("#for_amend_table1-table").removeClass("change_color")
 								//http://localhost/rmt/api/v1/index.php/amendments
                                
@@ -3702,6 +3710,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							}).addStyleClass("for_report_gen");
 
 						var report_RB2 = new sap.ui.commons.RadioButton({
+							id: 'soft_expiry_check'
 							text : 'Expired Soft Locks',
 							tooltip : 'Expired Soft Locks',
 							groupName : 'Group1',
@@ -3738,6 +3747,7 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
 								$("#report_first_open").removeClass("hide_div");
@@ -3755,42 +3765,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						
 						
 						report_matrix_layout.placeAt("report_first");	
-						var refresh_report = new sap.ui.commons.Button({
-							text : "Download Report",
-							tooltip : "Download Report",	
-							
-							press: function()
-							{
-								
-								if($("#amend_check-RB").is(":checked") == true)
-								{
-								
-								var from_amend_report = $("#__picker0-input").val();
-								var to_amend_report = $("#__picker1-input").val();
-								console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
-								/* $
-												.ajax({
-													method : "GET",
-													url : "/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
-															+from_amend_report+
-															"&so_to_date="
-															+to_amend_report,
-													
-													})
-						 */
-						 
-						 window.open("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
-									+from_amend_report+
-									"&so_to_date="
-									+to_amend_report)
-						 
-								}
-								
-								//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
-
-							}
-
-							}).addStyleClass("for_normal_buttons_style1");
+						
 						
 						var view_report_sel = new sap.ui.commons.Button({
 							text : "View Report",
@@ -3894,6 +3869,7 @@ var repo_to1 = new sap.ui.commons.Label({
 									$("#first").addClass("hide_div");
 									$("#amend_report_view").addClass("hide_div");
 									$("#hard_report_view").addClass("hide_div");
+									$("#soft_expiry_report_view").addClass("hide_div");
 									$("#soft_report_view").removeClass("hide_div");
 						}
 								else if ($("#hard_check-RB").is(":checked") == true)
@@ -3905,7 +3881,20 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#first").addClass("hide_div");
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 								$("#hard_report_view").removeClass("hide_div");
+					}
+								else if ($("#soft_expiry_check-RB").is(":checked") == true)
+								{
+								
+								$("#report_first").addClass("hide_div");
+								$("#report_first_open").addClass("hide_div");
+								$("#report_first_zero").addClass("hide_div");
+								$("#first").addClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
+								$("#soft_report_view").addClass("hide_div");
+								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").removeClass("hide_div");
 					}
 								
 								
@@ -3926,7 +3915,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
-						refresh_report.placeAt("report_first");	
+						//refresh_report.placeAt("report_first");	
 						view_report_sel.placeAt("report_first");
 						report_back.placeAt("report_first");	
 						
@@ -4395,7 +4384,40 @@ var repo_to1 = new sap.ui.commons.Label({
 
 												amend_table_report_gen.placeAt("amend_report_view");
                                  
-												
+												var download_amend_report = new sap.ui.commons.Button({
+													text : "Download Report",
+													tooltip : "Download Report",	
+													
+													press: function()
+													{
+														
+														
+														var from_amend_report = $("#__picker0-input").val();
+														var to_amend_report = $("#__picker1-input").val();
+														console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
+														/* $
+																		.ajax({
+																			method : "GET",
+																			url : "/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
+																					+from_amend_report+
+																					"&so_to_date="
+																					+to_amend_report,
+																			
+																			})
+												 */
+												 
+												 window.open("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
+															+from_amend_report+
+															"&so_to_date="
+															+to_amend_report)
+												 
+													
+														
+														//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
+
+													}
+
+													}).addStyleClass("for_normal_buttons_style1");
 												var report_back_amend = new sap.ui.commons.Button({
 													id : 'back_report_amend',
 													text : "Back",
@@ -4409,7 +4431,8 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_amend.placeAt("amend_report_view")
+												download_amend_report.placeAt("amend_report_view");
+												report_back_amend.placeAt("amend_report_view");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4590,6 +4613,39 @@ var repo_to1 = new sap.ui.commons.Label({
 										filterProperty : "",
 										width : "70px"
 												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Approve",
+														tooltip : "Approve"
+													}),
+													template : new sap.ui.commons.ComboBox({
+														
+														id:'stat_hard_report1',
+														tooltip : "Decision",
+														items : [ 
+														         new sap.ui.core.ListItem("decide_hreport", {
+															text : "Approve",
+															key : "Ap"
+														}), new sap.ui.core.ListItem("decide_hreport1", {
+															text : "Reject",
+															key : "Re"
+														}),]
+													}).bindProperty("value",""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Ops Comments" ,
+														tooltip :"Ops Comments"
+													}),
+													template : new sap.ui.commons.TextField({})
+												.bindProperty("value", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
 			
 												hard_lock_report_gen.sort(hard_lock_report_gen.getColumns()[0]);
 
@@ -4727,6 +4783,8 @@ var repo_to1 = new sap.ui.commons.Label({
 	
 		<div id='amend_report_view' class ="hide_div"></div>
 		<div id='soft_report_view' class ="hide_div"></div>
+		<div id='soft_expiry_report_view' class ="hide_div"></div>
+		
 		<div id='hard_report_view' class ="hide_div">
 </div>
 </body>
