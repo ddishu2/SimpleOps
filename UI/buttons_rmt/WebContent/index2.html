@@ -50,13 +50,7 @@ var  amend_table_report_gen;
 							filterProperty: "",
 							width :"50px"
 						}));
-						/* popup_detail.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
-							width: "50px"
-						})); */
+						
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
 							template: new sap.ui.commons.TextField().bindProperty("value", ""),
@@ -73,6 +67,20 @@ var  amend_table_report_gen;
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "End Date" ,tooltip :"End Date"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "50px"
+						}));
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
+							template: new sap.ui.commons.TextField().bindProperty("value", ""),
+							sortProperty: "",
+							filterProperty: "",
+							width: "50px"
+						}));
+						popup_detail.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
 							template: new sap.ui.commons.TextField().bindProperty("value", ""),
 							sortProperty: "",
 							filterProperty: "",
@@ -1572,67 +1580,50 @@ var  amend_table_report_gen;
 							text : 'Capability'
 						}).addStyleClass("for_text_style1");
 
-/////////////////////////////////////////////multi selection capability starts here///////////////////////////////////////
-                   
-                      var oSimpleListBox_demand = new sap.ui.commons.ListBox({
-							
-							width : "200px",
-							items : [ new sap.ui.core.ListItem({
-								text : 'DCM'
-							}), new sap.ui.core.ListItem({
-								text : 'Development'
-							}), new sap.ui.core.ListItem({
-								text : 'Finance'
-							}),
-							new sap.ui.core.ListItem({
-								text : 'HCM'
-							}),
-							new sap.ui.core.ListItem({
-								text : 'Misc'
-							}),
-							new sap.ui.core.ListItem({
-								text : 'ISU'
-							}),
-							new sap.ui.core.ListItem({
-								text : 'Netweaver'
-							}),
-							new sap.ui.core.ListItem({
-								text : 'SCM'
-							}),
-							new sap.ui.core.ListItem({
-								text : 'Retail & AFS'
-							}),
-							
-							],
-							select : function(e) {
-								var a2 = [ "" ];
-								jQuery.each(oSimpleListBox_demand.getSelectedItems(),
-										function(idx, item) {
-											a2.push(item.getText(), ",");
-										});
-								oTextSummary_demand.setValue(a2.join(""));
-							}
-						});
-						var oTextSummary_demand = new sap.ui.commons.TextField({id: 'summary_demand'});
-						var oMultiSelectionCheckBox_demand = new sap.ui.commons.CheckBox(
-								
+						var capabilityText = new sap.ui.commons.DropdownBox(
 								{
-									id : 'check_demand',
-									text : "MultiSelection",
-									checked : false,
-									change : function(e) {
-										oSimpleListBox_demand.setAllowMultiSelect(e
-												.getSource().getChecked());
-									}
-								});
+									id: 'ct_drop',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						capabilityText.setTooltip("Location");
+						capabilityText.setEditable(true);
+						capabilityText.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("Capability0");
+						oItem.setText("");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability1");
+						oItem.setText("DCM");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability2");
+						oItem.setText("Development");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability3");
+						oItem.setText("Finance");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability4");
+						oItem.setText("HCM");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability5");
+						oItem.setText("Misc");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability6");
+						oItem.setText("Management");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability7");
+						oItem.setText("ISU");
+						capabilityText.addItem(oItem);	
+						oItem = new sap.ui.core.ListItem("Capability9");
+						oItem.setText("Netweaver");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability10");
+						oItem.setText("SCM");
+						capabilityText.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability11");
+						oItem.setText("Retail & AFS");
+						capabilityText.addItem(oItem);
 
-						
-						oDetails.createRow(capabilityLabel, oSimpleListBox_demand,
-								oTextSummary_demand, oMultiSelectionCheckBox_demand); 
+						capabilityLabel.setLabelFor(capabilityText);
+						oDetails.createRow(capabilityLabel, capabilityText);
 
-
-						
-///////////////////////////////////////////////////multi selection capability Ends here////////////////////////////////////
 						var oTagg = new sap.ui.commons.Button(
 								{
 									text : "Get Tagging Results",
@@ -1654,10 +1645,7 @@ var  amend_table_report_gen;
 				
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
-										
-											var cap=$("#summary_demand").val();
-											var temp_cap = new Array();			
-											temp_cap = cap.split(",");
+											var cap=$("#ct_drop-input").val();
 									
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
@@ -1680,7 +1668,7 @@ var  amend_table_report_gen;
 												        + "&cust_name="
 												        + c_name
 												        + "&capability="
-												        +  cap ); 
+												        +  cap); 
 										 
 										 
 										 if(temp.length == 1)
@@ -2102,6 +2090,114 @@ var  amend_table_report_gen;
 														    	     + temp[3]
 																	+ "&proj_loc[]="
 														    	     + temp[4]
+																			
+																	        + "&proj_id="
+																	        + p_id
+																	        + "&cust_name="
+																	        + c_name
+																	        + "&capability="
+																	        +  cap,
+																		success : function(odata) {
+																			
+																			sap.ui.core.BusyIndicator.hide(0);
+																			console.log(odata);
+																			var table_row;
+																			var res = odata;
+																			var res_length = 0;
+																			var res_completed = 0;
+																			var res_partial = 0;
+																			var completeData = [];
+
+																			jQuery
+																					.each(
+																							res,
+																							function(
+																									i,
+																									val) {
+
+																								res_length++;
+																								if (val.emp == null) {
+
+																									res_partial++
+																								} else {
+																									var tmp = {
+																										sname : val.so.so_no,
+																										pcode : val.so.so_proj_id,
+																										pname : val.so.so_proj_name,
+																										sdate : val.so.so_cr_date,
+																										edate : val.so.so_endate,
+																										eid : val.emp[0].emp_id,
+																										ename : val.emp[0].emp_name,
+																										lev : val.emp[0].level,
+																										skill : val.emp[0].skill1_l4,
+																										eloc : val.emp[0].loc,
+																										fulfill : "",
+																										status : "",
+																										assign : "",
+																										approve1 : "--Select--",
+																										pro_enddate : "" ,
+																										skill_cat : "" ,
+																										reason : val.emp[0].reason,
+																										propose_id : val.prop_id
+																									
+																									};
+																								
+																									completeData
+																											.push(tmp);
+																									res_completed++;
+
+																								}
+
+																							});
+
+																			var oModel2 = new sap.ui.model.json.JSONModel();
+																			oModel2
+																					.setData({
+																						modelData : completeData
+																					});
+																			suitable_match
+																					.setModel(oModel2);
+																			suitable_match
+																					.bindRows("/modelData");
+
+																			descript
+																					.setText(res_length
+																							+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																							+ res_completed
+																							+ " SO's.\n\n\nIdentified Partial match for "
+																							
+																							+ "SO's \n\n\n");
+																		}
+																	});
+																 }
+										 
+										 
+													 else if(temp.length == 6)
+													 {
+															$
+																	.ajax({
+																		method : "GET",
+																		url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
+																			+ from
+																			+ "&so_to_date="
+																			+ upto
+																			+ "&proj_name="
+																			+ p_name
+																			+ "&proj_bu="
+																			+ p_bu
+																			
+						         											+ "&proj_loc[]="
+																			+ temp[0]
+																        	+ "&proj_loc[]="
+																    	     + temp[1]
+																	+ "&proj_loc[]="
+														    	     + temp[2]
+																	+ "&proj_loc[]="
+														    	     + temp[3]
+																	+ "&proj_loc[]="
+														    	     + temp[4]
+																	+ "&proj_loc[]="
+														    	     + temp[5]
 																			
 																	        + "&proj_id="
 																	        + p_id
@@ -3587,8 +3683,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							widths : [ '400px' ]
 						});
 						var report_RB1 = new sap.ui.commons.RadioButton({
-							text : 'Current Soft Locks',
-							tooltip : 'Current Soft Locks',
+							id: 'soft_check',
+							text : 'Soft Locks',
+							tooltip : 'Soft Locks',
 							groupName : 'Group1',	
 							}).addStyleClass("for_report_gen");
 
@@ -3599,6 +3696,7 @@ var repo_to1 = new sap.ui.commons.Label({
 
 							}).addStyleClass("for_report_gen");
 						var report_RB3 = new sap.ui.commons.RadioButton({
+							id : 'hard_check',
 							text : 'Hard Locks',
 							tooltip : 'Hard Locks',
 							groupName : 'Group1',
@@ -3662,12 +3760,7 @@ var repo_to1 = new sap.ui.commons.Label({
 															+from_amend_report+
 															"&so_to_date="
 															+to_amend_report,
-													 success : function(odata) {
-														
-														alert("Ammendments Report Downloading...");
-											             console.log(odata);
-													}
-												
+													
 													})
 						
 								}
@@ -3770,6 +3863,28 @@ var repo_to1 = new sap.ui.commons.Label({
 										})	
 									
 									}
+								else if ($("#soft_check-RB").is(":checked") == true)
+									{
+									
+									$("#report_first").addClass("hide_div");
+									$("#report_first_open").addClass("hide_div");
+									$("#report_first_zero").addClass("hide_div");
+									$("#first").addClass("hide_div");
+									$("#amend_report_view").addClass("hide_div");
+									$("#hard_report_view").addClass("hide_div");
+									$("#soft_report_view").removeClass("hide_div");
+						}
+								else if ($("#hard_check-RB").is(":checked") == true)
+								{
+								
+								$("#report_first").addClass("hide_div");
+								$("#report_first_open").addClass("hide_div");
+								$("#report_first_zero").addClass("hide_div");
+								$("#first").addClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
+								$("#soft_report_view").addClass("hide_div");
+								$("#hard_report_view").removeClass("hide_div");
+					}
 								
 								
 							}
@@ -4273,6 +4388,285 @@ var repo_to1 = new sap.ui.commons.Label({
 													}
 					}).addStyleClass("for_normal_buttons_style1");
 												report_back_amend.placeAt("amend_report_view")
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////// Report First Amendments Part////////////////////////////////////////////////
+
+						
+					var	 hard_lock_report_gen = new sap.ui.table.Table(
+														{
+															id : 'for_hard_lock_report_gen',
+															title : "RMT Amendment Report View",
+															//visibleRowCount : 9,
+															//firstVisibleRow : 3,
+															selectionMode: sap.ui.table.SelectionMode.Single,
+															
+															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+
+														}).addStyleClass("style_for_table");
+
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp ID",
+														tooltip : "Emp ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												//setRowHeight:"200px"
+												}));
+
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp Name",
+														tooltip : "Emp Name"
+													}),
+													template : new sap.ui.commons.TextView({id:''})
+															.bindProperty("text", ""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												
+												
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Service Line",
+														tooltip : "Service Line"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project Code ",
+														tooltip : "Project Code "
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project Name",
+														tooltip : "Project Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Start date",
+														tooltip : "Start date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "End Date",
+														tooltip : "End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "SO # ",
+														tooltip : "SO # "
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "SO Level ",
+														tooltip:"SO Level "
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "T&E approver ID",
+														tooltip:"T&E approver ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "T&E approver Name",
+														tooltip:"T&E approver Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Smart Project Code" ,
+														tooltip :"Smart Project Code"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "FTE%" ,
+														tooltip :"FTE%"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Tagging Type" ,
+														tooltip:"Tagging Type"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+			
+												hard_lock_report_gen.sort(hard_lock_report_gen.getColumns()[0]);
+
+												hard_lock_report_gen.placeAt("hard_report_view");
+                                 
+												
+												var report_back_soft = new sap.ui.commons.Button({
+													id : 'back_report_hard',
+													text : "Back",
+													tooltip : "Back",
+													press:function()
+													{
+														$("#report_first").removeClass("hide_div");
+														$("#report_first_open").addClass("hide_div");
+														$("#report_first_zero").removeClass("hide_div");
+														$("#hard_report_view").addClass("hide_div");
+														
+													}
+					}).addStyleClass("for_normal_buttons_style1");
+												report_back_soft.placeAt("hard_report_view")
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////// Report First Soft Part////////////////////////////////////////////////
+
+						
+					var	 soft_lock_report_gen = new sap.ui.table.Table(
+														{
+															id : 'for_soft_lock_report_gen',
+															title : "RMT Hard Lock Report View",
+															//visibleRowCount : 9,
+															//firstVisibleRow : 3,
+															selectionMode: sap.ui.table.SelectionMode.Single,
+															
+															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+
+														}).addStyleClass("style_for_table");
+
+												soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Type",
+														tooltip : "Type"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												//setRowHeight:"200px"
+												}));
+
+												soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "SO Number",
+														tooltip : "SO Number"
+													}),
+													template : new sap.ui.commons.TextView({id:''})
+															.bindProperty("text", ""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Numeric Emp ID",
+														tooltip : "Numeric Emp ID"
+													}),
+													template : new sap.ui.commons.TextView({id:''})
+															.bindProperty("text", ""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												
+												
+												
+												
+												soft_lock_report_gen.sort(soft_lock_report_gen.getColumns()[0]);
+
+												soft_lock_report_gen.placeAt("soft_report_view");
+                                 
+												
+												var report_back_hard = new sap.ui.commons.Button({
+													id : 'back_report_soft',
+													text : "Back",
+													tooltip : "Back",
+													press:function()
+													{
+														$("#report_first").removeClass("hide_div");
+														$("#report_first_open").addClass("hide_div");
+														$("#report_first_zero").removeClass("hide_div");
+														$("#soft_report_view").addClass("hide_div");
+														
+													}
+					}).addStyleClass("for_normal_buttons_style1");
+												report_back_amend.placeAt("soft_report_view")
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					})
 </script>
 
@@ -4309,8 +4703,9 @@ var repo_to1 = new sap.ui.commons.Label({
 		<div id='report_first_open' class="hide_div"></div>
 		
 	
-		<div id='amend_report_view' class ="hide_div">
-	
-	</div>
+		<div id='amend_report_view' class ="hide_div"></div>
+		<div id='soft_report_view' class ="hide_div"></div>
+		<div id='hard_report_view' class ="hide_div">
+</div>
 </body>
 </html>
