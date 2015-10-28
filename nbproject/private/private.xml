@@ -3,20 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/rmt/api/v1/index_1.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/mail_templates/CRD.txt</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_abs_deployableEmps.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/test_email.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/if_deployableEmps.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_SOEmpSkillMatcher.php</file>
-            <file>file:/C:/xampp/htdocs/rmt/api/branches/ptellis/api/v1/cl_DB.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_deployableBUEmps.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/branches/ptellis/api/v1/cl_DB.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_get_so_details.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_Lock.php</file>
-            <file>file:/C:/xampp/htdocs/rmt/api/v1/index.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_NotificationMails.php</file>
-            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_abs_QueryBuilder.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/mail_templates/CTE.txt</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/Usernametest.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_OpenSOQueryBuilder.php</file>
-            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_vo_open_sos.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_abs_QueryBuilder.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_DB.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_Proposals.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_vo_open_sos.php</file>
         </group>
     </open-files>
 </project-private>
