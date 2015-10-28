@@ -1,18 +1,11 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Abstract class contains reusable logic to add filters(=, LIKE, IN).
  * Date: 21/09/2015
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
- abstract class cl_abs_QueryBuilder {
+ abstract class queryBuilder {
     const C_SQL_DATE_FORMAT        = "'%Y-%m-%d'";
     const C_SQL_STR_TO_DATE        = ' STR_TO_DATE'; 
     const C_SQL_INIT_DATE           = '0000-00-00';
@@ -61,8 +54,7 @@
                         .self::C_SQL_FROM
                         .$fp_v_from_table.PHP_EOL;
         }
-        return $re_query;
-        
+        return $re_query; 
     }
     
     
@@ -72,16 +64,31 @@
         if(self::isArrayListValid($fp_arr_columns))
         {
             $re_colList = self::getCSVFromArray($fp_arr_columns, self::C_COMMA, '');
-            $re_query =  self::C_SQL_SELECT
+            if($re_colList !== NULL)
+            {
+                $re_query =  self::C_SQL_SELECT
                     .$re_colList
                     .self::C_SQL_FROM
                     .$fp_v_from_table.PHP_EOL;
+            }
         }
         return $re_query;
-        
     }
     
-    final public static function  isArrayListValid(&$ch_fp_arr_list)
+    /**
+     * Converts value to an SQL string.
+     *  
+     * @param string    field value 
+     * @return boolean  Success
+     */
+    final public static function quote($fp_v_value)
+    {
+        $lv_value = $fp_v_value;
+        $re_value  = self::C_SQL_QUOTE.$lv_value.self::C_SQL_QUOTE;
+        return $re_value;
+    }
+    
+    final private static function  isArrayListValid(&$ch_fp_arr_list)
     {
         $re_valid = false;
         if(    (!is_null($ch_fp_arr_list))
@@ -92,14 +99,58 @@
             * Remove blank elements from array.
             */
             $larr_non_blank_values = array_filter($ch_fp_arr_list);
-            if (count($$larr_non_blank_values) > 0)
+            if (count($larr_non_blank_values) > 0)
             {
                 $ch_fp_arr_list = $larr_non_blank_values;
                 $re_valid = true;
-            }
-            
+            }       
         }
         return $re_valid;
+    }
+    
+    
+    /**
+     * 
+     * @param array  $fp_arr_values
+     * @param string $fp_v_delimiter
+     * @param string $fp_v_enclosed_by
+     * @return string CSV separated values or CSV separated quoted values
+     */
+    final private static function getCSVFromArray($fp_arr_values, $fp_v_delimiter = self::C_COMMA, $fp_v_enclosed_by = self::C_SQL_QUOTE)
+    {
+        $re_csv = null;
+        if(self::isArrayListValid($fp_arr_values))
+        {
+                $lv_delimiter = $fp_v_enclosed_by.$fp_v_delimiter;
+                $lv_valueList = implode($lv_delimiter, $fp_arr_values);
+                $lv_valueList = $fp_v_enclosed_by
+                                .$lv_valueList
+                                .$fp_v_enclosed_by; 
+                $re_csv = $lv_valueList;
+        }
+        return $re_csv;
+    }
+    
+    final public static function equals($fp_v_fname, $fp_v_fval, $fp_v_is_num = false)
+    {
+        $re_query = false;
+        if(self::isValidFilter($fp_v_fname, $fp_v_fval))
+        {
+            $lv_fname = $fp_v_fname;
+            $lv_fval  = $fp_v_fval;
+            if($fp_v_is_num === true)
+            {
+                $lv_fname = self::convertToSQLLower($fp_v_fname);
+                $lv_fval  = strtolower($fp_v_fval);
+                $lv_fval = self::convertValueToSQLString($lv_fval);
+            }
+
+            $lv_filterLine = $lv_fname
+                            .self::C_SQL_EQUALS
+                            .$lv_fval;
+            $re_query = $lv_filterLine;
+        }
+        return $re_query;
     }
     
     
@@ -115,6 +166,8 @@
         }
         return $re_max;
     }
+    
+    
     /**
      * 
      * @return string Query with filters added.
@@ -372,46 +425,7 @@
         return $re_value;
     }
     
-     /**
-     * Converts value to an SQL string.
-     *  
-     * @param string    field value 
-     * @return boolean  Success
-     */
-    final public static function quote($fp_v_value)
-    {
-        $lv_value = $fp_v_value;
-        $re_value  = self::C_SQL_QUOTE.$lv_value.self::C_SQL_QUOTE;
-        return $re_value;
-    }
-    
-    
 
-    
-    /**
-     * 
-     * @param array $fp_arr_values
-     * @param string $fp_v_delimiter
-     * @param string $fp_v_prefix_and_suffix
-     * @return string CSV separated values or CSV separated quoted values
-     */
-    final private static function getCSVFromArray($fp_arr_values, $fp_v_delimiter = self::C_COMMA_QUOTE, $fp_v_prefix_and_suffix = self::C_SQL_QUOTE)
-    {
-        $re_csv = null;
-
-        if(self::isArrayListValid($fp_arr_values))
-        {
-                $lv_valueList = implode($fp_v_delimiter, $fp_arr_values);
-            
-//            $lv_valueList = self::C_SQL_QUOTE.$lv_valueList.self::C_SQL_QUOTE; 
-                $lv_valueList = $fp_v_prefix_and_suffix
-                                .$lv_valueList
-                                .$fp_v_prefix_and_suffix; 
-                $re_csv = $lv_valueList;
-
-        }
-        return $re_csv;
-    }
     
     /**
      * Converts array to a comma separated values string.
