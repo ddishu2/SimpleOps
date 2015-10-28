@@ -103,7 +103,7 @@ class cl_DB
       return self::$mysql_database;
   }
   
-  public function getResultsFromQuery($fp_v_query)
+  public static function getResultsFromQuery($fp_v_query)
   {
       self::setDBHandle();
       self::clearCount();
