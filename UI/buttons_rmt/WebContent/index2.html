@@ -3833,9 +3833,10 @@ var repo_to1 = new sap.ui.commons.Label({
 																		am_supname_report1 :val.new_sup_name,
 																		am_reason_report1 :val.reason,
 																		am_request_report1  :val.req_by,
-																	//	am_comments_report1 :,
-																		am_extn : val.act,
-																		am_notice : val.Date_chng_noti ,
+																		am_comments_report1 :val.ops_comments,
+																	   am_status_report  :  val.status,
+																	   am_extn_report1 : val.act,
+																		am_notice_report1 : val.date_chng_noti ,
 																	};
 																
 																	completeData_report1
@@ -4175,10 +4176,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "ID"
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "am_id_report1"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "am_id_report1",
+													filterProperty : "am_id_report1",
 													width : "70px",
 												//setRowHeight:"200px"
 												}));
@@ -4188,10 +4189,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														text : "Emp Name",
 														tooltip : "Emp Name"
 													}),
-													template : new sap.ui.commons.TextView({id:''})
-															.bindProperty("text", ""),
-													sortProperty : "",
-													filterProperty : "",
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", "am_name_report1"),
+													sortProperty : "am_name_report1",
+													filterProperty : "am_name_report1",
 													width : "100px"
 												}));
 												
@@ -4203,9 +4204,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Competency"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_compet_report1"),
+										sortProperty : "am_compet_report1",
+										filterProperty : "am_compet_report1",
 										width : "70px"
 												}));
 
@@ -4215,9 +4216,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Current Project Name"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_currproname_report1"),
+										sortProperty : "am_currproname_report1",
+										filterProperty : "am_currproname_report1",
 										width : "200px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4226,9 +4227,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Current Start Date"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_startdate_report1"),
+										sortProperty : "am_startdate_report1",
+										filterProperty : "am_startdate_report1",
 										width : "150px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4237,9 +4238,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Current End Date"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_enddate_report1"),
+										sortProperty : "am_enddate_report1",
+										filterProperty : "am_enddate_report1",
 										width : "100px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4248,9 +4249,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Project End Date Projected"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_projected_report1"),
+										sortProperty : "am_projected_report1",
+										filterProperty : "am_projected_report1",
 										width : "100px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4259,9 +4260,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip:"Supervisor Name"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_sup_report1"),
+										sortProperty : "am_sup_report1",
+										filterProperty : "am_sup_report1",
 										width : "100px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4270,9 +4271,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip:"Customer Name"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_customer_report1"),
+										sortProperty : "am_customer_report1",
+										filterProperty : "am_customer_report1",
 										width : "100px"
 												}));
 												
@@ -4282,9 +4283,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip:"New End Date"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_newdate_report1"),
+										sortProperty : "am_newdate_report1",
+										filterProperty : "am_newdate_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4293,9 +4294,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip :"Action"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_extn"),
+										sortProperty : "am_extn_report1",
+										filterProperty : "am_extn_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4304,9 +4305,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip :"Date Change Notice"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_notice_report1"),
+										sortProperty : "am_notice_report1",
+										filterProperty : "am_notice_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4315,9 +4316,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip:"New Supervisor ID"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_newsupid_report1"),
+										sortProperty : "am_newsupid_report1",
+										filterProperty : "am_newsupid_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4326,9 +4327,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip: "New Supervisor Name"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_supname_report1"),
+										sortProperty : "am_supname_report1",
+										filterProperty : "am_supname_report1",
 										width : "150px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4337,9 +4338,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip:"PM Comments"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_reason_report1"),
+										sortProperty : "am_reason_report1",
+										filterProperty : "am_reason_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4348,9 +4349,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip :"Requested by"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_request_report1"),
+										sortProperty : "am_request_report1",
+										filterProperty : "am_request_report1",
 										width : "100px"
 												}));
 												
@@ -4361,9 +4362,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Ops Comments"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "am_comments_report1"),
+										sortProperty : "am_comments_report1",
+										filterProperty : "am_comments_report1",
 										width : "100px"
 												}));
 												
