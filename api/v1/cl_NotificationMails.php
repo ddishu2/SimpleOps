@@ -152,19 +152,22 @@ class cl_NotificationMails {
                 return $this->lt_capability_email[$lv_key_cap]['lead'];
                 break;
             case 'capability_sub_lead':
-                if(array_key_exists($lv_key_cap, $this->lt_capability_email))
-                { return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'].';'.$this->lt_capability_email[$lv_key_cap]['sub_lead_2']; }
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) {
+                    return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'] . ';' . $this->lt_capability_email[$lv_key_cap]['sub_lead_2'];
+                }
                 return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'] . ';' . $this->lt_capability_email[$lv_key_cap]['sub_lead_2'];
                 break;
             case 'capability_SPOC':
-                if(array_key_exists($lv_key_cap, $this->lt_capability_email))
-                { return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'].';'.$this->lt_capability_email[$lv_key_cap]['staffing_spoc_1']; }
-                break;    
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) {
+                    return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'] . ';' . $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'];
+                }
+                break;
                 return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'] . ';' . $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'];
                 break;
             case 'capability_gen_id':
-                if(array_key_exists($lv_key_cap, $this->lt_capability_email))
-                { return $this->lt_capability_email[$lv_key_cap]['generic_id']; }
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) {
+                    return $this->lt_capability_email[$lv_key_cap]['generic_id'];
+                }
                 break;
             case 'ops_lead':
                 return $this->lt_capability_email[$lv_key_ops]['lead'];
@@ -188,8 +191,9 @@ class cl_NotificationMails {
                 return $this->lv_resource_email;
                 break;
             case 'bu_lead':
-                if(array_key_exists($lv_key_bu, $this->lt_bu))
-                { return $this->lt_bu[$lv_key_bu]['lead']; }
+                if (array_key_exists($lv_key_bu, $this->lt_bu)) {
+                    return $this->lt_bu[$lv_key_bu]['lead'];
+                }
                 break;
             case 'lead_other_bu':
                 return $this->lt_capability_email[$lv_key_ops]['generic_id'];
@@ -317,15 +321,13 @@ class cl_NotificationMails {
 
 // Get PM and EM details.            
                 $this->lt_pm_details = $lo_so_details->get_emp_details($this->lt_so_details[0]['pm_id']);
-                $lv_count = array_count_values($this->lt_pm_details);
-                if ($lv_count) {
+                if (array_key_exists(0, $this->lt_pm_details)) {
                     $this->lv_pm_email = $this->lt_pm_details[0]['email'];
                 } else {
                     $this->lv_pm_email = 'kishor.ahire@capgemini.com';
                 }
                 $this->lt_em_details = $lo_so_details->get_emp_details($this->lt_so_details[0]['em_id']);
-                $lv_count = array_count_values($this->lt_em_details);
-                if ($lv_count) {
+                if (array_key_exists(0, $this->lt_em_details)) {
                     $this->lv_em_email = $this->lt_em_details[0]['email'];
                 } else {
                     $this->lv_pm_email = 'kishor.ahire@capgemini.com';
@@ -353,7 +355,7 @@ class cl_NotificationMails {
                 $this->lt_so_details = $lo_so_details->get_so_details($this->lv_so_number);
                 $this->lt_corpid_details = $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
                 $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
-                $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
+                $this->lv_so_creator_name = $this->lt_corpid_details[0]['emp_name'];
 
 // Get employee details.
                 $this->lt_emp_details = $lo_so_details->get_emp_details($this->lv_empid);
