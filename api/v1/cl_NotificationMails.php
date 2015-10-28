@@ -606,7 +606,7 @@ class cl_NotificationMails {
 //                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
-        $lv_mail = mail('dishu@locahost', $this->lv_subject, $this->lv_message, $this->lv_headers);
+        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
         // $lv_mail = mail('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', 'Test: '.$this->lv_subject, $this->lv_message, $this->lv_headers);
