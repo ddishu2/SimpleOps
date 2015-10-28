@@ -226,6 +226,8 @@ var  amend_table_report_gen;
 									$("#first").removeClass("hide_div");
 									$("#heading").removeClass("hide_div");
 									$("#amend_report_view").addClass("hide_div");
+									$("#soft_report_view").addClass("hide_div");
+									$("#hard_report_view").addClass("hide_div");
 
 								}
 							}
@@ -291,6 +293,8 @@ var  amend_table_report_gen;
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
 								$("#amend_report_view").addClass("hide_div");
+								$("#soft_report_view").addClass("hide_div");
+								$("#hard_report_view").addClass("hide_div");
 
 							}
 						});
@@ -346,6 +350,8 @@ var  amend_table_report_gen;
 										$("#report_first_open").addClass("hide_div");
 										$("#report_first_zero").addClass("hide_div");
 										$("#amend_report_view").addClass("hide_div");
+										$("#soft_report_view").addClass("hide_div");
+										$("#hard_report_view").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#third").addClass("hide_div");
@@ -357,6 +363,8 @@ var  amend_table_report_gen;
 										$("#first").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#amend_report_view").addClass("hide_div");
+										$("#soft_report_view").addClass("hide_div");
+										$("#hard_report_view").addClass("hide_div");
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
@@ -380,6 +388,8 @@ var  amend_table_report_gen;
      								$("#amend_zero").addClass("hide_div");
      								$("#amend_first").addClass("hide_div");
      								$("#amend_report_view").addClass("hide_div");
+     								$("#soft_report_view").addClass("hide_div");
+    								$("#hard_report_view").addClass("hide_div");
      								$("#remove_first").removeClass("hide_div");
                             	 
                              }
@@ -404,6 +414,8 @@ var  amend_table_report_gen;
 								$("#amend_first").addClass("hide_div");
 								$("#amend_zero").removeClass("hide_div");
 								$("#amend_report_view").addClass("hide_div");
+								$("#soft_report_view").addClass("hide_div");
+								$("#hard_report_view").addClass("hide_div");
 								//$("#for_amend_table1-table").removeClass("change_color")
 								//http://localhost/rmt/api/v1/index.php/amendments
                                
@@ -3724,6 +3736,8 @@ var repo_to1 = new sap.ui.commons.Label({
 							select: function()
 							{
 								$("#amend_report_view").addClass("hide_div");
+								$("#soft_report_view").addClass("hide_div");
+								$("#hard_report_view").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").removeClass("hide_div");
 								
@@ -3753,7 +3767,7 @@ var repo_to1 = new sap.ui.commons.Label({
 								var from_amend_report = $("#__picker0-input").val();
 								var to_amend_report = $("#__picker1-input").val();
 								console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
-								$
+								/* $
 												.ajax({
 													method : "GET",
 													url : "/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
@@ -3762,7 +3776,13 @@ var repo_to1 = new sap.ui.commons.Label({
 															+to_amend_report,
 													
 													})
-						
+						 */
+						 
+						 window.open("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
+									+from_amend_report+
+									"&so_to_date="
+									+to_amend_report)
+						 
 								}
 								
 								//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
@@ -4575,7 +4595,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												hard_lock_report_gen.placeAt("hard_report_view");
                                  
 												
-												var report_back_soft = new sap.ui.commons.Button({
+												var report_back_hard = new sap.ui.commons.Button({
 													id : 'back_report_hard',
 													text : "Back",
 													tooltip : "Back",
@@ -4588,7 +4608,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_soft.placeAt("hard_report_view")
+												report_back_hard.placeAt("hard_report_view")
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4598,7 +4618,7 @@ var repo_to1 = new sap.ui.commons.Label({
 					var	 soft_lock_report_gen = new sap.ui.table.Table(
 														{
 															id : 'for_soft_lock_report_gen',
-															title : "RMT Hard Lock Report View",
+															title : "RMT Soft Lock Report View",
 															//visibleRowCount : 9,
 															//firstVisibleRow : 3,
 															selectionMode: sap.ui.table.SelectionMode.Single,
@@ -4653,7 +4673,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												soft_lock_report_gen.placeAt("soft_report_view");
                                  
 												
-												var report_back_hard = new sap.ui.commons.Button({
+												var report_back_soft = new sap.ui.commons.Button({
 													id : 'back_report_soft',
 													text : "Back",
 													tooltip : "Back",
@@ -4666,7 +4686,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_amend.placeAt("soft_report_view")
+												report_back_soft.placeAt("soft_report_view")
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					})
 </script>
