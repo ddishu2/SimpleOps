@@ -10,6 +10,8 @@
 	data-sap-ui-compatVersion='edge' data-sap-ui-preload='async'>
 	
 </script>
+
+ <link rel="stylesheet"href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script>
 var Model_amend;
@@ -232,7 +234,7 @@ var  amend_table_report_gen;
 
 								}
 								
-								var e =window.event
+							
 							}
 
 						}).addStyleClass("for_login_css");;
@@ -1276,6 +1278,14 @@ var  amend_table_report_gen;
 													{
 														$("#amend_first").addClass("hide_div");
 														$("#amend_zero").removeClass("hide_div");
+														
+														location = "/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
+														"&proj_name="
+														+pass_pro_name+
+														"&cust_name="
+														+pass_cust_name;
+														
+														location.reload();
 														
 													}
 
@@ -2636,8 +2646,7 @@ var  amend_table_report_gen;
 								//id:'p_s_id'
 							})
 									.bindProperty("text", "propose_id").addStyleClass("propo_id").addStyleClass("hide_proposed"),
-							sortProperty : "propose_id",
-							filterProperty : "propose_id",
+							
 							width : "10px",
 							/* visible:false, */
 							
@@ -3710,7 +3719,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							}).addStyleClass("for_report_gen");
 
 						var report_RB2 = new sap.ui.commons.RadioButton({
-							id: 'soft_expiry_check'
+							id: 'soft_expiry_check',
 							text : 'Expired Soft Locks',
 							tooltip : 'Expired Soft Locks',
 							groupName : 'Group1',
@@ -4651,7 +4660,11 @@ var repo_to1 = new sap.ui.commons.Label({
 
 												hard_lock_report_gen.placeAt("hard_report_view");
                                  
-												
+												var report_download_hard = new sap.ui.commons.Button({
+													text: "Download Report"	,											
+													tooltip : "Download Report",
+													
+												}).addStyleClass("for_normal_buttons_style1");
 												var report_back_hard = new sap.ui.commons.Button({
 													id : 'back_report_hard',
 													text : "Back",
@@ -4665,7 +4678,8 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_hard.placeAt("hard_report_view")
+												report_download_hard.placeAt("hard_report_view");
+												report_back_hard.placeAt("hard_report_view");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4728,7 +4742,12 @@ var repo_to1 = new sap.ui.commons.Label({
 												soft_lock_report_gen.sort(soft_lock_report_gen.getColumns()[0]);
 
 												soft_lock_report_gen.placeAt("soft_report_view");
-                                 
+                                                
+												var report_download_soft = new sap.ui.commons.Button({
+													text: "Download Report"	,											
+													tooltip : "Download Report",
+													
+												}).addStyleClass("for_normal_buttons_style1");
 												
 												var report_back_soft = new sap.ui.commons.Button({
 													id : 'back_report_soft',
@@ -4743,8 +4762,256 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_soft.placeAt("soft_report_view")
+												report_download_soft.placeAt("soft_report_view");
+												report_back_soft.placeAt("soft_report_view");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////for soft lock expiry Reports///////////////////////////////////////////////////////
+
+        	
+					var	 soft_expiry_report_gen = new sap.ui.table.Table(
+														{
+															id : 'for_soft_expiry_report_gen',
+															title : "RMT Hard Report View",
+															//visibleRowCount : 9,
+															//firstVisibleRow : 3,
+															selectionMode: sap.ui.table.SelectionMode.Single,
+															
+															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+
+														}).addStyleClass("style_for_table");
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "SO No.",
+														tooltip : "SO No."
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project Code",
+														tooltip : "Project Code"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project Name",
+														tooltip : "Project Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Start Date",
+														tooltip : "Start Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "End Date",
+														tooltip : "End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp ID",
+														tooltip : "Emp ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp Name",
+														tooltip : "Emp Name"
+													}),
+													template : new sap.ui.commons.TextView({id:''})
+															.bindProperty("text", ""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												
+												
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Level",
+														tooltip : "Level"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Skill",
+														tooltip : "Skill"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Location",
+														tooltip : "Location"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Projected End Date",
+														tooltip : "Projected End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Skill Category",
+														tooltip : "Skill Category"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Reason",
+														tooltip : "Reason"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Multiproposal ",
+														tooltip:"Multiproposal"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Approve",
+														tooltip : "Approve"
+													}),
+													template : new sap.ui.commons.ComboBox({
+														
+														id:'stat_soft_expiry_report1',
+														tooltip : "Decision",
+														items : [ 
+														         new sap.ui.core.ListItem("decide_sereport", {
+															text : "Approve",
+															key : "Ap"
+														}), new sap.ui.core.ListItem("decide_sereport1", {
+															text : "Reject",
+															key : "Re"
+														}),]
+													}).bindProperty("value",""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Ops Comments" ,
+														tooltip :"Ops Comments"
+													}),
+													template : new sap.ui.commons.TextField({})
+												.bindProperty("value", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+			
+												soft_expiry_report_gen.sort(soft_expiry_report_gen.getColumns()[0]);
+
+												soft_expiry_report_gen.placeAt("soft_expiry_report_view");
+                                           
+
+												var report_download_soft_expiry = new sap.ui.commons.Button({
+													text: "Download Report"	,											
+													tooltip : "Download Report",
+													
+												}).addStyleClass("for_normal_buttons_style1");
+												var report_back_soft_expiry = new sap.ui.commons.Button({
+													id : 'back_report_soft_expiry',
+													text : "Back",
+													tooltip : "Back",
+													press:function()
+													{
+														$("#report_first").removeClass("hide_div");
+														$("#report_first_open").addClass("hide_div");
+														$("#report_first_zero").removeClass("hide_div");
+														$("#hard_report_view").addClass("hide_div");
+														$("#soft_expiry_report_view").addClass("hide_div");
+														
+													}
+					}).addStyleClass("for_normal_buttons_style1");
+												report_download_soft_expiry.placeAt("soft_expiry_report_view")
+												report_back_soft_expiry.placeAt("soft_expiry_report_view")
+												
+/////////////////////////////////////////////////////////soft Lock expiry ends here/////////////////////////////////////
+
+
+
 					})
 </script>
 
