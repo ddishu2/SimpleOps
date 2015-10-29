@@ -2387,7 +2387,7 @@ var  amend_table_report_gen;
 							press : function backtosecond() {
 								$("#second").removeClass("hide_div");
 								$("#third").addClass("hide_div");
-								$(" #four1 ").empty().load();
+								$(" #suitable_match-table ").empty().load();
 								
 
 							}
@@ -4404,24 +4404,13 @@ var repo_to1 = new sap.ui.commons.Label({
 														var from_amend_report = $("#__picker0-input").val();
 														var to_amend_report = $("#__picker1-input").val();
 														console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
-														/* $
-																		.ajax({
-																			method : "GET",
-																			url : "/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
-																					+from_amend_report+
-																					"&so_to_date="
-																					+to_amend_report,
-																			
-																			})
-												 */
+														
 												 
 												 window.open("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
 															+from_amend_report+
 															"&so_to_date="
 															+to_amend_report)
-												 
-													
-														
+
 														//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
 
 													}
