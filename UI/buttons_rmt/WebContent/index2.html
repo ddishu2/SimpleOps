@@ -1259,6 +1259,12 @@ var  amend_table_report_gen;
 												      			 alert("Notification Sent");  
 												      			 $(".for_amend_dropdown").remove();
 													      			$("#for_amend_table1-table").addClass("change_color");
+													      			
+													      			aEmpty = [];
+													      			var oModel_empty = new sap.ui.model.json.JSONModel();
+													      			oModel_empty.setData({modelData: aEmpty});
+													      			amend_table1.setModel(oModel_empty);
+													      			amend_table1.bindRows("/modelData");
 													     
 												      		}
 														
@@ -2354,7 +2360,7 @@ var  amend_table_report_gen;
 									
 									parent2.removeClass("change_color");
 									$(".approveDropdown input").val("--Select--");
-									parent2.find(".status_of_emp").html("");
+								//	parent2.find(".status_of_emp").html("");
 									}
                  
                  }) 
@@ -2672,11 +2678,12 @@ var  amend_table_report_gen;
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
 										 
-										 
+										 parent.addClass("change_color");
+											$(this).val("Done");
 								
 										// $('#suitable_match1').draggable(); 
-										 parent.find(".status_of_emp").html("Mail Sent");
-											parent.addClass("change_color");  
+									/* 	 parent.find(".status_of_emp").html("Mail Sent");
+											parent.addClass("change_color");   */
 										/*	$(this).val("Done");
 											$(this).remove();
 										  */
