@@ -11,8 +11,7 @@
 	
 </script>
 
-
-
+ <link rel="stylesheet"href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script>
 var Model_amend;
@@ -231,8 +230,11 @@ var  amend_table_report_gen;
 									$("#amend_report_view").addClass("hide_div");
 									$("#soft_report_view").addClass("hide_div");
 									$("#hard_report_view").addClass("hide_div");
+									$("#soft_expiry_report_view").addClass("hide_div");
 
 								}
+								
+							
 							}
 
 						}).addStyleClass("for_login_css");;
@@ -298,6 +300,7 @@ var  amend_table_report_gen;
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 
 							}
 						});
@@ -355,6 +358,7 @@ var  amend_table_report_gen;
 										$("#amend_report_view").addClass("hide_div");
 										$("#soft_report_view").addClass("hide_div");
 										$("#hard_report_view").addClass("hide_div");
+										$("#soft_expiry_report_view").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
 										$("#first1a").addClass("hide_div");
 										$("#third").addClass("hide_div");
@@ -368,6 +372,7 @@ var  amend_table_report_gen;
 										$("#amend_report_view").addClass("hide_div");
 										$("#soft_report_view").addClass("hide_div");
 										$("#hard_report_view").addClass("hide_div");
+										$("#soft_expiry_report_view").addClass("hide_div");
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
@@ -393,6 +398,7 @@ var  amend_table_report_gen;
      								$("#amend_report_view").addClass("hide_div");
      								$("#soft_report_view").addClass("hide_div");
     								$("#hard_report_view").addClass("hide_div");
+    								$("#soft_expiry_report_view").addClass("hide_div");
      								$("#remove_first").removeClass("hide_div");
                             	 
                              }
@@ -419,6 +425,7 @@ var  amend_table_report_gen;
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 								//$("#for_amend_table1-table").removeClass("change_color")
 								//http://localhost/rmt/api/v1/index.php/amendments
                                
@@ -997,7 +1004,7 @@ var  amend_table_report_gen;
 															visibleRowCount :100,
 															 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
 
-														}).addStyleClass("style_for_table");
+														}).addStyleClass("style_for_table").addStyleClass("clear_data");
 
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -1248,10 +1255,11 @@ var  amend_table_report_gen;
 												      		  url: "/rmt/api/v1/index.php/approve_amendments/?"+asc2,
 												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 												      		success : function(odata){
-												      			
+												      			console.log(odata);
 												      			 alert("Notification Sent");  
 												      			 $(".for_amend_dropdown").remove();
 													      			$("#for_amend_table1-table").addClass("change_color");
+													     
 												      		}
 														
 														}); 
@@ -1270,8 +1278,7 @@ var  amend_table_report_gen;
 													press:function()
 													{
 														$("#amend_first").addClass("hide_div");
-														$("#amend_zero").removeClass("hide_div");
-														
+														$("#amend_zero").removeClass("hide_div");		
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
@@ -1350,10 +1357,10 @@ var  amend_table_report_gen;
 						var date2 = new Date();
 						date2.setMonth(date2.getMonth() + 4); */
 						
-						var date1= new Date();
-						date1.setDate(date1.getDate()-56);
-					date2 = new Date();
-						date2.setDate(date2.getDate()-28);
+						var date1 = new Date();
+						              date1.setDate(date1.getDate() - 56);
+					   var date2 = new Date();
+						              date2.setDate(date2.getDate() + 28);
 
 						var for_from_date = new sap.ui.model.json.JSONModel();
 						for_from_date.setData({
@@ -2372,7 +2379,7 @@ var  amend_table_report_gen;
 							press : function backtosecond() {
 								$("#second").removeClass("hide_div");
 								$("#third").addClass("hide_div");
-								$(" #four1 ").load()
+								$(" #suitable_match-table ").empty().load();
 								
 
 							}
@@ -2631,8 +2638,7 @@ var  amend_table_report_gen;
 								//id:'p_s_id'
 							})
 									.bindProperty("text", "propose_id").addStyleClass("propo_id").addStyleClass("hide_proposed"),
-							sortProperty : "propose_id",
-							filterProperty : "propose_id",
+							
 							width : "10px",
 							/* visible:false, */
 							
@@ -3631,10 +3637,10 @@ var  amend_table_report_gen;
 
 						
 						
-						var dateformat1= new Date();
-						dateformat1.setDate(dateformat1.getDate());
-					dateformat2= new Date();
-						dateformat2.setDate(dateformat2.getDate());
+						var dateformat1 = new Date();
+						              dateformat1.setDate(dateformat1.getDate());
+					   var dateformat2 = new Date();
+						              dateformat2.setDate(dateformat2.getDate());
 
 						var for_from_date1 = new sap.ui.model.json.JSONModel();
 						for_from_date1.setData({
@@ -3705,8 +3711,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							}).addStyleClass("for_report_gen");
 
 						var report_RB2 = new sap.ui.commons.RadioButton({
-							text : 'Expired Soft Locks',
-							tooltip : 'Expired Soft Locks',
+							id: 'soft_expiry_check',
+							text : 'Soft Lock Expiry',
+							tooltip : 'Soft Lock Expiry',
 							groupName : 'Group1',
 
 							}).addStyleClass("for_report_gen");
@@ -3741,6 +3748,7 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 								$("#report_first").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
 								$("#report_first_open").removeClass("hide_div");
@@ -3758,42 +3766,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						
 						
 						report_matrix_layout.placeAt("report_first");	
-						var refresh_report = new sap.ui.commons.Button({
-							text : "Download Report",
-							tooltip : "Download Report",	
-							
-							press: function()
-							{
-								
-								if($("#amend_check-RB").is(":checked") == true)
-								{
-								
-								var from_amend_report = $("#__picker0-input").val();
-								var to_amend_report = $("#__picker1-input").val();
-								console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
-								/* $
-												.ajax({
-													method : "GET",
-													url : "/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
-															+from_amend_report+
-															"&so_to_date="
-															+to_amend_report,
-													
-													})
-						 */
-						 
-						 window.open("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
-									+from_amend_report+
-									"&so_to_date="
-									+to_amend_report)
-						 
-								}
-								
-								//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
-
-							}
-
-							}).addStyleClass("for_normal_buttons_style1");
+						
 						
 						var view_report_sel = new sap.ui.commons.Button({
 							text : "View Report",
@@ -3897,6 +3870,7 @@ var repo_to1 = new sap.ui.commons.Label({
 									$("#first").addClass("hide_div");
 									$("#amend_report_view").addClass("hide_div");
 									$("#hard_report_view").addClass("hide_div");
+									$("#soft_expiry_report_view").addClass("hide_div");
 									$("#soft_report_view").removeClass("hide_div");
 						}
 								else if ($("#hard_check-RB").is(":checked") == true)
@@ -3908,7 +3882,20 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#first").addClass("hide_div");
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").addClass("hide_div");
 								$("#hard_report_view").removeClass("hide_div");
+					}
+								else if ($("#soft_expiry_check-RB").is(":checked") == true)
+								{
+								
+								$("#report_first").addClass("hide_div");
+								$("#report_first_open").addClass("hide_div");
+								$("#report_first_zero").addClass("hide_div");
+								$("#first").addClass("hide_div");
+								$("#amend_report_view").addClass("hide_div");
+								$("#soft_report_view").addClass("hide_div");
+								$("#hard_report_view").addClass("hide_div");
+								$("#soft_expiry_report_view").removeClass("hide_div");
 					}
 								
 								
@@ -3929,7 +3916,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
-						refresh_report.placeAt("report_first");	
+						//refresh_report.placeAt("report_first");	
 						view_report_sel.placeAt("report_first");
 						report_back.placeAt("report_first");	
 						
@@ -4398,7 +4385,29 @@ var repo_to1 = new sap.ui.commons.Label({
 
 												amend_table_report_gen.placeAt("amend_report_view");
                                  
-												
+												var download_amend_report = new sap.ui.commons.Button({
+													text : "Download Report",
+													tooltip : "Download Report",	
+													
+													press: function()
+													{
+														
+														
+														var from_amend_report = $("#__picker0-input").val();
+														var to_amend_report = $("#__picker1-input").val();
+														console.log("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="+from_amend_report+"&so_to_date="+to_amend_report)
+														
+												 
+												 window.open("/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date="
+															+from_amend_report+
+															"&so_to_date="
+															+to_amend_report)
+
+														//http://localhost/rmt/api/v1/index.php/download_report/?type=Amendment_Report&so_from_date=2015-09-21&so_to_date=2015-10-28
+
+													}
+
+													}).addStyleClass("for_normal_buttons_style1");
 												var report_back_amend = new sap.ui.commons.Button({
 													id : 'back_report_amend',
 													text : "Back",
@@ -4412,7 +4421,8 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_amend.placeAt("amend_report_view")
+												download_amend_report.placeAt("amend_report_view");
+												report_back_amend.placeAt("amend_report_view");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4422,7 +4432,7 @@ var repo_to1 = new sap.ui.commons.Label({
 					var	 hard_lock_report_gen = new sap.ui.table.Table(
 														{
 															id : 'for_hard_lock_report_gen',
-															title : "RMT Hard Report View",
+															title : "RMT Hard Lock Report View",
 															//visibleRowCount : 9,
 															//firstVisibleRow : 3,
 															selectionMode: sap.ui.table.SelectionMode.Single,
@@ -4593,12 +4603,49 @@ var repo_to1 = new sap.ui.commons.Label({
 										filterProperty : "",
 										width : "70px"
 												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Approve",
+														tooltip : "Approve"
+													}),
+													template : new sap.ui.commons.ComboBox({
+														
+														id:'stat_hard_report1',
+														tooltip : "Decision",
+														items : [ 
+														         new sap.ui.core.ListItem("decide_hreport", {
+															text : "Approve",
+															key : "Ap"
+														}), new sap.ui.core.ListItem("decide_hreport1", {
+															text : "Reject",
+															key : "Re"
+														}),]
+													}).bindProperty("value",""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Ops Comments" ,
+														tooltip :"Ops Comments"
+													}),
+													template : new sap.ui.commons.TextField({})
+												.bindProperty("value", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
 			
 												hard_lock_report_gen.sort(hard_lock_report_gen.getColumns()[0]);
 
 												hard_lock_report_gen.placeAt("hard_report_view");
                                  
-												
+												var report_download_hard = new sap.ui.commons.Button({
+													text: "Download Report"	,											
+													tooltip : "Download Report",
+													
+												}).addStyleClass("for_normal_buttons_style1");
 												var report_back_hard = new sap.ui.commons.Button({
 													id : 'back_report_hard',
 													text : "Back",
@@ -4612,7 +4659,8 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_hard.placeAt("hard_report_view")
+												report_download_hard.placeAt("hard_report_view");
+												report_back_hard.placeAt("hard_report_view");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4675,7 +4723,12 @@ var repo_to1 = new sap.ui.commons.Label({
 												soft_lock_report_gen.sort(soft_lock_report_gen.getColumns()[0]);
 
 												soft_lock_report_gen.placeAt("soft_report_view");
-                                 
+                                                
+												var report_download_soft = new sap.ui.commons.Button({
+													text: "Download Report"	,											
+													tooltip : "Download Report",
+													
+												}).addStyleClass("for_normal_buttons_style1");
 												
 												var report_back_soft = new sap.ui.commons.Button({
 													id : 'back_report_soft',
@@ -4690,8 +4743,256 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_back_soft.placeAt("soft_report_view")
+												report_download_soft.placeAt("soft_report_view");
+												report_back_soft.placeAt("soft_report_view");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////for soft lock expiry Reports///////////////////////////////////////////////////////
+
+        	
+					var	 soft_expiry_report_gen = new sap.ui.table.Table(
+														{
+															id : 'for_soft_expiry_report_gen',
+															title : "RMT Soft Lock Expiry Report View",
+															//visibleRowCount : 9,
+															//firstVisibleRow : 3,
+															selectionMode: sap.ui.table.SelectionMode.Single,
+															
+															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+
+														}).addStyleClass("style_for_table");
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "SO No.",
+														tooltip : "SO No."
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project Code",
+														tooltip : "Project Code"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Project Name",
+														tooltip : "Project Name"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Start Date",
+														tooltip : "Start Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "End Date",
+														tooltip : "End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp ID",
+														tooltip : "Emp ID"
+													}),
+													template : new sap.ui.commons.TextView({})
+															.bindProperty("text", ""),
+															
+													sortProperty : "",
+													filterProperty : "",
+													width : "70px",
+												}));
+
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Emp Name",
+														tooltip : "Emp Name"
+													}),
+													template : new sap.ui.commons.TextView({id:''})
+															.bindProperty("text", ""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												
+												
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Level",
+														tooltip : "Level"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Skill",
+														tooltip : "Skill"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Location",
+														tooltip : "Location"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Projected End Date",
+														tooltip : "Projected End Date"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "200px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Skill Category",
+														tooltip : "Skill Category"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Reason",
+														tooltip : "Reason"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Multiproposal ",
+														tooltip:"Multiproposal"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "100px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Approve",
+														tooltip : "Approve"
+													}),
+													template : new sap.ui.commons.ComboBox({
+														
+														id:'stat_soft_expiry_report1',
+														tooltip : "Decision",
+														items : [ 
+														         new sap.ui.core.ListItem("decide_sereport", {
+															text : "Approve",
+															key : "Ap"
+														}), new sap.ui.core.ListItem("decide_sereport1", {
+															text : "Reject",
+															key : "Re"
+														}),]
+													}).bindProperty("value",""),
+													sortProperty : "",
+													filterProperty : "",
+													width : "100px"
+												}));
+												
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Ops Comments" ,
+														tooltip :"Ops Comments"
+													}),
+													template : new sap.ui.commons.TextField({})
+												.bindProperty("value", ""),
+										sortProperty : "",
+										filterProperty : "",
+										width : "70px"
+												}));
+			
+												soft_expiry_report_gen.sort(soft_expiry_report_gen.getColumns()[0]);
+
+												soft_expiry_report_gen.placeAt("soft_expiry_report_view");
+                                           
+
+												var report_download_soft_expiry = new sap.ui.commons.Button({
+													text: "Download Report"	,											
+													tooltip : "Download Report",
+													
+												}).addStyleClass("for_normal_buttons_style1");
+												var report_back_soft_expiry = new sap.ui.commons.Button({
+													id : 'back_report_soft_expiry',
+													text : "Back",
+													tooltip : "Back",
+													press:function()
+													{
+														$("#report_first").removeClass("hide_div");
+														$("#report_first_open").addClass("hide_div");
+														$("#report_first_zero").removeClass("hide_div");
+														$("#hard_report_view").addClass("hide_div");
+														$("#soft_expiry_report_view").addClass("hide_div");
+														
+													}
+					}).addStyleClass("for_normal_buttons_style1");
+												report_download_soft_expiry.placeAt("soft_expiry_report_view")
+												report_back_soft_expiry.placeAt("soft_expiry_report_view")
+												
+/////////////////////////////////////////////////////////soft Lock expiry ends here/////////////////////////////////////
+
+
+
 					})
 </script>
 
@@ -4730,6 +5031,8 @@ var repo_to1 = new sap.ui.commons.Label({
 	
 		<div id='amend_report_view' class ="hide_div"></div>
 		<div id='soft_report_view' class ="hide_div"></div>
+		<div id='soft_expiry_report_view' class ="hide_div"></div>
+		
 		<div id='hard_report_view' class ="hide_div">
 </div>
 </body>
