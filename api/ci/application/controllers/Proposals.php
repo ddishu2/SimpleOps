@@ -11,8 +11,13 @@
  *
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
-class Proposals extends CI_Controller 
+class Proposals extends CI_Controller
 {
+
+    public function __construct() 
+    {
+        parent::__construct();
+    }
     public function view($page = 'home')
     {  
         
