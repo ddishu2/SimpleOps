@@ -31,68 +31,60 @@ class open_sos extends open_so_query_builder
         parent::__construct($fp_v_so_sdate , $fp_v_so_endate);
     }
         
+    /**
+     * 
+     * @return array Return Open SOs
+     */
+    
     public function get( ) 
     {
-        $this->setOpenSOs();  
+        $this->set();  
         return $this->arr_open_sos;
     }
     
     
-    private function setOpenSOs()
+    /**
+     * Set open SOs.
+     * 
+     */
+    private function set()
     {
         $larr_open_sos = [];
-        $larr_sos =  $this->fetch();
+        $lv_query = parent::getQuery();
+        $larr_sos = cl_DB::getResultsFromQuery($lv_query);
         foreach ($larr_sos as $lwa_so) 
         {
-            $lv_so_id = $lwa_so[self::C_SO_ID_DB_FNAME];
-            $larr_open_sos[] = $lwa_so;
+            $lv_so_id = $lwa_so[self::C_FNAME_SO_POS_NO];
+            $larr_open_sos[$lv_so_id] = $lwa_so;
         }
         $this->arr_open_sos =  $larr_open_sos;
     }
-
-    private function fetch()
-    {
-        $re_sos   = [];
-        $lv_query = parent::getQuery();
-//        echo $lv_query;
-        $re_sos = cl_DB::getResultsFromQuery($lv_query);
-        return $re_sos;
-    }
     
-    public function isOpen($fp_v_so_id) 
+    /**
+     * 
+     * @param type string
+     * @return boolean
+     */
+    public static function isOpen($fp_v_so_id) 
     {
-//      //  print_r(self::$arr_lockedso);
-//          $re_open = false;
-////        $v_so_rejectionCountWithinLimits = $this->isSO_RejectionCountWithinLimits($fp_v_so_id);
-////        $v_so_unfulfilled                = $this->isSO_Unfulfilled($fp_v_so_id);
-////        $lv_isOpen                       = $v_so_unfulfilled && $v_so_rejectionCountWithinLimits;
-//        $lv_query = 'SELECT'.PHP_EOL
-//                    .'so_no'.PHP_EOL
-//                    .'FROM'.PHP_EOL
-//                    .'v_open_so'.PHP_EOL
-//                    .'LIMIT 1';
-//        $lv_so_id = cl_DB::getResultsFromQuery($lv_query);
-//        $lv_count = cl_DB::getCountAndReset();
-//        if($lv_count === 1)
-//        {
+
+        $re_open = false;
+        $lv_query = 'SELECT'.PHP_EOL
+                    .self::C_FNAME_SO_POS_NO.PHP_EOL
+                    .'FROM'.PHP_EOL
+                    .self::C_TABNAME.PHP_EOL
+                    .'LIMIT 1';
+        $lv_so_id = cl_DB::getResultsFromQuery($lv_query);
+        $lv_count = cl_DB::getCountAndReset();
+        if($lv_count === 1)
+        {
             $re_open = true;
-//        }
+        }
         return $re_open;
     }
     
-    private function isSO_RejectionCountWithinLimits()
-    {
-//     
-    }
     
-/**
-* Returns true if no emps. currently soft/hard locked against so
-*@return true|false
- *  */
-    private function isSO_Unfulfilled()
-    {
-        
-    }
+
  // changes by tejas
     
   private function getLocked()

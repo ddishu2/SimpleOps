@@ -30,9 +30,8 @@ class cl_Proposals {
         $fp_o_open_sos->filterByEqualsProjBU($lv_so_proj_bu);
         $fp_o_open_sos->filterByInLocationList($larr_so_locs);
         $fp_o_open_sos->filterByContainsProjectID($fp_v_proj_id);
-      
-         $fp_o_open_sos->filterByEqualsCapability($fp_v_capability);
-          $fp_o_open_sos->filterByContainsCustomerName($fp_v_cust_name);
+        $fp_o_open_sos->filterByEqualsCapability($fp_v_capability);
+        $fp_o_open_sos->filterByContainsCustomerName($fp_v_cust_name);
         $this->arr_open_sos      = $fp_o_open_sos->get();
         $this->lo_deployable_emp = $fp_o_deployableEmp;
         $this->lv_item_id = 0;
