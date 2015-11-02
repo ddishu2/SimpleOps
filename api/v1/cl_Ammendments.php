@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 require_once 'cl_abs_QueryBuilder.php';
+require_once 'cl_loadFiles.php';
 class cl_ammendments {
 
     const C_COMMENTS = 'comments';
@@ -467,4 +468,10 @@ class cl_ammendments {
          return $result;
     }
     
+    
+    
+    public function loadAmendments()
+    {
+        $lv_amendment_loadFile = cl_loadFiles::loadAmendments();
+    }
 }
