@@ -29,6 +29,7 @@ require_once __DIR__ .
         'Slim.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 //require __DIR__.DIRECTORY_SEPARATOR.'cl_deployableEmp.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_deployableBUEmps.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_vo_open_sos.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_SOEmpSkillMatcher.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
@@ -58,33 +59,18 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_OpenSOQueryBuilder.php';
             echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
         });
 //               
-//         $app->
-//            get(cl_RMGTool_Globals ::GC_ROUTE_DEPLOYABLE_EMPS, 
-//               function () use ($app)
-//               {
-//                    $app->response->setStatus(200);
-//                    $app->response->headers->set('Content-Type', 'application/json');
-//                    
-//                    
-////                    $re_it_emps_for_sos = [];
-////                    $lo_open_sos = new cl_vo_open_sos();
-//                    $lv_so_from_date = $app->request->get(cl_vo_open_sos::C_FNAME_SO_FROM);
-//                    $lv_so_to_date   = $app->request->get(cl_vo_open_sos::C_FNAME_SO_TO);
-//                    echo $lv_so_from_date;
-//                            
-////                    $lt_open_sos = $lo_open_sos->get($lv_so_from_date, $lv_so_to_date);
-//////                    
-////                    
-////                    $c_pg = new cl_ProposalGenerator();
-////                    $re_it_emps_for_sos = $c_pg->getAutoProposals($lt_open_sos);
-////                    $app->response->setStatus(200);
-////                    $app->response->headers->set('Content-Type', 'application/json');
-////                    echo json_encode($re_it_emps_for_sos, JSON_PRETTY_PRINT);
-//                   // echo json_encode($lt_open_sos, JSON_PRETTY_PRINT);
-//            
-//               }
-//
-//        );
+         $app->
+            get(cl_RMGTool_Globals ::GC_ROUTE_DEPLOYABLE_EMPS, 
+               function () use ($app)
+               {
+                    $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');
+                    $lo_emp = new cl_deployableBUEmps();
+                    $larr_deployable_emps = $lo_emp->get();
+                    echo json_encode($larr_deployable_emps, JSON_PRETTY_PRINT);
+               }
+
+        );
 //        
         
         

@@ -143,16 +143,13 @@ class cl_DB
     {
       self::setDBHandle();
       self::clearCount();
+      $re_success = false;
 
       if( self::$dbhandle->query($fp_v_query) === true)
       {
-         return true;
-         echo 'Success';
+         $re_success =  true;
       }
-      else
-      {
-         return false;
-      }
+      return $re_success;
     }
     
 }

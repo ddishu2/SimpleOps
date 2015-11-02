@@ -53,7 +53,7 @@ class Proposals {
         $count = $value['MAX(prop_id)'];
        }
        $proposal_id = $count +1;
-       return $proposal_id;
+       return $lv_pid;
     }
     
     public function getAutoProposals() 
@@ -134,7 +134,7 @@ class Proposals {
                         .$lv_prop_id.self::C_COMMA
                         .$lv_item_id.self::C_COMMA
                         .$lv_so_id  .self::C_COMMA
-                        .$lv_emp_id .self::C_COMMA
+                        .$lv_emp_id  .self::C_COMMA
                         .$lv_created_on.PHP_EOL
                    .')'.PHP_EOL;  
        $re_create_success = cl_DB::postResultIntoTable($lv_query);

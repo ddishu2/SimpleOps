@@ -14,6 +14,7 @@
  */
  abstract class cl_abs_QueryBuilder {
     const C_SQL_DATE_FORMAT        = "'%Y-%m-%d'";
+    const C_SQL_LIMIT              = ' LIMIT ';
     const C_SQL_STR_TO_DATE        = ' STR_TO_DATE'; 
     const C_SQL_INIT_DATE           = '0000-00-00';
     const C_SQL_MAX                 = 'MAX';
@@ -51,7 +52,7 @@
 
     private $v_query_filters = '';
     
-    final public static function selectAll($fp_v_from_table = '')
+    final public static function selectAll($fp_v_from_table = '', $fp_limit = 0)
     {
         $re_query = NULL;
         if(self::isValidFilter($fp_v_from_table, 'DUMMY'))
@@ -60,6 +61,11 @@
                         .self::C_SQL_ALL
                         .self::C_SQL_FROM
                         .$fp_v_from_table.PHP_EOL;
+            if($limit > 0)
+            {
+                $re_query
+               .self::C_SQL_LIMIT.$fp_limit.PHP_EOL;
+            }
         }
         return $re_query;
         
@@ -78,7 +84,6 @@
                     .$fp_v_from_table.PHP_EOL;
         }
         return $re_query;
-        
     }
     
     final public static function  isArrayListValid(&$ch_fp_arr_list)
@@ -88,16 +93,16 @@
            &&  is_array($ch_fp_arr_list) 
            &&  count($ch_fp_arr_list) > 0)
         {
-            /**
-            * Remove blank elements from array.
-            */
+//            /**
+//            * Remove blank elements from array.
+//            */
             $larr_non_blank_values = array_filter($ch_fp_arr_list);
-            if (count($$larr_non_blank_values) > 0)
+            if (count($larr_non_blank_values) > 0)
             {
                 $ch_fp_arr_list = $larr_non_blank_values;
                 $re_valid = true;
             }
-            
+//            
         }
         return $re_valid;
     }
@@ -140,6 +145,7 @@
         $re_query = $lv_baseQuery     .PHP_EOL
                    .$lv_filters       .PHP_EOL
                    .$lv_orderBySuffix .PHP_EOL;
+        echo $re_query;
         return $re_query;
     }
         
@@ -420,7 +426,7 @@
      * @param  boolean $lv_is_num True if array has number values 
      * @return string  CSV string
      */
-    final public static function convertArrayToCSV(array $fp_arr_values = null, $lv_is_num = false)
+    final public static function convertArrayToCSV($fp_arr_values = null, $lv_is_num = false)
     {
         $re_csv = null;
         /**

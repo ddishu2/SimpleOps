@@ -217,7 +217,7 @@ class cl_Lock {
         
         $count = 0;
         $select = "SELECT * FROM `trans_count`";
-         $result = cl_DB::getResultsFromQuery($select);
+        $result = cl_DB::getResultsFromQuery($select);
          
         foreach($result as $key => $value)
         {
@@ -485,8 +485,8 @@ and so_id ='$fp_v_so_id'";
            $lv_startDate = date(cl_abs_QueryBuilder::C_DATE_FORMAT);
            $lv_endDate   = $lv_startDate;
        }
-       $lv_startDate = cl_abs_QueryBuilder::convertToSQLDate($lv_startDate);
-       $lv_endDate   = cl_abs_QueryBuilder::convertToSQLDate($lv_endDate);
+       $lv_startDate = cl_abs_QueryBuilder::getSQLDateFromString($lv_startDate);
+       $lv_endDate   = cl_abs_QueryBuilder::getSQLDateFromString($lv_endDate);
         
        $lv_statusClause    = cl_abs_QueryBuilder::getInQuery(self::C_FNAME_STATUS, $fp_arr_statuses);
        $lv_end_date_clause = cl_abs_QueryBuilder::getBetweenFilterQuery

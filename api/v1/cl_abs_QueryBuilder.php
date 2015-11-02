@@ -13,7 +13,8 @@
  * @author "Prashanth Tellis Prashanth.Tellis@capgemini.com"
  */
  abstract class cl_abs_QueryBuilder {
-     const C_SQL_DATE_FORMAT        = "'%Y-%m-%d'";
+    const C_SQL_DATE_FORMAT        = "'%Y-%m-%d'";
+    const C_SQL_STR_TO_DATE        = ' STR_TO_DATE'; 
     const C_SQL_INIT_DATE           = '0000-00-00';
     const C_SQL_MAX                 = 'MAX';
     const C_SQL_PARENTHESES_OPEN    = ' ( ';
@@ -476,8 +477,8 @@
         $re_cast_as_date = '';
         if(self::isValidFilter($fp_v_fname, $lv_dummy_fvalue))
         {
-            $re_cast_as_date = self::C_SQL_STR_TO_DATE.
-                               self::C_SQL_PARENTHESES_OPEN
+            $re_cast_as_date = self::C_SQL_STR_TO_DATE
+                               .self::C_SQL_PARENTHESES_OPEN
                                .$fp_v_fname
                                .self::C_COMMA
                                .self::C_SQL_DATE_FORMAT

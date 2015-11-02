@@ -112,7 +112,7 @@ class cl_DB
 //      Invalid queries will return false
       if($lv_query_results == false)
       {
-          throw new Exception(self::QUERY_EXCEPTION);
+          throw new Exception(self::QUERY_EXCEPTION.':'.$fp_v_query);
       }
       else
         {
