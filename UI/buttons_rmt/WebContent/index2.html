@@ -490,7 +490,19 @@ var  amend_table_report_gen;
 											$("#soft_expiry_report_view").addClass("hide_div");
 									}  else if (oEvent.getParameter("itemId") == "item_amend1-2") {
 										
-										window.open("/rmt/api/v1/index.php/load_amendment");
+										
+									 	$
+										.ajax({
+											method : "GET",
+											url : 
+										"/rmt/api/v1/index.php/load_amendment",
+										
+										success :function(odata) {
+											console.log(odata);
+
+										}
+										})
+										//"/rmt/api/v1/index.php/load_amendment";
 									
 									} 
 								});
