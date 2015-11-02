@@ -404,7 +404,7 @@ var  amend_table_report_gen;
                              }
 						});
 
-						var amendments = new sap.ui.commons.Button({
+						/* var amendments = new sap.ui.commons.Button({
 							id : 'ad',
 							text : "Amendments",
 							tooltip : "Amendments",
@@ -426,25 +426,86 @@ var  amend_table_report_gen;
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
 								$("#soft_expiry_report_view").addClass("hide_div");
-								//$("#for_amend_table1-table").removeClass("change_color")
-								//http://localhost/rmt/api/v1/index.php/amendments
+								
                                
 							}
+						}); */
+						
+						
+						
+						var amendments = new sap.ui.commons.MenuButton({
+							id : 'ad',
+							text : "Amendments",
+							tooltip : "Amendments"
 						});
+
+						//Create the menu
+						var oMenu1 = new sap.ui.commons.Menu("menu_amend1", {
+							ariaDescription : "File Menu",
+							tooltip : "Transaction"
+						});
+						//Create the items and add them to the menu
+						var oMenuItem1 = new sap.ui.commons.MenuItem("item_amend1-1",
+								{
+									text : "Create ammendments file",
+									
+								}); 
+						oMenu1.addItem(oMenuItem1);
+						var oMenuItem2 = new sap.ui.commons.MenuItem("item_amend1-2",
+								{
+									text : "Upload ammendments file"
+								});
+						oMenu1.addItem(oMenuItem2);
+						
+						var oMenuItem3 = new sap.ui.commons.MenuItem("item_amend1-3",
+								{
+									text : "Approve ammendments"
+								});
+						oMenu1.addItem(oMenuItem3);
+						
+
+						amendments.setMenu(oMenu1);
+
+						//Attach an event to raise an alert when an item is selected.
+						amendments
+								.attachItemSelected(function(oEvent) {
+
+									if (oEvent.getParameter("itemId") == "item_amend1-3") {
+										
+										$("#second").addClass("hide_div");
+										$("#first").addClass("hide_div");
+											$("#manual1").addClass("hide_div");
+											$("#first1a").addClass("hide_div");
+											$("#third").addClass("hide_div");
+											$("#four1").addClass("hide_div");
+											$("#four2_core").addClass("hide_div");
+											$("#report_first").addClass("hide_div");
+											$("#report_first_open").addClass("hide_div");
+											$("#report_first_zero").addClass("hide_div");
+											$("#amend_first").addClass("hide_div");
+											$("#amend_zero").removeClass("hide_div");
+											$("#amend_report_view").addClass("hide_div");
+											$("#soft_report_view").addClass("hide_div");
+											$("#hard_report_view").addClass("hide_div");
+											$("#soft_expiry_report_view").addClass("hide_div");
+									}  else if (oEvent.getParameter("itemId") == "item_amend1-2") {
+										
+										window.open("/rmt/api/v1/index.php/load_amendment");
+									
+									} 
+								});
 						
 						
 						
 						
-						//--------------------------------------------for amendments-----------------------------------------------------------------//
+						//-------------------------------------------for amendments-----------------------------------------------------------------//
 						 var oDetails_amend_search = new sap.ui.commons.layout.MatrixLayout({
 							id : 'matrix_search_amend1',
 							layoutFixed : true,
 							width : '850px',
 							rowHeight : '10px',
 							columns : 4,
-							widths : [ '200px', '250px','200px' , '200px' 
-                              
-							           ]
+							widths : [ '200px', '250px','200px' , '200px'  ]
 						});	
 						
 						var custnameLabel_amend = new sap.ui.commons.Label({
