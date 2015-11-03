@@ -21,6 +21,7 @@ class cl_RMGTool_Globals
     const GC_GETAMMENDMENTSREPORT = '/getAmmendmentReport(/)';
     const GC_DWN_REPORT = '/download_report(/)';
     const GC_LOAD_AMMENDMENT = '/load_amendment(/)';
+    const GC_CREATE_AMENDMENT_FILE = '/create_amendment_file(/)';
     
     
 //    static public $GC_SLIM_PATH = __DIR__.
@@ -613,6 +614,15 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                  { 
                 $lo_amendments = new cl_ammendments();
                 $lo_amendments->loadAmendments();
+                
+                 }
+                );
+                $app->get(cl_RMGTool_Globals::GC_CREATE_AMENDMENT_FILE, 
+               function () use($app)
+                 { 
+                  
+                $lo_amendments = new cl_ammendments();
+                $lo_amendments->createAmendmentsFile();
                 
                  }
                 );
