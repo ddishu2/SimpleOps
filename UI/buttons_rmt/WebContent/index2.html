@@ -504,6 +504,22 @@ var  amend_table_report_gen;
 										//"/rmt/api/v1/index.php/load_amendment";
 									
 									} 
+                                     else if (oEvent.getParameter("itemId") == "item_amend1-1") {
+										
+										
+									 	$
+										.ajax({
+											method : "GET",
+											url : 
+										"/rmt/api/v1/index.php/create_amendment_file",
+										
+										success :function(odata) {
+											alert("hii");
+										}
+										})
+										//"/rmt/api/v1/index.php/load_amendment";
+									
+									} 
 								});
 						
 						
