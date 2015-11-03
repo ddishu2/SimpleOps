@@ -20,7 +20,9 @@ class cl_ammendments {
     const C_COMPETENCY = 'competency';
     const C_CUST_NAME = 'cust_name';
     const C_PROJ_NAME = 'proj_name';
-   
+    const AMENDMENT_BAT_SRC_DIR  = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\Batch Files\\';
+    const AMENDMENT_BAT_FILENAME_LOAD = 'rmt_amen_load_PHP.bat';
+    const AMENDMENT_BAT_FILENAME_CREATE = 'rmt_amen_load_RAS.bat';
 //    const C_AMMEND_TABLE = 'ammend_table';
     private static $arr_amendments = [];
     private static $arr_amendments_decision_taken = [];
@@ -472,6 +474,25 @@ class cl_ammendments {
     
     public function loadAmendments()
     {
+        $lv_batfile = //'start '.
+                escapeshellarg(self::AMENDMENT_BAT_SRC_DIR.self::AMENDMENT_BAT_FILENAME_LOAD);
+        echo $lv_batfile;
+        $str = exec($lv_batfile);
+        
         $lv_amendment_loadFile = cl_loadFiles::loadAmendments();
+    }
+    public function createAmendmentsFile()
+    {
+        $lv_batfile = //'start '.
+                escapeshellarg(self::AMENDMENT_BAT_SRC_DIR.self::AMENDMENT_BAT_FILENAME_CREATE);
+//        $lv_batfile = 'start /B \\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\Batch Files\rmt_amen_load_PHP.bat';
+//        $lv_batfile = escapeshellarg($lv_batfile);
+        echo $lv_batfile;
+      
+        //system("cmd /c C:\xampp\htdocs\rmt\api\BatchFile\SlockExpiry.bat");
+        //$str = exec('start /B C:\xampp\htdocs\rmt\api\BatchFile\SlockExpiry.bat');
+        //$str = exec('start /B '.self::AMENDMENT_BAT_FILENAME.self::AMENDMENT_BAT_FILENAME);
+        $str = exec($lv_batfile);
+        //echo $str;
     }
 }
