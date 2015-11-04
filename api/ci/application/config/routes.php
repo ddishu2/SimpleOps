@@ -49,6 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
-$route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['default_controller'] = 'open_so/getOpenSO';
+//$route['404_override'] = '';
+//$route['translate_uri_dashes'] = FALSE;
+$route['open_so'] = 'open_so/getOpenSO';
+$route['open_so/(:any)'] = 'news/getOpenSO/$1';
