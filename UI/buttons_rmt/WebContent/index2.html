@@ -21,6 +21,7 @@ var check1;
 var index;
 var amend_table1;
 var oOverlayContainer;
+var oTF;
 var  amend_table_report_gen;
 
 	sap.ui
@@ -156,7 +157,7 @@ var  amend_table_report_gen;
 							text : 'UserName:-'
 						}).addStyleClass("for_login_css");
 
-						var oTF = new sap.ui.commons.TextField({
+						 oTF = new sap.ui.commons.TextField({
 							id : 'TF-Name',
 							tooltip : 'UserName',
 							editable : true,
@@ -514,7 +515,7 @@ var  amend_table_report_gen;
 										"/rmt/api/v1/index.php/create_amendment_file",
 										
 										success :function(odata) {
-											alert("hii");
+											alert("Data Created Successfully");
 										}
 										})
 										//"/rmt/api/v1/index.php/load_amendment";
@@ -1091,6 +1092,7 @@ var  amend_table_report_gen;
 															selectionMode: sap.ui.table.SelectionMode.Single,
 															visibleRowCount :100,
 															 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+															 navigationMode : sap.ui.table.NavigationMode.Scrollbar
 
 														}).addStyleClass("style_for_table").addStyleClass("clear_data");
 
@@ -1393,13 +1395,16 @@ var  amend_table_report_gen;
 							tooltip : "External Hiring",
 
 						});
-						
+					
+
+				
 						cg_logo.placeAt("heading");
 						logout.placeAt("heading");
 						admin_act.placeAt("heading");
-						
+					
 						for_head_button.createRow(demand_fulfill, report_gen,
 								amendments, Approvals, External_Hiring)
+							//	for_head_button.createRow(wel_come)
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
