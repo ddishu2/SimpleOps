@@ -11,11 +11,15 @@ class SalesOrders extends CI_Controller
     {
         parent::__construct();
     }
+    
     public function getOpen()
+            
     {
-        echo $this->input->get('so_id');
-        echo 'Hello World';
+    
+        
     }
+    
+    
 
     
     
