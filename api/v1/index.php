@@ -22,6 +22,7 @@ class cl_RMGTool_Globals
     const GC_DWN_REPORT = '/download_report(/)';
     const GC_LOAD_AMMENDMENT = '/load_amendment(/)';
     const GC_CREATE_AMENDMENT_FILE = '/create_amendment_file(/)';
+    const GC_SSO                   = '/sso(/)';
     
     
 //    static public $GC_SLIM_PATH = __DIR__.
@@ -640,7 +641,18 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
                   
                   }
                   );   
-                  
+           
+// Added By Dikshant Mishra for SSO login.
+           $app->get(cl_RMGTool_Globals::GC_SSO,
+            function() use ($app)
+                {
+                    $lo_sso = new cl_sso();
+                    $re_result = $lo_sso->get_username();
+                    $app->response->setStatus(200);
+                    $app->response->headers->set('Content-Type', 'application/json');           
+                    echo json_encode($re_result, JSON_PRETTY_PRINT);
+            }
+            );
                   
                   
                   
