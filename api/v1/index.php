@@ -51,6 +51,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_NotificationMails.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Reports.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_sso.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
