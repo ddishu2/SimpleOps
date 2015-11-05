@@ -14,9 +14,6 @@
 class cl_sso {
     public function get_username() {
         $lv_cred = explode('\\', $_SERVER['REMOTE_USER']);
-        if (count($lv_cred) == 1)
-            array_unshift($lv_cred, "(no domain info - perhaps SSPIOmitDomain is On)");
-            list($lv_domain, $lv_user) = $lv_cred;
-            return $lv_cred;
+        return $lv_cred;
     }
 }
