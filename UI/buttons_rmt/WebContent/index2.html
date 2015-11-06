@@ -25,7 +25,7 @@ var check1;
 var index;
 var amend_table1;
 var oOverlayContainer;
-var sso1;
+var sso1=[];
 var  amend_table_report_gen;
 
 	sap.ui
@@ -43,7 +43,7 @@ var  amend_table_report_gen;
 							
 							success :function(odata) {
 								console.log(odata)
-								 sso1 = odata;
+								 sso1[] = odata;
 								
 								console.log(sso1);
 								alert("Hii")
@@ -143,12 +143,13 @@ var  amend_table_report_gen;
 
 						});
 						
-						var oValue1 = sso1;
+						var oValue1 = sso1[0];
+						console.log(oValue1);
 						var welcome_text =new sap.ui.commons.TextView({ id :'welcome_text1' ,text : "Welcome"});
 						var welcome_username = new sap.ui.commons.TextView({id :'welcome_username1' ,text : "UserDemo1"}); 
 						
 						sap.ui.getCore().byId("welcome_username1").setText(oValue1);
-
+                   
 						var admin_act = new sap.ui.commons.Button({
 							id : 'aa11',
 							text : "Administration Activities",
