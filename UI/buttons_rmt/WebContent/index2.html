@@ -34,8 +34,21 @@ var  amend_table_report_gen;
 					function() {
 						
 						$(document).ready(function(){
-						    alert("Hii");
-						  });
+
+						 	$
+							.ajax({
+								method : "GET",
+								url : 
+							"/rmt/api/v1/index.php/sso",
+							
+							success :function(odata) {
+								console.log(odata);
+								
+							
+							}
+							})
+						
+						  }); 
 
 						var popup_detail = new sap.ui.table.Table({
 							title: "Already Proposed Details",
@@ -114,149 +127,8 @@ var  amend_table_report_gen;
 						oOverlayContainer.attachClose(handler);
 						oOverlayContainer.attachOpen(handler);
 						oOverlayContainer.attachOpenNew(handler);
-						
-						
-						
-			/* 			var welcomme_text=new sap.ui.commons.TextView({id: 'wel_text' ,
-							text: "AppsOne SAP RMT Tool"
-							
-						});
-						
-						welcomme_text.placeAt("first1a");
-					
-						var oWelcome_Page1 = new sap.ui.commons.layout.MatrixLayout(
-								{
-									id : 'owel1',
-									layoutFixed : true,
-									width : '400px',
-									columns : 1,
-									widths : [ '400px' ]
-								});
-						
-						
-						var for_login = new sap.ui.commons.layout.MatrixLayout(
-								{
-									id : 'for_log_layout',
-									layoutFixed : true,
-									width : '500px',
-									columns : 2,
-									widths : [ '200px', '300px' ]
-								});
-						
-						
 
-						
-						var cg_logo1 = new sap.ui.commons.Image({
-							id : "rmtLogo",
-							width : "300px",
-							src : "images/Picture1.png",	
-							tooltip : "RMT Tool"
-
-						});
-
-						var logoCell = new sap.ui.commons.layout.MatrixLayoutCell(
-								{
-									colSpan : 2
-								});
-						logoCell.addContent(cg_logo1);
-						for_login.createRow(logoCell);
-
-						var oLabel = new sap.ui.commons.Label({
-							id : 'L-Name',
-							text : 'UserName:-'
-						}).addStyleClass("for_login_css");
-
-						 oTF = new sap.ui.commons.TextField({
-							id : 'TF-Name',
-							tooltip : 'UserName',
-							editable : true,
-							value : '',
-							width : '200px',
-						}).addStyleClass("for_login_css");
-						oLabel.setLabelFor(oTF);
-
-						for_login.createRow(oLabel, oTF);
-						var oLabel = new sap.ui.commons.Label({
-							id : 'L1-Name',
-							text : 'Password:-'
-						}).addStyleClass("for_login_css");
-
-						var oTF = new sap.ui.commons.PasswordField({
-							id : 'TF1-Name',
-							tooltip : 'Name',
-							editable : true,
-							value : '',
-							width : '200px',
-							change : function() {
-								if (this.getValue() == '')
-									alert("Please Enter your Password.");
-							}
-						}).addStyleClass("for_login_css");;
-
-						oLabel.setLabelFor(oTF);
-						for_login.createRow(oLabel, oTF);
-						var oButton1 = new sap.ui.commons.Button({
-							text : "LOGIN",
-							id : 'buton1',
-							tooltip : "LOGIN ",
-							press : function for_login() {
-
-								var nameFirstField = sap.ui.getCore().byId(
-										"TF-Name");
-								var namePassField = sap.ui.getCore().byId(
-										"TF1-Name");
-								var nameVisibility = sap.ui.getCore().byId(
-										"idlogin1")
-								if (nameFirstField.getValue() === "") {
-									alert("Please Enter Username.");
-									return;
-								} else if (namePassField.getValue() === "") {
-									alert("Please Enter Password");
-									return;
-								 }
-								else if(nameFirstField.getValue() !== "UserDemo1" ) 
-								{
-									
-								alert("You are not a valid User"); 
-
-								}
-								else if(namePassField.getValue() !== "userpass") 
-								{
-									
-								alert("You are not a valid User"); 
-
-								} 
-								
-								else {
-
-									$("#first1a").addClass("hide_div");
-									$("#manual1").addClass("hide_div");
-									$("#third").addClass("hide_div");
-									$("#second").addClass("hide_div");
-									$("#four1").addClass("hide_div");
-									$("#four2_core").addClass("hide_div");
-									$("#first").removeClass("hide_div");
-									$("#heading").removeClass("hide_div");
-									$("#amend_report_view").addClass("hide_div");
-									$("#soft_report_view").addClass("hide_div");
-									$("#hard_report_view").addClass("hide_div");
-									$("#soft_expiry_report_view").addClass("hide_div");
-
-								}
-								
-							
-							}
-
-						}).addStyleClass("for_login_css");;
-
-						for_login.createRow("", oButton1);
-
-						oWelcome_Page1.createRow(oTV);
-						oWelcome_Page1.createRow(oImage);
-
-						oWelcome_Page1.createRow(for_login);
-						oWelcome_Page1.placeAt("first1a"); */
-
+			
 						//for First Div(first)
 						var cg_logo = new sap.ui.commons.Image({
 							id : 'cg_logo',
@@ -283,41 +155,7 @@ var  amend_table_report_gen;
 							}
 
 						});
-						/* var logout = new sap.ui.commons.Button({
-							id : 'lo',
-							text : "Logout",
-							tooltip : "Logout",
-							press : function back_to_login() {
-								
-								//location.reload();
-								
-								 	 var nameFirstField1 = sap.ui.getCore().byId(
-									"TF-Name");
-							var namePassField1 = sap.ui.getCore().byId(
-									"TF1-Name");
-								 nameFirstField1.setValue()=="";
-								 namePassField1.setValue()=="";
-							
-                                    
-						//		$("#first1a").removeClass("hide_div");
-								$("#third").addClass("hide_div");
-								$("#four1").addClass("hide_div");
-								$("#four2_core").addClass("hide_div");
-								$("#first").addClass("hide_div");
-								$("#heading").addClass("hide_div");
-								$("#second").addClass("hide_div");
-								$("#amend_first").addClass("hide_div");
-								$("#amend_zero").addClass("hide_div");
-								$("#report_first").addClass("hide_div");
-								$("#report_first_open").addClass("hide_div");
-								$("#report_first_zero").addClass("hide_div");
-								$("#amend_report_view").addClass("hide_div");
-								$("#soft_report_view").addClass("hide_div");
-								$("#hard_report_view").addClass("hide_div");
-								$("#soft_expiry_report_view").addClass("hide_div");
-
-							}
-						}); */
+						
 						var for_head_button = new sap.ui.commons.layout.MatrixLayout(
 								{
 									id : 'fhb',
@@ -374,7 +212,7 @@ var  amend_table_report_gen;
 										$("#hard_report_view").addClass("hide_div");
 										$("#soft_expiry_report_view").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
-									//	$("#first1a").addClass("hide_div");
+									
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
@@ -382,7 +220,7 @@ var  amend_table_report_gen;
 										$("#manual1").removeClass("hide_div");
 										$("#second").addClass("hide_div");
 										$("#first").addClass("hide_div");
-									//	$("#first1a").addClass("hide_div");
+									
 										$("#amend_report_view").addClass("hide_div");
 										$("#soft_report_view").addClass("hide_div");
 										$("#hard_report_view").addClass("hide_div");
@@ -401,7 +239,7 @@ var  amend_table_report_gen;
                             	 $("#second").addClass("hide_div");
      							$("#first").addClass("hide_div");
      								$("#manual1").addClass("hide_div");
-     						//		$("#first1a").addClass("hide_div");
+     					
      								$("#third").addClass("hide_div");
      								$("#four1").addClass("hide_div");
      								$("#four2_core").addClass("hide_div");
@@ -418,32 +256,6 @@ var  amend_table_report_gen;
                              }
 						});
 
-						/* var amendments = new sap.ui.commons.Button({
-							id : 'ad',
-							text : "Amendments",
-							tooltip : "Amendments",
-							press: function()
-							{
-								$("#second").addClass("hide_div");
-							$("#first").addClass("hide_div");
-								$("#manual1").addClass("hide_div");
-								$("#first1a").addClass("hide_div");
-								$("#third").addClass("hide_div");
-								$("#four1").addClass("hide_div");
-								$("#four2_core").addClass("hide_div");
-								$("#report_first").addClass("hide_div");
-								$("#report_first_open").addClass("hide_div");
-								$("#report_first_zero").addClass("hide_div");
-								$("#amend_first").addClass("hide_div");
-								$("#amend_zero").removeClass("hide_div");
-								$("#amend_report_view").addClass("hide_div");
-								$("#soft_report_view").addClass("hide_div");
-								$("#hard_report_view").addClass("hide_div");
-								$("#soft_expiry_report_view").addClass("hide_div");
-								
-                               
-							}
-						}); */
 						
 						
 						
@@ -489,7 +301,7 @@ var  amend_table_report_gen;
 										$("#second").addClass("hide_div");
 										$("#first").addClass("hide_div");
 											$("#manual1").addClass("hide_div");
-										//	$("#first1a").addClass("hide_div");
+										
 											$("#third").addClass("hide_div");
 											$("#four1").addClass("hide_div");
 											$("#four2_core").addClass("hide_div");
@@ -1425,7 +1237,7 @@ var  amend_table_report_gen;
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
-							text : 'Welcome To RMT Tool.',
+							text : 'Welcome To RMT Tool',
 						})
 
 						var oImage = new sap.ui.commons.Image({
