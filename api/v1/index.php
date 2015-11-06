@@ -661,9 +661,9 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
             $app->get(cl_RMGTool_Globals::GC_23DAYS_HL_RELEASE,
                                 function() use ($app)
                 {
-                $fp_date_from = $app->request->get(cl_releasenotification::gc_date_from);
+//                $fp_date_from = $app->request->get(cl_releasenotification::gc_date_from);
                 $io_days      = new cl_releasenotification;
-                $re_result    = $io_days->add_business_days($fp_date_from);
+                $re_result    = $io_days->getreleasablehardlocks();
                 $app->response->setStatus(200);
                 $app->response->headers->set('Content-Type', 'application/json');           
                 echo json_encode($re_result, JSON_PRETTY_PRINT);
