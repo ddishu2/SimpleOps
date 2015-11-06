@@ -23,6 +23,7 @@ class cl_RMGTool_Globals
     const GC_LOAD_AMMENDMENT = '/load_amendment(/)';
     const GC_CREATE_AMENDMENT_FILE = '/create_amendment_file(/)';
     const GC_SSO                   = '/sso(/)';
+    const GC_23DAYS_HL_RELEASE     = '/hardlock_release_notification(/)';
     
     
 //    static public $GC_SLIM_PATH = __DIR__.
@@ -655,6 +656,18 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
             }
             );
                   
+// Added by Dikshant Mishra for Hard lock release notification
+            $app->get(cl_RMGTool_Globals::GC_23DAYS_HL_RELEASE,
+                                function() use ($app)
+                {
+                $fp_date_from = $app->request->get(cl_workingdays::gc_date_from);
+                $io_days      = new cl_workingdays;
+                $re_result    = $io_days->add_business_days($fp_date_from);
+                $app->response->setStatus(200);
+                $app->response->headers->set('Content-Type', 'application/json');           
+                echo json_encode($re_result, JSON_PRETTY_PRINT);
+                }
+                );
                   
                   
                   
