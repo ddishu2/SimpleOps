@@ -12,7 +12,7 @@
  * @author Dikshant Mishra/dikmishr
  */
 class cl_releasenotification {
-    const gc_business_days = 23,
+    const gc_business_days = 26,
           gc_date_format   = 'd-M-Y',
           gc_date_from     = 'date_from';
     
@@ -32,7 +32,7 @@ class cl_releasenotification {
 // Function to get all the hard locks which will be released on a particular date.
     public function getreleasablehardlocks()
     {
-        $lv_edate = $this->add_business_days(date(self::gc_date_format));
+        $lv_edate = $this->add_business_days(date(self::gc_date_format));       
         $lv_query_empid =   "SELECT curr_so,
                             curr_end_date,
                             idp,
@@ -46,7 +46,8 @@ class cl_releasenotification {
                             curr_proj_name
                             level
                             from m_emp_ras
-                            where curr_end_date = '$lv_edate'";
+                            where curr_end_date = '$lv_edate' and
+                                  idp = 'Appsone SAP'";
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
