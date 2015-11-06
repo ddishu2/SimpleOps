@@ -8,7 +8,7 @@
 
 /**
  * Description of cl_NotificationMails
- * Sending emails to concerned parties about for different activities.
+ * Sending emails to concerned parties for different activities.
  * 
  * @author "Dikshant Mishra dikshant.mishra@capgemini.com"
  */
@@ -113,6 +113,14 @@ class cl_NotificationMails {
         return $lv_return;
     }
 
+// Method to send Hard lock release intimation.
+    public function sendhardlockreleaseintimation($fp_arr_locks, $fp_arr_recievers)
+    {
+        $lv_return = false;
+        $lv_return = self::sendnotification($fp_arr_locks, 'RL4', '', $fp_arr_recievers, '');
+        return $lv_return;
+    }
+    
 // Method to send Soft lock release notification.
     public function sendSoftLockNotification($fp_v_so_id, $i_link, $fp_v_emp_id, $fp_v_trans_id) {
         $lv_return = false;

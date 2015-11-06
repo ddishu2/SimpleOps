@@ -28,7 +28,6 @@ class cl_releasenotification {
         }
         return date(self::gc_date_format, $lv_dayx);
     }
-
 }
 
 
