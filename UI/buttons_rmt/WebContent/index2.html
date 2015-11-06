@@ -25,7 +25,7 @@ var check1;
 var index;
 var amend_table1;
 var oOverlayContainer;
-var sso1=[];
+var sso1;
 var  amend_table_report_gen;
 
 	sap.ui
@@ -33,27 +33,7 @@ var  amend_table_report_gen;
 			.attachInit(
 					function() {
 						
-						$(document).ready(function(){
-
-						 	$
-							.ajax({
-								method : "GET",
-								url : 
-							"/rmt/api/v1/index.php/sso",
-							
-							success :function(odata) {
-								console.log(odata)
-								 sso1 = odata;
-								
-								console.log(sso1);
-								alert("Hii")
-								
-							
-							}
-							})
 						
-						  }); 
-
 						var popup_detail = new sap.ui.table.Table({
 							title: "Already Proposed Details",
 							visibleRowCount: 7,
@@ -143,7 +123,7 @@ var  amend_table_report_gen;
 
 						});
 						
-						var oValue1 = sso1[0];
+						var oValue1 = sso1;
 						console.log(oValue1);
 						var welcome_text =new sap.ui.commons.TextView({ id :'welcome_text1' ,text : "Welcome"});
 						var welcome_username = new sap.ui.commons.TextView({id :'welcome_username1' ,text : "UserDemo1"}); 
@@ -4973,5 +4953,28 @@ var repo_to1 = new sap.ui.commons.Label({
 		<div id='hard_report_view' class ="hide_div">
 </div>
 </div>
+<script>
+$(document).ready(function(){
+
+ 	$
+	.ajax({
+		method : "GET",
+		url : 
+	"/rmt/api/v1/index.php/sso",
+	
+	success :function(odata) {
+		console.log(odata)
+		 sso1 = odata;
+		
+		console.log(sso1);
+		
+		$("#welcome_username1").text(sso1);
+	
+	}
+	})
+
+  }); 
+
+</script>
 </body>
 </html>
