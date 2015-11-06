@@ -53,6 +53,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'cl_getDetails.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Ammendments.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_Reports.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_sso.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_releasenotification.php';
  \Slim\Slim::registerAutoloader();
  
 // Instantiate a Slim Application
@@ -660,8 +661,8 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
             $app->get(cl_RMGTool_Globals::GC_23DAYS_HL_RELEASE,
                                 function() use ($app)
                 {
-                $fp_date_from = $app->request->get(cl_workingdays::gc_date_from);
-                $io_days      = new cl_workingdays;
+                $fp_date_from = $app->request->get(cl_releasenotification::gc_date_from);
+                $io_days      = new cl_releasenotification;
                 $re_result    = $io_days->add_business_days($fp_date_from);
                 $app->response->setStatus(200);
                 $app->response->headers->set('Content-Type', 'application/json');           

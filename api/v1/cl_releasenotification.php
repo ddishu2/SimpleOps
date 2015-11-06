@@ -11,7 +11,7 @@
  *
  * @author Dishu
  */
-class cl_workingdays {
+class cl_releasenotification {
     const gc_business_days = 23,
           gc_date_format   = 'd-M-Y',
           gc_date_from     = 'date_from';
