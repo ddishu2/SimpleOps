@@ -126,7 +126,7 @@ var  amend_table_report_gen;
 						/* var oValue1 = sso1;
 						console.log(oValue1); */
 						var welcome_text =new sap.ui.commons.TextView({ id :'welcome_text1' ,text : "Welcome"});
-						var welcome_username = new sap.ui.commons.TextView({id :'welcome_username1' ,text : "UserDemo1"}); 
+						var welcome_username = new sap.ui.commons.TextView({id :'welcome_username1' ,text : ""}); 
 						
 						/* sap.ui.getCore().byId("welcome_username1").setText(oValue1);
 						console.log(welcome_username) */
@@ -200,19 +200,23 @@ var  amend_table_report_gen;
 										$("#hard_report_view").addClass("hide_div");
 										$("#soft_expiry_report_view").addClass("hide_div");
 										$("#manual1").addClass("hide_div");
-									
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
 									} else if (oEvent.getParameter("itemId") == "item1-2") {
-										$("#manual1").removeClass("hide_div");
 										$("#second").addClass("hide_div");
+										// $('#second').load('demand_fullfill1.html');
 										$("#first").addClass("hide_div");
-									
+										$("#amend_first").addClass("hide_div");
+										$("#amend_zero").addClass("hide_div");
+										$("#report_first").addClass("hide_div");
+										$("#report_first_open").addClass("hide_div");
+										$("#report_first_zero").addClass("hide_div");
 										$("#amend_report_view").addClass("hide_div");
 										$("#soft_report_view").addClass("hide_div");
 										$("#hard_report_view").addClass("hide_div");
 										$("#soft_expiry_report_view").addClass("hide_div");
+										$("#manual1").removeClass("hide_div");
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
@@ -312,6 +316,7 @@ var  amend_table_report_gen;
 										"/rmt/api/v1/index.php/load_amendment",
 										
 										success :function(odata) {
+											
 											alert("Data Uploaded Successfully");
 											
 										
@@ -330,8 +335,10 @@ var  amend_table_report_gen;
 										"/rmt/api/v1/index.php/create_amendment_file",
 										
 										success :function(odata) {
+											 sap.ui.core.BusyIndicator.show(0);
 											window.location.reload();
 											alert("Ammendment File Created");
+											 sap.ui.core.BusyIndicator.hide(0);
 										}
 										})
 										//"/rmt/api/v1/index.php/load_amendment";
@@ -513,6 +520,7 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
+											am_ext_notice : "" ,
 											am_extn : val.act,
 											am_notice : val.Date_chng_noti ,
 										};
@@ -594,6 +602,7 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
+											am_ext_notice : "" ,
 											am_extn : val.act,
 											am_notice : val.Date_chng_noti ,
 										};
@@ -680,6 +689,7 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
+											am_ext_notice : "" ,
 											am_extn : val.act,
 											am_notice : val.Date_chng_noti ,
 										};
@@ -765,6 +775,7 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
+											am_ext_notice : "" ,
 											am_extn : val.act,
 											am_notice : val.Date_chng_noti ,
 										};
@@ -850,6 +861,7 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
+											am_ext_notice : "" ,
 											am_extn : val.act,
 											am_notice : val.Date_chng_noti ,
 										};
@@ -1042,13 +1054,24 @@ var  amend_table_report_gen;
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Date Change Notice" ,
-														tooltip :"Date Change Notice"
+														text : "Roll-Off Lead Time" ,
+														tooltip :"Roll-Off Lead Time"
 													}),
 													template : new sap.ui.commons.TextView({})
 												.bindProperty("text", "am_notice"),
 										sortProperty : "am_notice",
 										filterProperty : "am_notice",
+										width : "70px"
+												}));
+												amend_table1.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Extension Notice" ,
+														tooltip :"Extension Notice"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_ext_notice"),
+										sortProperty : "am_ext_notice",
+										filterProperty : "am_ext_notice",
 										width : "70px"
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
@@ -1067,11 +1090,11 @@ var  amend_table_report_gen;
 														text : "New Supervisor Name",
 														tooltip: "New Supervisor Name"
 													}),
-													template : new sap.ui.commons.TextView({id:'ame_nsn'})
+													template : new sap.ui.commons.TextView({})
 												.bindProperty("text", "am_supname"),
 										sortProperty : "am_supname",
 										filterProperty : "am_supname",
-										width : "150px"
+										width : "100px"
 												}));
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -1268,10 +1291,6 @@ var  amend_table_report_gen;
 
 						}).addStyleClass("for_text_style1");
 
-						/* var date1 = new Date();
-						date1.setMonth(date1.getMonth() - 8);
-						var date2 = new Date();
-						date2.setMonth(date2.getMonth() + 4); */
 						
 						var date1 = new Date();
 						              date1.setDate(date1.getDate() - 56);
@@ -3236,143 +3255,335 @@ var  amend_table_report_gen;
 
 						
 						
-						///for manual tagging (manual1)
-
-						///for the form within overlay for SO's
-						var SO_form = new sap.ui.commons.layout.MatrixLayout({
-							id : 'manual_so_table_form',
+					//////////////////////////////////////////////Manual Tagging Starts///////////////////////////////////////////////////////////
+              	var osearch_manual = new sap.ui.commons.layout.MatrixLayout({
+							id : 'matrix_manual_search',
 							layoutFixed : true,
-							width : '400px',
-							columns : 2,
-							widths : [ '200px', '200px' ]
+							width : '800px',
+							columns : 4,
+							widths : [ '150px', '250px', 
+
+							           '150px', '150px' ]
 						});
 
-						var P_id = new sap.ui.commons.Label({
-							text : "Project ID :"
-						}).addStyleClass("manual_form_common_style");
-						var p_id1_value = new sap.ui.commons.TextField();
+						
 
-						var P_Name = new sap.ui.commons.Label({
-							text : "Project Name :"
-						}).addStyleClass("manual_form_common_style");
-						var p_name_value = new sap.ui.commons.TextField();
+						
 
-						var c_Name = new sap.ui.commons.Label({
-							text : "Customer Name :"
-						}).addStyleClass("manual_form_common_style");
-						var c_name_value = new sap.ui.commons.TextField();
+						var oLabel_manual = new sap.ui.commons.Label({
+							id : 'so_date_from_manual',
+							text : 'SO Date From',
 
-						var sop_bu = new sap.ui.commons.Label({
-							text : "SO Project BU :"
-						}).addStyleClass("manual_form_common_style");
-						var sop_bu_value = new sap.ui.commons.TextField();
+						}).addStyleClass("for_text_style1");
 
-						var clr1 = new sap.ui.commons.Button({
+						/* var date1 = new Date();
+						date1.setMonth(date1.getMonth() - 8);
+						var date2 = new Date();
+						date2.setMonth(date2.getMonth() + 4); */
+						
+						var date1_manual = new Date();
+						              date1_manual.setDate(date1_manual.getDate());
+					   var date2_manual = new Date();
+						              date2_manual.setDate(date2_manual.getDate());
 
-							text : "CLEAR",
-							tooltip : "CLEAR",
-
-						}).addStyleClass("manual_form_common_style_buttons");
-						var get_results1 = new sap.ui.commons.Button({
-
-							text : "Get SO Search Results",
-							tooltip : "Get SO Search Results",
-
-						}).addStyleClass("manual_form_common_style_buttons");
-
-						SO_form.createRow(P_id, p_id1_value);
-						SO_form.createRow(P_Name, p_name_value);
-						SO_form.createRow(c_Name, c_name_value);
-						SO_form.createRow(sop_bu, sop_bu_value);
-						SO_form.createRow(clr1, get_results1);
-
-						///for the values within employees	valueHelp
-						var emp_form = new sap.ui.commons.layout.MatrixLayout({
-							id : 'manual_emp_form',
-							layoutFixed : true,
-							width : '400px',
-							columns : 2,
-							widths : [ '200px', '200px' ]
+						var for_from_date_manual = new sap.ui.model.json.JSONModel();
+						for_from_date_manual.setData({
+							dateValue : date1_manual
 						});
+						sap.ui.getCore().setModel(for_from_date_manual, "fromModel_manual");
 
-						var deploy1 = new sap.ui.commons.Label({
-							text : "Deployable :"
-						}).addStyleClass("manual_form_common_style");
-						var deploy11_value = new sap.ui.commons.ComboBox(
-								"ComboBox1");
-						deploy11_value.setTooltip("value1");
-						deploy11_value.setEditable(true);
-						deploy11_value.setValue("YES");
-						deploy11_value.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("value1");
-						oItem.setText("NO");
-						deploy11_value.addItem(oItem);
+						// create DatePickers and bind to model
+						var so_from_manual = new sap.ui.commons.DatePicker({
+							id : 'sfrom1_manual',
+							width : "10em",
+							value : {
+								path : "fromModel_manual>/dateValue",
+								type : new sap.ui.model.type.Date({
+									pattern : "yyyy-MM-dd",
+									strictParsing : true
+								})
+							}
+						}).addStyleClass("for_fields_style1");
+						so_from_manual.setDate
+						/* date1.placeAt("sample2"); */
 
-						var Future_SO = new sap.ui.commons.Label({
-							text : "Future SO :"
-						}).addStyleClass("manual_form_common_style");
+						oLabel_manual.setLabelFor(so_from_manual);
+						osearch_manual.createRow(oLabel_manual, so_from_manual);
+
+						var soDateToLabel_manual = new sap.ui.commons.Label({
+							id : 'so_date_to_manual',
+							text : 'SO Date To',
+
+						}).addStyleClass("for_text_style1");
+
+						var for_to_date_manual = new sap.ui.model.json.JSONModel();
+						for_to_date_manual.setData({
+							dateValue : date2_manual
+						});
+						sap.ui.getCore().setModel(for_to_date_manual, "toModel_manual");
+
+						var so_to_manual = new sap.ui.commons.DatePicker({
+							id : 'sto1_manual',
+							width : "10em",
+							value : {
+								path : "toModel_manual>/dateValue",
+								type : new sap.ui.model.type.Date({
+									pattern : "yyyy-MM-dd",
+									strictParsing : true
+								})
+							}
+						}).addStyleClass("for_fields_style1");
+
+						oLabel_manual.setLabelFor(so_to_manual);
+						osearch_manual.createRow(soDateToLabel_manual, so_to_manual);
+
+						var so_pro_bu_manual = new sap.ui.commons.Label({
+							
+							id:'spb_manual',
+							text : 'SO Project BU'
+						}).addStyleClass("for_text_style1");
+
+						var so_pro_drop_manual = new sap.ui.commons.DropdownBox(
+								{id:'spdrop_manual'}).addStyleClass("for_fields_style1");
+						so_pro_drop_manual.setTooltip("Project BU");
+						so_pro_drop_manual.setEditable(true);
+						so_pro_drop_manual.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("drops0_manual");
+						oItem.setText("");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops1_manual");
+						oItem.setText("AO-Common Pool");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops2_manual");
+						oItem.setText("Appsone SAP");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops3_manual");
+						oItem.setText("AUS-AM");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops4_manual");
+						oItem.setText("AUS-TS");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops5_manual");
+						oItem.setText("NA CPRD");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops6_manual");
+						oItem.setText("NA EUC");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops7_manual");
+						oItem.setText("NA HTEC");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops8_manual");
+						oItem.setText("NA MLS");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops9_manual");
+						oItem.setText("NA-AM");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops10_manual");
+						oItem.setText("NA OPERATION");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops11_manual");
+						oItem.setText("SEA-TS");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops12_manual");
+						oItem.setText("UK-AM");
+						so_pro_drop_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("drops13_manual");
+						oItem.setText("UK-TS");
+						so_pro_drop_manual.addItem(oItem);
+
+						so_pro_bu_manual.setLabelFor(so_pro_drop_manual);
+						osearch_manual.createRow(so_pro_bu_manual, so_pro_drop_manual);
+
+						var projectIdLabel_manual = new sap.ui.commons.Label({
+							text : 'Project ID',
+
+						}).addStyleClass("for_text_style1");
+
+						var projectIdText_manual = new sap.ui.commons.TextField({
+							id : 'pro_id_form_manual',
+							editable : true,
+							maxLength : 9,
+
+							
+							width : '200px'
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						;
-						var Future_SO_value = new sap.ui.commons.TextField();
 
-						var capb1 = new sap.ui.commons.Label({
-							text : "Capability :"
-						}).addStyleClass("manual_form_common_style");
-						var capb1_value = new sap.ui.commons.ComboBox(
-								"ComboBox2");
-						capb1_value.setTooltip("value2");
-						capb1_value.setEditable(true);
-						capb1_value.setValue("SCM");
-						capb1_value.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("value2");
-						oItem.setText("CRM");
-						capb1_value.addItem(oItem);
+						oLabel_manual.setLabelFor(projectIdText_manual);
+						osearch_manual.createRow(projectIdLabel_manual, projectIdText_manual);
 
-						var skill1 = new sap.ui.commons.Label({
-							text : "Skill :"
-						}).addStyleClass("manual_form_common_style");
-						var skill1_value = new sap.ui.commons.ComboBox(
-								"ComboBox3");
-						skill1_value.setTooltip("Skills");
-						skill1_value.setEditable(true);
-						skill1_value.setValue("MM");
-						skill1_value.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("value3");
-						oItem.setText("WM");
-						skill1_value.addItem(oItem);
+						var projectNameLabel_manual = new sap.ui.commons.Label({
+							
+							text : 'Project Name'
+						}).addStyleClass("for_text_style1");
+						
+						
 
-						var loci2 = new sap.ui.commons.Label({
-							text : "Location :"
-						}).addStyleClass("manual_form_common_style");
+						var projectNameText_manual = new sap.ui.commons.TextField({
+							
+							id:'Pro_id_manual',
+							//tooltip : 'SO Date',
+							editable : true,
+							width : '200px'
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						;
-						var loci2_value = new sap.ui.commons.TextField();
 
-						var clr2 = new sap.ui.commons.Button({
+						projectNameLabel_manual.setLabelFor(projectNameText_manual);
+						osearch_manual.createRow(projectNameLabel_manual, projectNameText_manual);
+                       
+                     var so_type_label_manual = new sap.ui.commons.Label({
+ 							
+							text : 'SO Type'
+						}).addStyleClass("for_text_style1");
+                     
+						var so_type_select_manual = new sap.ui.commons.DropdownBox(
+								{
+									//id: 'ct_drop',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						so_type_select_manual.setTooltip("so_type");
+						so_type_select_manual.setEditable(true);
+						so_type_select_manual.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("so_type0_manual");
+						oItem.setText("Project");
+						so_type_select_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("so_type1_manual");
+						oItem.setText("Persuit");
+						so_type_select_manual.addItem(oItem);
+						
+						
+						
+						var locationLabel_manual = new sap.ui.commons.Label({
+							text : 'Location'
+						}).addStyleClass("for_text_style1");
 
-							text : "CLEAR",
-							tooltip : "CLEAR",
+						
+						osearch_manual.createRow(so_type_label_manual, so_type_select_manual);
+						
+						var oSimpleListBox_manual = new sap.ui.commons.ListBox({
+							
+							width : "200px",
+							items : [ new sap.ui.core.ListItem({
+								text : 'Mumbai'
+							}), new sap.ui.core.ListItem({
+								text : 'Bangalore'
+							}), new sap.ui.core.ListItem({
+								text : 'Chennai'
+							}), new sap.ui.core.ListItem({
+								text : 'Gurgaon'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Hyderabad'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Pune'
+							}),
+							new sap.ui.core.ListItem({
+								text : 'Kolkata'
+							}),
+							
+							
+							],
+							select : function(e) {
+								var a_manual = [ "" ];
+								jQuery.each(oSimpleListBox_manual.getSelectedItems(),
+										function(idx, item) {
+											a_manual.push(item.getText(), ",");
+										});
+								oTextSummary_manual.setValue(a_manual.join(""));
+							}
+						});
+						var oTextSummary_manual = new sap.ui.commons.TextField({id: 'loci_manual'});
+						var oMultiSelectionCheckBox_manual = new sap.ui.commons.CheckBox(
+								{
+									text : "MultiSelection",
+									checked : false,
+									change : function(e) {
+										oSimpleListBox_manual.setAllowMultiSelect(e
+												.getSource().getChecked());
+									}
+								});
 
-						}).addStyleClass("manual_form_common_style_buttons");
-						var get_emp_results1 = new sap.ui.commons.Button({
+						
+						osearch_manual.createRow(locationLabel_manual, oSimpleListBox_manual,
+								oTextSummary_manual, oMultiSelectionCheckBox_manual);
 
-							text : "Get Emp Results",
-							tooltip : "Get SO Search Results",
+						var custnameLabel_manual = new sap.ui.commons.Label({
+							text : 'Customer Name'
+						}).addStyleClass("for_text_style1");
 
-						}).addStyleClass("manual_form_common_style_buttons");
+						var custnameText_manual = new sap.ui.commons.TextField({
+							id: 'cust_name1_manual',
+							//tooltip : 'SO Date',
+							editable : true,
+							width : '200px'
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						;
 
-						emp_form.createRow(deploy1, deploy11_value);
-						emp_form.createRow(Future_SO, Future_SO_value);
-						emp_form.createRow(capb1, capb1_value);
-						emp_form.createRow(skill1, skill1_value);
-						emp_form.createRow(loci2, loci2_value);
-						emp_form.createRow(clr2, get_emp_results1);
+						custnameLabel_manual.setLabelFor(custnameText_manual);
+						osearch_manual.createRow(custnameLabel_manual, custnameText_manual);
 
-						var oTable = new sap.ui.table.Table({
-							id : 'mytable',
-							visibleRowCount : 1,
-							selectionMode : sap.ui.table.SelectionMode.Single,
-							width : '100px',
-							height : '100px'
-						}).addStyleClass("style_for_table");
+						var capabilityLabel_manual = new sap.ui.commons.Label({
+							text : 'Capability'
+						}).addStyleClass("for_text_style1");
+
+						var capabilityText_manual = new sap.ui.commons.DropdownBox(
+								{
+									id: 'ct_drop_manual',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						capabilityText_manual.setTooltip("Location");
+						capabilityText_manual.setEditable(true);
+						capabilityText_manual.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("Capability0_manual");
+						oItem.setText("");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability1_manual");
+						oItem.setText("DCM");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability2_manual");
+						oItem.setText("Development");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability3_manual");
+						oItem.setText("Finance");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability4_manual");
+						oItem.setText("HCM");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability5_manual");
+						oItem.setText("Misc");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability6_manual");
+						oItem.setText("Management");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability7_manual");
+						oItem.setText("ISU");
+						capabilityText_manual.addItem(oItem);	
+						oItem = new sap.ui.core.ListItem("Capability9_manual");
+						oItem.setText("Netweaver");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability10_manual");
+						oItem.setText("SCM");
+						capabilityText_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability11_manual");
+						oItem.setText("Retail & AFS");
+						capabilityText_manual.addItem(oItem);
+
+						capabilityLabel_manual.setLabelFor(capabilityText_manual);
+						osearch_manual.createRow(capabilityLabel_manual, capabilityText_manual);
+					    
+						var search_manual1 =new sap.ui.commons.Button({id:'search_for_manual',text :"Search for SO's"}).addStyleClass("for_normal_buttons_style1");
+						osearch_manual.createRow(search_manual1)
+					
+					
+          var manual1_table = new sap.ui.table.Table(
+					{
+						id : 'manual_table1',
+						title : " ",
+						visibleRowCount : 2,
+						firstVisibleRow : 3,
+						selectionMode: sap.ui.table.SelectionMode.Single,
+						//navigationMode : sap.ui.table.NavigationMode.Paginator,
+
+					}).addStyleClass("style_for_table");
 						var aData = [ {
 							Sl_No : "",
 							p_id : "",
@@ -3385,7 +3596,7 @@ var  amend_table_report_gen;
 							location : ""
 						} ];
 						//Define the columns and the control templates to be used
-						oTable
+						manual1_table
 								.addColumn(new sap.ui.table.Column(
 										{
 											label : 'SO No',
@@ -3409,133 +3620,136 @@ var  amend_table_report_gen;
 																		width : '400px'
 																	});
 															oFor_so
-																	.addContent(new sap.ui.commons.TextView(
-																			{
-																				text : "Search for SO's"
-																			}));
-
-															oFor_so
-																	.addContent(SO_form);
+																	.addContent(osearch_manual);
 
 															oFor_so.open();
 														}
-													})
+													}),
+													width :"60px"
 										}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'Project Id',
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project ID"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "p_id")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "60px"
 						}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'Project Name',
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project Name"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "p_name")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "100px"
 						}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'Start Date',
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Start Date"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "srt_date")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "70px"
 						}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'End Date',
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "End Date"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "end_date")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "70px"
 						}));
-						oTable
-								.addColumn(new sap.ui.table.Column(
-										{
-											label : 'Emp ID',
-											template : new sap.ui.commons.ValueHelpField(
-													{
-														valueHelpRequest : function(
-																oEvent) {
-															console
-																	.log(oEvent
-																			.getParameters('newValue').newValue);
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Emp ID"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "70px"
+						}));
 
-															function handler(
-																	oEvent) {
-																alert("Event '"
-																		+ oEvent
-																				.getId()
-																		+ "' triggered");
-															}
-															var oFor_emp = new sap.ui.ux3.OverlayContainer(
-																	{
-																		width : '400px'
-																	});
-															oFor_emp
-																	.addContent(new sap.ui.commons.TextView(
-																			{
-																				text : "Search for Employee's"
-																			}));
-
-															oFor_emp
-																	.addContent(emp_form);
-
-															oFor_emp.open();
-														}
-													}
-
-											)
-										}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'Emp Name',
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Emp Name"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_name")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "70px"
 						}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'Level',
+
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Level"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "level")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "70px"
 						}));
-						oTable.addColumn(new sap.ui.table.Column({
-							label : 'Location',
+
+						manual1_table.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Location"
+							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "location")
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "70px"
 						}));
-						//Create a model and bind the table rows to this model
-						var oModel = new sap.ui.model.json.JSONModel();
-						oModel.setData({
+                     
+
+						manual1_table.sort(manual1_table.getColumns()[0]);
+						
+						var oModel_manual = new sap.ui.model.json.JSONModel();
+						oModel_manual.setData({
 							modelData : aData
 						});
-						oTable.setModel(oModel);
-						oTable.bindRows("/modelData");
+						manual1_table.setModel(oModel_manual);
+						manual1_table.bindRows("/modelData");
 						//Bring the table onto the UI 
-						oTable.placeAt("manual1");
+						manual1_table.placeAt("manual1");
 
-						/* var manual_assign = new sap.ui.commons.Button({
-							text : "Assign & Notify",
-							tooltip : "Assign & Notify",
-							
-							press: function go_to_manual2()
-						{
-								
-								$("#manual1").addClass("hide_div");
-								$("#manual2").removeClass("hide_div");
-								
-						}
-							
-						/* 	}).addStyleClass("for_normal_buttons_style1");
-						
-						
-						var manual_back = new sap.ui.commons.Button({
+						var assign_manual = new sap.ui.commons.Button({
+							id : 'bt1_manual_assign',
+							text : "Assign",
+						}).addStyleClass("for_normal_buttons_style1");						
+						var back_manual = new sap.ui.commons.Button({
+							id : 'bt1_manual_back',
 							text : "Back",
-							tooltip : "Back",
-							press: function back_from_manual()
-						{
-								
+							press : function(){
 								$("#manual1").addClass("hide_div");
-								$("#first").removeClass("hide_div");		
-						}
-							
-						//}).addStyleClass("for_normal_buttons_style1"); */
-
-						/* manual_assign.placeAt("manual1");
-						manual_back.placeAt("manual1");
+								$("#manual2").addClass("hide_div");
+								$("#first").removeClass("hide_div");
+								
+							}
+						}).addStyleClass("for_normal_buttons_style1");
 						
-						 */
-						 
+						manual1_table.placeAt("manual1");
+						assign_manual.placeAt("manual1");
+						back_manual.placeAt("manual1");
+
+						
+						
+						
+						
+
+						
+					
+////////////////////////////////////////////Manual Ends Here//////////////////////////////////////////////////////////////////
 
 	/////----------------------------------For Report Generation---------------------------------------------------/////////
 	var report_matrix_layout_dates1 = new sap.ui.commons.layout.MatrixLayout({
@@ -4074,6 +4288,7 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#amend_report_view").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first").removeClass("hide_div");
+								$("#report_first_zero").removeClass("hide_div")
 								
 							}
 						}).addStyleClass("for_normal_buttons_style1");
@@ -4954,7 +5169,7 @@ var repo_to1 = new sap.ui.commons.Label({
 </div>
 </div>
 <script>
-$(document).ready(function(){
+$( window ).load(function(){
 
  	$
 	.ajax({
