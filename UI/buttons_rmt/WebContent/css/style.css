@@ -1,3 +1,20 @@
+#for_so_manual_text
+{
+	font-size: 25px;
+margin-top: 25px;
+margin-left: 250px;
+	
+}
+
+#__container0
+{
+	POSITION : RELATIVE !IMPORTANT ;
+	width: 900px;
+height: 900px;
+margin-top: 15%;
+MARGIN-BOTTOM: -1%;
+}
+
 #welcome1
 {
     	margin-top: -70px;
@@ -335,7 +352,7 @@ margin-left: 50px !important;
 	margin-top: 140px;
 }
 
-#second, #third {
+#second, #third,#manual1 {
 	
 	min-height: 100px;
 	height: 100%;
