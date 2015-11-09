@@ -12,9 +12,22 @@
  * @author Dikshant Mishra/dikmishr
  */
 class cl_releasenotification {
-    const gc_business_days = 26,
+    const gc_business_days = 23,
           gc_date_format   = 'd-M-Y',
           gc_date_from     = 'date_from';
+            
+    private $gv_so            = 'curr_so',          
+            $gv_edate         = 'cur_end_date',
+            $gv_idp           = 'idp',
+            $gv_sub_bu        = 'sub_bu',
+            $gv_svc_line      = 'svc_line',
+            $gv_org           = 'org',
+            $gv_empid         = 'emp_id',
+            $gv_emp_name      = 'emp_name',
+            $gv_prime_skill   = 'prime_skill',
+            $gv_proj_code     = 'curr_proj_code',
+            $gv_proj_name     = 'curr_proj_name',
+            $gv_level         = 'level';
     
     private function add_business_days($i_sdate) {
         $lv_count = 1;
@@ -30,27 +43,41 @@ class cl_releasenotification {
     }
     
 // Function to get all the hard locks which will be released on a particular date.
-    public function getreleasablehardlocks()
+    private function getreleasablehardlocks()
     {
         $lv_edate = $this->add_business_days(date(self::gc_date_format));       
-        $lv_query_empid =   "SELECT curr_so,
-                            curr_end_date,
-                            idp,
-                            sub_bu,
-                            svc_line,
-                            org,
-                            emp_id,
-                            emp_name,
-                            prime_skill,
-                            curr_proj_code,
-                            curr_proj_name
-                            level
+        $lv_query_empid =  "SELECT '$this->gv_so',
+                            '$this->gv_edate',
+                            '$this->gv_idp',
+                            '$this->gv_sub_bu',
+                            '$this->gv_svc_line,
+                            '$this->gv_org',
+                            '$this->gv_empid',
+                            '$this->gv_emp_name',
+                            '$this->gv_prime_skill',
+                            '$this->gv_proj_code',
+                            '$this->gv_proj_name',
+                            '$this->gv_level',
                             from m_emp_ras
                             where curr_end_date = '$lv_edate' and
-                                  idp = 'Appsone SAP'";
+                            '$this->gv_idp' = 'Appsone SAP'";
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
-}
+    
+    public function checkandnotify()
+    {
+        $lt_emp_details = $this->getreleasablehardlocks();
+        $lv_count = count($lt_emp_details);
+        if ($lv_count > 0) 
+            {
+            foreach ($lt_emp_details as $lv_key => $lwa_values) 
+                {
+                   
+                }
+            
+            }
+        }
+    }
 
 

@@ -114,10 +114,10 @@ class cl_NotificationMails {
     }
 
 // Method to send Hard lock release intimation.
-    public function sendhardlockreleaseintimation($fp_arr_locks, $fp_arr_recievers)
+    public function sendhardlockreleasenotification($fp_arr_locks)
     {
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_arr_locks, 'RL4', '', $fp_arr_recievers, '');
+        $lv_return = self::sendnotification($fp_arr_locks, 'RL4', '', '', '');
         return $lv_return;
     }
     
@@ -578,6 +578,8 @@ class cl_NotificationMails {
             $this->lt_cte_details = $i_so_number;
             $this->lv_status = $i_transid;
             $this->lv_comments = $i_emp_id;
+        } elseif ($i_mode == 'RL4') {
+            $this->lt_hlr_details = $i_so_number;            
         } else {
             $this->lv_so_number = $i_so_number;
             $this->lv_empid = $i_emp_id;
