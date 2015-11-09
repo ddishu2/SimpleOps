@@ -661,7 +661,6 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
             $app->get(cl_RMGTool_Globals::GC_23DAYS_HL_RELEASE,
                                 function() use ($app)
                 {
-//                $fp_date_from = $app->request->get(cl_releasenotification::gc_date_from);
                 $io_days      = new cl_releasenotification;
                 $re_result    = $io_days->checkandnotify();
                 $app->response->setStatus(200);

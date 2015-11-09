@@ -58,26 +58,29 @@ class cl_releasenotification {
                             '$this->gv_proj_code',
                             '$this->gv_proj_name',
                             '$this->gv_level',
-                            from m_emp_ras
-                            where curr_end_date = '$lv_edate' and
-                            '$this->gv_idp' = 'Appsone SAP'";
+                            FROM m_emp_ras
+                            WHERE curr_end_date = '$lv_edate' and
+                            '$this->gv_idp' = 'Appsone SAP' ORDER BY '$this->gv_proj_code'";
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
     
     public function checkandnotify()
-    {
+    {   
+        $lv_prev_proj_code = '';
+        $lt_proj_details   = [];
         $lt_emp_details = $this->getreleasablehardlocks();
         $lv_count = count($lt_emp_details);
         if ($lv_count > 0) 
             {
             foreach ($lt_emp_details as $lv_key => $lwa_values) 
                 {
-                   
+                $lv_index = array_search($lwa_values[$this->gv_proj_code], array_column($lt_proj_details, $this->gv_proj_code));
                 }
-            
             }
-        }
     }
+}
 
 
+$io = new cl_releasenotification();
+$io->checkandnotify();
