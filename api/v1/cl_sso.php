@@ -14,6 +14,7 @@
 class cl_sso {
     public function get_username() {
         $lv_cred = explode('\\', $_SERVER['REMOTE_USER']);
-        return $lv_cred;
+        $lv_name = cl_DB::getResultsFromQuery("SELECT emp_name FROM m_emp_ras WHERE domain_id = '$lv_cred'");
+        return $lv_name;
     }
 }
