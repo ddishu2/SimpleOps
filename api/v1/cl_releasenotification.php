@@ -94,7 +94,7 @@ class cl_releasenotification {
 // If its not the last record then we'll just collect the current record and 
 // wait for the last record to come                     
                     else
-                    {array_push($lt_proj_details, $lwa_values); print_r($lt_proj_details);}
+                    {array_push($lt_proj_details, $lwa_values);}
                 }
             }  
         }
@@ -109,5 +109,4 @@ class cl_releasenotification {
             else 
             {return true;}
         }   
-
 }

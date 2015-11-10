@@ -488,6 +488,11 @@ class cl_NotificationMails {
                 $this->lv_req_by = $this->lt_req_details[0]['emp_name'];
                 $this->lv_req_email = $this->lt_req_details[0]['email'];
                 break;
+            
+            case 'RL4':
+                $this->lv_subject = $this->lt_act_type[0]['action_type_text'];
+                break;
+            
             default:
                 break;
         }
