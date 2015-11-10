@@ -28,7 +28,8 @@ class cl_releasenotification {
             $gv_prime_skill   = 'prime_skill',
             $gv_proj_code     = 'curr_proj_code',
             $gv_proj_name     = 'curr_proj_name',
-            $gv_level         = 'level';
+            $gv_level         = 'level',
+            $gv_pm_name       = 'proj_m_name';
     
     private function add_business_days($i_sdate) {
         $lv_count = 1;
@@ -47,7 +48,7 @@ class cl_releasenotification {
     private function getreleasablehardlocks()
     {
         $lv_edate = $this->add_business_days(date(self::gc_date_format));
-        $lv_edate = '11-Dec-15';
+        $lv_edate = '11-DEC-15';
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
@@ -59,7 +60,8 @@ class cl_releasenotification {
                             $this->gv_prime_skill.','.
                             $this->gv_proj_code.','.
                             $this->gv_proj_name.','.
-                            $this->gv_level.
+                            $this->gv_level.','.
+                            $this->gv_pm_name.
                             " FROM m_emp_ras
                             WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' ORDER BY ". $this->gv_proj_code;
