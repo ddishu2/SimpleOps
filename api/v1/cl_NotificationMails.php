@@ -410,6 +410,13 @@ class cl_NotificationMails {
                 $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
                 $this->lt_act_type = cl_DB::getResultsFromQuery($this->lv_query_act_type);
                 break;
+            
+            case 'RL4':
+// Get details of all capabilities email ids.
+                $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
+                $this->lt_act_type = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+                break;
+            
             default:
                 break;
         }
@@ -579,10 +586,22 @@ class cl_NotificationMails {
                 $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][$this->gv_pm_name], $this->lv_content);
                 $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lt_hlr_details[0][$this->gv_proj_name], $this->lv_content);
                 $lv_content = explode('SPLIT_HERE', $this->lv_content);
-                print_r($lv_content);
+                $this->lv_content = $lv_content[0];
                 foreach ($this->lt_hlr_details as $lv_key_hlr => $lwa_hlr) {
-                
+                $this->lv_content .= $lv_content[1];
+                $this->lv_content = str_replace("GV_SNO", $lv_key_hlr, $this->lv_content);
+                $this->lv_content = str_replace("GV_SO_NO", $lwa_hlr[$this->gv_so], $this->lv_content);
+                $this->lv_content = str_replace("GV_EDATE", $lwa_hlr[$this->gv_edate], $this->lv_content);
+                $this->lv_content = str_replace("GV_BU", $lwa_hlr[$this->gv_idp], $this->lv_content);
+                $this->lv_content = str_replace("GV_SBU", $lwa_hlr[$this->gv_sub_bu], $this->lv_content);
+                $this->lv_content = str_replace("GV_SERV_LINE", $lwa_hlr[$this->gv_svc_line], $this->lv_content);
+                $this->lv_content = str_replace("GV_LOCATION", $lwa_hlr[$this->gv_org], $this->lv_content);
+                $this->lv_content = str_replace("GV_EMPID", $lwa_hlr[$this->gv_empid], $this->lv_content);
+                $this->lv_content = str_replace("GV_EMPNAME", $lwa_hlr[$this->gv_emp_name], $this->lv_content);
+                $this->lv_content = str_replace("GV_PRI_SKILL", $lwa_hlr[$this->gv_prime_skill], $this->lv_content);
+                $this->lv_content = str_replace("GV_LEVEL", $lwa_hlr[$this->gv_level], $this->lv_content);                
                 }
+                $this->lv_content .= $lv_content[2];
                 break;
             default:                
                 break;
