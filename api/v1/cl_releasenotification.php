@@ -11,13 +11,14 @@
  *
  * @author Dikshant Mishra/dikmishr
  */
+require_once __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 class cl_releasenotification {
     const gc_business_days = 23,
-          gc_date_format   = 'd-M-Y',
+          gc_date_format   = 'd-M-y',
           gc_date_from     = 'date_from';
             
     private $gv_so            = 'curr_so',          
-            $gv_edate         = 'cur_end_date',
+            $gv_edate         = 'curr_end_date',
             $gv_idp           = 'idp',
             $gv_sub_bu        = 'sub_bu',
             $gv_svc_line      = 'svc_line',
@@ -45,22 +46,24 @@ class cl_releasenotification {
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
     {
-        $lv_edate = $this->add_business_days(date(self::gc_date_format));       
-        $lv_query_empid =  "SELECT '$this->gv_so',
-                            '$this->gv_edate',
-                            '$this->gv_idp',
-                            '$this->gv_sub_bu',
-                            '$this->gv_svc_line,
-                            '$this->gv_org',
-                            '$this->gv_empid',
-                            '$this->gv_emp_name',
-                            '$this->gv_prime_skill',
-                            '$this->gv_proj_code',
-                            '$this->gv_proj_name',
-                            '$this->gv_level',
-                            FROM m_emp_ras
-                            WHERE curr_end_date = '$lv_edate' and
-                            '$this->gv_idp' = 'Appsone SAP' ORDER BY '$this->gv_proj_code'";
+        $lv_edate = $this->add_business_days(date(self::gc_date_format));
+        $lv_edate = '11-Dec-15';
+        $lv_query_empid =  'SELECT '. $this->gv_so.','.
+                            $this->gv_edate.','.
+                            $this->gv_idp.','.
+                            $this->gv_sub_bu.','.
+                            $this->gv_svc_line.','.
+                            $this->gv_org.','.
+                            $this->gv_empid.','.
+                            $this->gv_emp_name.','.
+                            $this->gv_prime_skill.','.
+                            $this->gv_proj_code.','.
+                            $this->gv_proj_name.','.
+                            $this->gv_level.
+                            " FROM m_emp_ras
+                            WHERE curr_end_date = '$lv_edate' and ".
+                            $this->gv_idp . " = 'Appsone SAP' ORDER BY ". $this->gv_proj_code;
+        echo $lv_query_empid;
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
@@ -75,12 +78,38 @@ class cl_releasenotification {
             {
             foreach ($lt_emp_details as $lv_key => $lwa_values) 
                 {
-                $lv_index = array_search($lwa_values[$this->gv_proj_code], array_column($lt_proj_details, $this->gv_proj_code));
+// Check if the current record is the last record in the table for that field's value.                
+                    $lv_end = $this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code);
+
+// If its not the last record then we'll just collect the current record and 
+// wait for the last record to come                    
+                    if ($lv_end == false)
+                    {array_push($lt_proj_details, $lwa_values);}
+                    
+// If its the last record, we'll collect the current record and send out email notifications.
+// Then we'll clear the table to be used for next set of records.                    
+                    else
+                    {
+                      array_push($lt_proj_details, $lwa_values);
+                      $io_mail = new cl_NotificationMails();
+                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);
+                      if ($lv_mail) {return true;}
+                      else {return false;}                      
+                      $lt_proj_details = [];
+                    }
                 }
-            }
-    }
+            }  
+        }
+            
+// Method to check if supplied row is the last record with value of the field same as itself in the table           
+    private function atendofvalue($i_table, $i_key, $i_row, $i_field)
+        {       
+// Increment the key
+            $lv_key = $i_key + 1;
+            if ((array_key_exists($lv_key, $i_table) ==  true) && ( $i_table[$lv_key][$i_field] == $i_row[$i_field])) 
+            {return false;}
+            else 
+            {return true;}
+        }   
+
 }
-
-
-$io = new cl_releasenotification();
-$io->checkandnotify();
