@@ -114,6 +114,14 @@ var  amend_table_report_gen;
 
 			
 						//for First Div(first)
+						var open_try_this = new sap.ui.commons.Link({
+	                      text: "Link to Action", 
+	                       tooltip: "This is a test tooltip",
+	                       press: function() {window.open("\\ntbomfs001\Datagrp\AppsOne SAP RMT\Ammendment");}});
+								
+						//	window.open("\\ntbomfs001\Datagrp\AppsOne SAP RMT\Ammendment");	
+								
+						
 						var cg_logo = new sap.ui.commons.Image({
 							id : 'cg_logo',
 							src : "images/capgemini-logo.png",
@@ -219,6 +227,7 @@ var  amend_table_report_gen;
 										$("#manual1").removeClass("hide_div");
 										$("#third").addClass("hide_div");
 										$("#four1").addClass("hide_div");
+										
 										$("#four2_core").addClass("hide_div");
 									}
 								});
@@ -1237,6 +1246,7 @@ var  amend_table_report_gen;
 
 						
 						cg_logo.placeAt("heading");
+						open_try_this.placeAt("heading")
 						welcome_text.placeAt("heading");
 						welcome_username.placeAt("heading");
 					
