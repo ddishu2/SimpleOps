@@ -27,6 +27,7 @@ var amend_table1;
 var oOverlayContainer;
 var sso1;
 var  amend_table_report_gen;
+var tp1;
 
 	sap.ui
 			.getCore()
@@ -114,34 +115,23 @@ var  amend_table_report_gen;
 
 			
 						//for First Div(first)
-	var cg_logo = new sap.ui.commons.Image({
+                    	var cg_logo = new sap.ui.commons.Image({
 							id : 'cg_logo',
 							src : "images/capgemini-logo.png",
-							//text : "Administration Activities",
 							tooltip : "Capgemini",
 							width : "250px"
 
 						});
 						
-						/* var oValue1 = sso1;
-						console.log(oValue1); */
 						var welcome_text =new sap.ui.commons.TextView({ id :'welcome_text1' ,text : "Welcome"});
 						var welcome_username = new sap.ui.commons.TextView({id :'welcome_username1' ,text : ""}); 
 						
-						/* sap.ui.getCore().byId("welcome_username1").setText(oValue1);
-						console.log(welcome_username) */
                    
 						var admin_act = new sap.ui.commons.Button({
 							id : 'aa11',
 							text : "Administration Activities",
 							tooltip : "Administration Activities",
-							press : function admin_open() {
-								$("#first").addClass("hide_div");
-								$("#admin").removeClass("hide_div");
-								$("#heading").addClass("hide_div");
-								$("#amend_report_view").addClass("hide_div");
-							}
-
+					
 						});
 						
 						var for_head_button = new sap.ui.commons.layout.MatrixLayout(
@@ -521,9 +511,9 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
-											am_ext_notice : "" ,
+											am_ext_notice : val.ext_notice ,
 											am_extn : val.act,
-											am_notice : val.Date_chng_noti ,
+											am_notice : val.roll_off_lead_time ,
 										};
 									
 										completeData1
@@ -603,9 +593,9 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
-											am_ext_notice : "" ,
+											am_ext_notice : val.ext_notice ,
 											am_extn : val.act,
-											am_notice : val.Date_chng_noti ,
+											am_notice : val.roll_off_lead_time ,
 										};
 									
 										completeData1
@@ -690,9 +680,9 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
-											am_ext_notice : "" ,
+											am_ext_notice : val.ext_notice ,
 											am_extn : val.act,
-											am_notice : val.Date_chng_noti ,
+											am_notice : val.roll_off_lead_time ,
 										};
 									
 										completeData1
@@ -776,9 +766,9 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
-											am_ext_notice : "" ,
+											am_ext_notice : val.ext_notice ,
 											am_extn : val.act,
-											am_notice : val.Date_chng_noti ,
+											am_notice : val.roll_off_lead_time ,
 										};
 									
 										completeData1
@@ -862,9 +852,9 @@ var  amend_table_report_gen;
 											am_request :val.req_by,
 											am_status :"Approve",
 											am_comments:"",
-											am_ext_notice : "" ,
+											am_ext_notice : val.ext_notice ,
 											am_extn : val.act,
-											am_notice : val.Date_chng_noti ,
+											am_notice : val.roll_off_lead_time ,
 										};
 									
 										completeData1
@@ -3801,6 +3791,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							text : 'To Date\t\t\t\t',
 
 						}).addStyleClass("for_text_style1");
+						
 						var for_to_date1 = new sap.ui.model.json.JSONModel();
 						for_to_date1.setData({
 							dateValue : dateformat2
@@ -3890,16 +3881,26 @@ var repo_to1 = new sap.ui.commons.Label({
 							groupName : 'Group1',
 
 							}).addStyleClass("for_report_gen");
+						var report_RB7 = new sap.ui.commons.RadioButton({
+							id: 'bench_age_check',
+							text : 'Bench Ageing',
+							tooltip : 'Bench Ageing',
+							groupName : 'Group1',
+
+							}).addStyleClass("for_report_gen");
 						report_matrix_layout.createRow(report_RB1);
 						report_matrix_layout.createRow(report_RB2);
 						report_matrix_layout.createRow(report_RB3);
 						report_matrix_layout.createRow(report_RB4);
 						report_matrix_layout.createRow(report_RB5);
 						report_matrix_layout.createRow(report_RB6);
-						
+						report_matrix_layout.createRow(report_RB7);
+					
 						
 						report_matrix_layout.placeAt("report_first");	
+					
 						
+					
 						
 						var view_report_sel = new sap.ui.commons.Button({
 							text : "View Report",
@@ -3967,6 +3968,7 @@ var repo_to1 = new sap.ui.commons.Label({
 																	   am_status_report  :  val.status,
 																	   am_extn_report1 : val.act,
 																		am_notice_report1 : val.date_chng_noti ,
+																		am_ext_notice_report1 :""
 																	};
 																
 																	completeData_report1
@@ -4031,10 +4033,32 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#soft_expiry_report_view").removeClass("hide_div");
 					}
 								
+								else if ($("#bench_age_check-RB").is(":checked") == true)	
+									{
+									 tp1 = new sap.ui.ux3.ToolPopup({id: 'tool_popup1',
+										content : [ for_desicion ],
+										opener : view_report_sel
+									});
+					
+									}
+								
+								if (tp1.isOpen()) {
+									tp1.close();
+								} else {
+									tp1.open(sap.ui.core.Popup.Dock.BeginTop, sap.ui.core.Popup.Dock.BeginBottom);
+								}
 								
 							}
 
 							}).addStyleClass("for_normal_buttons_style1");
+						var Open_bench = new sap.ui.commons.Button({text:"Open"}).addStyleClass("for_normal_buttons_style1");
+						var Save_bench = new sap.ui.commons.Button({text :"Save"}).addStyleClass("for_normal_buttons_style1");
+						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" 
+						}).addStyleClass("for_normal_buttons_style1");
+
+						var for_desicion = new sap.ui.layout.HorizontalLayout("Layout1", {
+							content: [Open_bench, Save_bench, Cancel_bench]
+						});
 						var report_back = new sap.ui.commons.Button({
 							id : 'back_report',
 							text : "Back",
@@ -4446,13 +4470,24 @@ var repo_to1 = new sap.ui.commons.Label({
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
-														text : "Date Change Notice" ,
-														tooltip :"Date Change Notice"
+														text : "Roll-Off Lead Time" ,
+														tooltip :"Roll-Off Lead Time"
 													}),
 													template : new sap.ui.commons.TextView({})
 												.bindProperty("text", "am_notice_report1"),
 										sortProperty : "am_notice_report1",
-										filterProperty : "am_notice_report1",
+										filterProperty : "am_notice",
+										width : "70px"
+												}));
+												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Extension Notice" ,
+														tooltip :"Extension Notice"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "am_ext_notice_report1"),
+										sortProperty : "am_ext_notice_report1",
+										filterProperty : "am_ext_notice_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
