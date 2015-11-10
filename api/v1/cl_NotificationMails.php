@@ -39,6 +39,7 @@ class cl_NotificationMails {
             $lt_pm_details = [],
             $lt_em_details = [],
             $lt_req_details = [],
+            $lt_hlr_details = [],
             $lv_query_notifcn,
             $lv_query_capability,
             $lv_recievers,
@@ -68,7 +69,20 @@ class cl_NotificationMails {
             $lv_status,
             $lv_req_by,
             $lv_req_email,
-            $lv_comments;
+            $lv_comments,
+            $gv_so            = 'curr_so',          
+            $gv_edate         = 'curr_end_date',
+            $gv_idp           = 'idp',
+            $gv_sub_bu        = 'sub_bu',
+            $gv_svc_line      = 'svc_line',
+            $gv_org           = 'org',
+            $gv_empid         = 'emp_id',
+            $gv_emp_name      = 'emp_name',
+            $gv_prime_skill   = 'prime_skill',
+            $gv_proj_code     = 'curr_proj_code',
+            $gv_proj_name     = 'curr_proj_name',
+            $gv_level         = 'level',
+            $gv_pm_name       = 'proj_m_name';
 
 // Constructor of the class
     function __construct() {
@@ -386,7 +400,7 @@ class cl_NotificationMails {
                 break;
 
             case 'CTE':
-                // Get employee details.
+// Get employee details.
                 $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_cte_details['id']);
 
 // Get requested by details
@@ -560,7 +574,17 @@ class cl_NotificationMails {
                 $this->lv_content = str_replace("GV_NSN", $this->lt_cte_details['new_sup_name'], $this->lv_content);
                 $this->lv_content = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);
                 break;
-            default:
+                
+            case 'RL4':
+                $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][$this->gv_pm_name], $this->lv_content);
+                $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lt_hlr_details[0][$this->gv_proj_name], $this->lv_content);
+                $lv_content = explode('SPLIT_HERE', $this->lv_content);
+                print_r($lv_content);
+                foreach ($this->lt_hlr_details as $lv_key_hlr => $lwa_hlr) {
+                
+                }
+                break;
+            default:                
                 break;
         }
     }
