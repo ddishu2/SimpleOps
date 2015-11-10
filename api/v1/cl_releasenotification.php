@@ -65,7 +65,6 @@ class cl_releasenotification {
                             " FROM m_emp_ras
                             WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' ORDER BY ". $this->gv_proj_code;
-        echo $lv_query_empid;
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
@@ -80,25 +79,22 @@ class cl_releasenotification {
             {
             foreach ($lt_emp_details as $lv_key => $lwa_values) 
                 {
-// Check if the current record is the last record in the table for that field's value.                
-                    $lv_end = $this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code);
-
-// If its not the last record then we'll just collect the current record and 
-// wait for the last record to come                    
-                    if ($lv_end == false)
-                    {array_push($lt_proj_details, $lwa_values);}
-                    
+                
+// Check if the current record is the last record in the table for that field's value.                                                                
 // If its the last record, we'll collect the current record and send out email notifications.
 // Then we'll clear the table to be used for next set of records.                    
-                    else
+                    if($this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code))
                     {
                       array_push($lt_proj_details, $lwa_values);
                       $io_mail = new cl_NotificationMails();
-                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);
-                      if ($lv_mail) {return true;}
-                      else {return false;}                      
+                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
                       $lt_proj_details = [];
                     }
+                    
+// If its not the last record then we'll just collect the current record and 
+// wait for the last record to come                     
+                    else
+                    {array_push($lt_proj_details, $lwa_values); print_r($lt_proj_details);}
                 }
             }  
         }
@@ -107,8 +103,8 @@ class cl_releasenotification {
     private function atendofvalue($i_table, $i_key, $i_row, $i_field)
         {       
 // Increment the key
-            $lv_key = $i_key + 1;
-            if ((array_key_exists($lv_key, $i_table) ==  true) && ( $i_table[$lv_key][$i_field] == $i_row[$i_field])) 
+            $lv_key_new = $i_key + 1;
+            if ((array_key_exists($lv_key_new, $i_table) ===  true) && ( $i_table[$lv_key_new][$i_field] == $i_row[$i_field])) 
             {return false;}
             else 
             {return true;}
