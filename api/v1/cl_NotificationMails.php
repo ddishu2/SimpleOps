@@ -671,14 +671,14 @@ class cl_NotificationMails {
         //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
-//        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
-//        {
-//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
-//        }
-//        else
-//        {
+        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
+        {
+        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+        }
+        else
+        {
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-//        }     
+        }     
 
         if ($lv_mail) {
             return true;

@@ -38,25 +38,33 @@ class cl_loadFiles
     
     private static function loadTableWithCSVFileData($fp_v_table_name = '', $fp_v_file_name = '')
     {
+     
         $re_success = false;
         if($fp_v_table_name   !== '' && $fp_v_table_name !== NULL
            && $fp_v_file_name !== '' && $fp_v_file_name  !== NULL)
         {
-            $query_empty_table      = 'TRUNCATE TABLE '.$fp_v_table_name.';';
+               
+            $query_empty_table      = 'Truncate TABLE '.$fp_v_table_name.';';
+             echo $query_empty_table;
             $lv_result1             = cl_DB::updateResultIntoTable($query_empty_table);
+           
             $query_load_table       = "LOAD DATA INFILE '$fp_v_file_name' "
                                     . "INTO TABLE $fp_v_table_name "
                                     . "FIELDS TERMINATED BY ','  "
                                     . " OPTIONALLY ENCLOSED BY '\"' " 
                                     . "LINES TERMINATED BY '\\r\\n'"
                                     . "IGNORE 1 LINES ;";
+
 //            echo $query_load_table ;
+
             $lv_result2 = cl_DB::updateResultIntoTable($query_load_table);
+
             
             $query_delete_blanks  = "delete from m_ammendment where m_ammendment.id = 0";
             $lv_result3 = cl_DB::updateResultIntoTable($query_delete_blanks);
-            echo $lv_result1.$lv_result2.$lv_result3;
+            //echo $lv_result1.$lv_result2.$lv_result3;
             $re_success = $lv_result1 && $lv_result2 && $lv_result3;
+
         }
         return $re_success;
     }
@@ -67,9 +75,12 @@ class cl_loadFiles
     public static function loadAmendments()
     {
         $lv_amendments_file = self::copyAmendmentToLocal();
+       
         if($lv_amendments_file !== null)
         {
+            
             self::loadTableWithCSVFileData(cl_ammendments::AMENDMENTS_TABNAME,$lv_amendments_file );
+           
         }
     }
 }

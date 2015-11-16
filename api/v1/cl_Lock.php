@@ -61,10 +61,10 @@ class cl_Lock {
     }
 //Soft Lock
     public function setTransId() {        //find max trans_id
-//        $lv_sql = 'SELECT'.PHP_EOL
-//                 .'MAX(trans_id)'.PHP_EOL
-//                . 'FROM '.self::C_TABLE_NAME.PHP_EOL;
-//        $lv_max_trans_id = cl_DB::getResultsFromQuery($lv_sql);
+        $lv_sql = 'SELECT'.PHP_EOL
+                 .'MAX(trans_id)'.PHP_EOL
+                . 'FROM '.self::C_TABLE_NAME.PHP_EOL;
+        $lv_max_trans_id = cl_DB::getResultsFromQuery($lv_sql);
         return $lv_max_trans_id;
     }
     
@@ -117,7 +117,7 @@ class cl_Lock {
                 $lv_value = self::setTransId(); // find max trans_id
 
                 foreach ($lv_value as $key => $value) { //generate new trans_id
-                    $lv_trans_id = $value['max(trans_id)'];
+                    $lv_trans_id = $value['MAX(trans_id)'];
                 }
                 $lv_trans_id++; //newly generated trans id
 
@@ -435,7 +435,7 @@ and so_id ='$fp_v_so_id'";
         
         //$lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
       
-        $lv_link = "http://localhost/rmt/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate&trans_id=$fp_v_trans_id";
+        $lv_link = "http://10.74.163.157:8080/rmt/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate&trans_id=$fp_v_trans_id";
         return $lv_link;
         
     }
