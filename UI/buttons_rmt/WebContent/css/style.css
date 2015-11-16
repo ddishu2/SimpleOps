@@ -1,3 +1,30 @@
+.sapUiUx3OverlayOpenButton
+{
+	
+	display :none;
+}
+#back_to_manual1
+{
+	
+	margin-left: 41% !important;
+}
+
+#tag_stat1
+{
+	
+	margin-left: 20%;
+}
+.for_fonts_manual2
+{
+	font-size: 23px !important;
+	
+}
+#matrix_manual2
+{
+	
+	margin-left: 27%;
+margin-top: 10%;
+}
 #matrix_manual_search
 {
 	
@@ -20,7 +47,12 @@ height: 900px;
 margin-top: 15%;
 MARGIN-BOTTOM: -1%;
 }
-
+#matrix_manual_search_emp
+{
+	
+	margin-left: 30%;
+margin-top: 10%;
+}
 #welcome1
 {
     	margin-top: -70px;
