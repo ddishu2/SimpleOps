@@ -1184,12 +1184,14 @@ var tp1;
 
 												var back = new sap.ui.commons.Button({
 													id : 'back_amend',
-													text : "Back",
+													text : "Back to Home",
 													tooltip : "Back",
 													press:function()
 													{
-														$("#amend_first").addClass("hide_div");
-														$("#amend_zero").removeClass("hide_div");		
+														 sap.ui.core.BusyIndicator.show(0);	
+														 sap.ui.core.BusyIndicator.hide(0);
+														 window.location.reload();
+														
 													}
 
 												}).addStyleClass("for_normal_buttons_style1");
@@ -3929,7 +3931,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip :"Action"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", "am_extn"),
+												.bindProperty("text", "am_extn_report1"),
 										sortProperty : "am_extn_report1",
 										filterProperty : "am_extn_report1",
 										width : "70px"
@@ -3942,7 +3944,7 @@ var repo_to1 = new sap.ui.commons.Label({
 													template : new sap.ui.commons.TextView({})
 												.bindProperty("text", "am_notice_report1"),
 										sortProperty : "am_notice_report1",
-										filterProperty : "am_notice",
+										filterProperty : "am_notice_report1",
 										width : "70px"
 												}));
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
@@ -4045,14 +4047,17 @@ var repo_to1 = new sap.ui.commons.Label({
 													}).addStyleClass("for_normal_buttons_style1");
 												var report_back_amend = new sap.ui.commons.Button({
 													id : 'back_report_amend',
-													text : "Back",
+													text : "Back to Home",
 													tooltip : "Back",
 													press:function()
 													{
-														$("#report_first").removeClass("hide_div");
+													/* 	$("#report_first").removeClass("hide_div");
 														$("#report_first_open").addClass("hide_div");
 														$("#report_first_zero").removeClass("hide_div");
-														$("#amend_report_view").addClass("hide_div");
+														$("#amend_report_view").addClass("hide_div"); */
+														sap.ui.core.BusyIndicator.show(0);	
+														window.location.reload();
+														 sap.ui.core.BusyIndicator.hide(0);
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
