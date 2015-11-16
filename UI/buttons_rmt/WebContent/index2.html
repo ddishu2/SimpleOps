@@ -1161,7 +1161,11 @@ var tp1;
 												      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 												      		success : function(odata){
 												      			console.log(odata);
-												      			 alert("Notification Sent");  
+												      			
+												      			sap.ui.core.BusyIndicator.show(0);	
+																
+												      			 alert("Notification Sent");
+												      			 sap.ui.core.BusyIndicator.hide(0);
 												      			 $(".for_amend_dropdown").remove();
 													      			$("#for_amend_table1-table").addClass("change_color");
 													      			
