@@ -24,7 +24,8 @@ class cl_NotificationMails {
              *           \\\\<IP address>\<directory>\[<directory>]\\
              *            ntbomfs001 -> 10.75.250.149   
              */
-            lc_root = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\';
+            lc_root = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\',
+            lc_colon = ';';
 
 // Private class variables.    
     private $lv_content,
@@ -39,6 +40,7 @@ class cl_NotificationMails {
             $lt_pm_details = [],
             $lt_em_details = [],
             $lt_req_details = [],
+            $lt_sup_details = [],
             $lt_hlr_details = [],
             $lv_query_notifcn,
             $lv_query_capability,
@@ -231,46 +233,46 @@ class cl_NotificationMails {
 // Function to get the recievers based on the activity type, employee details etc.            
     Private function get_recievers() {
         if ($this->lt_recievers[0]['capability_lead'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('capability_lead') . ';';
+            $this->lv_recievers .= self::get_emailid('capability_lead') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['capability_sub_lead'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('capability_sub_lead') . ';';
+            $this->lv_recievers .= self::get_emailid('capability_sub_lead') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['capability_SPOC'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('capability_SPOC') . ';';
+            $this->lv_recievers .= self::get_emailid('capability_SPOC') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['capability_gen_id'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('capability_gen_id') . ';';
+            $this->lv_recievers .= self::get_emailid('capability_gen_id') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['ops_lead'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('ops_lead') . ';';
+            $this->lv_recievers .= self::get_emailid('ops_lead') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['ops_sub_lead'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('ops_sub_lead') . ';';
+            $this->lv_recievers .= self::get_emailid('ops_sub_lead') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['ops_gen_id'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('ops_gen_id') . ';';
+            $this->lv_recievers .= self::get_emailid('ops_gen_id') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['so_creator'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('so_creator') . ';';
+            $this->lv_recievers .= self::get_emailid('so_creator') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['proj_manager'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('proj_manager') . ';';
+            $this->lv_recievers .= self::get_emailid('proj_manager') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['eng_manager'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('eng_manager') . ';';
+            $this->lv_recievers .= self::get_emailid('eng_manager') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['resource'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('resource') . ';';
+            $this->lv_recievers .= self::get_emailid('resource') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['bu_lead'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('bu_lead') . ';';
+            $this->lv_recievers .= self::get_emailid('bu_lead') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['lead_other_bu'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('lead_other_bu') . ';';
+            $this->lv_recievers .= self::get_emailid('lead_other_bu') . self::lc_colon;
         }
         if ($this->lt_recievers[0]['crmg'] === 'X') {
-            $this->lv_recievers .= self::get_emailid('crmg') . ';';
+            $this->lv_recievers .= self::get_emailid('crmg') . self::lc_colon;
         }
     }
 
@@ -405,6 +407,7 @@ class cl_NotificationMails {
 
 // Get requested by details
                 $this->lt_req_details = $lo_so_details->get_corpid_details($this->lt_cte_details['req_by']);
+                $this->lt_sup_details = $lo_so_details->get_corpid_details($this->lt_cte_details['new_sup_corp_id']);
 
 // Get details of all capabilities email ids.
                 $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
@@ -480,6 +483,7 @@ class cl_NotificationMails {
                 $this->lv_subject = $this->lt_act_type[0]['action_type_text'];
                 $this->lv_req_by = $this->lt_req_details[0]['emp_name'];
                 $this->lv_req_email = $this->lt_req_details[0]['email'];
+                $this->lv_recievers .= $this->lv_req_email . self::lc_colon;
                 break;
             case 'CTE':
                 $this->lv_BU = $this->lt_cte_details['IDP'];
@@ -487,6 +491,8 @@ class cl_NotificationMails {
                 $this->lv_subject = $this->lt_act_type[0]['action_type_text'];
                 $this->lv_req_by = $this->lt_req_details[0]['emp_name'];
                 $this->lv_req_email = $this->lt_req_details[0]['email'];
+                $this->lv_recievers .= $this->lv_req_email . self::lc_colon;
+                $this->lv_recievers .= $this->lt_sup_details[0]['email'] . self::lc_colon;
                 break;
             
             case 'RL4':
@@ -665,14 +671,14 @@ class cl_NotificationMails {
         //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
-        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
-        {
-        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
-        }
-        else
-        {
+//        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
+//        {
+//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+//        }
+//        else
+//        {
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-        }     
+//        }     
 
         if ($lv_mail) {
             return true;
