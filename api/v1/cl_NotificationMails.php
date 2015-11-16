@@ -663,15 +663,16 @@ class cl_NotificationMails {
 // Get recievers for email.                
         self::get_recievers();
         //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-//                $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
 
 
+        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
+        {
+        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+        }
+        else
+        {
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-
-
-        // $lv_mail = mail('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', 'Test: '.$this->lv_subject, $this->lv_message, $this->lv_headers);
-
-
+        }     
 
         if ($lv_mail) {
             return true;
@@ -681,8 +682,3 @@ class cl_NotificationMails {
     }
 
 }
-
-//        $lo_email = new cl_NotificationMails();
-//        $lo_email->sendSoftLockReleaseNotification(203209, 232, 132456);
-//        $lo_email->sendSoftLockNotification(276011, 'http://localhost/rmt/UI/buttons_rmt/WebContent/approval.html', 232, 203201);
-//        $lo_email->sendSORejectionNotification(203209, 232, 132456);
