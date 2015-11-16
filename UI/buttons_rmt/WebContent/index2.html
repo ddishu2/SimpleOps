@@ -350,7 +350,7 @@ var tp1;
 							widths : [ '200px', '250px','200px' , '200px'  ]
 						});	
 						
-						var custnameLabel_amend = new sap.ui.commons.Label({
+						/* var custnameLabel_amend = new sap.ui.commons.Label({
 							text : 'Customer Name'
 						}).addStyleClass("for_text_style1");
 
@@ -359,10 +359,10 @@ var tp1;
 							//tooltip : 'SO Date',
 							editable : true,
 							width : '200px'
-						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font"); */
 						
 						
-						oDetails_amend_search.createRow(custnameLabel_amend,custnameText_amend)
+						//oDetails_amend_search.createRow(custnameLabel_amend,custnameText_amend)
 						
 						var pronameLabel_amend = new sap.ui.commons.Label({
 							text : 'Project Name'
@@ -447,16 +447,14 @@ var tp1;
 								$("#amend_zero").addClass("hide_div");
 								$("#amend_first").removeClass("hide_div");
 								
-								var pass_cust_name = $("#cust_name_amend").val();
+								//var pass_cust_name = $("#cust_name_amend").val();
 								var pass_pro_name = $("#pro_name_amend").val();
 								var pass_cap = $("#summary_amend").val();
 								var temp1 = new Array();			
 								temp1 = pass_cap.split(",");
 								console.log("/rmt/api/v1/index.php/amendments?competency[]="+pass_cap+
 										"&proj_name="
-										+pass_pro_name+
-										"&cust_name="
-										+pass_cust_name
+										+pass_pro_name
 								);
 								if(temp1.length==1)	
 								{
@@ -470,9 +468,7 @@ var tp1;
 				
 				"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
 			"&proj_name="
-			+pass_pro_name+
-			"&cust_name="
-			+pass_cust_name,
+			+pass_pro_name,
 //http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
@@ -501,7 +497,7 @@ var tp1;
 											am_enddate:val.curr_edate,
 											am_projected:val.proj_edate_projected,
 											am_sup:val.supervisor,
-											am_customer:val.cust_name,
+										//	am_customer:val.cust_name,
 											am_dom:val.domain_id,
 											am_newdate:val.new_edate,
 											am_newcorp:val.new_sup_corp_id,
@@ -552,9 +548,7 @@ var tp1;
 		"/rmt/api/v1/index.php/amendments?competency[]="+temp1[0]+
 						"&competency[]="+temp1[1]+
 			"&proj_name="
-			+pass_pro_name+
-			"&cust_name="
-			+pass_cust_name,
+			+pass_pro_name,
 //http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
@@ -583,7 +577,7 @@ var tp1;
 											am_enddate:val.curr_edate,
 											am_projected:val.proj_edate_projected,
 											am_sup:val.supervisor,
-											am_customer:val.cust_name,
+										//	am_customer:val.cust_name,
 											am_dom:val.domain_id,
 											am_newdate:val.new_edate,
 											am_newcorp:val.new_sup_corp_id,
@@ -639,9 +633,7 @@ var tp1;
 						"&competency[]="+temp1[1]+"&competency[]="+temp1[2]
 		+
 			"&proj_name="
-			+pass_pro_name+
-			"&cust_name="
-			+pass_cust_name,
+			+pass_pro_name,
 //http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
@@ -670,7 +662,7 @@ var tp1;
 											am_enddate:val.curr_edate,
 											am_projected:val.proj_edate_projected,
 											am_sup:val.supervisor,
-											am_customer:val.cust_name,
+											//am_customer:val.cust_name,
 											am_dom:val.domain_id,
 											am_newdate:val.new_edate,
 											am_newcorp:val.new_sup_corp_id,
@@ -725,9 +717,7 @@ var tp1;
 						"&competency[]="+temp1[1]+"&competency[]="+temp1[2]+"&competency[]="+temp1[3]
 		+
 			"&proj_name="
-			+pass_pro_name+
-			"&cust_name="
-			+pass_cust_name,
+			+pass_pro_name,
 //http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
@@ -756,7 +746,7 @@ var tp1;
 											am_enddate:val.curr_edate,
 											am_projected:val.proj_edate_projected,
 											am_sup:val.supervisor,
-											am_customer:val.cust_name,
+										//	am_customer:val.cust_name,
 											am_dom:val.domain_id,
 											am_newdate:val.new_edate,
 											am_newcorp:val.new_sup_corp_id,
@@ -811,9 +801,7 @@ var tp1;
 						"&competency[]="+temp1[1]+"&competency[]="+temp1[2]+"&competency[]="+temp1[3]
 		+"&competency[]="+temp1[4]+
 			"&proj_name="
-			+pass_pro_name+
-			"&cust_name="
-			+pass_cust_name,
+			+pass_pro_name,
 //http://localhost/rmt/api/v1/index.php/amendments?competency[]=SCM&proj_name=IN03_SAP_INDIA_MANAGEMENT&cust_name=Sap%20India%20Mgmt
 			success : function(odata) {
 				console.log(odata);
@@ -842,7 +830,7 @@ var tp1;
 											am_enddate:val.curr_edate,
 											am_projected:val.proj_edate_projected,
 											am_sup:val.supervisor,
-											am_customer:val.cust_name,
+											//am_customer:val.cust_name,
 											am_dom:val.domain_id,
 											am_newdate:val.new_edate,
 											am_newcorp:val.new_sup_corp_id,
@@ -906,8 +894,6 @@ var tp1;
 														{
 															id : 'for_amend_table1',
 															title : "RMT Amendment",
-															//visibleRowCount : 9,
-															//firstVisibleRow : 3,
 															selectionMode: sap.ui.table.SelectionMode.Single,
 															visibleRowCount :100,
 															 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
@@ -1009,7 +995,7 @@ var tp1;
 										filterProperty : "am_sup",
 										width : "100px"
 												}));
-												amend_table1.addColumn(new sap.ui.table.Column({
+												/* amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
 														text : "Customer Name",
 														tooltip:"Customer Name"
@@ -1019,7 +1005,7 @@ var tp1;
 										sortProperty : "am_customer",
 										filterProperty : "am_customer",
 										width : "100px"
-												}));
+												})); */
 												
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -1581,652 +1567,7 @@ var tp1;
 										$("#third").removeClass("hide_div");
 										$("#second").addClass("hide_div");
                                         
-										var from = $("#sfrom1-input").val();
-										var upto = $("#sto1-input").val();
-										var p_name=$("#Pro_id").val();
-										var p_bu=$("#spdrop-input").val();
-										var p_loc=$("#loci").val();
-										console.log(p_loc);
-										var temp = new Array();			
-										temp = p_loc.split(",");
-										
-									console.log(temp.length);
-				
-										var p_id=$("#pro_id_form").val();
-										var c_name=$("#cust_name1").val();
-											var cap=$("#ct_drop-input").val();
 									
-										 sap.ui.core.BusyIndicator.show(0);
-							 			
-										
-											
-										  
-										 console
-												.log("/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-														+ from
-														+ "&so_to_date="
-														+ upto
-														+ "&proj_name="
-														+ p_name
-														+ "&proj_bu="
-														+ p_bu
-														+ "&proj_loc[]="
-														+ temp
-												        + "&proj_id="
-												        + p_id
-												        + "&cust_name="
-												        + c_name
-												        + "&capability="
-												        +  cap); 
-										 
-										 
-										 if(temp.length == 1)
-											 {
-										$
-												.ajax({
-													method : "GET",
-													url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-														+ from
-														+ "&so_to_date="
-														+ upto
-														+ "&proj_name="
-														+ p_name
-														+ "&proj_bu="
-														+ p_bu
-														
-             											+ "&proj_loc[]="
-														+ temp[0]
-														
-												        + "&proj_id="
-												        + p_id
-												        + "&cust_name="
-												        + c_name
-												        + "&capability="
-												        +  cap,
-													success : function(odata) {
-														
-														sap.ui.core.BusyIndicator.hide(0);
-														console.log(odata);
-														var table_row;
-														var res = odata;
-														var res_length = 0;
-														var res_completed = 0;
-														var res_partial = 0;
-														var completeData = [];
-
-														jQuery
-																.each(
-																		res,
-																		function(
-																				i,
-																				val) {
-
-																			res_length++;
-																			if (val.emp == null) {
-
-																				res_partial++
-																			} else {
-																				var tmp = {
-																					sname : val.so.so_no,
-																					pcode : val.so.so_proj_id,
-																					pname : val.so.so_proj_name,
-																					sdate : val.so.so_sdate,
-																					edate : val.so.so_endate,
-																					eid : val.emp[0].emp_id,
-																					ename : val.emp[0].emp_name,
-																					lev : val.emp[0].level,
-																					skill : val.emp[0].skill1_l4,
-																					eloc : val.emp[0].loc,
-																					fulfill : "",
-																					status : "",
-																					assign : "",
-																					approve1 : "--Select--",
-																					pro_enddate : "" ,
-																					skill_cat : "" ,
-																					reason : val.emp[0].reason,
-																					propose_id : val.prop_id
-																				
-																				};
-																			
-																				completeData
-																						.push(tmp);
-																				res_completed++;
-
-																			}
-
-																		});
-
-														var oModel2 = new sap.ui.model.json.JSONModel();
-														oModel2
-																.setData({
-																	modelData : completeData
-																});
-														suitable_match
-																.setModel(oModel2);
-														suitable_match
-																.bindRows("/modelData");
-
-														descript
-																.setText(res_length
-																		+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																		+ res_completed
-																		+ " SO's.\n\n\nIdentified Partial match for "
-																		
-																		+ "SO's \n\n\n");
-													}
-												});
-											 }
-										 
-										 else if(temp.length == 2)
-										 {
-									$
-											.ajax({
-												method : "GET",
-												url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-													+ from
-													+ "&so_to_date="
-													+ upto
-													+ "&proj_name="
-													+ p_name
-													+ "&proj_bu="
-													+ p_bu
-													
-         											+ "&proj_loc[]="
-													+ temp[0]
-										        	+ "&proj_loc[]="
-										    	     + temp[1]
-													
-											        + "&proj_id="
-											        + p_id
-											        + "&cust_name="
-											        + c_name
-											        + "&capability="
-											        +  cap,
-												success : function(odata) {
-													
-													sap.ui.core.BusyIndicator.hide(0);
-													console.log(odata);
-													var table_row;
-													var res = odata;
-													var res_length = 0;
-													var res_completed = 0;
-													var res_partial = 0;
-													var completeData = [];
-
-													jQuery
-															.each(
-																	res,
-																	function(
-																			i,
-																			val) {
-
-																		res_length++;
-																		if (val.emp == null) {
-
-																			res_partial++
-																		} else {
-																			var tmp = {
-																				sname : val.so.so_no,
-																				pcode : val.so.so_proj_id,
-																				pname : val.so.so_proj_name,
-																				sdate : val.so.so_sdate,
-																				edate : val.so.so_endate,
-																				eid : val.emp[0].emp_id,
-																				ename : val.emp[0].emp_name,
-																				lev : val.emp[0].level,
-																				skill : val.emp[0].skill1_l4,
-																				eloc : val.emp[0].loc,
-																				fulfill : "",
-																				status : "",
-																				assign : "",
-																				approve1 : "--Select--",
-																				pro_enddate : "" ,
-																				skill_cat : "" ,
-																				reason : val.emp[0].reason,
-																				propose_id : val.prop_id
-																			
-																			};
-																		
-																			completeData
-																					.push(tmp);
-																			res_completed++;
-
-																		}
-
-																	});
-
-													var oModel2 = new sap.ui.model.json.JSONModel();
-													oModel2
-															.setData({
-																modelData : completeData
-															});
-													suitable_match
-															.setModel(oModel2);
-													suitable_match
-															.bindRows("/modelData");
-
-													descript
-															.setText(res_length
-																	+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																	+ res_completed
-																	+ " SO's.\n\n\nIdentified Partial match for "
-																	
-																	+ "SO's \n\n\n");
-												}
-											});
-										 }
-										 else if(temp.length == 3)
-										 {
-									$
-											.ajax({
-												method : "GET",
-												url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-													+ from
-													+ "&so_to_date="
-													+ upto
-													+ "&proj_name="
-													+ p_name
-													+ "&proj_bu="
-													+ p_bu
-													
-         											+ "&proj_loc[]="
-													+ temp[0]
-										        	+ "&proj_loc[]="
-										    	     + temp[1]
-											+ "&proj_loc[]="
-								    	     + temp[2]
-													
-											        + "&proj_id="
-											        + p_id
-											        + "&cust_name="
-											        + c_name
-											        + "&capability="
-											        +  cap,
-												success : function(odata) {
-													
-													sap.ui.core.BusyIndicator.hide(0);
-													console.log(odata);
-													var table_row;
-													var res = odata;
-													var res_length = 0;
-													var res_completed = 0;
-													var res_partial = 0;
-													var completeData = [];
-
-													jQuery
-															.each(
-																	res,
-																	function(
-																			i,
-																			val) {
-
-																		res_length++;
-																		if (val.emp == null) {
-
-																			res_partial++
-																		} else {
-																			var tmp = {
-																				sname : val.so.so_no,
-																				pcode : val.so.so_proj_id,
-																				pname : val.so.so_proj_name,
-																				sdate : val.so.so_sdate,
-																				edate : val.so.so_endate,
-																				eid : val.emp[0].emp_id,
-																				ename : val.emp[0].emp_name,
-																				lev : val.emp[0].level,
-																				skill : val.emp[0].skill1_l4,
-																				eloc : val.emp[0].loc,
-																				fulfill : "",
-																				status : "",
-																				assign : "",
-																				approve1 : "--Select--",
-																				pro_enddate : "" ,
-																				skill_cat : "" ,
-																				reason : val.emp[0].reason,
-																				propose_id : val.prop_id
-																			
-																			};
-																		
-																			completeData
-																					.push(tmp);
-																			res_completed++;
-
-																		}
-
-																	});
-
-													var oModel2 = new sap.ui.model.json.JSONModel();
-													oModel2
-															.setData({
-																modelData : completeData
-															});
-													suitable_match
-															.setModel(oModel2);
-													suitable_match
-															.bindRows("/modelData");
-
-													descript
-															.setText(res_length
-																	+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																	+ res_completed
-																	+ " SO's.\n\n\nIdentified Partial match for "
-																	
-																	+ "SO's \n\n\n");
-												}
-											});
-										 }			 else if(temp.length == 4)
-										 {
-												$
-														.ajax({
-															method : "GET",
-															url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-																+ from
-																+ "&so_to_date="
-																+ upto
-																+ "&proj_name="
-																+ p_name
-																+ "&proj_bu="
-																+ p_bu
-																
-			         											+ "&proj_loc[]="
-																+ temp[0]
-													        	+ "&proj_loc[]="
-													    	     + temp[1]
-														+ "&proj_loc[]="
-											    	     + temp[2]
-														+ "&proj_loc[]="
-											    	     + temp[3]
-																
-														        + "&proj_id="
-														        + p_id
-														        + "&cust_name="
-														        + c_name
-														        + "&capability="
-														        +  cap,
-															success : function(odata) {
-																
-																sap.ui.core.BusyIndicator.hide(0);
-																console.log(odata);
-																var table_row;
-																var res = odata;
-																var res_length = 0;
-																var res_completed = 0;
-																var res_partial = 0;
-																var completeData = [];
-
-																jQuery
-																		.each(
-																				res,
-																				function(
-																						i,
-																						val) {
-
-																					res_length++;
-																					if (val.emp == null) {
-
-																						res_partial++
-																					} else {
-																						var tmp = {
-																							sname : val.so.so_no,
-																							pcode : val.so.so_proj_id,
-																							pname : val.so.so_proj_name,
-																							sdate : val.so.so_sdate,
-																							edate : val.so.so_endate,
-																							eid : val.emp[0].emp_id,
-																							ename : val.emp[0].emp_name,
-																							lev : val.emp[0].level,
-																							skill : val.emp[0].skill1_l4,
-																							eloc : val.emp[0].loc,
-																							fulfill : "",
-																							status : "",
-																							assign : "",
-																							approve1 : "--Select--",
-																							pro_enddate : "" ,
-																							skill_cat : "" ,
-																							reason : val.emp[0].reason,
-																							propose_id : val.prop_id
-																						
-																						};
-																					
-																						completeData
-																								.push(tmp);
-																						res_completed++;
-
-																					}
-
-																				});
-
-																var oModel2 = new sap.ui.model.json.JSONModel();
-																oModel2
-																		.setData({
-																			modelData : completeData
-																		});
-																suitable_match
-																		.setModel(oModel2);
-																suitable_match
-																		.bindRows("/modelData");
-
-																descript
-																		.setText(res_length
-																				+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																				+ res_completed
-																				+ " SO's.\n\n\nIdentified Partial match for "
-																				
-																				+ "SO's \n\n\n");
-															}
-														});
-													 }			 else if(temp.length == 5)
-													 {
-															$
-																	.ajax({
-																		method : "GET",
-																		url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-																			+ from
-																			+ "&so_to_date="
-																			+ upto
-																			+ "&proj_name="
-																			+ p_name
-																			+ "&proj_bu="
-																			+ p_bu
-																			
-						         											+ "&proj_loc[]="
-																			+ temp[0]
-																        	+ "&proj_loc[]="
-																    	     + temp[1]
-																	+ "&proj_loc[]="
-														    	     + temp[2]
-																	+ "&proj_loc[]="
-														    	     + temp[3]
-																	+ "&proj_loc[]="
-														    	     + temp[4]
-																			
-																	        + "&proj_id="
-																	        + p_id
-																	        + "&cust_name="
-																	        + c_name
-																	        + "&capability="
-																	        +  cap,
-																		success : function(odata) {
-																			
-																			sap.ui.core.BusyIndicator.hide(0);
-																			console.log(odata);
-																			var table_row;
-																			var res = odata;
-																			var res_length = 0;
-																			var res_completed = 0;
-																			var res_partial = 0;
-																			var completeData = [];
-
-																			jQuery
-																					.each(
-																							res,
-																							function(
-																									i,
-																									val) {
-
-																								res_length++;
-																								if (val.emp == null) {
-
-																									res_partial++
-																								} else {
-																									var tmp = {
-																										sname : val.so.so_no,
-																										pcode : val.so.so_proj_id,
-																										pname : val.so.so_proj_name,
-																										sdate : val.so.so_sdate,
-																										edate : val.so.so_endate,
-																										eid : val.emp[0].emp_id,
-																										ename : val.emp[0].emp_name,
-																										lev : val.emp[0].level,
-																										skill : val.emp[0].skill1_l4,
-																										eloc : val.emp[0].loc,
-																										fulfill : "",
-																										status : "",
-																										assign : "",
-																										approve1 : "--Select--",
-																										pro_enddate : "" ,
-																										skill_cat : "" ,
-																										reason : val.emp[0].reason,
-																										propose_id : val.prop_id
-																									
-																									};
-																								
-																									completeData
-																											.push(tmp);
-																									res_completed++;
-
-																								}
-
-																							});
-
-																			var oModel2 = new sap.ui.model.json.JSONModel();
-																			oModel2
-																					.setData({
-																						modelData : completeData
-																					});
-																			suitable_match
-																					.setModel(oModel2);
-																			suitable_match
-																					.bindRows("/modelData");
-
-																			descript
-																					.setText(res_length
-																							+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																							+ res_completed
-																							+ " SO's.\n\n\nIdentified Partial match for "
-																							
-																							+ "SO's \n\n\n");
-																		}
-																	});
-																 }
-										 
-										 
-													 else if(temp.length == 6)
-													 {
-															$
-																	.ajax({
-																		method : "GET",
-																		url : "/rmt/api/v1/index.php/deployable_emp/?so_from_date="
-																			+ from
-																			+ "&so_to_date="
-																			+ upto
-																			+ "&proj_name="
-																			+ p_name
-																			+ "&proj_bu="
-																			+ p_bu
-																			
-						         											+ "&proj_loc[]="
-																			+ temp[0]
-																        	+ "&proj_loc[]="
-																    	     + temp[1]
-																	+ "&proj_loc[]="
-														    	     + temp[2]
-																	+ "&proj_loc[]="
-														    	     + temp[3]
-																	+ "&proj_loc[]="
-														    	     + temp[4]
-																	+ "&proj_loc[]="
-														    	     + temp[5]
-																			
-																	        + "&proj_id="
-																	        + p_id
-																	        + "&cust_name="
-																	        + c_name
-																	        + "&capability="
-																	        +  cap,
-																		success : function(odata) {
-																			
-																			sap.ui.core.BusyIndicator.hide(0);
-																			console.log(odata);
-																			var table_row;
-																			var res = odata;
-																			var res_length = 0;
-																			var res_completed = 0;
-																			var res_partial = 0;
-																			var completeData = [];
-
-																			jQuery
-																					.each(
-																							res,
-																							function(
-																									i,
-																									val) {
-
-																								res_length++;
-																								if (val.emp == null) {
-
-																									res_partial++
-																								} else {
-																									var tmp = {
-																										sname : val.so.so_no,
-																										pcode : val.so.so_proj_id,
-																										pname : val.so.so_proj_name,
-																										sdate : val.so.so_sdate,
-																										edate : val.so.so_endate,
-																										eid : val.emp[0].emp_id,
-																										ename : val.emp[0].emp_name,
-																										lev : val.emp[0].level,
-																										skill : val.emp[0].skill1_l4,
-																										eloc : val.emp[0].loc,
-																										fulfill : "",
-																										status : "",
-																										assign : "",
-																										approve1 : "--Select--",
-																										pro_enddate : "" ,
-																										skill_cat : "" ,
-																										reason : val.emp[0].reason,
-																										propose_id : val.prop_id
-																									
-																									};
-																								
-																									completeData
-																											.push(tmp);
-																									res_completed++;
-
-																								}
-
-																							});
-
-																			var oModel2 = new sap.ui.model.json.JSONModel();
-																			oModel2
-																					.setData({
-																						modelData : completeData
-																					});
-																			suitable_match
-																					.setModel(oModel2);
-																			suitable_match
-																					.bindRows("/modelData");
-
-																			descript
-																					.setText(res_length
-																							+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																							+ res_completed
-																							+ " SO's.\n\n\nIdentified Partial match for "
-																							
-																							+ "SO's \n\n\n");
-																		}
-																	});
-																 }
 
 									}
 								});
@@ -2271,21 +1612,7 @@ var tp1;
 								$("#four1").removeClass("hide_div");
 								$("#third").addClass("hide_div");
                             
-                  $(".approveDropdown input").each(function(index,val){	
-									
-									var parent2 = $(this).parent().parent().parent().parent();	
-              
-									if($(".approveDropdown input").val()=="Reject" || $(".approveDropdown input").val()=="Approve")
-										
-									{
-									
-									parent2.addStyleClass("change_color1");
-									$(".approveDropdown input").val("--Select--");
-								//	parent2.find(".status_of_emp").html("");
-									}
-                 
-                 }) 
-								
+                		
 								
 								
 							}
@@ -2579,77 +1906,11 @@ var tp1;
 							id: 'noti_suitable',
 							text : "Submit & Send Notification",
 							tooltip : "notify",
-							press: function(check){
-								if($(".approveDropdown input").val() == "Approve" || $(".approveDropdown input").val() == "Reject" )
-									{
-								
-								alert("Notification Sent Successfully.");
-									}
-								var so_str = "";
-								var emp_str = "";
-								var status_str = "";
-								var p1_id = "";
-								 
-								$(".approveDropdown input").each(function(index,val){
-				
-									if($(this).val() == "Approve" || $(this).val() == "Reject"){
-										var parent = $(this).parent().parent().parent().parent();
-										so_str += "&so_id[]="+parent.find(".soid").text();
-										emp_str += "&emp_id[]="+parent.find(".empoid").text();
-										 status_str += "&status[]="+$(this).val();
-										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 
-										 parent.addClass("change_color");
-											$(this).val("Done");
-								
-										// $('#suitable_match1').draggable(); 
-									/* 	 parent.find(".status_of_emp").html("Mail Sent");
-											parent.addClass("change_color");   */
-										/*	$(this).val("Done");
-											$(this).remove();
-										  */
-									/* 		parent.find(".approveDropdown input").val("Done");
-											parent.find(".approveDropdown input").remove(); */
-											
-											
-									}
-								});
-								$(".approveDropdown input").each(function(index,val){
-									
-									if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "None"){
-										$(this).val("Done");
-										$(this).remove();
-									}
-									
-									});
-								var asc= so_str + emp_str +status_str+p1_id;
-								console.log(asc);
-								$.ajax({
-						      		  method: "GET",
-						      		  url: "/rmt/api/v1/index.php/approve_soft_lock/?"+asc,
-						      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
-						      		success : function(odata){
-						      			
-						      			 
-						      		}
-								
-								});
-							check=false
-							return check ;
-								/* //http://localhost/rmt1/v1/index.php/approve_soft_lock/?so_id[]=111&so_id[]=112&so_id[]=113&emp_id[]=221&emp_id[]=222&emp_id[]=223&status[]=SoftLocked&status[]=Rejected&status[]=SoftLocked&prop_id=2 */
-									console.log(check)
-							}
+						
 
 						}).addStyleClass("for_normal_buttons_style1");
 						console.log(check)
-						 
-								 
-								 
-								 
-									
-									
-								
-								
+		
 					
 						var back = new sap.ui.commons.Button({
 							id : 'bt2',
@@ -3248,6 +2509,10 @@ var tp1;
 						
 						
 					//////////////////////////////////////////////Manual Tagging Starts///////////////////////////////////////////////////////////
+					
+					
+					
+                 /*     -----------------/* on f4 of SO field	 ------------------------*/
               	var osearch_manual = new sap.ui.commons.layout.MatrixLayout({
 							id : 'matrix_manual_search',
 							layoutFixed : true,
@@ -3258,20 +2523,11 @@ var tp1;
 							           '150px', '150px' ]
 						});
 
-						
-
-						
-
 						var oLabel_manual = new sap.ui.commons.Label({
 							id : 'so_date_from_manual',
 							text : 'SO Date From',
 
 						}).addStyleClass("for_text_style1");
-
-						/* var date1 = new Date();
-						date1.setMonth(date1.getMonth() - 8);
-						var date2 = new Date();
-						date2.setMonth(date2.getMonth() + 4); */
 						
 						var date1_manual = new Date();
 						              date1_manual.setDate(date1_manual.getDate());
@@ -3559,13 +2815,149 @@ var tp1;
 						oItem.setText("Retail & AFS");
 						capabilityText_manual.addItem(oItem);
 
-						capabilityLabel_manual.setLabelFor(capabilityText_manual);
 						osearch_manual.createRow(capabilityLabel_manual, capabilityText_manual);
 					    
-						var search_manual1 =new sap.ui.commons.Button({id:'search_for_manual',text :"Search for SO's"}).addStyleClass("for_normal_buttons_style1");
-						osearch_manual.createRow(search_manual1)
+						var search_manual1_back =new sap.ui.commons.Button({id:'search_for_manual',text :"Search for SO's"}).addStyleClass("for_normal_buttons_style1");
+						osearch_manual.createRow(search_manual1_back)
+						
+						
+						/* ------------So's f4 help Ennds here----------------------- */
+						
+						
+///////////////////////////////////////////////emp's f4 help starts here////////////////////////////////////////////////////////
+
+                          var osearch_manual_emp = new sap.ui.commons.layout.MatrixLayout({
+							id : 'matrix_manual_search_emp',
+							layoutFixed : true,
+							width : '400px',
+							columns : 2,
+							widths : [ '200px', '200px']
+						});
+						
+						var deployable_manual = new sap.ui.commons.Label({
+							text : 'Deployable :'
+						}).addStyleClass("for_text_style1");
+
+						var deployable_dropdown = new sap.ui.commons.DropdownBox(
+								{
+									id: 'ct_deploy_manual',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						deployable_dropdown.setTooltip("Deployable");
+						deployable_dropdown.setEditable(true);
+						deployable_dropdown.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("Capability0_manual_deploy");
+						oItem.setText("YES");
+						deployable_dropdown.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability1_manual_deploy");
+						oItem.setText("NO");
+						deployable_dropdown.addItem(oItem);
+						deployable_manual.setLabelFor(deployable_dropdown);
+						osearch_manual_emp.createRow(deployable_manual, deployable_dropdown);
+						
+						var future_manual = new sap.ui.commons.Label({
+							text : "Future SO :"
+						}).addStyleClass("for_text_style1");
+                          
+						var future_manual_text =new sap.ui.commons.TextField({}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						osearch_manual_emp.createRow(future_manual, future_manual_text);
+						
+						
+						var capabilityLabel_manual_emp = new sap.ui.commons.Label({
+							text : 'Capability'
+						}).addStyleClass("for_text_style1");
+
+						var capabilityText_manual_emp = new sap.ui.commons.DropdownBox(
+								{
+									id: 'ct_drop_manual_emp',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						capabilityText_manual_emp.setTooltip("Location");
+						capabilityText_manual_emp.setEditable(true);
+						capabilityText_manual_emp.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("Capability0_manual_emp");
+						oItem.setText("");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability1_manual_emp");
+						oItem.setText("DCM");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability2_manual_emp");
+						oItem.setText("Development");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability3_manual_emp");
+						oItem.setText("Finance");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability4_manual_emp");
+						oItem.setText("HCM");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability5_manual_emp");
+						oItem.setText("Misc");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability6_manual_emp");
+						oItem.setText("Management");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability7_manual_emp");
+						oItem.setText("ISU");
+						capabilityText_manual_emp.addItem(oItem);	
+						oItem = new sap.ui.core.ListItem("Capability9_manual_emp");
+						oItem.setText("Netweaver");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability10_manual_emp");
+						oItem.setText("SCM");
+						capabilityText_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability11_manual_emp");
+						oItem.setText("Retail & AFS");
+						capabilityText_manual_emp.addItem(oItem);
+
+						osearch_manual_emp.createRow(capabilityLabel_manual_emp, capabilityText_manual_emp);
+
+                        
+						var  skill_Label_manual_emp = new sap.ui.commons.Label({
+							text : 'Skill'
+						}).addStyleClass("for_text_style1");
+						osearch_manual_emp.createRow(skill_Label_manual_emp)
+						
+						var location_manual = new sap.ui.commons.Label({
+							text : "Location :"
+						}).addStyleClass("for_text_style1");
+                         
+						
+						var locationtext_manual_emp = new sap.ui.commons.DropdownBox(
+								{
+									id: 'ct_drop_manual_location',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						locationtext_manual_emp.setTooltip("Location");
+						locationtext_manual_emp.setEditable(true);
+						locationtext_manual_emp.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("Capability0_manual_emp_loc");
+						oItem.setText("");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability1_manual_emp_loc");
+						oItem.setText("Mumbai");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability2_manual_emp_loc");
+						oItem.setText("Banglore");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability3_manual_emp_loc");
+						oItem.setText("Chennai");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability4_manual_emp_loc");
+						oItem.setText("Gurgaon");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability5_manual_emp_loc");
+						oItem.setText("Hyderabad");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability6_manual_emp_loc");
+						oItem.setText("Pune");
+						locationtext_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("Capability7_manual_emp_loc");
+						oItem.setText("Kolkata");
+						locationtext_manual_emp.addItem(oItem);	
+				osearch_manual_emp.createRow(location_manual, locationtext_manual_emp);
+						
+						
+						
+						
 					
-					
+/////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
           var manual1_table = new sap.ui.table.Table(
 					{
 						id : 'manual_table1',
@@ -3659,16 +3051,37 @@ var tp1;
 							filterProperty : "",
 							width : "70px"
 						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp ID"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "70px"
-						}));
+						manual1_table
+						.addColumn(new sap.ui.table.Column(
+								{
+									label : 'Emp ID',
+									template : new sap.ui.commons.ValueHelpField(
+											{
+												valueHelpRequest : function(
+														oEvent) {
+													console
+															.log(oEvent
+																	.getParameters('newValue').newValue);
+
+													function handler(
+															oEvent) {
+														alert("Event '"
+																+ oEvent
+																		.getId()
+																+ "' triggered");
+													}
+													var oFor_so = new sap.ui.ux3.OverlayContainer(
+															{
+																width : '400px'
+															});
+													oFor_so
+															.addContent(osearch_manual_emp);
+
+													oFor_so.open();
+												}
+											}),
+											width :"60px"
+								}));
 
 						manual1_table.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3718,6 +3131,12 @@ var tp1;
 						var assign_manual = new sap.ui.commons.Button({
 							id : 'bt1_manual_assign',
 							text : "Assign",
+							press : function(){
+								
+								$("#manual2").removeClass("hide_div");
+								$("#manual1").addClass("hide_div");
+								
+							}
 						}).addStyleClass("for_normal_buttons_style1");						
 						var back_manual = new sap.ui.commons.Button({
 							id : 'bt1_manual_back',
@@ -3741,7 +3160,40 @@ var tp1;
 
 						
 					
-////////////////////////////////////////////Manual Ends Here//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////Manual1 Ends Here//////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////Manual2 Starts Here////////////////////////////////////////////////////////////////////
+                     
+                     
+               var osearch_manual2 = new sap.ui.commons.layout.MatrixLayout({
+							id : 'matrix_manual2',
+							layoutFixed : true,
+							width : '800px',
+							columns : 1,
+							widths : [ '800px']
+						});
+                   var tagging_stat1 =new sap.ui.commons.TextView({id:'tag_stat1', text : "Manual Entry For SO Tagging\n\n"}).addStyleClass("for_fonts_manual2");   
+                   var tagging_stat2 =new sap.ui.commons.TextView({ text : "Employee X hard tagged to S01 and notification sent via mail. \n\n"}).addStyleClass("for_fonts_manual2");
+                   
+                   osearch_manual2.createRow(tagging_stat1);
+                   osearch_manual2.createRow(tagging_stat2);
+                   osearch_manual2.placeAt("manual2");
+                   
+                var back_manual2 = new sap.ui.commons.Button({
+                	id : 'back_to_manual1',
+                	text : "Back",
+                	press: function()
+                	{
+                		$("#manual2").addClass("hide_div");
+                		$("#manual1").removeClass("hide_div");
+                	}
+                }).addStyleClass("for_normal_buttons_style1");
+                back_manual2.placeAt("manual2");
+                 
+  
+  
 
 	/////----------------------------------For Report Generation---------------------------------------------------/////////
 	var report_matrix_layout_dates1 = new sap.ui.commons.layout.MatrixLayout({
@@ -3956,7 +3408,7 @@ var repo_to1 = new sap.ui.commons.Label({
 																		am_enddate_report1 :val.curr_edate,
 																		am_projected_report1 :val.proj_edate_projected,
 																		am_sup_report1 :val.supervisor,
-																		am_customer_report1 :val.cust_name,
+																		//am_customer_report1 :val.cust_name,
 																		am_dom_report1 :val.domain_id,
 																		am_newdate_report1 :val.new_edate,
 																		am_newcorp_report1 :val.new_sup_corp_id,
@@ -3967,8 +3419,8 @@ var repo_to1 = new sap.ui.commons.Label({
 																		am_comments_report1 :val.ops_comments,
 																	   am_status_report  :  val.status,
 																	   am_extn_report1 : val.act,
-																		am_notice_report1 : val.date_chng_noti ,
-																		am_ext_notice_report1 :""
+																		am_notice_report1 : val.roll_off_lead_time ,
+																		am_ext_notice_report1 :val.ext_notice
 																	};
 																
 																	completeData_report1
@@ -4010,7 +3462,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						}
 								else if ($("#hard_check-RB").is(":checked") == true)
 								{
-								
+									
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
@@ -4022,7 +3474,7 @@ var repo_to1 = new sap.ui.commons.Label({
 					}
 								else if ($("#soft_expiry_check-RB").is(":checked") == true)
 								{
-								
+							
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
@@ -4035,25 +3487,39 @@ var repo_to1 = new sap.ui.commons.Label({
 								
 								else if ($("#bench_age_check-RB").is(":checked") == true)	
 									{
-									 tp1 = new sap.ui.ux3.ToolPopup({id: 'tool_popup1',
+								var	 tp1 = new sap.ui.ux3.ToolPopup({
 										content : [ for_desicion ],
 										opener : view_report_sel
-									});
+									}).addStyleClass("for_hide");
 					
 									}
 								
-								if (tp1.isOpen()) {
+								/* if (tp1.isOpen()) {
 									tp1.close();
-								} else {
+								} else { */
 									tp1.open(sap.ui.core.Popup.Dock.BeginTop, sap.ui.core.Popup.Dock.BeginBottom);
-								}
+								//}
 								
 							}
 
 							}).addStyleClass("for_normal_buttons_style1");
-						var Open_bench = new sap.ui.commons.Button({text:"Open"}).addStyleClass("for_normal_buttons_style1");
+						var Open_bench = new sap.ui.commons.Button({text:"Open",
+							press: function()
+							{
+								
+								
+							}
+						
+						}).addStyleClass("for_normal_buttons_style1");
 						var Save_bench = new sap.ui.commons.Button({text :"Save"}).addStyleClass("for_normal_buttons_style1");
-						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" 
+						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" ,		
+					press: function()
+					{
+						 if (tp1.isOpen()) {
+								tp1.close();
+							}
+						
+					}
 						}).addStyleClass("for_normal_buttons_style1");
 
 						var for_desicion = new sap.ui.layout.HorizontalLayout("Layout1", {
@@ -4434,7 +3900,7 @@ var repo_to1 = new sap.ui.commons.Label({
 										filterProperty : "am_sup_report1",
 										width : "100px"
 												}));
-												amend_table_report_gen.addColumn(new sap.ui.table.Column({
+											/* 	amend_table_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
 														text : "Customer Name",
 														tooltip:"Customer Name"
@@ -4444,7 +3910,7 @@ var repo_to1 = new sap.ui.commons.Label({
 										sortProperty : "am_customer_report1",
 										filterProperty : "am_customer_report1",
 										width : "100px"
-												}));
+												})); */
 												
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
