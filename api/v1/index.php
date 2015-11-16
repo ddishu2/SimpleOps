@@ -491,9 +491,16 @@ $app->get(cl_RMGTool_Globals ::GC_route_proposals,
            
                     $re_ammendments = cl_ammendments::getAmmendments($lv_cust_name,$lv_proj_name,$lv_arr_competency);
                     $app->response->setStatus(200);
-                    $app->response->headers->set('Content-Type', 'application/json');           
-                    echo json_encode($re_ammendments, JSON_PRETTY_PRINT);
-                  
+                    $app->response->headers->set('Content-Type', 'application/json');  
+                   
+                   // echo json_encode($re_ammendments, JSON_PRETTY_PRINT);
+                   // echo json_encode($re_ammendments, JSON_PRETTY_PRINT);
+                   //$str = json_encode($re_ammendments);
+                   //echo $str.'sddfdfdfd';
+                    //$arr = array(0 => array(), 1 => array(), 2 => array(), 3 => array(), 4 => array());
+                    echo json_encode($re_ammendments,JSON_PRETTY_PRINT);
+                    //print_r($re_ammendments);
+               
            }
                   );       
                   

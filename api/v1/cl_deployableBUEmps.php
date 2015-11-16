@@ -67,8 +67,8 @@ class cl_deployableBUEmps extends cl_abs_deployableEmp {
             $lv_emp_id = $lwa_deployable_emp['emp_id'];
 
 
-         //   $lv_emp_prime_skill = strtolower($lwa_deployable_emp['skill1_l4']);
-             $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
+            $lv_emp_prime_skill = strtolower($lwa_deployable_emp['skill1_l4']);
+             //$lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
             $lv_emp_level = strtolower($lwa_deployable_emp['level']);
             $lv_emp_loc = strtolower($lwa_deployable_emp['loc']);
 //            echo $fp_v_so_id.','

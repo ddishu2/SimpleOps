@@ -340,7 +340,7 @@
             * Remove blank elements from array.
             */
             $larr_non_blank_values = array_filter($fp_arr_values);
-            if (count($$larr_non_blank_values) > 0)
+            if (count($larr_non_blank_values) > 0)
             {
                 $lv_valueList = implode($fp_v_delimiter, $larr_non_blank_values);
             

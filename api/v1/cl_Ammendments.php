@@ -20,7 +20,8 @@ class cl_ammendments {
     const C_COMPETENCY = 'competency';
     const C_CUST_NAME = 'cust_name';
     const C_PROJ_NAME = 'proj_name';
-    const AMENDMENT_BAT_SRC_DIR  = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\Batch Files\\';
+//    const AMENDMENT_BAT_SRC_DIR  = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\Batch Files\\';
+    const AMENDMENT_BAT_SRC_DIR  ="D:\\xampp\\htdocs\\rmt\\api\\BatchFile\\amendments\\";
     const AMENDMENT_BAT_FILENAME_LOAD = 'rmt_amen_load_PHP.bat';
     const AMENDMENT_BAT_FILENAME_CREATE = 'rmt_amen_load_RAS.bat';
 //    const C_AMMEND_TABLE = 'ammend_table';
@@ -66,7 +67,8 @@ class cl_ammendments {
          
          
          
-         $filter_cust_name  = self::isfilterset($fp_cust_name);
+//         $filter_cust_name  = self::isfilterset($fp_cust_name);
+        $filter_cust_name = false;
          $filter_curr_proj_name = self::isfilterset($fp_proj_name);
          $filter_competency = self::isfilterset($fp_arr_competency); 
          
@@ -145,7 +147,7 @@ class cl_ammendments {
          
          
         $re_result = cl_DB::getResultsFromQuery($sql);
-//      print_r($re_ammendments);
+//      print_r($re_result);
 
         
         foreach ($re_result as $key => $value) {
@@ -153,12 +155,52 @@ class cl_ammendments {
 
 //            if (((!$value['new_edate'] == '') || (!$value['new_sup_id'] == 0)) && (!self::isProcessed($value['id']))) {
                 if (!self::isProcessed($value['id'])){
-                $re_ammendments[] = $value;
+//                    if($key ==2 ) {
+//                        $value['cust_name'] = 'tejas sss';
+                      
+                    unset($value['cust_name']);
+                     $re_ammendments[] = $value;
+//                       break;
+//                    }  
+                //print_r($value);die;
+                //break;
             }
         }
 
 
-
+        //unset($re_ammendments[0]['new_sup_corp_id']);
+        //unset($re_ammendments[0]['new_sup_id']);
+        //unset($re_ammendments[0]['new_sup_name']);
+        //unset($re_ammendments[0]['reason']);
+        //unset($re_ammendments[0]['curr_proj_name']);
+        //unset($re_ammendments[0]['curr_sdate']);
+        //unset($re_ammendments[0]['curr_edate']);
+        //unset($re_ammendments[0]['supervisor']);
+        //unset($re_ammendments[0]['proj_edate_projected']);
+        //unset($re_ammendments[0]['cust_name']);
+        //unset($re_ammendments[0]['ext_notice']);
+        //unset($re_ammendments[0]['roll_off_lead_time']);
+        //unset($re_ammendments[0]['new_edate']);
+        //unset($re_ammendments[0]['roll_off_lead_time']);
+//        [id] => 307
+//            [name] => Sridhar S Iyer
+//            [level] => M4
+//            [IDP] => Appsone SAP
+//            [loc] => Mumbai
+//            [bill_stat] => Chargeable
+//            [competency] => Finance
+//            [curr_proj_name] => IN03_ALDI - SAP POC
+//            [curr_sdate] => 14-Oct-15
+//            [curr_edate] => 30-Nov-15
+//            [proj_edate_projected] => 30-Nov-15
+//            [supervisor] => Gokhale,Kaustubh
+//            [domain_id] => sriiyer
+//            [new_edate] => 30-Nov-16
+//            [act] => Extension
+//            [roll_off_lead_time] => 274
+//            [ext_notice] => -261
+//            [req_by] => tnakwa
+        
         return $re_ammendments;
     }
      
@@ -352,7 +394,8 @@ class cl_ammendments {
 //        $lv_supervisor = $fp_arr_result['supervisor_lname'].$fp_arr_result['supervisor_fname'];
         $lv_supervisor = $fp_arr_result['supervisor'];
         
-        $lv_cust_name = $fp_arr_result['cust_name'];
+//        $lv_cust_name = $fp_arr_result['cust_name'];
+        $lv_cust_name = '';
         $lv_domain_id = $fp_arr_result['domain_id'];
 
 
@@ -361,7 +404,18 @@ class cl_ammendments {
         $lv_new_edate = date('y-m-d', strtotime($lv_nedate));
 
          $lv_act = $fp_arr_result['act'];
-         $lv_date_chng_noti = $fp_arr_result['Date_chng_noti'];
+//         $lv_date_chng_noti = $fp_arr_result['Date_chng_noti'];
+           /* change
+          * addition of new cols insted of Date_chang_noti
+          */
+         
+        $lv_roll_off_lead_time = $fp_arr_result['roll_off_lead_time'];
+        $lv_ext_notice = $fp_arr_result['ext_notice'];
+        
+        
+        /*
+         * end Change
+         */
 
 
         $lv_new_sup_corp_id = $fp_arr_result['new_sup_corp_id'];
@@ -397,24 +451,33 @@ class cl_ammendments {
         }
         // if existing then update else insert
        if($flag == "false"){
-        $sql = "INSERT INTO `rmg_tool`.`trans_ammendment` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`date_chng_noti`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
-                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
-       }
+//        $sql = "INSERT INTO `trans_ammendment` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`date_chng_noti`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
+//                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+           $sql = "INSERT INTO `trans_ammendment` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`roll_off_lead_time`,`ext_notice`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
+                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_roll_off_lead_time','$lv_ext_notice', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+           }
        else 
        {
           $sql = "UPDATE `trans_ammendment` SET `new_edate`='$lv_new_edate',`new_sup_corp_id`= '$lv_new_sup_corp_id',`new_sup_id`='$lv_new_sup_id',`new_sup_name`='$lv_new_sup_name',`reason`='$lv_reason',`req_by`='$lv_req_by',`status`='$lv_status',`ops_comments`='$lv_ops_comments',`Updated On`='$lv_Updated_On' WHERE id = $lv_id"; 
        }
 
-
+//         echo $sql;
         $re_result = cl_DB::updateResultIntoTable($sql);
-            
+        
+        
+        $sql_new_edate_adjust = "UPDATE `trans_ammendment` SET `new_edate`='0000-00-00' WHERE `new_edate`='1970-01-01';";    
+        $re_result1 = cl_DB::updateResultIntoTable($sql_new_edate_adjust);
 //        $sql1 = "INSERT INTO `rmg_tool`.`trans_ammendment_history` (`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`,`act`,`date_chng_noti`,`proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
 //                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti','$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
         
-         $sql1 = "INSERT INTO `rmg_tool`.`trans_ammendment_history`(`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`date_chng_noti`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
-                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_date_chng_noti', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
+         $sql1 = "INSERT INTO `trans_ammendment_history`(`id`, `name`, `level`, `IDP`, `loc`, `bill_stat`, `competency`, `curr_proj_name`, `curr_sdate`, `curr_edate`, `proj_edate_projected`, `supervisor`, `cust_name`, `domain_id`, `new_edate`,`act`,`roll_off_lead_time`,`ext_notice`, `new_sup_corp_id`, `new_sup_id`, `new_sup_name`, `reason`, `req_by`, `status`, `ops_comments`,`Updated On`)"
+                . " VALUES ($lv_id, '$lv_name', '$lv_level', '$lv_IDP', '$lv_loc', '$lv_bill_stat', '$lv_competency', '$lv_curr_proj_name', '$lv_curr_sdate', '$lv_curr_edate', '$lv_proj_edate_projected', '$lv_supervisor', '$lv_cust_name', '$lv_domain_id', '$lv_new_edate','$lv_act','$lv_roll_off_lead_time','$lv_ext_notice', '$lv_new_sup_corp_id', '$lv_new_sup_id', '$lv_new_sup_name', '$lv_reason', '$lv_req_by', '$lv_status', '$lv_ops_comments','$lv_Updated_On')";
         
         $re_result1 = cl_DB::updateResultIntoTable($sql1);
+        
+        
+        $sql_new_edate_adjust_history = "UPDATE `trans_ammendment_history` SET `new_edate`='0000-00-00' WHERE `new_edate`='1970-01-01';";    
+        $re_result1 = cl_DB::updateResultIntoTable($sql_new_edate_adjust_history);
         
          $lo_mail = new cl_NotificationMails();
          
@@ -476,6 +539,9 @@ class cl_ammendments {
     {
         $lv_batfile = //'start '.
                 escapeshellarg(self::AMENDMENT_BAT_SRC_DIR.self::AMENDMENT_BAT_FILENAME_LOAD);
+        
+//        $lv_batfile = escapeshellarg('D:\xampp\htdocs\rmt\api\BatchFile\amendments\rmt_amen_load_PHP.bat');
+        
         echo $lv_batfile;
         $str = exec($lv_batfile);
         
@@ -485,6 +551,9 @@ class cl_ammendments {
     {
         $lv_batfile = //'start '.
                 escapeshellarg(self::AMENDMENT_BAT_SRC_DIR.self::AMENDMENT_BAT_FILENAME_CREATE);
+        
+        
+//          $lv_batfile = escapeshellarg('D:\xampp\htdocs\rmt\api\BatchFile\amendments\rmt_amen_load_RAS.bat');
 //        $lv_batfile = 'start /B \\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\Batch Files\rmt_amen_load_PHP.bat';
 //        $lv_batfile = escapeshellarg($lv_batfile);
         echo $lv_batfile;

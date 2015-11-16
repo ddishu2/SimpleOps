@@ -1,4 +1,8 @@
 <?php
+
+ini_set('max_execution_time', 300);
+
+
 /**
  * Summary:  Reusable Logic for interacting with the database.
  *           
@@ -8,6 +12,7 @@
  * @uses cl_DB()->getResultsFromQuery to retrieve results. 
  * 
  */
+
 class cl_DB
 {
     const DB_EXCEPTION     = "Could not connect to database";
@@ -17,7 +22,9 @@ class cl_DB
     const C_DATE_INITIAL   = '0000-00-00';
     const C_QUERY_ERROR    = 'Error: No Records Found';
     const C_HOSTNAME       = "localhost";
-    const C_DB_NAME        = "rmg_tool";
+//    const C_DB_NAME        = "rmg_tool";
+//    const C_DB_NAME        = "rmt_new_masters";
+    const C_DB_NAME        = "rmt_avi";
     const C_USER_NAME      = "root";
     const C_PASSWORD       = "";
     private static $dbhandle = null;
@@ -129,7 +136,7 @@ class cl_DB
    
      public function updateResultIntoTable($fp_v_query)
      {
-//        self::setDBHandle();
+        self::setDBHandle();
 //        self::clearCount();
 //      $re_results = [];
         $re_success = false; 
