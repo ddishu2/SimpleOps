@@ -48,7 +48,6 @@ class cl_releasenotification {
     private function getreleasablehardlocks()
     {
         $lv_edate = $this->add_business_days(date(self::gc_date_format));
-        $lv_edate = '11-DEC-15';
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
