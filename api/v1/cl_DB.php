@@ -24,7 +24,8 @@ class cl_DB
     const C_HOSTNAME       = "localhost";
 //    const C_DB_NAME        = "rmg_tool";
 //    const C_DB_NAME        = "rmt_new_masters";
-    const C_DB_NAME        = "rmt_avi";
+//    const C_DB_NAME        = "rmt_avi";
+    const C_DB_NAME        = "rmt_amendment_DB";
     const C_USER_NAME      = "root";
     const C_PASSWORD       = "";
     private static $dbhandle = null;
