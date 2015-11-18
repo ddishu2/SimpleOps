@@ -9,6 +9,7 @@
  *
  * @author vkhisty
  */
+require_once(APPPATH.'models/cl_methods.php');
 class m_report extends CI_model
 {
     const C_HDR_LINE1          = 'Content-Type: text/csv'; 
@@ -81,11 +82,11 @@ public function setreport_type($fp_report)
    public function setdates($fp_start_dates,$fp_end_dates){
       
     
-        $lv_dates_valid = cl_methods::isDateRangeValid($fp_v_start_date, $fp_v_end_date);
+        $lv_dates_valid = cl_methods::isDateRangeValid($fp_start_dates, $fp_end_dates);
         if($lv_dates_valid === true)
         {
-            $this->v_start_date  = $fp_v_start_date;
-            $this->v_end_date    = $fp_v_end_date;   
+            $this->v_start_date  = $fp_start_dates;
+            $this->v_end_date    = $fp_end_dates;   
         }
         else
         {

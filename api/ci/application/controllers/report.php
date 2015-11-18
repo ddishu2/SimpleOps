@@ -23,16 +23,20 @@ class report extends CI_controller {
     
     public function setreports()
     {
+        
+        echo "Hello";
        $rp_type      =  $this->input->get(self::C_RTYPE); 
        $rp_from_date =  $this->input->get(self::C_FROM_DATE); // Start Date
        $rp_to_date   =  $this->input->get(self::C_TO_DATE); // End Date
 //       
         $this->m_report->isreportvalid($rp_type,$rp_from_date,$rp_to_date);
         $this->m_report->download();
+        
+        
 
     }
-//    public function demo()
-//    {
-//        echo "Hello";
-//    }
+    public function demo()
+    {
+        echo "Hello";
+    }
 }

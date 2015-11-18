@@ -11,7 +11,7 @@
  *
  * @author vkhisty
  */
-class cl_methods extends CI_models {
+class cl_methods {
     const C_DATE_FORMAT      = 'Y-m-d';
     
     final public static function isDateValid($fp_v_date)
