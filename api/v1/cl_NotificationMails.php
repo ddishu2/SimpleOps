@@ -279,10 +279,9 @@ class cl_NotificationMails {
 // Method to set email headers    
     private function add_header() {
         $lv_uid = md5(uniqid(time()));
-        $this->lv_headers = 'From: appsonesap.in@capgemini.com' . "\r\n";
+        $this->lv_headers  = 'From: appsonesap.in@capgemini.com' . "\r\n";
         $this->lv_headers .= 'Reply-To: appsonesap.in@capgemini.com' . "\r\n";
-//        $this->lv_headers .= 'bcc: tejas.nakwa@capgemini.com' . "\r\n"; 
-//        $this->lv_headers .= 'cc: prashanth.tellis@capgemini.com' . "\r\n";
+        $this->lv_headers .= 'cc: appsonesap.in@capgemini.com' . "\r\n";
         $this->lv_headers .= 'MIME-Version: 1.0' . "\r\n";
         $this->lv_headers .= "Content-Type: multipart/mixed; boundary=\"" . $lv_uid . "\"\r\n";
         return $lv_uid;
@@ -623,7 +622,7 @@ class cl_NotificationMails {
                 $this->lv_content = $lv_content[0];
                 foreach ($this->lt_hlr_details as $lv_key_hlr => $lwa_hlr) {
                 $this->lv_content .= $lv_content[1];
-                $this->lv_content = str_replace("GV_SNO", $lv_key_hlr, $this->lv_content);
+                $this->lv_content = str_replace("GV_SNO", ($lv_key_hlr + 1), $this->lv_content);
                 $this->lv_content = str_replace("GV_SO_NO", $lwa_hlr[$this->gv_so], $this->lv_content);
                 $this->lv_content = str_replace("GV_EDATE", $lwa_hlr[$this->gv_edate], $this->lv_content);
                 $this->lv_content = str_replace("GV_BU", $lwa_hlr[$this->gv_idp], $this->lv_content);
@@ -696,12 +695,16 @@ class cl_NotificationMails {
         {
         $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
         }
+        elseif ($i_mode === 'RL4')
+        {
+        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
+        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+        }
         else
         {
-        echo $this->lv_recievers;
+        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
         }     
-
         if ($lv_mail) {
             return true;
         } else {
