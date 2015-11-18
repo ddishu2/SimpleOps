@@ -595,7 +595,10 @@ class cl_NotificationMails {
 
             case 'CTE':
                 $this->lv_content = str_replace("GV_UPDATED_BY", $this->lv_req_by, $this->lv_content);
-                $this->lv_content = str_replace("GV_STATUS", $this->lv_status . 'ed', $this->lv_content);
+                if($this->lv_status == 'Approve')
+                { $this->lv_content = str_replace("GV_STATUS", $this->lv_status . 'd', $this->lv_content); }
+                else
+                { $this->lv_content = str_replace("GV_STATUS", $this->lv_status . 'ed', $this->lv_content); }    
                 $this->lv_content = str_replace("GV_ID", $this->lt_cte_details['id'], $this->lv_content);
                 $this->lv_content = str_replace("GV_EMPNAME", $this->lt_cte_details['name'], $this->lv_content);
                 $this->lv_content = str_replace("GV_COMPETENCY", $this->lt_cte_details['competency'], $this->lv_content);
@@ -689,12 +692,12 @@ class cl_NotificationMails {
 // Get recievers for email.                
         self::get_recievers();      
 
-//        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
-//        {
-//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
-//        }
-//        else
-//        {
+        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
+        {
+        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+        }
+        else
+        {
         echo $this->lv_recievers;
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
 //        }     
