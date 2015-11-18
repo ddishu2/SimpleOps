@@ -34,12 +34,6 @@
             </td>
             <td bgcolor='blue'style='color:white'>
                <CENTER>New End Date</CENTER>
-            </td>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>New Supervisor ID</CENTER>
-            </td>
-            <td bgcolor='blue'style='color:white'>
-               <CENTER>New Supervisor Name</CENTER>
             </td>		
          </tr>
          <tr>
@@ -69,12 +63,6 @@
             </td>
            <td>
                <CENTER>GV_NED</CENTER>
-            </td>
-           <td>
-               <CENTER>GV_NSID</CENTER>
-            </td>
-           <td>
-               <CENTER>GV_NSN</CENTER>
             </td>
          </tr>
       </table>
