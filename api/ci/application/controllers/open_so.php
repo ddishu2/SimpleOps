@@ -14,9 +14,7 @@ class open_so extends CI_controller
     const C_PROJ_ID   = 'proj_id';
     const C_CUST_NAME = 'cust_name';
     const C_CAPABILITY = 'capability';
-    
-    
-    
+   
     
     const C_FROM_DATE = 'so_from_date';
     const C_TO_DATE = 'so_to_date';

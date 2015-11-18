@@ -11,6 +11,7 @@ Class m_proposals extends CI_model
     /*
      * change
      */
+    private static $arr_slock_expired = [];
     private static $arr_perfect_proposals = [];
     private static $v_perfect_proposal_count = 0;
     private static $arr_slocked = [];
@@ -23,12 +24,14 @@ Class m_proposals extends CI_model
      const C_TABNAME1 = 'v_deployable_emps';
     const c_emp_skill_fname = 'skill1_l4';
     const C_FNAME_BENCH_AGING = 'bench_aging';
-    const c_emp_loc_fname = 'so_loc';
+    const c_emp_loc_fname = 'loc';
     const c_emp_level_fname = 'level';
     
     
     
     const C_FNAME_REJECTED = 'rejected';
+    const C_DATE_FORMAT    = 'Y-m-d';
+    
     
 // end change
     
@@ -58,7 +61,7 @@ Class m_proposals extends CI_model
                $this->load->database();
 //                echo "inside INdex";
         }
-        public function setAttributes(m_open_so $fp_o_open_sos, m_BuEmployees $fo_BuEmployess,$lv_so_projname,$lv_so_proj_bu,$larr_so_locs,$fp_v_proj_id,$fp_v_capability,$fp_v_cust_name)
+        public function set_attributes(m_open_so $fp_o_open_sos, m_BuEmployees $fp_o_deployableEmp,$lv_so_projname,$lv_so_proj_bu,$larr_so_locs,$fp_v_proj_id,$fp_v_capability,$fp_v_cust_name)
         {
         $this->lv_prop_id = self::setProposalID();
         
@@ -93,9 +96,9 @@ Class m_proposals extends CI_model
 //                   .self::C_TABNAME.PHP_EOL;
 //       $re_PID = cl_DB::getResultsFromQuery($lv_query);
             
-            
-            $this->db->select_max(self::C_FNAME_PROPOSAL_ID.'AS prop_id');
-            $result = $this->db->get()->row(self::C_TABNAME);  
+           //self::C_FNAME_PROPOSAL_ID 
+            $this->db->select_max(self::C_FNAME_PROPOSAL_ID);
+            $result = $this->db->get(self::C_TABNAME)->row();  
             $count = $result->prop_id;
 
 
@@ -119,10 +122,10 @@ Class m_proposals extends CI_model
         $re_it_emps_for_sos = [];
         foreach ($this->arr_open_sos as $open_so) 
         {
-            $lv_so_id                            = $open_so[m_open_sos::C_FNAME_SO_POS_NO];
-            $lv_so_skill                         = $open_so[m_open_sos::C_FNAME_SKILL];
-            $lv_so_loc                           = $open_so[m_open_sos::C_FNAME_LOCATION];
-            $lv_so_level                         = $open_so[m_open_sos::C_FNAME_LEVEL];
+            $lv_so_id                            = $open_so[m_open_so::C_FNAME_SO_POS_NO];
+            $lv_so_skill                         = $open_so[m_open_so::C_FNAME_SKILL];
+            $lv_so_loc                           = $open_so[m_open_so::C_FNAME_LOCATION];
+            $lv_so_level                         = $open_so[m_open_so::C_FNAME_LEVEL];
             $re_it_emps_for_sos[$lv_so_id][self::C_FNAME_SO] = $open_so;
             $re_it_emps_for_sos[$lv_so_id][self::C_FNAME_PROPOSAL_ID] = $this->lv_prop_id;
             
@@ -179,7 +182,7 @@ Class m_proposals extends CI_model
 public function createProposal( $fp_so_id , $fp_emp_id ) 
     {
       $this->incrementItemID();
-      $lv_date = date(cl_DB::C_DATE_FORMAT);
+      $lv_date = date(self::C_DATE_FORMAT);
 //      $lv_prop_id      = cl_abs_QueryBuilder::convertValueToSQLString($this->lv_prop_id);
 //      $lv_item_id      = cl_abs_QueryBuilder::convertValueToSQLString($this->lv_item_id);
 //      $lv_so_id        = cl_abs_QueryBuilder::convertValueToSQLString($fp_so_id);
@@ -243,11 +246,13 @@ public function createProposal( $fp_so_id , $fp_emp_id )
            {
              if(array_key_exists ('emp',$value))
              {
-               $lv_empid = $value['emp'][0]['emp_id'];
                
+                 if($value['emp'] != null)
+                 {
+               $lv_empid = $value['emp'][0]['emp_id'];
                $lv_soid = $value['so']['so_pos_no'];
                self::createProposal ($lv_soid,$lv_empid);
-            
+                 }
                           
              }
            }
@@ -260,10 +265,12 @@ public function createProposal( $fp_so_id , $fp_emp_id )
      * @return boolean|\true|\false
      */
     private static function hasProposalBeenRejectedMaxTimes($lv_so_id)
-    {
+    { 
+        $lock = new m_lock();
+        
         $lv_result = false;
         if (
-               cl_Lock::getRejectionCount($lv_so_id) >= 3
+               $lock->getRejectionCount($lv_so_id) >= 3
                )
         {
             $lv_result = true;
@@ -387,6 +394,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
         
 //        $lv_query = "SELECT emp_id FROM trans_locks where status = 'S201'";
 //        $lt_data = cl_DB::getResultsFromQuery($lv_query);
+         $this->db->select(self::C_FNAME_EMP_ID);
       $result = $this->db->get_where(m_lock::C_TABNAME, array(m_lock::C_FNAME_STATUS =>m_lock::C_STATUS_HARD_LOCK ));             
            $lt_data = $result->result_array();
 
@@ -425,7 +433,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
         $lt_data = [];
 //        $lv_query = "SELECT * FROM trans_Proposals where rejected = 'X'";
 //        $lt_data = cl_DB::getResultsFromQuery($lv_query);
-         $result = $this->db->get_where(slef::C_TABNAME, array(self::C_FNAME_REJECTED =>'X' ));             
+         $result = $this->db->get_where(self::C_TABNAME, array(self::C_FNAME_REJECTED =>'X' ));             
            $lt_data = $result->result_array();
 
             self::$arr_proposalRejectedByOps = $lt_data;
@@ -505,7 +513,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
      */
     public function isDeployable($fp_v_emp_id, $fp_v_so_id) {
         $re_isDeployable = false;
-        if (!$this->isProposed($fp_v_emp_id) && !$this->isSoftLocked($fp_v_emp_id) && !$this->isRejectedByManager($fp_v_emp_id, $fp_v_so_id) && !$this->isHardLocked($fp_v_emp_id) && !$this->isRejectedByOps($fp_v_emp_id, $fp_v_so_id)) {
+        if (!$this->isProposed($fp_v_emp_id) && !$this->isSoftLocked($fp_v_emp_id) && !$this->isRejectedByManager($fp_v_emp_id, $fp_v_so_id) && !$this->isHardLocked($fp_v_emp_id) && !$this->isRejectedByOps($fp_v_emp_id, $fp_v_so_id)&&!$this->isSlockExpired($fp_v_emp_id)) {
             $re_isDeployable = true;
         }
         return $re_isDeployable;
@@ -583,10 +591,113 @@ public function createProposal( $fp_so_id , $fp_emp_id )
  */
          public function isMultiProposedDeployable($fp_v_emp_id, $fp_v_so_id) {
         $re_isDeployable = false;
-        if (!$this->isProposed($fp_v_emp_id) && !$this->isRejectedByManager($fp_v_emp_id, $fp_v_so_id) && !$this->isHardLocked($fp_v_emp_id) && !$this->isRejectedByOps($fp_v_emp_id, $fp_v_so_id)) {
+        if (!$this->isProposed($fp_v_emp_id) && !$this->isRejectedByManager($fp_v_emp_id, $fp_v_so_id) && !$this->isHardLocked($fp_v_emp_id) && !$this->isRejectedByOps($fp_v_emp_id, $fp_v_so_id) && !$this->isSlockExpired($fp_v_emp_id)) {
             $re_isDeployable = true;
         }
         return $re_isDeployable;
     }
+    
+    /*
+     * fetch all the slock Expired Employees and filter them in proposals until ops team confirms Expiry 
+     
+     */
+    
+     public function getSlockExpired()
+     {
+         $lt_data = [];
+        
+//        $lv_query = "SELECT emp_id FROM trans_locks where status = 'S201'";
+//        $lt_data = cl_DB::getResultsFromQuery($lv_query);
+         $this->db->select(self::C_FNAME_EMP_ID);
+      $result = $this->db->get_where(m_lock::C_TABNAME, array(m_lock::C_FNAME_STATUS =>m_lock::C_STATUS_SOFT_LOCK_EXPIRED ));             
+           $lt_data = $result->result_array();
+
+
+        
+        self::$arr_slock_expired = $lt_data;
+     }
+    
+     
+     public function isSlockExpired($fp_v_emp_id)
+     {
+          $lv_hlocked = false;
+//         echo $fp_v_emp_id."<br>";
+
+        foreach (self::$arr_slock_expired as $key => $value) {
+
+
+            if (in_array($fp_v_emp_id, $value)) {
+                $lv_hlocked = true;
+                break;
+            }
+     }
+    
+     }
   // end change
+     
+     
+     
+     
+     // partial proposals method 
+     public function getpartialProposals($fp_v_so_id, $fp_v_so_skill, $fp_v_so_level, $fp_v_so_loc)
+     {
+          $lwa_deployable_emp = [];
+          $re_wa_emps_for_so = null;
+        foreach ($this->it_deployable_emps as $lwa_deployable_emp) {
+
+
+            $lv_emp_id = $lwa_deployable_emp[self::C_FNAME_EMP_ID];
+
+
+            $lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
+            // $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
+            $lv_emp_level = strtolower($lwa_deployable_emp[self::c_emp_level_fname]);
+            $lv_emp_loc = strtolower($lwa_deployable_emp[self::c_emp_loc_fname]);
+
+            
+//            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id))
+//            )
+//                            {
+//                $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
+//                $re_wa_emp_for_so[] = $lwa_deployable_emp;
+////                    echo 'Match'.$fp_v_so_id.'--->'.$lwa_deployable_emp['emp_id'].'======'.json_encode($re_wa_emp_for_so ).PHP_EOL;
+//                break;
+//            }
+            
+            $lv_flag_location = $this->isLocationMatching($fp_v_so_loc,$lv_emp_loc);
+            $lv_flag_level = $this->isLevelMatching($fp_v_so_level,$lv_emp_level);
+            
+            $lv_result = ($lv_flag_level || $lv_flag_location);
+            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_result && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+            )
+            {
+                $this->addToPartialProposal($lv_emp_id, $fp_v_so_id);
+                $re_wa_emps_for_so[] = $lwa_deployable_emp;
+////                   
+//                break;
+            }
+            
+            
+        }
+
+        return $re_wa_emps_for_so;
+     }
+     private function isLocationMatching($fp_v_so_loc,$lv_emp_loc)
+     {
+         $result = false;
+        if($lv_emp_loc == strtolower($fp_v_so_loc))
+        {
+            $result =  true;
+        }
+        return $result;
+     }
+     private Function isLevelMatching($fp_v_so_level,$lv_emp_level)
+     {
+          $result = false;
+         if ($lv_emp_level == strtolower($fp_v_so_level))
+        {
+           $result =  true ;
+        }
+        return $result;
+     }
 }
