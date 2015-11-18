@@ -392,6 +392,16 @@ class cl_NotificationMails {
             case 'CRD':
 // Get employee details.
                 $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_crd_details['id']);
+                
+// Get PM details
+                if (array_key_exists(0, $this->lt_emp_details))
+                {
+                $this->lt_pm_details = $lo_so_details->get_emp_details($this->$this->lt_emp_details[0]['proj_m_id']);
+                if (array_key_exists(0, $this->lt_pm_details))
+                {
+                    $this->lv_pm_email = $this->lt_pm_details[0]['email'];
+                }
+                }
 
 // Get requested by details               
                 $this->lt_req_details = $lo_so_details->get_corpid_details($this->lt_crd_details['req_by']);
@@ -404,6 +414,16 @@ class cl_NotificationMails {
             case 'CTE':
 // Get employee details.
                 $this->lt_emp_details = $lo_so_details->get_emp_details($this->lt_cte_details['id']);
+                
+// Get PM details
+                if (array_key_exists(0, $this->lt_emp_details))
+                {
+                $this->lt_pm_details = $lo_so_details->get_emp_details($this->$this->lt_emp_details[0]['proj_m_id']);
+                if (array_key_exists(0, $this->lt_pm_details))
+                {
+                    $this->lv_pm_email = $this->lt_pm_details[0]['email'];
+                }
+                }                
 
 // Get requested by details
                 $this->lt_req_details = $lo_so_details->get_corpid_details($this->lt_cte_details['req_by']);
@@ -667,9 +687,7 @@ class cl_NotificationMails {
         }
 
 // Get recievers for email.                
-        self::get_recievers();
-        //   $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);
-
+        self::get_recievers();      
 
         if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
         {
