@@ -700,7 +700,7 @@ class cl_NotificationMails {
         {
         echo $this->lv_recievers;
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-//        }     
+        }     
 
         if ($lv_mail) {
             return true;
