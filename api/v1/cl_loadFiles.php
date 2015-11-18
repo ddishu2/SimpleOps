@@ -15,6 +15,8 @@ class cl_loadFiles
     const AMENDMENT_DEST_DIR = 'D:\\\\rmt\\\\loadFiles\\\\';
     const EX_FILE            = 'Could not copy file';
     
+    const AMENDMENT_EXCEL_FILENAME = 'Change in T&E Approver and release date of resources.xlsm';
+    
     private static $v_amendment_local_file = null;
 
     private static function copyAmendmentToLocal()
@@ -22,11 +24,13 @@ class cl_loadFiles
         $v_date = date('Y_m_d_H_i_s');
         self::$v_amendment_local_file  = self::AMENDMENT_DEST_DIR.'amendment'.$v_date.'.csv';
         $v_remote_filename = self::AMENDMENT_SRC_DIR.self::AMENDMENT_SRC_FILENAME; 
+        $v_remote_excel = self::AMENDMENT_SRC_DIR.self::AMENDMENT_EXCEL_FILENAME;
         $v_copy_success_flag = copy($v_remote_filename, self::$v_amendment_local_file);
         if ($v_copy_success_flag === TRUE) 
         {
             echo 'Copied Amendment Successfully from'.$v_remote_filename.' to: '.self::$v_amendment_local_file.PHP_EOL;
             $v_delete_success_flag = unlink($v_remote_filename);
+//            $v_delete_excel = unlink($v_remote_excel);
              
         }
         else
