@@ -341,7 +341,7 @@ class cl_NotificationMails {
 
 // Get details of all capabilities email ids.
                 $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
-                $this->lt_act_type = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+                $this->lt_act_type  = cl_DB::getResultsFromQuery($this->lv_query_act_type);
 
 // Get PM and EM details.            
                 $this->lt_pm_details = $lo_so_details->get_emp_details($this->lt_so_details[0]['pm_id']);
@@ -689,14 +689,15 @@ class cl_NotificationMails {
 // Get recievers for email.                
         self::get_recievers();      
 
-        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
-        {
-        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
-        }
-        else
-        {
+//        if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
+//        {
+//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+//        }
+//        else
+//        {
+        echo $this->lv_recievers;
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-        }     
+//        }     
 
         if ($lv_mail) {
             return true;
