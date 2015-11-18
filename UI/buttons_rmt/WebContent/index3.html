@@ -4138,7 +4138,6 @@ var repo_to1 = new sap.ui.commons.Label({
 																		am_enddate_report1 :val.curr_edate,
 																		am_projected_report1 :val.proj_edate_projected,
 																		am_sup_report1 :val.supervisor,
-																	//	am_customer_report1 :val.cust_name,
 																		am_dom_report1 :val.domain_id,
 																		am_newdate_report1 :val.new_edate,
 																		am_newcorp_report1 :val.new_sup_corp_id,
@@ -4189,6 +4188,7 @@ var repo_to1 = new sap.ui.commons.Label({
 									$("#hard_report_view").addClass("hide_div");
 									$("#soft_expiry_report_view").addClass("hide_div");
 									$("#soft_report_view").removeClass("hide_div");
+						
 						}
 								else if ($("#hard_check-RB").is(":checked") == true)
 								{
@@ -4217,18 +4217,18 @@ var repo_to1 = new sap.ui.commons.Label({
 								
 								else if ($("#bench_age_check-RB").is(":checked") == true)	
 									{
-								var	 tp1 = new sap.ui.ux3.ToolPopup({
+							tp1 = new sap.ui.ux3.ToolPopup({
+								        id: 'bench_age_popup' ,
 										content : [ for_desicion ],
 										opener : view_report_sel
 									}).addStyleClass("for_hide");
 					
 									}
 								
-								/* if (tp1.isOpen()) {
-									tp1.close();
-								} else { */
-									tp1.open(sap.ui.core.Popup.Dock.BeginTop, sap.ui.core.Popup.Dock.BeginBottom);
-								//}
+								
+									tp1.open();
+									
+							
 								
 							}
 
@@ -4238,10 +4238,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" ,		
 					press: function()
 					{
-						 if (tp1.isOpen()) {
-								tp1.close();
-							}
-						
+						jQuery( '#bench_age_popup' ).hide().css( 'visibility','hidden')
 					}
 						}).addStyleClass("for_normal_buttons_style1");
 
@@ -4624,17 +4621,7 @@ var repo_to1 = new sap.ui.commons.Label({
 										filterProperty : "am_sup_report1",
 										width : "100px"
 												}));
-											/* 	amend_table_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Customer Name",
-														tooltip:"Customer Name"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", "am_customer_report1"),
-										sortProperty : "am_customer_report1",
-										filterProperty : "am_customer_report1",
-										width : "100px"
-												})); */
+											
 												
 												amend_table_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -5041,44 +5028,167 @@ var repo_to1 = new sap.ui.commons.Label({
 
 														}).addStyleClass("style_for_table");
 
-												soft_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Type",
-														tooltip : "Type"
-													}),
-													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
-															
-													sortProperty : "",
-													filterProperty : "",
-													width : "70px",
-												//setRowHeight:"200px"
-												}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "SO No.",
+							tooltip :"SO No"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px",
+					
+					}));
 
-												soft_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "SO Number",
-														tooltip : "SO Number"
-													}),
-													template : new sap.ui.commons.TextView({id:''})
-															.bindProperty("text", ""),
-													sortProperty : "",
-													filterProperty : "",
-													width : "100px"
-												}));
-												soft_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Numeric Emp ID",
-														tooltip : "Numeric Emp ID"
-													}),
-													template : new sap.ui.commons.TextView({id:''})
-															.bindProperty("text", ""),
-													sortProperty : "",
-													filterProperty : "",
-													width : "100px"
-												}));
-												
-												
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Project Code" ,
+							tooltip : "Project Code"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Project Name" ,
+							tooltip : "Project Name"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Start Date",
+							tooltip : "Start Date"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "End Date" ,
+							tooltip :"End Date"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Emp ID" ,
+							tooltip :"Emp ID"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", "")
+								,
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Emp Name" ,
+							tooltip :"Emp Name"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Level" ,
+							tooltip : "Level"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Skill",
+							tooltip :"Skill"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Location" ,
+							tooltip : "Location"
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					
+					
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Projected End Date" ,
+							tooltip : "Projected End Date"
+						}),
+						template : new sap.ui.commons.TextView({
+							//id:'p_s_id'
+						})
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px",
+						/* visible:false, */
+						
+					}));
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Skill Category" ,
+							tooltip : "Skill Category"
+						}),
+						template : new sap.ui.commons.TextView({
+							
+						})
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px",
+						
+						
+					}));
+					
+					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
+						label : new sap.ui.commons.Label({
+							text : "Reason" ,
+							tooltip: "Reason"
+							
+						}),
+						template : new sap.ui.commons.TextView()
+								.bindProperty("text", ""),
+						sortProperty : "",
+						filterProperty : "",
+						width : "100px"
+					}));
+					
+									
 												
 												
 												
