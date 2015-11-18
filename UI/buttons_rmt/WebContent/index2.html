@@ -995,18 +995,7 @@ var tp1;
 										filterProperty : "am_sup",
 										width : "100px"
 												}));
-												/* amend_table1.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Customer Name",
-														tooltip:"Customer Name"
-													}),
-													template : new sap.ui.commons.TextView({id:'ame_cn1'})
-												.bindProperty("text", "am_customer"),
-										sortProperty : "am_customer",
-										filterProperty : "am_customer",
-										width : "100px"
-												})); */
-												
+											
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
 														text : "New End Date",
@@ -3519,13 +3508,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						}).addStyleClass("for_normal_buttons_style1");
 						var Save_bench = new sap.ui.commons.Button({text :"Save"}).addStyleClass("for_normal_buttons_style1");
 						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" ,		
-					press: function()
-					{
-						 if (tp1.isOpen()) {
-								tp1.close();
-							}
-						
-					}
+					
 						}).addStyleClass("for_normal_buttons_style1");
 
 						var for_desicion = new sap.ui.layout.HorizontalLayout("Layout1", {
@@ -3803,9 +3786,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														{
 															id : 'for_amend_table_report_gen',
 															title : "RMT Amendment Report View",
-															//visibleRowCount : 9,
-															//firstVisibleRow : 3,
-															selectionMode: sap.ui.table.SelectionMode.Single,
+															 selectionMode: sap.ui.table.SelectionMode.Single,
 															 navigationMode: sap.ui.table.NavigationMode.Paginator,
 															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
 
