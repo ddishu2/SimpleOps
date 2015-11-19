@@ -2617,6 +2617,8 @@ var tp1;
 									});
 								var asc= so_str + emp_str +status_str+p1_id+all_multi;
 								console.log(asc);
+								
+								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc,
@@ -3588,12 +3590,12 @@ var tp1;
 						deployable_manual.setLabelFor(deployable_dropdown);
 						osearch_manual_emp.createRow(deployable_manual, deployable_dropdown);
 						
-						var future_manual = new sap.ui.commons.Label({
+						/* var future_manual = new sap.ui.commons.Label({
 							text : "Future SO :"
 						}).addStyleClass("for_text_style1");
                           
 						var future_manual_text =new sap.ui.commons.TextField({}).addStyleClass("for_fields_style1").addStyleClass("for_font");
-						osearch_manual_emp.createRow(future_manual, future_manual_text);
+						osearch_manual_emp.createRow(future_manual, future_manual_text); */
 						
 						
 						var capabilityLabel_manual_emp = new sap.ui.commons.Label({
@@ -3686,7 +3688,67 @@ var tp1;
 						oItem.setText("Kolkata");
 						locationtext_manual_emp.addItem(oItem);	
 				osearch_manual_emp.createRow(location_manual, locationtext_manual_emp);
-						
+				
+				
+				
+				var level_manual = new sap.ui.commons.Label({
+					text : "Level :"
+				}).addStyleClass("for_text_style1");
+				var capabilityText_level = new sap.ui.commons.DropdownBox(
+						{
+							//id: 'ct_drop_manual_emp',
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+				capabilityText_level.setTooltip("Location");
+				capabilityText_level.setEditable(true);
+				capabilityText_level.setWidth("200px");
+				var oItem = new sap.ui.core.ListItem("Capability0_manual_level");
+				oItem.setText("");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability1_manual_level");
+				oItem.setText("P0");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability2_manual_level");
+				oItem.setText("P1");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability3_manual_level");
+				oItem.setText("P2");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability4_manual_level");
+				oItem.setText("P3");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability5_manual_level");
+				oItem.setText("P4");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability6_manual_level");
+				oItem.setText("P5");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability7_manual_level");
+				oItem.setText("M1");
+				capabilityText_level.addItem(oItem);	
+				oItem = new sap.ui.core.ListItem("Capability9_manual_level");
+				oItem.setText("M2");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability10_manual_level");
+				oItem.setText("M3");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability11_manual_level");
+				oItem.setText("M4");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability12_manual_level");
+				oItem.setText("M5");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability13_manual_level");
+				oItem.setText("M6");
+				capabilityText_level.addItem(oItem);
+				oItem = new sap.ui.core.ListItem("Capability14_manual_level");
+				oItem.setText("M7");
+				capabilityText_level.addItem(oItem);
+				
+
+				osearch_manual_emp.createRow(level_manual, capabilityText_level);
+
+				var search_manual1_emp_results =new sap.ui.commons.Button({text :"Get Emp Results"}).addStyleClass("for_normal_buttons_style1");
+				osearch_manual_emp.createRow(search_manual1_emp_results)		
 						
 						
 						
