@@ -2580,6 +2580,7 @@ var tp1;
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
+								var all_multi = "X";
 								 
 								$(".approveDropdown input").each(function(index,val){
 				
@@ -2613,12 +2614,14 @@ var tp1;
 									}
 									
 									});
-								var asc= so_str + emp_str +status_str+p1_id;
+								var asc= so_str + emp_str +status_str+p1_id+all_multi;
 								console.log(asc);
 								$.ajax({
 						      		  method: "GET",
-						      		  url: "/rmt/api/v1/index.php/approve_soft_lock/?"+asc,
+						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc,
 						      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+						      				
+	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
 						      		success : function(odata){
 						      			
 						      			 
