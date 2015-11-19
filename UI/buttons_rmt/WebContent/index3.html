@@ -2522,7 +2522,7 @@ var tp1;
 							}),
 							template : new sap.ui.commons.CheckBox({
 								//id:'p_s_id'
-							}),
+							}).addStyleClass("multi_check_so"),
 									/* .bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",*/
@@ -2590,7 +2590,7 @@ var tp1;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+"&allow_multi="+all_multi;
+										 all_multi+"&allow_multi="+parent.find(".multi_check_so").val();
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
