@@ -28,6 +28,7 @@ var oOverlayContainer;
 var sso1;
 var  amend_table_report_gen;
 var tp1;
+var value_checkbox
 
 	sap.ui
 			.getCore()
@@ -2508,7 +2509,7 @@ var tp1;
 								tooltip : "Multiproposal"
 							}),
 							template : new sap.ui.commons.CheckBox({
-								//id:'p_s_id'
+								id:'id_check_multi'
 							}).addStyleClass("multi_check_so"),
 									/* .bindProperty("text", ""),
 							sortProperty : "",
@@ -2526,7 +2527,7 @@ var tp1;
 								text: "View",
 								Tooltip:"View",
 								press: function(oEvent){ 
-									$.ajax({
+									/* $.ajax({
 							      		  method: "GET",
 							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?"+asc,
 							      		//localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761				
@@ -2535,7 +2536,7 @@ var tp1;
 
 							      		}
 									});
-									
+									 */
 									
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
@@ -2578,7 +2579,8 @@ var tp1;
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								var all_multi = "";
+								if($("#id_check_multi").is(':checked'))
+								{ value_checkbox='X';}else{  value_checkbox='  '}
 								 
 								$(".approveDropdown input").each(function(index,val){
 				
@@ -2588,19 +2590,12 @@ var tp1;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+"&allow_multi="+parent.find(".multi_check_so").val();
+										 value_checkbox+"&allow_multi="+value_checkbox;
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
 								
-										// $('#suitable_match1').draggable(); 
-									/* 	 parent.find(".status_of_emp").html("Mail Sent");
-											parent.addClass("change_color");   */
-										/*	$(this).val("Done");
-											$(this).remove();
-										  */
-									/* 		parent.find(".approveDropdown input").val("Done");
-											parent.find(".approveDropdown input").remove(); */
+										
 											
 											
 									}
