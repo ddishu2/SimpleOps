@@ -2590,7 +2590,7 @@ var value_checkbox
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 value_checkbox+"&allow_multi="+value_checkbox;
+										 value_checkbox+="&allow_multi="+value_checkbox;
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -2608,7 +2608,7 @@ var value_checkbox
 									}
 									
 									});
-								var asc= so_str + emp_str +status_str+p1_id+all_multi;
+								var asc= so_str + emp_str +status_str+p1_id+value_checkbox;
 								console.log(asc);
 								
 								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
