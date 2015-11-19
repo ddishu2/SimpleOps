@@ -2580,7 +2580,7 @@ var tp1;
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								var all_multi = "X";
+								var all_multi = "";
 								 
 								$(".approveDropdown input").each(function(index,val){
 				
@@ -2590,6 +2590,7 @@ var tp1;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
+										 all_multi+"&allow_multi="+all_multi;
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
