@@ -28,7 +28,6 @@ var oOverlayContainer;
 var sso1;
 var  amend_table_report_gen;
 var tp1;
-var value_checkbox
 
 	sap.ui
 			.getCore()
@@ -2579,8 +2578,7 @@ var value_checkbox
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								if($("#id_check_multi").is(':checked'))
-								{ value_checkbox='X';}else{  value_checkbox='  '}
+								var all_multi = "";
 								 
 								$(".approveDropdown input").each(function(index,val){
 				
@@ -2590,11 +2588,14 @@ var value_checkbox
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 value_checkbox+="&allow_multi="+value_checkbox;
+										 all_multi+="&allow_multi="+parent.find("#id_check_multi").val();
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
-				
+								
+										
+											
+											
 									}
 								});
 								$(".approveDropdown input").each(function(index,val){
@@ -2605,7 +2606,7 @@ var value_checkbox
 									}
 									
 									});
-								var asc= so_str + emp_str +status_str+p1_id+value_checkbox;
+								var asc= so_str + emp_str +status_str+p1_id+all_multi;
 								console.log(asc);
 								
 								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
