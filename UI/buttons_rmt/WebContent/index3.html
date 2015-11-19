@@ -2432,19 +2432,6 @@ var tp1;
 							width : "100px"
 						}));
 						
-						/* suitable_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Status" ,
-								tooltip :"Status"
-							}),
-							template : new sap.ui.commons.TextView({
-								//id:'status_of_emp'
-							})
-									.bindProperty("text", "status").addStyleClass("status_of_emp"),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						})); */
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Projected End Date" ,
@@ -2539,6 +2526,17 @@ var tp1;
 								text: "View",
 								Tooltip:"View",
 								press: function(oEvent){ 
+									$.ajax({
+							      		  method: "GET",
+							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?"+asc,
+							      		//localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761				
+							      		success : function(odata){
+							      			console.log(odata);
+
+							      		}
+									});
+									
+									
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
 									}
