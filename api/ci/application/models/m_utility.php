@@ -12,7 +12,7 @@
  * @author Dikshant Mishra/Dikmishr
  */
 
-class Utilities extends CI_model
+class m_utility extends CI_model
 {
     public function __construct()
     {
@@ -23,7 +23,8 @@ class Utilities extends CI_model
     {
     $lv_cred = explode('\\', $_SERVER['REMOTE_USER']);
     $lv_domain_id = $lv_cred[0];
-    $lt_name = $this->db->query("SELECT emp_name FROM m_emp_ras WHERE domain_id = ?", $lv_domain_id);
+    $io_query = $this->db->query("SELECT emp_name FROM m_emp_ras WHERE domain_id = ?", $lv_domain_id);
+    $lt_name = $io_query->result_array();
     foreach ($lt_name as $lwa_name) 
         {
             $lv_cred[0] = $lwa_name['emp_name'];
