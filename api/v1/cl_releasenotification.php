@@ -29,6 +29,8 @@ class cl_releasenotification {
             $gv_proj_code     = 'curr_proj_code',
             $gv_proj_name     = 'curr_proj_name',
             $gv_level         = 'level',
+            $gv_sup_id        = 'sup_id',
+            $gv_sup_name      = 'sup_name',
             $gv_pm_name       = 'proj_m_name';
     
     private function add_business_days($i_sdate) {
@@ -60,6 +62,8 @@ class cl_releasenotification {
                             $this->gv_proj_code.','.
                             $this->gv_proj_name.','.
                             $this->gv_level.','.
+                            $this->gv_sup_id.','.
+                            $this->gv_sup_name.','.
                             $this->gv_pm_name.
                             " FROM m_emp_ras_copy
                             WHERE curr_end_date = '$lv_edate' and ".

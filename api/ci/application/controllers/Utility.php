@@ -23,4 +23,9 @@ class Utility extends CI_controller
         $lv_cred = $this->m_utility->get_username();
         echo json_encode($lv_cred, JSON_PRETTY_PRINT);
     }
+    
+    public function check_hlr()
+    {
+       $this->m_utility->checkandnotify();
+    }
 }

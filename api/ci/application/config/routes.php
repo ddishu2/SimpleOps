@@ -60,7 +60,8 @@ $route['display_report/(:any)'] = 'display_report/setreport/$1';
 
 $route['open_so'] = 'open_so/getOpenSO';
 $route['open_so/(:any)'] = 'news/getOpenSO/$1';
-$route['sso'] ='Utility/get_username';
+$route['sso'] = 'Utility/get_username';
+$route['/hardlock_release_notification'] = 'Utility/check_hlr';
 //$route['dr'] = 'display_report/setreport';
 
 
