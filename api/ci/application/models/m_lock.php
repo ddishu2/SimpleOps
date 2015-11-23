@@ -16,6 +16,9 @@ class m_lock extends ci_model
                $this->load->database();
 
         }
+     const C_SMART_PROJECT_CODE ='smart_proj_code';
+    const C_FTE = 'FTE';
+    const C_TAG_TYPE = 'tag_type';   
      const C_DATE_FORMAT    = 'Y-m-d';
      const C_FNAME_REJ_COUNT = 'rej_count';   
      const C_TABNAME_COUNT = 'trans_count';   
@@ -257,7 +260,7 @@ $this->db->update(self::C_TABNAME, $data);
 
         //print_r($re_sos);
     }
-    public function setComments($lv_trans_id, $fp_v_status,$fp_v_comments)
+    public function setComments($lv_trans_id, $fp_v_status,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type)
     {
         
         //$sql1 ="INSERT INTO `rmg_tool`.`trans_comment` (`trans_id`, `status`, `comment`) VALUES ($lv_trans_id, $fp_v_status, $fp_v_comments);";
@@ -267,7 +270,11 @@ $this->db->update(self::C_TABNAME, $data);
          $data = array(
         self::C_TRANS_ID => $lv_trans_id,
         self::C_COMMENT_STATUS => $fp_v_status,
-        self::C_FNAME_COMMENTS => $fp_v_comments
+        self::C_FNAME_COMMENTS => $fp_v_comments,
+        self::C_SMART_PROJECT_CODE =>  $lv_smart_project_code,
+        self::C_FTE => $lv_FTE,
+        self::C_TAG_TYPE => $lv_tag_type
+             
         );
         
         $this->db->insert(self::C_TABNAMECOMMENTS, $data);
@@ -353,7 +360,7 @@ $this->db->update(self::C_TABNAME, $data);
     /*hardlocks an employee  
       returns 1 if successfull
      returns -1 if failed     */
-public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments) {
+public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type) {
    
       
 //        $lv_obj = new cl_DB();
@@ -389,7 +396,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments) {
             $lv_set_hardlock = self::setHardLock($lv_trans_id,$fp_sdate,$fp_edate);
             $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, self::C_STATUS_HARD_LOCK, $lv_prop_id, $lv_req_id);
           
-            $lv_comments = self::setComments($lv_trans_id,self::C_STATUS_HARD_LOCK,$fp_v_comments);
+            $lv_comments = self::setComments($lv_trans_id,self::C_STATUS_HARD_LOCK,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);
            
             
             // change the status of other locks which were acquired for same Employee

@@ -7,6 +7,7 @@
  */
 class Locks extends CI_Controller
 {
+    
 
     public function __construct() 
     {
@@ -61,6 +62,10 @@ class Locks extends CI_Controller
             $lv_trans_id =  $this->input->get(m_lock::C_TRANS_ID);
             $lv_comments =  $this->input->get(m_lock::C_COMMENTS);
             $lv_status =  $this->input->get(m_lock::C_FNAME_STATUS);
+            
+            $lv_smart_project_code = $this->input->get(m_lock::C_SMART_PROJECT_CODE);
+            $lv_FTE = $this->input->get(m_lock::C_FTE);
+            $lv_tag_type = $this->input->get(m_lock::C_TAG_TYPE);
 //            $lv_obj = new cl_Lock();
 //            $lv_trans_id = 1;
             $lv_msg = "";
@@ -70,7 +75,7 @@ class Locks extends CI_Controller
             if ($lv_status == 'Approve')
             {
               
-            $lv_result = $this->m_lock->ApproveHardLock($lv_trans_id,$lv_comments);//S201
+            $lv_result = $this->m_lock->ApproveHardLock($lv_trans_id,$lv_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);//S201
                 if($lv_result == 1)
                 {
                 $lv_msg = "resource hard locked";

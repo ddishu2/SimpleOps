@@ -21,8 +21,10 @@ Class m_proposals extends CI_model
     private $it_deployable_emps = [];
     private $it_multi_prop_allowed_emps = [];
     
-     const C_TABNAME1 = 'v_deployable_emps';
-    const c_emp_skill_fname = 'skill1_l4';
+     const C_TABNAME1 = 'v_deployable_emps3';
+//    const c_emp_skill_fname = 'skill1_l4';
+     const c_emp_skill_fname = 'prime_skill';
+     
     const C_FNAME_BENCH_AGING = 'bench_aging';
     const c_emp_loc_fname = 'loc';
     const c_emp_level_fname = 'level';
@@ -61,7 +63,7 @@ Class m_proposals extends CI_model
                $this->load->database();
 //                echo "inside INdex";
         }
-        public function set_attributes(m_open_so $fp_o_open_sos, m_BuEmployees $fp_o_deployableEmp,$lv_so_projname,$lv_so_proj_bu,$larr_so_locs,$fp_v_proj_id,$fp_v_capability,$fp_v_cust_name)
+        public function set_attributes(m_open_so $fp_o_open_sos, m_BuEmployees $fp_o_deployableEmp)
         {
         $this->lv_prop_id = self::setProposalID();
         
@@ -641,6 +643,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
      // partial proposals method 
      public function getpartialProposals($fp_v_so_id, $fp_v_so_skill, $fp_v_so_level, $fp_v_so_loc)
      {
+         echo count($this->it_deployable_emps)."</BR>";
           $lwa_deployable_emp = [];
           $re_wa_emps_for_so = null;
         foreach ($this->it_deployable_emps as $lwa_deployable_emp) {
@@ -668,10 +671,29 @@ public function createProposal( $fp_so_id , $fp_emp_id )
             $lv_flag_level = $this->isLevelMatching($fp_v_so_level,$lv_emp_level);
             
             $lv_result = ($lv_flag_level || $lv_flag_location);
-            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_result && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+           // echo "so skill:".strtolower($fp_v_so_skill)."emp_skill".$lv_emp_prime_skill."</br>";
+            
+            if ($lv_flag_location == true && $lv_flag_level==true)
+            {
+                $lv_result = false;
+            }
+            
+            
+            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill &&
+                     $lv_result &&
+                     ($this->isDeployable($lv_emp_id, $fp_v_so_id))
             )
             {
-                $this->addToPartialProposal($lv_emp_id, $fp_v_so_id);
+               
+                if ($lv_flag_location == false)
+                {
+                    $lwa_deployable_emp['not_matching'] = 'location';
+                }
+                else if($lv_flag_level == false)
+                {
+                    $lwa_deployable_emp['not_matching'] = 'level';
+                }   
+//                $this->addToPartialProposal($lv_emp_id, $fp_v_so_id);
                 $re_wa_emps_for_so[] = $lwa_deployable_emp;
 ////                   
 //                break;
@@ -682,15 +704,22 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 
         return $re_wa_emps_for_so;
      }
+     /*
+      * returns Boolean true if location is matching
+      */
      private function isLocationMatching($fp_v_so_loc,$lv_emp_loc)
      {
+         //echo "so Loaction     ".$fp_v_so_loc."     Emp location   ".$lv_emp_loc."</BR>";
          $result = false;
-        if($lv_emp_loc == strtolower($fp_v_so_loc))
+        if(strtolower($lv_emp_loc) == strtolower($fp_v_so_loc))
         {
             $result =  true;
         }
         return $result;
      }
+     /*
+      * returns Boolean true if level is matching
+      */
      private Function isLevelMatching($fp_v_so_level,$lv_emp_level)
      {
           $result = false;
@@ -700,4 +729,12 @@ public function createProposal( $fp_so_id , $fp_emp_id )
         }
         return $result;
      }
+//    private Function addToPartialProposal($lv_emp_id, $fp_v_so_id)
+//    {
+//        if (!array_key_exists($fp_v_emp_id, self::$arr_partial_proposals)) {
+//            self::$arr_partial_proposals[$fp_v_emp_id] = $fp_v_so_id;
+//            self::$v_partial_proposal_count++;
+//        }
+//    }
+    
 }
