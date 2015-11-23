@@ -48,7 +48,7 @@ class cl_get_so_details
             return $this->lt_so_details;             
         }
                 
-    public function get_emp_details($i_emp_id) 
+public function get_emp_details($i_emp_id) 
         {
             self::set_query('',$i_emp_id, '');
             
