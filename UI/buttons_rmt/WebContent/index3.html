@@ -1432,7 +1432,7 @@ var tp1;
                      
 						var so_type_select = new sap.ui.commons.DropdownBox(
 								{
-									//id: 'ct_drop',
+									id: 'so_type_id1',
 								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						so_type_select.setTooltip("so_type");
 						so_type_select.setEditable(true);
@@ -1586,7 +1586,7 @@ var tp1;
 										var p_id=$("#pro_id_form").val();
 										var c_name=$("#cust_name1").val();
 											var cap=$("#ct_drop-input").val();
-									
+									 var so_type_text=$("#so_type_id1-input").val();//so_type_id1
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
 										
@@ -1597,9 +1597,9 @@ var tp1;
 														+ from
 														+ "&so_to_date="
 														+ upto
-														/* + "&proj_name="
+														 + "&proj_name="
 														+ p_name
-														+ "&proj_bu="
+														+ "&so_proj_bu="
 														+ p_bu
 														+ "&proj_loc[]="
 														+ temp
@@ -1608,7 +1608,10 @@ var tp1;
 												        + "&cust_name="
 												        + c_name
 												        + "&capability="
-												        +  cap */); 
+												        +  cap
+												        +"&so_type="
+												        +so_type_text
+												); 
 										 
 										 
 										 if(temp.length == 1)
@@ -1620,9 +1623,9 @@ var tp1;
 														+ from
 														+ "&so_to_date="
 														+ upto
-														/* + "&proj_name="
+														 + "&proj_name="
 														+ p_name
-														+ "&proj_bu="
+														+ "&so_proj_bu="
 														+ p_bu
 														
              											+ "&proj_loc[]="
@@ -1633,7 +1636,9 @@ var tp1;
 												        + "&cust_name="
 												        + c_name
 												        + "&capability="
-												        +  cap */,
+												        +  cap
+												        +"&so_type="
+												        +so_type_text,
 													success : function(odata) {
 														
 														sap.ui.core.BusyIndicator.hide(0);
@@ -1717,9 +1722,9 @@ var tp1;
 													+ from
 													+ "&so_to_date="
 													+ upto
-													/* + "&proj_name="
+													 + "&proj_name="
 													+ p_name
-													+ "&proj_bu="
+													+ "&so_proj_bu="
 													+ p_bu
 													
          											+ "&proj_loc[]="
@@ -1732,7 +1737,9 @@ var tp1;
 											        + "&cust_name="
 											        + c_name
 											        + "&capability="
-											        +  cap */,
+											        +  cap 
+											        +"&so_type="
+											        +so_type_text,
 												success : function(odata) {
 													
 													sap.ui.core.BusyIndicator.hide(0);
@@ -1815,9 +1822,9 @@ var tp1;
 													+ from
 													+ "&so_to_date="
 													+ upto
-													/* + "&proj_name="
+													 + "&proj_name="
 													+ p_name
-													+ "&proj_bu="
+													+ "&so_proj_bu="
 													+ p_bu
 													
          											+ "&proj_loc[]="
@@ -1832,7 +1839,9 @@ var tp1;
 											        + "&cust_name="
 											        + c_name
 											        + "&capability="
-											        +  cap */,
+											        +  cap
+											        +"&so_type="
+											        +so_type_text,
 												success : function(odata) {
 													
 													sap.ui.core.BusyIndicator.hide(0);
@@ -1914,9 +1923,9 @@ var tp1;
 																+ from
 																+ "&so_to_date="
 																+ upto
-																/* /* + "&proj_name="
+																 + "&proj_name="
 																+ p_name
-																+ "&proj_bu="
+																+ "&so_proj_bu="
 																+ p_bu
 																
 			         											+ "&proj_loc[]="
@@ -1933,7 +1942,9 @@ var tp1;
 														        + "&cust_name="
 														        + c_name
 														        + "&capability="
-														        +  cap */ ,
+														        +  cap 
+														        +"&so_type="
+														        +so_type_text,
 															success : function(odata) {
 																
 																sap.ui.core.BusyIndicator.hide(0);
@@ -2015,9 +2026,9 @@ var tp1;
 																			+ from
 																			+ "&so_to_date="
 																			+ upto
-																			/* + "&proj_name="
+																			 + "&proj_name="
 																			+ p_name
-																			+ "&proj_bu="
+																			+ "&so_proj_bu="
 																			+ p_bu
 																			
 						         											+ "&proj_loc[]="
@@ -2036,7 +2047,9 @@ var tp1;
 																	        + "&cust_name="
 																	        + c_name
 																	        + "&capability="
-																	        +  cap */,
+																	        +  cap 
+																	        +"&so_type="
+																	        +so_type_text,
 																		success : function(odata) {
 																			
 																			sap.ui.core.BusyIndicator.hide(0);
@@ -2121,9 +2134,9 @@ var tp1;
 																			+ from
 																			+ "&so_to_date="
 																			+ upto
-																			/* + "&proj_name="
+																			 + "&proj_name="
 																			+ p_name
-																			+ "&proj_bu="
+																			+ "&so_proj_bu="
 																			+ p_bu
 																			
 						         											+ "&proj_loc[]="
@@ -2144,7 +2157,9 @@ var tp1;
 																	        + "&cust_name="
 																	        + c_name
 																	        + "&capability="
-																	        +  cap */,
+																	        +  cap 
+																	        +"&so_type="
+																	        +so_type_text,
 																		success : function(odata) {
 																			
 																			sap.ui.core.BusyIndicator.hide(0);
@@ -2526,16 +2541,16 @@ var tp1;
 								text: "View",
 								Tooltip:"View",
 								press: function(oEvent){ 
-									/* $.ajax({
+									 $.ajax({
 							      		  method: "GET",
-							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?"+asc,
+							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761",
 							      		//localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761				
 							      		success : function(odata){
 							      			console.log(odata);
 
 							      		}
 									});
-									 */
+									 
 									
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
@@ -4290,7 +4305,11 @@ var repo_to1 = new sap.ui.commons.Label({
 							}
 
 							}).addStyleClass("for_normal_buttons_style1");
-						var Open_bench = new sap.ui.commons.Button({text:"Open"}).addStyleClass("for_normal_buttons_style1");
+						var Open_bench = new sap.ui.commons.Button({text:"Open",press: function(){
+							
+							
+							window.open("10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment")
+						}}).addStyleClass("for_normal_buttons_style1");
 						var Save_bench = new sap.ui.commons.Button({text :"Save"}).addStyleClass("for_normal_buttons_style1");
 						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" ,		
 					press: function()
