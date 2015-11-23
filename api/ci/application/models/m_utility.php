@@ -32,6 +32,8 @@ class m_utility extends CI_model
             $gv_proj_code     = 'curr_proj_code',
             $gv_proj_name     = 'curr_proj_name',
             $gv_level         = 'level',
+            $gv_sup_id        = 'sup_id',
+            $gv_sup_name      = 'sup_name',
             $gv_pm_name       = 'proj_m_name';
     
     public function __construct()
@@ -69,6 +71,7 @@ class m_utility extends CI_model
     private function getreleasablehardlocks()
     {
         $lv_edate = $this->add_business_days(date(self::gc_date_format));
+        $lv_edate = '25-DEC-2015';
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
@@ -81,6 +84,8 @@ class m_utility extends CI_model
                             $this->gv_proj_code.','.
                             $this->gv_proj_name.','.
                             $this->gv_level.','.
+                            $this->gv_sup_id.','.
+                            $this->gv_sup_name.','.
                             $this->gv_pm_name.
                             ' FROM '. $this->gv_tab_name.
                             " WHERE curr_end_date = '$lv_edate' and ".
@@ -108,6 +113,7 @@ class m_utility extends CI_model
                     {
                       array_push($lt_proj_details, $lwa_values);
                       $io_mail = new cl_NotificationMails();
+                      print_r($lt_proj_details);
 //                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
                       $lt_proj_details = [];
                     }
