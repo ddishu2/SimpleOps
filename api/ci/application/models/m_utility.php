@@ -70,8 +70,7 @@ class m_utility extends CI_model
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
     {
-        $lv_edate = $this->add_business_days(date(self::gc_date_format));
-        $lv_edate = '25-DEC-2015';
+        $lv_edate = $this->add_business_days(date(self::gc_date_format));        
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
@@ -112,7 +111,7 @@ class m_utility extends CI_model
                     if($this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code))
                     {
                       array_push($lt_proj_details, $lwa_values);
-                      $io_mail = new cl_NotificationMails();
+//                      $io_mail = new cl_NotificationMails();
                       print_r($lt_proj_details);
 //                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
                       $lt_proj_details = [];
