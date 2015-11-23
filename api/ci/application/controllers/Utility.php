@@ -26,6 +26,6 @@ class Utility extends CI_controller
     
     public function check_hlr()
     {
-       $this->m_utility->checkandnotify();
+       $this->m_utility->checkandnotify();       
     }
 }
