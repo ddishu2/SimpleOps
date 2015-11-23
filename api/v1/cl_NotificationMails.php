@@ -438,9 +438,8 @@ class cl_NotificationMails {
 // Get details of all capabilities email ids.
                 $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
                 $this->lt_act_type  = cl_DB::getResultsFromQuery($this->lv_query_act_type);
-                $this->lt_sup_details = $lo_so_details->get_emp_details($this->lt_hlr_details[0][$this->gv_sup_id]);
-                break;
-            
+                $this->lt_sup_details = $lo_so_details->get_emp_details($this->lt_hlr_details[0][$this->gv_sup_id], 'm_emp_record');
+                break;            
             default:
                 break;
         }
@@ -704,7 +703,7 @@ class cl_NotificationMails {
         {
         $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-        }     
+        }         
         if ($lv_mail) {
             return true;
         } else {
