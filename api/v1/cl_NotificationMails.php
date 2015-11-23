@@ -84,6 +84,8 @@ class cl_NotificationMails {
             $gv_proj_code     = 'curr_proj_code',
             $gv_proj_name     = 'curr_proj_name',
             $gv_level         = 'level',
+            $gv_sup_id        = 'sup_id',
+            $gv_sup_name      = 'sup_name',
             $gv_pm_name       = 'proj_m_name';
 
 // Constructor of the class
@@ -436,7 +438,8 @@ class cl_NotificationMails {
             case 'RL4':
 // Get details of all capabilities email ids.
                 $this->lt_recievers = cl_DB::getResultsFromQuery($this->lv_query_notifcn);
-                $this->lt_act_type = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+                $this->lt_act_type  = cl_DB::getResultsFromQuery($this->lv_query_act_type);
+                $this->lt_sup_details = $lo_so_details->get_emp_details($this->lt_hlr_details[0][$this->gv_sup_id]);
                 break;
             
             default:
@@ -515,7 +518,11 @@ class cl_NotificationMails {
                 break;
             
             case 'RL4':
-                $this->lv_subject = $this->lt_act_type[0]['action_type_text'];
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                if (array_key_exists(0, $this->lt_sup_details))
+                {
+                $this->lv_recievers .= $this->lt_sup_details[0]['email'] . self::lc_colon;
+                }
                 break;
             
             default:
@@ -616,7 +623,7 @@ class cl_NotificationMails {
                 break;
                 
             case 'RL4':
-                $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][$this->gv_pm_name], $this->lv_content);
+                $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][$this->gv_sup_name], $this->lv_content);
                 $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lt_hlr_details[0][$this->gv_proj_name], $this->lv_content);
                 $lv_content = explode('SPLIT_HERE', $this->lv_content);
                 $this->lv_content = $lv_content[0];
@@ -690,6 +697,7 @@ class cl_NotificationMails {
 
 // Get recievers for email.                
         self::get_recievers();      
+        echo $this->lv_recievers;
 
         if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
         {
@@ -698,7 +706,8 @@ class cl_NotificationMails {
         elseif ($i_mode === 'RL4')
         {
         $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
-        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+//        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+        $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
         }
         else
         {
