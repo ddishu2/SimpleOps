@@ -331,7 +331,6 @@ class cl_NotificationMails {
         switch ($i_mode) {
             case 'SL':
 // Get SO details            
-                echo $this->lv_so_number;
                 $this->lt_so_details = $lo_so_details->get_so_details($this->lv_so_number);
                 $this->lt_corpid_details = $lo_so_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
                 $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
@@ -589,7 +588,6 @@ class cl_NotificationMails {
                 $this->lv_content = str_replace("GV_CSD", $this->lt_crd_details['curr_sdate'], $this->lv_content);
                 $this->lv_content = str_replace("GV_CED", $this->lt_crd_details['curr_edate'], $this->lv_content);
                 $this->lv_content = str_replace("GV_PEDP", $this->lt_crd_details['proj_edate_projected'], $this->lv_content);
-//                $this->lv_supervisor_name = $this->lt_crd_details['supervisor_lname'].', '.$this->lt_crd_details['supervisor_fname'];
                 $this->lv_supervisor_name = $this->lt_crd_details['supervisor'];
 
                 $this->lv_content = str_replace("GV_SUPERVISOR", $this->lv_supervisor_name, $this->lv_content);
@@ -697,7 +695,6 @@ class cl_NotificationMails {
 
 // Get recievers for email.                
         self::get_recievers();      
-        echo $this->lv_recievers;
 
         if (($i_mode === 'CTE') || ($i_mode == 'CRD'))
         {
@@ -706,8 +703,7 @@ class cl_NotificationMails {
         elseif ($i_mode === 'RL4')
         {
         $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
-//        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
-        $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);
+        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);        
         }
         else
         {

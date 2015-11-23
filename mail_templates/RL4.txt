@@ -1,8 +1,8 @@
 <html>
    <style>.font{font-size:15;font-family:Calibri}</style>
    <body class="font">
-      <p>Dear GV_PM,</p>
-      <d>The tagging of the following resources for GV_PROJECT_NAME will expire in the next 22 work-days.  
+      <p>Dear Manager,</p>
+      <d>The tagging of the following resource(s) for GV_PROJECT_NAME will expire in the next 22 work-days.  
       </d>
       <h4><u></u></h4>
       <table class="font" border='1'>
@@ -40,6 +40,9 @@
             <td bgcolor='blue'style='color:white'>
                <CENTER>Level</CENTER>
             </td>
+            <td bgcolor='blue'style='color:white'>
+               <CENTER>Project Manager</CENTER>
+            </td>
          </tr>
 SPLIT_HERE
          <tr>
@@ -76,10 +79,15 @@ SPLIT_HERE
            <td>
                <CENTER>GV_LEVEL</CENTER>
             </td>
+           <td>
+               <CENTER>GV_PM</CENTER>
+            </td>
          </tr>
 SPLIT_HERE
       </table>
-      <p><font color=#FF0000><B>Note: You have 2 work-days to raise an extension request for a resource. If a request is not received during this period, the respective resource will be future-proposed for requirements after the current engagement end-date.</B></font>	
+      <p><font color=#FF0000><B>Note: You have 2 work-days to raise an extension request for a resource. If a request is not received during this period, the respective resource will be future-proposed for requirements after the current engagement end-date.</B></font>
+      <p><B>You have to update the Roll Off or Extension details through Amendment Sheet (Change in T&E Approver and release date of resources) which can be found at link</B>	
+      <A HREF="\\ntbomfs001\datagrp\AppsOne SAP RMT\Ammendment">Appsone SAP RMT</A>
       <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
       </table>
    </body>
