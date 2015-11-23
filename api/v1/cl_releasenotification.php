@@ -49,7 +49,7 @@ class cl_releasenotification {
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
     {
-        $lv_edate = $this->add_business_days(date(self::gc_date_format));
+        $lv_edate = $this->add_business_days(date(self::gc_date_format));        
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
