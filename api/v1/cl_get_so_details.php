@@ -14,65 +14,67 @@
 
 class cl_get_so_details 
 {    
-    private $lv_so_no,
-            $lv_emp_id,
-            $lv_query_so,
-            $lv_query_emp,
-            $lv_query_alias,
-            $lt_so_details = [],
-            $lt_emp_details = [],
-            $lt_corpid_details = [];
+private $lv_so_no,
+        $lv_emp_id,
+        $lv_query_so,
+        $lv_query_emp,
+        $lv_tabname,
+        $lv_query_alias,
+        $lt_so_details = [],
+        $lt_emp_details = [],
+        $lt_corpid_details = [];
     
-    private function set_query($i_so_number = '', $i_emp_id = '', $i_emp_alias = '')
-        {
+private function set_query($i_so_number = '', $i_emp_id = '', $i_emp_alias = '', $i_tabname = '')       
+    {        
+        $this->lv_so_no         =   $i_so_number;
+        $this->lv_emp_id        =   $i_emp_id;
+        $this->lv_query_so      =   'SELECT *
+                                    FROM m_so_rrs 
+                                    WHERE so_no ='.$i_so_number.' LIMIT 1';
         
-            $this->lv_so_no         =   $i_so_number;
-            $this->lv_emp_id        =   $i_emp_id;
-            $this->lv_query_so      =   'SELECT *
-                                         FROM m_so_rrs 
-                                         WHERE so_no ='.$i_so_number.' LIMIT 1';
-            
-            $this->lv_query_emp    =    "SELECT *
-                                         FROM m_emp_ras
-                                         WHERE emp_id = '$i_emp_id' LIMIT 1";
-            
-            $this->lv_query_alias  =    "SELECT * FROM m_emp_ras WHERE domain_id = '$i_emp_alias' LIMIT 1";
+        if ($i_tabname === '')
+        {
+            $this->lv_tabname = 'm_emp_rrs';
         }
-        
-    public function get_so_details($i_so_number)
+        else
         {
-            self::set_query($i_so_number);
+            $this->lv_tabname = $i_tabname;
+        }    
+            
+        $this->lv_query_emp    =    "SELECT *
+                                    FROM '$this->lv_tabname'
+                                    WHERE emp_id = '$i_emp_id' LIMIT 1";
+            
+        $this->lv_query_alias  =    "SELECT * FROM '$this->lv_tabname' WHERE domain_id = '$i_emp_alias' LIMIT 1";
+    }
+        
+public function get_so_details($i_so_number)
+    {
+        self::set_query($i_so_number,'','','');
         
 // Get SO details             
-            $this->lt_so_details  = cl_DB::getResultsFromQuery($this->lv_query_so); 
-            return $this->lt_so_details;             
-        }
+        $this->lt_so_details  = cl_DB::getResultsFromQuery($this->lv_query_so);
+        return $this->lt_so_details;             
+    }
                 
-public function get_emp_details($i_emp_id) 
-        {
-            self::set_query('',$i_emp_id, '');
+public function get_emp_details($i_emp_id,$i_tabname = '') 
+    {
+        self::set_query('',$i_emp_id, '',$i_tabname);
             
 // Get employee details.
-            $this->lt_emp_details = cl_DB::getResultsFromQuery($this->lv_query_emp);
-            return $this->lt_emp_details;       
-        } 
+        $this->lt_emp_details = cl_DB::getResultsFromQuery($this->lv_query_emp);
+        return $this->lt_emp_details;       
+    } 
         
 // Get Employee details based on CORP ID
-    public function get_corpid_details($i_emp_alias)
-        {       
+public function get_corpid_details($i_emp_alias,$i_tabname = '')
+    {       
         
-        $this->lt_corpid_details  = [];     
-            self::set_query('','', $i_emp_alias);
+    $this->lt_corpid_details  = [];     
+    self::set_query('','', $i_emp_alias, $i_tabname);
             
 // Get Corp-ID Details            
-            if ( $this->lt_corpid_details = cl_DB::getResultsFromQuery($this->lv_query_alias) )
-            { return $this->lt_corpid_details; }
-            else
-            { 
-                $i_emp_alias = 'vgannama';
-                self::set_query('','', $i_emp_alias);
-                $this->lt_corpid_details = cl_DB::getResultsFromQuery($this->lv_query_alias);
-                return $this->lt_corpid_details;             
-            }
-        }    
+        if ( $this->lt_corpid_details = cl_DB::getResultsFromQuery($this->lv_query_alias) )
+        { return $this->lt_corpid_details; }
+    }   
 }
