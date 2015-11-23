@@ -60,8 +60,18 @@ $route['display_report/(:any)'] = 'display_report/setreport/$1';
 
 $route['open_so'] = 'open_so/getOpenSO';
 $route['open_so/(:any)'] = 'news/getOpenSO/$1';
+
+
 $route['sso'] = 'Utility/get_username';
 $route['hardlock_release_notification'] = 'Utility/check_hlr';
 //$route['dr'] = 'display_report/setreport';
+
+
+
+$route['deployable_emp'] = 'Proposals/deployable_emps';
+$route['approve_soft_lock'] = 'Locks/approve_soft_lock';
+$route['approve_hard_lock']= 'Locks/approve_hard_lock';
+$route['get_where_proposed'] = 'Locks/getwhereProposed';
+$route['get_partial'] = 'Proposals/getPartialProposals';
 
 

@@ -71,7 +71,7 @@ public function isreportvalid($fp_v_report_type,$fp_v_start_date,$fp_v_end_date)
             $this->setreport_type($fp_v_report_type);
         }
         if($re_valid === true){
-            $this->setdates($fp_v_start_date, $fp_v_end_date);
+          //  $this->setdates($fp_v_start_date, $fp_v_end_date);
         }
     }
     
