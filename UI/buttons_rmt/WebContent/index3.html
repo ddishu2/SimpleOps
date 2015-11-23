@@ -1680,7 +1680,8 @@ var tp1;
 																					pro_enddate : val.emp[0].proj_endda  ,
 																					skill_cat : val.emp[0].skill_cat ,
 																					reason : val.emp[0].reason,
-																					propose_id : val.prop_id
+																					propose_id : val.prop_id,
+																					multi_prop : "",
 																				
 																				};
 																			
@@ -1781,7 +1782,8 @@ var tp1;
 																				pro_enddate : val.emp[0].proj_endda  ,
 																				skill_cat : val.emp[0].skill_cat ,
 																				reason : val.emp[0].reason,
-																				propose_id : val.prop_id
+																				propose_id : val.prop_id,
+																				multi_prop : ""
 																			
 																			};
 																		
@@ -1883,7 +1885,8 @@ var tp1;
 																				pro_enddate : val.emp[0].proj_endda  ,
 																				skill_cat : val.emp[0].skill_cat ,
 																				reason : val.emp[0].reason,
-																				propose_id : val.prop_id
+																				propose_id : val.prop_id,
+																				multi_prop : ""
 																			
 																			};
 																		
@@ -1986,7 +1989,8 @@ var tp1;
 																							pro_enddate : val.emp[0].proj_endda  ,
 																							skill_cat : val.emp[0].skill_cat ,
 																							reason : val.emp[0].reason,
-																							propose_id : val.prop_id
+																							propose_id : val.prop_id,
+																							multi_prop : "",
 																						
 																						};
 																					
@@ -2091,7 +2095,8 @@ var tp1;
 																										pro_enddate : val.emp[0].proj_endda  ,
 																										skill_cat : val.emp[0].skill_cat ,
 																										reason : val.emp[0].reason,
-																										propose_id : val.prop_id
+																										propose_id : val.prop_id,
+																										multi_prop : ""
 																									
 																									};
 																								
@@ -2201,7 +2206,8 @@ var tp1;
 																										pro_enddate : val.emp[0].proj_endda  ,
 																										skill_cat : val.emp[0].skill_cat ,
 																										reason : val.emp[0].reason,
-																										propose_id : val.prop_id
+																										propose_id : val.prop_id,
+																										multi_prop : "",
 																									
 																									};
 																								
@@ -2525,9 +2531,9 @@ var tp1;
 							template : new sap.ui.commons.CheckBox({
 								id:'id_check_multi'
 							}).addStyleClass("multi_check_so")
-									 .bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									 .bindProperty("text", "multi_prop"),
+							sortProperty : "multi_prop",
+							filterProperty : "multi_prop",
 							width : "100px", 
 						
 							
