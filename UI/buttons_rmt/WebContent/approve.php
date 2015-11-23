@@ -105,6 +105,11 @@
 						<th>SO Number</th>
 						<th>Assignment Start Date</th>
 						<th>Assignment End Date</th>
+						<th>Smart Project Code</th>
+						<th>FTE%</th>
+						<th>Tagging Type</th>
+						
+						
 					</tr>
 					<tr>
 						<td><?php echo htmlspecialchars($_GET["proj_code"]);?></td>
@@ -112,6 +117,12 @@
 						<td><?php echo htmlspecialchars($_GET["so_no"]);?></td>
 						<td><?php echo htmlspecialchars($_GET["sdate"]);?></td>
 						<td><?php echo htmlspecialchars($_GET["edate"]);?></td>
+						<td><input type="text" class="project_code_text1"></td>
+						<td><input type="text"  class="fte_text1"></td>
+						<td><select>
+  <option value="Expense">Expense</option>
+  <option value="Effort Booking">Effort Booking</option>
+</select></td>
 					</tr>
 				</table>
 			</div>
