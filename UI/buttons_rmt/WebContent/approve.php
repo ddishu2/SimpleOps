@@ -33,6 +33,13 @@
 				border:1px solid;
 				padding:2px;
 			}
+			.comments1
+			{
+			width: 435px !important;
+            height: 80px;
+			}
+			
+			
 		</style>
 		
 		
