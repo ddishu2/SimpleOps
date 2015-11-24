@@ -44,7 +44,7 @@ private function set_query($i_so_number = '', $i_emp_id = '', $i_emp_alias = '',
         $this->lv_query_emp    =    "SELECT *
                                     FROM " .$this->lv_tabname. 
                                     " WHERE emp_id = '$i_emp_id' LIMIT 1";
-        echo $this->lv_query_emp;
+        
             
         $this->lv_query_alias  =    "SELECT * FROM $this->lv_tabname WHERE domain_id = '$i_emp_alias' LIMIT 1";
     }
