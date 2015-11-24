@@ -553,7 +553,6 @@ class cl_NotificationMails {
             case 'SLR':
                 $this->lv_content = str_replace("GV_SO_OWNER", $this->lv_so_creator_name, $this->lv_content);
                 $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lv_projname, $this->lv_content);
-                $this->lv_content = str_replace("GV_EMPNAME", $this->lv_empname, $this->lv_content);
                 $this->lv_content = str_replace("GV_EMPID", $this->lv_empid, $this->lv_content);
                 $this->lv_content = str_replace("GV_PRI_SKILL", $this->lv_pri_skill, $this->lv_content);
                 $this->lv_content = str_replace("GV_LEVEL", $this->lv_level, $this->lv_content);
@@ -579,6 +578,10 @@ class cl_NotificationMails {
 
             case 'CRD':
                 $this->lv_content = str_replace("GV_UPDATED_BY", $this->lv_req_by, $this->lv_content);
+                if($this->lv_status == 'Approve')
+                { $this->lv_content = str_replace("GV_STATUS", $this->lv_status . 'd', $this->lv_content); }
+                else
+                { $this->lv_content = str_replace("GV_STATUS", $this->lv_status . 'ed', $this->lv_content);} 
                 $this->lv_content = str_replace("GV_STATUS", $this->lv_status . 'ed', $this->lv_content);
                 $this->lv_content = str_replace("GV_ID", $this->lt_crd_details['id'], $this->lv_content);
                 $this->lv_content = str_replace("GV_EMPNAME", $this->lt_crd_details['name'], $this->lv_content);
@@ -696,7 +699,7 @@ class cl_NotificationMails {
         self::get_recievers();      
         if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4'))
         {
-        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);              
         }
         else
         {
