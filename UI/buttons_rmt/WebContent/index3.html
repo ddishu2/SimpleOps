@@ -2529,7 +2529,7 @@ var all_multi = "";
 								tooltip : "Multiproposal"
 							}),
 							template : new sap.ui.commons.CheckBox({
-								id:'id_check_multi'
+						
 							}).addStyleClass("multi_check_so")
 									 .bindProperty("text", "multi_prop"),
 							sortProperty : "multi_prop",
@@ -2599,10 +2599,9 @@ var all_multi = "";
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								
+								var all_multi="";
 								 
-								if($(".multi_check_so").is(':checked'))
-								{  all_multi="X";}else{ all_multi=""}
+							
 
 								
 								$(".approveDropdown input").each(function(index,val){
@@ -2613,7 +2612,7 @@ var all_multi = "";
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										"&allow_multi="+all_multi;
+										 all_multi+="&allow_multi="+parent.find(".multi_check_so").val();
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -3863,7 +3862,25 @@ var all_multi = "";
 						var  skill_Label_manual_emp = new sap.ui.commons.Label({
 							text : 'Skill'
 						}).addStyleClass("for_text_style1");
-						osearch_manual_emp.createRow(skill_Label_manual_emp)
+						
+						var skill_Text_manual_emp = new sap.ui.commons.DropdownBox(
+								{
+									id: 'skill_drop_manual_emp',
+								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						skill_Text_manual_emp.setTooltip("Skills");
+						skill_Text_manual_emp.setEditable(true);
+						skill_Text_manual_emp.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("skill0_manual_emp");
+						oItem.setText("A");
+						skill_Text_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("skill1_manual_emp");
+						oItem.setText("B");
+						skill_Text_manual_emp.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("skill2_manual_emp");
+						oItem.setText("C");
+						skill_Text_manual_emp.addItem(oItem);   
+						
+						osearch_manual_emp.createRow(skill_Label_manual_emp,skill_Text_manual_emp)
 						
 						var location_manual = new sap.ui.commons.Label({
 							text : "Location :"
@@ -4134,8 +4151,8 @@ var all_multi = "";
 							label : new sap.ui.commons.Label({
 								text : "Smart Project Code"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
+							template : new sap.ui.commons.TextField()
+									.bindProperty("value", ""),
 							sortProperty : "",
 							filterProperty : "",
 							width : "70px"
@@ -4144,8 +4161,8 @@ var all_multi = "";
 							label : new sap.ui.commons.Label({
 								text : "FTE%"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
+							template : new sap.ui.commons.TextField()
+									.bindProperty("value", ""),
 							sortProperty : "",
 							filterProperty : "",
 							width : "70px"
