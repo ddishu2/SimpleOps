@@ -147,8 +147,8 @@ class m_utility extends CI_model
 // DateTime validator function
     public function validateDate($i_date, $i_format = self::gc_default_format)
     {   
-    $lv_date = DateTime::createFromFormat($format, $date);
-    return $d && $d->format($format) == $date;
+    $io_date = DateTime::createFromFormat($i_format, $i_date);
+    return $io_date && $io_date->format($i_format) == $i_date;
     }
 }
 
