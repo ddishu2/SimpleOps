@@ -10,6 +10,7 @@
  * @author vkhisty
  */
 require_once(APPPATH.'models/cl_methods.php');
+require_once(APPPATH.'models/m_lock.php');
 class m_report extends CI_model
 {
     const C_HDR_LINE1          = 'Content-Type: text/csv'; 
@@ -42,24 +43,29 @@ class m_report extends CI_model
     CONST C_TYPE_REJ_EMP    = 'Rejected_Employees';
     const C_TYPE_REJ_SO     = 'Rejected_SO';
     const C_EX_INVALID      = 'Invalid Mail Type';
-    const C_TYPE_AMMENDMENTS = 'Amendment_Report';
+        const C_TYPE_AMMENDMENTS = 'Amendment_Report';
     
     
-    private $v_report_type = '';
-//    private $v_start_date;
-//    private $v_end_date;
-//    
+    protected $v_report_type;
+    protected $v_start_date ;
+    protected $v_end_date;
+    
     
     /**
      * @throws Invalid Mail Type Exception.
      */
     public function __construct()
     {
+        $this->load->database();
+          }
+   public function isreportvalid($fp_v_report_type,$fp_v_start_date,$fp_v_end_date)
         
-    }
-    
-public function isreportvalid($fp_v_report_type,$fp_v_start_date,$fp_v_end_date)
     {
+   
+//    echo $fp_v_report_type;
+//    echo $fp_v_start_date;
+//    echo $fp_v_end_date;
+//    
          $re_valid = false;
         if(     $fp_v_report_type === self::C_TYPE_SL
             ||  $fp_v_report_type === self::C_TYPE_SL_RELEASE
@@ -68,54 +74,84 @@ public function isreportvalid($fp_v_report_type,$fp_v_start_date,$fp_v_end_date)
             ||  $fp_v_report_type == self::C_TYPE_AMMENDMENTS)
         {
             $re_valid = true;
-            $this->setreport_type($fp_v_report_type);
         }
         if($re_valid === true){
-          //  $this->setdates($fp_v_start_date, $fp_v_end_date);
+            $this->set_attributes($fp_v_report_type);
+            $this->setdates($fp_v_start_date, $fp_v_end_date);
+//            echo self::$v_report_type;
+             
         }
     }
-    
-public function setreport_type($fp_report)
-{
-    $this->v_report_type = $fp_report;
-}
+//    
+  public function set_attributes($fp_report_type)
+    {
+       $this->v_report_type = $fp_report_type;
+      
+    }
    public function setdates($fp_start_dates,$fp_end_dates){
       
-    
-        $lv_dates_valid = cl_methods::isDateRangeValid($fp_start_dates, $fp_end_dates);
-        if($lv_dates_valid === true)
-        {
-            $this->v_start_date  = $fp_start_dates;
-            $this->v_end_date    = $fp_end_dates;   
-        }
-        else
-        {
-            $this->setDefaultDates();
-        }
-    } 
-    
-    public function setDefaultDates() {
-       
-    
-        $this->v_start_date  = date(cl_methods::C_DATE_FORMAT);
-        $this->v_end_date = $this->v_start_date;
-    }
-    
 
-    public function download()
-    {
-        
-        $this->setHeaders();
-        /**
-         * $lo_csv_output File ptr connected to PHP O/P stream in write mode.
-         * 
-         */
+$lv_dates_valid = cl_methods::isDateRangeValid($fp_start_dates, $fp_end_dates);
+if($lv_dates_valid === true)
+{
+$this->v_start_date  = $fp_start_dates;
+$this->v_end_date    = $fp_end_dates;   
+}
+else
+{
+$this->setDefaultDates();
+}
+} 
+
+public function setDefaultDates() {
+
+
+$this->v_start_date  = date(cl_methods::C_DATE_FORMAT);
+$this->v_end_date = $this->v_start_date;
+}
+
+
+public function download()
+{
+
+$this->setHeaders();
+/**
+////         * $lo_csv_output File ptr connected to PHP O/P stream in write mode.
+////         * 
+////         */
         $lo_csv_output = fopen(self::C_PHP_OUT_STREAM, self::C_MODE_FILE_WRITE);
-//        $lo_csv_output = fopen("output.csv", self::C_MODE_FILE_WRITE);
-        // output the column headings
-//     fputcsv($lo_csv_output, array('Column 1', 'Column 2', 'Column 3'));
-         fputcsv($lo_csv_output,array('ID','Name','Level'));
+//////        $lo_csv_output = fopen("output.csv", self::C_MODE_FILE_WRITE);
+////        // output the column headings
+//////     fputcsv($lo_csv_output, array('Column 1', 'Column 2', 'Column 3'));
+////        
+////        
+//     fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking )'));
         
+       
+         switch ($this->v_report_type) {
+        case self::C_TYPE_HL:
+                   fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking )'));
+                    break;
+//                case self::C_TYPE_HL_RELEASE:
+//                
+//                    break;
+//                case self::C_TYPE_SL:
+//                
+//                    break;
+//                case self::C_TYPE_SL_RELEASE:
+//                                    break;
+//                case self::C_TYPE_AMMENDMENTS:
+//                     fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking )'));
+                ////////                            $lo_ammendments = new cl_ammendments();
+//////                           $re_data = $lo_ammendments->getAmmendmentsReport($this->v_start_date,$this->v_end_date);
+//////                    $re_data1 = [];                 
+//                     break;
+                default:
+//////
+                   break;
+           }
+////         
+////        
         $arr_data = $this->getData();
         for($i=0;$i<count($arr_data);$i++)
         {
@@ -123,10 +159,10 @@ public function setreport_type($fp_report)
         fputcsv($lo_csv_output,$row);
         }
         // make php send the generated csv lines to the browser
-//        fpassthru($lo_csv_output);
+        fpassthru($lo_csv_output);
         fclose($lo_csv_output);
     }
-    
+////    
         private function setHeaders() 
         {
             $lv_hdrLine2 = $this->getHeaderLine2();
@@ -135,45 +171,49 @@ public function setreport_type($fp_report)
             header("Pragma: no-cache");
             header("Expires: 0");
         }
-
-
+////
+////
         private function getData()
         {
             $re_data = [];
-            $lo_lock = new cl_Lock();
+             //$re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
+          // $lo_lock = new cl_Lock();
             switch ($this->v_report_type) 
             {
                 case self::C_TYPE_HL:
-                    
+//                     
+                    $re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
+//////                    
                     break;
-                case self::C_TYPE_HL_RELEASE:
-                
-                    break;
-                case self::C_TYPE_SL:
-                
-                    break;
-                case self::C_TYPE_SL_RELEASE:
-                
-                    break;
-                case self::C_TYPE_AMMENDMENTS:
+////                case self::C_TYPE_HL_RELEASE:
+////                
+////                    break;
+////                case self::C_TYPE_SL:
+////                
+////                    break;
+////                case self::C_TYPE_SL_RELEASE:
+////                
+////                    break;
+//                case self::C_TYPE_AMMENDMENTS:
+//                    $re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
 //                            $lo_ammendments = new cl_ammendments();
-//                           $re_data = $lo_ammendments->getAmmendmentsReport($this->v_start_date,$this->v_end_date);
-//                    $re_data1 = [];
-                    $re_data['ID'] = '1234';
-                    $re_data['Name'] = 'abcd';
-                    $re_data['level'] = 'P1';
-                    break;
-                default:
-                    $re_data = [];
-                    break;
+////////                           $re_data = $lo_ammendments->getAmmendmentsReport($this->v_start_date,$this->v_end_date);
+////////                    $re_data1 = [];
+////////                    $re_data['ID'] = '1234';
+////////                    $re_data['Name'] = 'abcd';
+////////                    $re_data['level'] = 'P1';
+//                   break;
+//                default:
+//                    $re_data = [];
+//                    break;
             }
         return $re_data;
         }
-    
-    /**
-     * 
-     * @return string Content Disposition Header with Name of Report File at end
-     */
+////    
+////    /**
+////     * 
+////     * @return string Content Disposition Header with Name of Report File at end
+////     */
     private function getHeaderLine2()
     {
         $lv_filename = $this->getFileName();
@@ -181,11 +221,11 @@ public function setreport_type($fp_report)
                                 .$lv_filename;
         return $re_header_line2;
     }
-    
-    /**
-     * 
-     * @return string Name of CSV Report File suffixed by timestamp
-     */
+////    
+////    /**
+////     * 
+////     * @return string Name of CSV Report File suffixed by timestamp
+////     */
     private function getFileName()
     {
         $re_timestamp = date(self::C_DATE_FORMAT);
@@ -195,5 +235,4 @@ public function setreport_type($fp_report)
                       .self::C_FILENAME_SUFFIX;
         return $re_filename;
     }
-
 }
