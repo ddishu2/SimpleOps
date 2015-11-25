@@ -86,7 +86,7 @@ SPLIT_HERE
 SPLIT_HERE
       </table>
       <p><font color=#FF0000><B>Note: You have 2 work-days to raise an extension request for a resource. If a request is not received during this period, the respective resource will be future-proposed for requirements after the current engagement end-date.</B></font>
-      <p><B>You have to update the Roll Off or Extension details through Amendment Sheet (Change in T&E Approver and release date of resources) which can be found at link</B>	
+      <p>You can update the Roll Off or Extension details using the <B>Change in T&E Approver and release date of resources</B> spreadsheet, which can be found at	
       <A HREF="\\ntbomfs001\datagrp\AppsOne SAP RMT\Ammendment">Appsone SAP RMT</A>
       <p>Regards,<br><b></b><br>Resource Management Group (RMG).</p>
       </table>

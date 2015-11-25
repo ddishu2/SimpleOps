@@ -62,14 +62,16 @@ private
 // Get Employee details based on employee ID from different table    
     public function get_emp_details($i_emp_id,$i_tabname = '') 
         {
+        $ci_ins =& get_instance();
         self::set_query($i_emp_id,'',$i_tabname);
-        return ($this->db->query($this->lv_query_emp)->array_result());  
+        return ($ci_ins->db->query($this->lv_query_emp)->result_array());  
         } 
 
 // Get Employee details based on CORP ID
     public function get_corpid_details($i_emp_alias,$i_tabname = '')
-        {               
+        {         
+        $ci_ins =& get_instance();
         self::set_query('',$i_emp_alias, $i_tabname);
-        return ($this->db->query($this->lv_query_alias)->array_result());  
+        return ($ci_ins->db->query($this->lv_query_alias)->result_array());  
         }   
 }

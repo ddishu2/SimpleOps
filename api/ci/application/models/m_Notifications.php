@@ -347,8 +347,8 @@ class m_Notifications extends CI_model
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lv_empid);
 
 // Get details of all capabilities email ids.
-                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->array_result();
-                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->array_result();
+                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->result_array();
+                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
             case 'SLR':
@@ -368,8 +368,8 @@ class m_Notifications extends CI_model
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lv_empid);
 
 // Get details of all capabilities email ids.
-                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->array_result();
-                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->array_result();
+                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->result_array();
+                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
             case 'SOR':
@@ -389,8 +389,8 @@ class m_Notifications extends CI_model
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lv_empid);
 
 // Get details of all capabilities email ids.
-                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->array_result();
-                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->array_result();
+                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->result_array();
+                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
             case 'CRD':
@@ -411,8 +411,8 @@ class m_Notifications extends CI_model
                 $this->lt_req_details = $lo_details->get_corpid_details($this->lt_crd_details['req_by']);
 
 // Get details of all capabilities email ids.
-                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->array_result();
-                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->array_result();
+                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->result_array();
+                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
             case 'CTE':
@@ -434,15 +434,15 @@ class m_Notifications extends CI_model
                 $this->lt_sup_details = $lo_details->get_corpid_details($this->lt_cte_details['new_sup_corp_id']);
 
 // Get details of all capabilities email ids.
-                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->array_result();
-                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->array_result();
+                $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->result_array();                
+                $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
             
             case 'RL4':
 // Get details of all capabilities email ids.
-                $this->lt_recievers   = $this->db->query($this->lv_query_notifcn)->array_result();
-                $this->lt_act_type    = $this->db->query($this->lv_query_act_type)->array_result();
-                $this->lt_sup_details = $lo_details->get_emp_details($this->lt_hlr_details[0][$this->gv_sup_id], 'm_emp_record');
+                $this->lt_recievers   = $this->db->query($this->lv_query_notifcn)->result_array();
+                $this->lt_act_type    = $this->db->query($this->lv_query_act_type)->result_array();
+                $this->lt_sup_details = $lo_details->get_emp_details($this->lt_hlr_details[0][self::gc_sup_id], 'm_emp_record');
                 break;            
             default:
                 break;
@@ -664,8 +664,8 @@ class m_Notifications extends CI_model
                 break;
                 
             case 'RL4':
-                $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][$this->gc_sup_name], $this->lv_content);
-                $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lt_hlr_details[0][$this->gv_proj_name], $this->lv_content);
+                $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][self::gc_sup_name], $this->lv_content);
+                $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lt_hlr_details[0][self::gc_proj_name], $this->lv_content);
                 $lv_content = explode('SPLIT_HERE', $this->lv_content);
                 $this->lv_content = $lv_content[0];
                 foreach ($this->lt_hlr_details as $lv_key_hlr => $lwa_hlr) {
