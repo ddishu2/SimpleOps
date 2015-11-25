@@ -30,6 +30,7 @@ var  amend_table_report_gen;
 var tp1;
 var oFor_so;
 var oFor_emp;
+var regex = /^[0-9]+$/
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -3993,6 +3994,28 @@ var oFor_emp;
 						
 					
 /////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
+         /* var aData = [ {
+							Sl_No : "",
+							p_id : "12323",
+							p_name : "dsfsdf",
+							srt_date : "12312312",
+							end_date : "123123122",
+							emp_id : "546546",
+							emp_name : "gfghfgh",
+							level : "yy66",
+							location : "hfghfgh",
+							sm_proj_code : "",
+							fte :"",
+							//tag_type :"",
+							
+							
+						} ]; */ 
+          
+          
+          
+          
+          
+          
           var manual1_table = new sap.ui.table.Table(
 					{
 						id : 'manual_table1',
@@ -4003,22 +4026,7 @@ var oFor_emp;
 						//navigationMode : sap.ui.table.NavigationMode.Paginator,
 
 					}).addStyleClass("style_for_table");
-						var aData = [ {
-							Sl_No : "",
-							p_id : "",
-							p_name : "",
-							srt_date : "",
-							end_date : "",
-							emp_id : "",
-							emp_name : "",
-							level : "",
-							location : "",
-							sm_proj_code : "",
-							fte :"",
-							//tag_type :"",
-							
-							
-						} ];
+						
 						//Define the columns and the control templates to be used
 						manual1_table
 								.addColumn(new sap.ui.table.Column(
@@ -4159,7 +4167,9 @@ var oFor_emp;
 							label : new sap.ui.commons.Label({
 								text : "Smart Project Code"
 							}),
-							template : new sap.ui.commons.TextField()
+							template : new sap.ui.commons.TextField({
+								id: 'sm_pro_code1'
+							})
 									.bindProperty("value", ""),
 							sortProperty : "",
 							filterProperty : "",
@@ -4169,7 +4179,10 @@ var oFor_emp;
 							label : new sap.ui.commons.Label({
 								text : "FTE%"
 							}),
-							template : new sap.ui.commons.TextField()
+							template : new sap.ui.commons.TextField({
+								
+								id: 'fte1'
+							})
 									.bindProperty("value", ""),
 							sortProperty : "",
 							filterProperty : "",
@@ -4188,14 +4201,6 @@ var oFor_emp;
 						}));
                      
 
-						manual1_table.sort(manual1_table.getColumns()[0]);
-						
-						var oModel_manual = new sap.ui.model.json.JSONModel();
-						oModel_manual.setData({
-							modelData : aData
-						});
-						manual1_table.setModel(oModel_manual);
-						manual1_table.bindRows("/modelData");
 						//Bring the table onto the UI 
 						manual1_table.placeAt("manual1");
 
@@ -4203,9 +4208,22 @@ var oFor_emp;
 							id : 'bt1_manual_assign',
 							text : "Assign",
 							press : function(){
+								 var input_manual1 = sap.ui.getCore().byId('sm_pro_code1').getValue();
+								 var input_manual2 = sap.ui.getCore().byId('fte1').getValue();
+								 
+								 
+						         if (!input_manual1.match(regex)) {
+						        alert("Entered Smart Project Code is not valid");
+						      } 
+						         else if(!input_manual2.match(regex))
+						        	 {
+						        	 alert("Entered FTE% is not valid");
+						        	 }
+						         else{
 								
 								$("#manual2").removeClass("hide_div");
 								$("#manual1").addClass("hide_div");
+						         }
 								
 							}
 						}).addStyleClass("for_normal_buttons_style1");						
