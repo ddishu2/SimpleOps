@@ -2521,6 +2521,7 @@ var regex = /^[0-9]+$/
 								tooltip : "Multiproposal"
 							}),
 							template : new sap.ui.commons.CheckBox({
+								id :'multipropose_check'
 						
 							}).addStyleClass("multi_check_so")
 									 .bindProperty("text", "multi_prop"),
@@ -2604,7 +2605,7 @@ var regex = /^[0-9]+$/
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find(".multi_check_so").prop( "checked" );
+										 all_multi+="&allow_multi="+parent.find("#multipropose_check-CB").prop( "checked" );
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
