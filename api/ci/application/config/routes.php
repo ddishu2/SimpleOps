@@ -74,4 +74,6 @@ $route['approve_hard_lock']= 'Locks/approve_hard_lock';
 $route['get_where_proposed'] = 'Locks/getwhereProposed';
 $route['get_partial'] = 'Proposals/getPartialProposals';
 
+$route['get_ValidSOs'] = 'ManualLocks/get_ValidSOs';
+
 
