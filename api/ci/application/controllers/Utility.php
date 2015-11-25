@@ -26,7 +26,6 @@ class Utility extends CI_controller
     
     public function check_hlr()
     {
-        echo json_encode($this->m_utility->checkandnotify(), JSON_PRETTY_PRINT);
-//       $this->m_utility->checkandnotify();       
+       $this->m_utility->checkandnotify();       
     }
 }
