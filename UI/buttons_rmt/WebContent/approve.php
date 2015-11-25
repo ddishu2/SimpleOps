@@ -82,7 +82,7 @@
 			
 			$.ajax({
     		  method: "GET",
-    		  url: "/rmt/api/v1/index.php/approve_hard_lock/?"+asc1,
+    		  url: "/rmt/api/ci/index.php/approve_hard_lock/?"+asc1,
     		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
     		///rmt/api/ci/index.php/approve_hard_lock/?trans_id=2&comments=Abc&status=Approve&smart_proj_code=A&FTE=B&tag_type=hard
     		success : function(odata){
