@@ -697,7 +697,6 @@ class cl_NotificationMails {
 
 // Get recievers for email.                
         self::get_recievers();   
-        echo $this->lv_recievers;
         if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4'))
         {
         $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
