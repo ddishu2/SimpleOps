@@ -2603,7 +2603,7 @@ var oFor_emp;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										all_multi= parent.find(".multi_check_so").val();
+										 all_multi+="&allow_multi="+parent.find(".multi_check_so").val();
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -2624,7 +2624,7 @@ var oFor_emp;
 								var asc= so_str + emp_str +status_str+p1_id;
 								console.log(asc);
 								
-								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc+"&allow_multi="+all_multi)
+								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc+"&allow_multi="+all_multi,
