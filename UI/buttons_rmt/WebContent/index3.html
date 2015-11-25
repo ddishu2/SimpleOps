@@ -2603,7 +2603,7 @@ var oFor_emp;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find(".multi_check_so").val();
+										 all_multi+="&allow_multi="+parent.find(".multi_check_so").prop( "checked" );
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -2621,13 +2621,13 @@ var oFor_emp;
 									}
 									
 									});
-								var asc= so_str + emp_str +status_str+p1_id;
+								var asc= so_str + emp_str +status_str+p1_id+all_multi;
 								console.log(asc);
 								
 								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
 								$.ajax({
 						      		  method: "GET",
-						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc+"&allow_multi="+all_multi,
+						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc,
 						      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 						      				
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
@@ -3802,8 +3802,8 @@ var oFor_emp;
 						}).addStyleClass("for_text_style1");
 						 
 						 var future_manual_CB = new sap.ui.commons.CheckBox({
-								text : 'Not Blank',
-								tooltip : 'Not Blank',
+								text : 'Blank',
+								tooltip : 'Blank',
 							
 								});
 						 
