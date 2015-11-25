@@ -18,7 +18,8 @@ class m_utility extends CI_model
           gc_date_format   = 'd-M-y',
           gc_date_from     = 'date_from',
           gc_bu            = 'Appsone SAP',
-          gc_filepath      = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\';
+          gc_filepath      = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\',
+          gc_date_year     = 'YY';
             
     private $gv_tab_name      = 'm_emp_ras_copy',
             $gv_so            = 'curr_so',          
@@ -139,6 +140,7 @@ class m_utility extends CI_model
     public function BAfilepath()
     {
         $lv_filepath = self::gc_filepath;
+        $lv_year     = date(self::gc_date_year);
     }
 }
 
