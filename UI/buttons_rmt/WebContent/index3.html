@@ -28,7 +28,8 @@ var oOverlayContainer;
 var sso1;
 var  amend_table_report_gen;
 var tp1;
-var all_multi = "";
+var oFor_so;
+var oFor_emp;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -994,17 +995,7 @@ var all_multi = "";
 										filterProperty : "am_sup",
 										width : "100px"
 												}));
-												/* amend_table1.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Customer Name",
-														tooltip:"Customer Name"
-													}),
-													template : new sap.ui.commons.TextView({id:'ame_cn1'})
-												.bindProperty("text", "am_customer"),
-										sortProperty : "am_customer",
-										filterProperty : "am_customer",
-										width : "100px"
-												})); */
+												
 												
 												amend_table1.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -2612,7 +2603,7 @@ var all_multi = "";
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find(".multi_check_so").val();
+										all_multi= parent.find(".multi_check_so").val();
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -2630,13 +2621,13 @@ var all_multi = "";
 									}
 									
 									});
-								var asc= so_str + emp_str +status_str+p1_id+all_multi;
+								var asc= so_str + emp_str +status_str+p1_id;
 								console.log(asc);
 								
-								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
+								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc+"&allow_multi="+all_multi)
 								$.ajax({
 						      		  method: "GET",
-						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc,
+						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?"+asc+"&allow_multi="+all_multi,
 						      		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
 						      				
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
@@ -3369,7 +3360,7 @@ var all_multi = "";
 									.bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",
-							width : "100px"
+							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3380,7 +3371,7 @@ var all_multi = "";
 									.bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",
-							width : "100px"
+							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3759,7 +3750,17 @@ var all_multi = "";
 
 						osearch_manual.createRow(capabilityLabel_manual, capabilityText_manual);
 					    
-						var search_manual1 =new sap.ui.commons.Button({id:'search_for_manual',text :"Search for SO's"}).addStyleClass("for_normal_buttons_style1");
+						var search_manual1 =new sap.ui.commons.Button({id:'search_for_manual',text :"Search for SO's",
+							
+						press: function()
+						{
+						 oFor_so.removeContent(osearch_manual);
+						 oFor_so.addContent(table_for_manual_so);
+						 
+						 
+						}
+						
+						}).addStyleClass("for_normal_buttons_style1");
 						osearch_manual.createRow(search_manual1)
 						
 						
@@ -3978,7 +3979,14 @@ var all_multi = "";
 
 				osearch_manual_emp.createRow(level_manual, capabilityText_level);
 
-				var search_manual1_emp_results =new sap.ui.commons.Button({text :"Get Emp Results"}).addStyleClass("for_normal_buttons_style1");
+				var search_manual1_emp_results =new sap.ui.commons.Button({text :"Get Emp Results" ,press: function()
+					{
+					 oFor_emp.removeContent(osearch_manual_emp);
+					 oFor_emp.addContent(table_for_manual_emp);
+					
+					}
+				
+				}).addStyleClass("for_normal_buttons_style1");
 				osearch_manual_emp.createRow(search_manual1_emp_results)		
 						
 						
@@ -4031,7 +4039,7 @@ var all_multi = "";
 																				.getId()
 																		+ "' triggered");
 															}
-															var oFor_so = new sap.ui.ux3.OverlayContainer(
+															 oFor_so = new sap.ui.ux3.OverlayContainer(
 																	{
 																		width : '400px'
 																	});
@@ -4102,14 +4110,14 @@ var all_multi = "";
 																		.getId()
 																+ "' triggered");
 													}
-													var oFor_so = new sap.ui.ux3.OverlayContainer(
+													 oFor_emp = new sap.ui.ux3.OverlayContainer(
 															{
 																width : '400px'
 															});
-													oFor_so
+													oFor_emp
 															.addContent(osearch_manual_emp);
 
-													oFor_so.open();
+													oFor_emp.open();
 												}
 											}),
 											width :"60px"
@@ -5847,21 +5855,16 @@ var repo_to1 = new sap.ui.commons.Label({
 </div>
 <script>
 $( window ).load(function(){
-
  	$
 	.ajax({
 		method : "GET",
 		url : 
-	"/rmt/api/v1/index.php/sso",
-	
+	"/rmt/api/v1/index.php/sso",	
 	success :function(odata) {
 		console.log(odata)
-		 sso1 = odata;
-		
-		console.log(sso1);
-		
+		 sso1 = odata;		
+		console.log(sso1);		
 		$("#welcome_username1").text(sso1);
-	
 	}
 	})
 
