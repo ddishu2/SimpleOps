@@ -47,19 +47,44 @@
 		<script type="text/javascript">
 
 	function submit_form(){
-
-		
+            var regex = /^[0-9]+$/
 			var stat1="" ;
 			var comm1="" ;
+			var smart1 = "";
+			var fte_pass="";
+			var tag_type1="";
 			var transactn = "&trans_id="+$("#transaction_id").val();
 			stat1 += "&status="+$(".selection1").val();
 			comm1 += "&comments="+$(".comments1").val();
+			smart1 += "&smart_proj_code="+$(".project_code_text1").val();
+			fte_pass+= "&FTE="+$(".fte_text1").val();
+			tag_type1+= "&tag_type="+$(".tag_type_value").val();
+			
+			
+            var asc1= comm1 + stat1 + transactn+smart1+fte_pass+tag_type1;
 
-			var asc1= comm1 + stat1 + transactn;
+            var input_manual1 = $(".project_code_text1").val();
+			 var input_manual2 = $(".fte_text1").val();
+			 
+			 
+	         if (!input_manual1.match(regex)) {
+	        alert("Entered Smart Project Code is not valid");
+	      } 
+	         else if(!input_manual2.match(regex))
+	        	 {
+	        	 alert("Entered FTE% is not valid");
+	        	 }
+	         else if($(".comments1").val()=="")
+	         {
+	        	 alert("Please Enter the Comments");
+	         }
+	         else{
+			
 			$.ajax({
     		  method: "GET",
     		  url: "/rmt/api/v1/index.php/approve_hard_lock/?"+asc1,
     		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
+    		///rmt/api/ci/index.php/approve_hard_lock/?trans_id=2&comments=Abc&status=Approve&smart_proj_code=A&FTE=B&tag_type=hard
     		success : function(odata){
 
     		      alert("Submitted");
@@ -67,6 +92,7 @@
     		      window.close();
     		}
 		});
+	         }
 
 		
 	}	
@@ -124,9 +150,9 @@
 						<td><?php echo htmlspecialchars($_GET["so_no"]);?></td>
 						<td><?php echo htmlspecialchars($_GET["sdate"]);?></td>
 						<td><?php echo htmlspecialchars($_GET["edate"]);?></td>
-						<td><input type="text" class="project_code_text1"></td>
-						<td><input type="text"  class="fte_text1"></td>
-						<td><select>
+						<td><input type="text" class="project_code_text1" ></td>
+						<td><input type="text"  class="fte_text1" ></td>
+						<td><select class="tag_type_value">
   <option value="Expense">Expense</option>
   <option value="Effort Booking">Effort Booking</option>
 </select></td>
