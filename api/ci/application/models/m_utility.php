@@ -14,12 +14,13 @@
 require_once(APPPATH.'models/m_Notifications.php');
 class m_utility extends CI_model
 {
-    const gc_business_days = 23,
-          gc_date_format   = 'd-M-y',
-          gc_date_from     = 'date_from',
-          gc_bu            = 'Appsone SAP',
-          gc_filepath      = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\',
-          gc_date_year     = 'YY';
+    const gc_business_days  = 23,
+          gc_date_format    = 'd-M-y',
+          gc_date_from      = 'date_from',
+          gc_bu             = 'Appsone SAP',
+          gc_filepath       = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\',
+          gc_date_year      = 'YY',
+          gc_default_format = 'Y-m-d H:i:s';
             
     private $gv_tab_name      = 'm_emp_ras_copy',
             $gv_so            = 'curr_so',          
@@ -141,6 +142,13 @@ class m_utility extends CI_model
     {
         $lv_filepath = self::gc_filepath;
         $lv_year     = date(self::gc_date_year);
+    }
+    
+// DateTime validator function
+    public function validateDate($i_date, $i_format = self::gc_default_format)
+    {   
+    $lv_date = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
     }
 }
 
