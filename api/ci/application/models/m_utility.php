@@ -11,13 +11,14 @@
  *
  * @author Dikshant Mishra/Dikmishr
  */
-
+require_once(APPPATH.'models/m_Notifications.php');
 class m_utility extends CI_model
 {
     const gc_business_days = 23,
           gc_date_format   = 'd-M-y',
           gc_date_from     = 'date_from',
-          gc_bu            = 'Appsone SAP';
+          gc_bu            = 'Appsone SAP',
+          gc_filepath      = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\';
             
     private $gv_tab_name      = 'm_emp_ras_copy',
             $gv_so            = 'curr_so',          
@@ -57,7 +58,8 @@ class m_utility extends CI_model
     private function add_business_days($i_sdate) {
         $lv_count = 1;
         $lv_dayx = strtotime($i_sdate);
-        while ($lv_count < self::gc_business_days) {
+        while ($lv_count < self::gc_business_days) 
+        {
                 $lv_day = date('N', $lv_dayx);
                 $lv_date = date('Y-m-d', $lv_dayx);
                 if ($lv_day < 6)
@@ -70,7 +72,7 @@ class m_utility extends CI_model
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
     {
-        $lv_edate = $this->add_business_days(date(self::gc_date_format));        
+        $lv_edate = $this->add_business_days(date(self::gc_date_format));  
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
@@ -89,9 +91,7 @@ class m_utility extends CI_model
                             ' FROM '. $this->gv_tab_name.
                             " WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' ORDER BY ". $this->gv_proj_code;
-        $io_query = $this->db->query($lv_query_empid);        
-        $lt_emp_details = $io_query->result_array();
-        return $lt_emp_details;
+        return($this->db->query($lv_query_empid)->result_array());                 
     }
     
     public function checkandnotify()
@@ -111,9 +111,8 @@ class m_utility extends CI_model
                     if($this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code))
                     {
                       array_push($lt_proj_details, $lwa_values);
-//                      $io_mail = new cl_NotificationMails();
-                      print_r($lt_proj_details);
-//                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
+                      $io_mail = new m_Notifications();                      
+                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
                       $lt_proj_details = [];
                     }
                     
@@ -127,12 +126,19 @@ class m_utility extends CI_model
             
 // Method to check if supplied row is the last record with value of the field same as itself in the table           
     private function atendofvalue($i_table, $i_key, $i_row, $i_field)
-        {       
+    {       
 // Increment the key
-            $lv_key_new = $i_key + 1;
-            if ((array_key_exists($lv_key_new, $i_table) ===  true) && ( $i_table[$lv_key_new][$i_field] == $i_row[$i_field])) 
-            {return false;}
-            else 
-            {return true;}
-        }       
+        $lv_key_new = $i_key + 1;
+        if ((array_key_exists($lv_key_new, $i_table) ===  true) && ( $i_table[$lv_key_new][$i_field] == $i_row[$i_field])) 
+        {return false;}
+        else 
+        {return true;}
+    }
+        
+// Get Bench Ageing File path
+    public function BAfilepath()
+    {
+        $lv_filepath = self::gc_filepath;
+    }
 }
+
