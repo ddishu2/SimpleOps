@@ -58,7 +58,13 @@ class m_lock extends ci_model
     const C_MULTI = 'allow_multi';
     const C_FNAME_ALLOW_MULTI = 'allow_multi';
     
+    const C_star ='*';
+    const C_V_hard_lock = 'v_hard_lock';
+    const C_curr_start_date = 'curr_start_date';
+    const C_curr_end_date = 'curr_end_date';
+    
     private static $arr_SO_that_rejectedemps = [];
+//    private static $arr_result = [];
     
 // const C_PARENT_PROPOS_ID = 'propos_id';
 // const C_REQUESTOR_ID = 'requestor_id';
@@ -737,4 +743,16 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
 //       $re_data = $lo_DB->getResultsFromQuery($lv_query);
 //       return $re_data;
 //   }    
+    
+    public function gethardlockdata($fp_start_date , $fp_end_date){
+       $arr_result = [];
+       $this->db->select('emp_id,emp_name,svc_line ,curr_proj_code,curr_proj_name,curr_start_date,curr_end_date,so_id,so_level ,sup_id,sup_name,smart_proj_code,FTE,tag_type');
+       $this->db->from(self::C_V_hard_lock);
+       $this->db->where('updated_on >=',$fp_start_date); 
+       $this->db->where('updated_on <=',$fp_end_date);
+       $arr_result = $this->db->get();
+       $arr_result_final = $arr_result->result_array();     
+    return $arr_result_final;
+           
+    }
 }
