@@ -77,7 +77,8 @@ class m_open_so extends CI_model
         return $this->arr_open_sos;
     }
     private function set()
-    {  echo $this->v_project_bu;
+    { 
+//        echo $this->v_project_bu;
          $larr_open_sos = [];
 //        $lv_query = parent::getQuery();
 //        $larr_sos = cl_DB::getResultsFromQuery($lv_query);

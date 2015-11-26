@@ -174,6 +174,9 @@ class m_lock extends ci_model
        
 //        $lv_obj = new cl_DB();
 //        $lv_db = $lv_obj->getDBHandle();
+//        echo "Array";
+//        print_r($fp_arr_Multi);
+//        echo "End Array";
         $softlock_count = 0;
         $rejected_proposal_count = 0;
         $res_count =[];
@@ -199,7 +202,7 @@ class m_lock extends ci_model
                         $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$fp_arr_Multi[$i]);
                          
                         // if allow multi is set to false update and set allow multi = false  all the entries in translocks for that employee 
-                        if ($fp_arr_Multi[$i] === '')
+                        if ($fp_arr_Multi[$i] == '')
                                  {
                                          $data = array(
                                         self::C_FNAME_ALLOW_MULTI =>''                                                                              
