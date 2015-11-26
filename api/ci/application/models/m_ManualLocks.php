@@ -50,7 +50,7 @@ class m_ManualLocks extends CI_model
         $lt_open_sos = [];
         
 // Select SO Number from table        
-        $this->db->select(self::gc_so_pos_no);
+        $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no);
         
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
@@ -91,13 +91,13 @@ class m_ManualLocks extends CI_model
         }
         
 // Once all filters are set, query the view and return the array.
-        $lt_validso = $this->db->get(self::gc_viewname)->result_array();
-        foreach ($lt_validso as $lwa_so) 
-        {
-            $lv_so_id = $lwa_so[self::gc_so_pos_no];
-            $lt_open_sos[$lv_so_id] = $lwa_so;
-        }
-        return $lt_open_sos;
+        return($this->db->get(self::gc_viewname)->result_array());
+//        foreach ($lt_validso as $lwa_so) 
+//        {
+//            $lv_so_id = $lwa_so[self::gc_so_pos_no];
+//            $lt_open_sos[$lv_so_id] = $lwa_so;
+//        }
+//        return $lt_open_sos;
     }
     
     public function get_ValidEMPs()
