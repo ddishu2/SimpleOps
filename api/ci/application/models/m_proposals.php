@@ -47,7 +47,7 @@ Class m_proposals extends CI_model
     const C_FNAME_EMP         = 'emp';
     const C_FNAME_CREATED_ON  = 'created_on'; 
     const C_TABNAME           =  'trans_proposals';
-    const C_COMMA             = ','.PHP_EOL;
+    //const C_COMMA             = ','.PHP_EOL;
     
     //private $proposal_id;
     //private $item_id;
