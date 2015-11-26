@@ -49,8 +49,7 @@ class ManualLocks extends CI_Controller
                                                             $lv_proj_id,
                                                             $lv_cust_name,
                                                             $lv_capability  );
-        print_r($lt_validso);
-//        echo json_encode($lt_validso, JSON_PRETTY_PRINT);       
+        $this->output->set_content_type('application/json')->set_output(json_encode($lt_validso,JSON_PRETTY_PRINT));      
     }
     
     Public function get_ValidEMPs()
