@@ -14,6 +14,7 @@ class m_lock extends ci_model
         {
                
                $this->load->database();
+               $this->load->model('m_Notifications');
 
         }
      const C_SMART_PROJECT_CODE ='smart_proj_code';
@@ -75,26 +76,26 @@ class m_lock extends ci_model
         
     }
 
-    public function getHardLockedEmps($fp_v_start_date = null, $fp_v_end_date =  null) 
-    {
-        $lv_query = cl_abs_QueryBuilder::C_SQL_SELECT
-                   .cl_abs_QueryBuilder::C_SQL_ALL
-                   .cl_abs_QueryBuilder::C_SQL_FROM
-                   .self::C_TABLE_NAME.PHP_EOL
-                   .cl_abs_QueryBuilder::C_SQL_WHERE
-                   .self::C_FNAME_STATUS.cl_abs_QueryBuilder::C_SQL_EQUALS.self::C_STATUS_SOFT_LOCK_EXPIRED
-                   .cl_abs_QueryBuilder;
-    }
-
-    public function getSoftLockExpiredEmps() {
-        $lv_query = cl_abs_QueryBuilder::C_SQL_SELECT
-                   .cl_abs_QueryBuilder::C_SQL_ALL
-                   .cl_abs_QueryBuilder::C_SQL_FROM
-                   .self::C_TABLE_NAME.PHP_EOL
-                   .cl_abs_QueryBuilder::C_SQL_WHERE
-                   .self::C_FNAME_STATUS.cl_abs_QueryBuilder::C_SQL_EQUALS.self::C_STATUS_SOFT_LOCK_EXPIRED;
-        
-    }
+//    public function getHardLockedEmps($fp_v_start_date = null, $fp_v_end_date =  null) 
+//    {
+//        $lv_query = cl_abs_QueryBuilder::C_SQL_SELECT
+//                   .cl_abs_QueryBuilder::C_SQL_ALL
+//                   .cl_abs_QueryBuilder::C_SQL_FROM
+//                   .self::C_TABLE_NAME.PHP_EOL
+//                   .cl_abs_QueryBuilder::C_SQL_WHERE
+//                   .self::C_FNAME_STATUS.cl_abs_QueryBuilder::C_SQL_EQUALS.self::C_STATUS_SOFT_LOCK_EXPIRED
+//                   .cl_abs_QueryBuilder;
+//    }
+//
+//    public function getSoftLockExpiredEmps() {
+//        $lv_query = cl_abs_QueryBuilder::C_SQL_SELECT
+//                   .cl_abs_QueryBuilder::C_SQL_ALL
+//                   .cl_abs_QueryBuilder::C_SQL_FROM
+//                   .self::C_TABLE_NAME.PHP_EOL
+//                   .cl_abs_QueryBuilder::C_SQL_WHERE
+//                   .self::C_FNAME_STATUS.cl_abs_QueryBuilder::C_SQL_EQUALS.self::C_STATUS_SOFT_LOCK_EXPIRED;
+//        
+//    }
 //Soft Lock
     public function setTransId() {        //find max trans_id
 //        $lv_sql = 'SELECT'.PHP_EOL
@@ -233,9 +234,8 @@ class m_lock extends ci_model
                    // $lo_mail_noti = new cl_NotificationMails();
                     //$lo_mail_noti->sendnotification($fp_arr_so[$i], $i_mode,$lv_link ,$lv_trans_id,$fp_arr_emp[$i]);
                    
-                   // $lo_mail_noti->sendSoftLockNotification($fp_arr_so[$i],$lv_link,$fp_arr_emp[$i],$lv_trans_id);
-                    
-                    
+                   $this->m_Notifications->sendSoftLockNotification($fp_arr_so[$i],$lv_link,$fp_arr_emp[$i],$lv_trans_id);
+                   
                 }
             } elseif ($fp_arr_stat[$i] == 'Reject') {
                 $lv_result = self::rejectProposal($lv_prop_id, $fp_arr_emp[$i], $fp_arr_so[$i]);
@@ -420,7 +420,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
                 /*
                  * logic to send mail to owners of other So's
                  */
-                
+              
             }
             
 //            mysqli_commit($lv_db);
@@ -531,6 +531,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             if($lv_Rej_count >= 3)
             {
                 //method to send mail to so_owner to clsoe the SO
+                 $this->m_Notifications->sendSORejectionNotification($lv_so_id, $lv_emp_id,  $lv_trans_id);
             }
             
             
