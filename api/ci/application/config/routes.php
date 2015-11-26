@@ -64,6 +64,7 @@ $route['open_so/(:any)'] = 'news/getOpenSO/$1';
 
 $route['sso'] = 'Utility/get_username';
 $route['hardlock_release_notification'] = 'Utility/check_hlr';
+$route['get_ValidSOs'] = 'ManualLocks/get_ValidSOs';
 //$route['dr'] = 'display_report/setreport';
 
 
@@ -74,6 +75,6 @@ $route['approve_hard_lock']= 'Locks/approve_hard_lock';
 $route['get_where_proposed'] = 'Locks/getwhereProposed';
 $route['get_partial'] = 'Proposals/getPartialProposals';
 
-$route['get_ValidSOs'] = 'ManualLocks/get_ValidSOs';
+
 
 
