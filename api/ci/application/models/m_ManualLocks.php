@@ -92,12 +92,6 @@ class m_ManualLocks extends CI_model
         
 // Once all filters are set, query the view and return the array.
         return($this->db->get(self::gc_viewname)->result_array());
-//        foreach ($lt_validso as $lwa_so) 
-//        {
-//            $lv_so_id = $lwa_so[self::gc_so_pos_no];
-//            $lt_open_sos[$lv_so_id] = $lwa_so;
-//        }
-//        return $lt_open_sos;
     }
     
     public function get_ValidEMPs()
