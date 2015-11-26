@@ -15,7 +15,7 @@
 require_once(APPPATH.'models/m_utility.php');
 class m_ManualLocks extends CI_model
 {   
-    const gc_date_format    = 'd-M-y',
+    const gc_date_format    = 'y-mm-dd',
           gc_so_pos_no      = 'so_pos_no',
           gc_so_prim_skill  = 'so_primary_skill',
           gc_so_loc         = 'so_loc',
@@ -46,8 +46,6 @@ class m_ManualLocks extends CI_model
                                     $i_cust_name = '',
                                     $i_capability = ''  )
     {
-// Initialized
-        $lt_open_sos = [];
         
 // Select SO Number from table        
         $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no);
@@ -57,7 +55,7 @@ class m_ManualLocks extends CI_model
         
 // Check for filters and apply them if they're set.        
         if((($this->isFilterset($i_from_date)) && ($io_utility->validateDate($i_from_date, self::gc_date_format)) === true) &&
-           (($this->isFilterset($i_to_date)) && ($io_utility->validateDate($i_to_date, self::gc_date_format)) === true)) 
+           (($this->isFilterset($i_to_date))   && ($io_utility->validateDate($i_to_date, self::gc_date_format)) === true)) 
         {
         $this->db->where(self::gc_so_sdate_new." BETWEEN CAST('$i_from_date' AS DATE)AND CAST('$i_to_date' AS DATE)");
         }
