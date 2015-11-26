@@ -5291,6 +5291,11 @@ var repo_to1 = new sap.ui.commons.Label({
 							text : 'Hard Locks',
 							tooltip : 'Hard Locks',
 							groupName : 'Group1',
+							change : function()
+							{
+								$("#view_report_button").html("Download Report");
+								
+							}
 							
 							}).addStyleClass("for_report_gen");
 
@@ -5457,14 +5462,17 @@ var repo_to1 = new sap.ui.commons.Label({
 								else if ($("#hard_check-RB").is(":checked") == true)
 								{
 									
-								$("#report_first").addClass("hide_div");
-								$("#report_first_open").addClass("hide_div");
-								$("#report_first_zero").addClass("hide_div");
-								$("#first").addClass("hide_div");
-								$("#amend_report_view").addClass("hide_div");
-								$("#soft_report_view").addClass("hide_div");
-								$("#soft_expiry_report_view").addClass("hide_div");
-								$("#hard_report_view").removeClass("hide_div");
+									var from_hardlock_report = $("#__picker0-input").val();
+									var to_hardlock_report = $("#__picker1-input").val();
+									
+									
+							 //[11/26/2015 7:35 PM] Khisty, Vineet: 
+//localhost/rmt/api/ci/index.php/displayreport/?type=Hard_Lock&so_from_date=2015-11-19&so_to_date=2015-11-22
+
+							 window.open("/rmt/api/ci/index.php/displayreport/?type=Hard_Lock&so_from_date="
+										+from_hardlock_report+
+										"&so_to_date="
+										+to_hardlock_report)
 					}
 								else if ($("#soft_expiry_check-RB").is(":checked") == true)
 								{
@@ -6046,238 +6054,7 @@ var repo_to1 = new sap.ui.commons.Label({
 ///////////////////////////////////////////////// Report First Amendments Part////////////////////////////////////////////////
 
 						
-					var	 hard_lock_report_gen = new sap.ui.table.Table(
-														{
-															id : 'for_hard_lock_report_gen',
-															title : "RMT Hard Lock Report View",
-															//visibleRowCount : 9,
-															//firstVisibleRow : 3,
-															selectionMode: sap.ui.table.SelectionMode.Single,
-															
-															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
-
-														}).addStyleClass("style_for_table");
-
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Emp ID",
-														tooltip : "Emp ID"
-													}),
-													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
-															
-													sortProperty : "",
-													filterProperty : "",
-													width : "70px",
-												//setRowHeight:"200px"
-												}));
-
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Emp Name",
-														tooltip : "Emp Name"
-													}),
-													template : new sap.ui.commons.TextView({id:''})
-															.bindProperty("text", ""),
-													sortProperty : "",
-													filterProperty : "",
-													width : "100px"
-												}));
-												
-												
-												
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Service Line",
-														tooltip : "Service Line"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Project Code ",
-														tooltip : "Project Code "
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Project Name",
-														tooltip : "Project Name"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "200px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Start date",
-														tooltip : "Start date"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "200px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "End Date",
-														tooltip : "End Date"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "100px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "SO # ",
-														tooltip : "SO # "
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "100px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "SO Level ",
-														tooltip:"SO Level "
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "100px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "T&E approver ID",
-														tooltip:"T&E approver ID"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "100px"
-												}));
-												
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "T&E approver Name",
-														tooltip:"T&E approver Name"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Smart Project Code" ,
-														tooltip :"Smart Project Code"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "FTE%" ,
-														tooltip :"FTE%"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Tagging Type" ,
-														tooltip:"Tagging Type"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Approve",
-														tooltip : "Approve"
-													}),
-													template : new sap.ui.commons.ComboBox({
-														
-														id:'stat_hard_report1',
-														tooltip : "Decision",
-														items : [ 
-														         new sap.ui.core.ListItem("decide_hreport", {
-															text : "Approve",
-															key : "Ap"
-														}), new sap.ui.core.ListItem("decide_hreport1", {
-															text : "Reject",
-															key : "Re"
-														}),]
-													}).bindProperty("value",""),
-													sortProperty : "",
-													filterProperty : "",
-													width : "100px"
-												}));
-												hard_lock_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Ops Comments" ,
-														tooltip :"Ops Comments"
-													}),
-													template : new sap.ui.commons.TextField({})
-												.bindProperty("value", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "70px"
-												}));
-			
-												hard_lock_report_gen.sort(hard_lock_report_gen.getColumns()[0]);
-
-												hard_lock_report_gen.placeAt("hard_report_view");
-                                 
-												var report_download_hard = new sap.ui.commons.Button({
-													text: "Download Report"	,											
-													tooltip : "Download Report",
-													
-												}).addStyleClass("for_normal_buttons_style1");
-												var report_back_hard = new sap.ui.commons.Button({
-													id : 'back_report_hard',
-													text : "Back",
-													tooltip : "Back",
-													press:function()
-													{
-														$("#report_first").removeClass("hide_div");
-														$("#report_first_open").addClass("hide_div");
-														$("#report_first_zero").removeClass("hide_div");
-														$("#hard_report_view").addClass("hide_div");
-														
-													}
-					}).addStyleClass("for_normal_buttons_style1");
-												report_download_hard.placeAt("hard_report_view");
-												report_back_hard.placeAt("hard_report_view");
+				
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
