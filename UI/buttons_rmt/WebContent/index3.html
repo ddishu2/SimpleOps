@@ -3247,202 +3247,7 @@ var skill_Text_manual_emp;
 						
 						
 					//////////////////////////////////////////////Manual Tagging Starts///////////////////////////////////////////////////////////
-					//table for so search manual//
-					var table_for_manual_so = new sap.ui.table.Table(
-								{
-									id : 'table_for_manual_so1',
-									title : "List of SO's",
-									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :20,
-									firstVisibleRow: 3,
-								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
-									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
-
-								}).addStyleClass("style_for_table");
-
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project ID.",
-								tooltip :"Project ID"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px",
-						//setRowHeight:"200px"
-						}));
-
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Name" ,
-								tooltip : "Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Customer Name" ,
-								tooltip : "Customer Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "SO Project BU",
-								tooltip : "SO Project BU"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "SO NO.",
-								tooltip : "SO NO."
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Select.",
-								tooltip : "Select."
-							}),
-							template : new sap.ui.commons.RadioButton()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
-						table_for_manual_so.sort(table_for_manual_so.getColumns()[0]);	
-		//-------------------table for so search manual ends here-----------------------//
-		 
-		
-			var table_for_manual_emp = new sap.ui.table.Table(
-								{
-									id : 'table_for_manual_emp1',
-									title : "List of Emp's",
-									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :20,
-									firstVisibleRow: 3,
-								}).addStyleClass("style_for_table");
-
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Deployable.",
-								tooltip :"Deployable"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px",
-						//setRowHeight:"200px"
-						}));
-
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Future SO" ,
-								tooltip : "Future SO"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Capability" ,
-								tooltip : "Capability"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Skill",
-								tooltip : "Skill"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Location",
-								tooltip : "Location"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Current SO",
-								tooltip : "Current SO"
-							}),
-							template : new sap.ui.commons.RadioButton()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp ID",
-								tooltip : "Emp ID"
-							}),
-							template : new sap.ui.commons.RadioButton()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp Name",
-								tooltip : "Emp Name"
-							}),
-							template : new sap.ui.commons.RadioButton()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Select",
-								tooltip : "Select"
-							}),
-							template : new sap.ui.commons.RadioButton()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
-						table_for_manual_emp.sort(table_for_manual_emp.getColumns()[0]);
+			
 		//  table for manual emp search starts here///
 		
 		 
@@ -3757,9 +3562,550 @@ var skill_Text_manual_emp;
 							
 						press: function()
 						{
+							
+							//////Important///
 						 oFor_so.removeContent(osearch_manual);
 						 oFor_so.addContent(table_for_manual_so);
-						 
+						// /rmt/api/ci/index.php/get_ValidSOs
+						
+										var from_manu = $("#sfrom1_manual-input").val();
+										var upto_manu = $("#sto1_manual-input").val();
+										var p_name_manu=$("#Pro_id_manual").val();
+										var p_bu_manu=$("#spdrop_manual-input").val();
+										var p_loc_manu=$("#loci_manual").val();
+										console.log(p_loc_manu);
+										var temp_manual = new Array();			
+										temp_manual = p_loc_manu.split(",");
+										
+									console.log(temp_manual.length);
+				
+										var p_id_manu=$("#pro_id_form_manual").val();
+										var c_name_manu=$("#cust_name1_manual").val();
+											var cap_manu=$("#ct_drop-input").val();
+									 var so_type_text_manu=$("#so_type_id1-input").val();//so_type_id1
+										 sap.ui.core.BusyIndicator.show(0);
+							 			
+										
+										/*  /rmt/api/CI/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31 */	
+										  //[11/26/2015 2:07 PM] Mishra, Dikshant: 
+
+
+//0.74.163.157:8080/rmt/api/ci/index.php/get_ValidSOs/?so_from_date=&so_to_date=&proj_bu=&so_type=&proj_name=&proj_loc=&proj_id=&cust_name=&capability=
+
+										 console
+												.log("/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+														+ from_manu
+														+ "&so_to_date="
+														+ upto_manu
+														 + "&proj_name="
+														+ p_name_manu
+														+ "&so_proj_bu="
+														+ p_bu_manu
+														+ "&proj_loc[]="
+														+ temp_manual
+												        + "&proj_id="
+												        + p_id_manu
+												        + "&cust_name="
+												        + c_name_manu
+												        + "&capability="
+												        +  cap_manu
+												        +"&so_type="
+												        +so_type_text_manu
+												); 
+										 
+										 
+										 if(temp_manual.length == 1)
+											 {
+										$
+												.ajax({
+													method : "GET",
+													url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+														+ from_manu
+														+ "&so_to_date="
+														+ upto_manu
+														 + "&proj_name="
+														+ p_name_manu
+														+ "&so_proj_bu="
+														+ p_bu_manu
+														
+             											+ "&proj_loc[]="
+														+ temp_manual[0]
+														
+												        + "&proj_id="
+												        + p_id_manu
+												        + "&cust_name="
+												        + c_name_manu
+												        + "&capability="
+												        +  cap_manu
+												        +"&so_type="
+												        +so_type_text_manu,
+													success : function(odata) {
+														
+														sap.ui.core.BusyIndicator.hide(0);
+														console.log(odata);
+														var table_row;
+														var res = odata;		
+														var completeData_manual = [];
+
+														jQuery
+																.each(
+																		res,
+																		function(
+																				i,
+																				val) {
+
+																			
+																			
+																				var tmp = {
+																					so_pro_id_manual : val.so_proj_id,
+																					so_pro_name_manual : val.so_proj_name,
+																					so_cust_name_manual : val.cust_name,
+																					so_p_bu_manual : val.so_proj_bu,
+																					so_no_manual : val.so_pos_no
+																					
+																				
+																				};
+																			
+																				completeData_manual
+																						.push(tmp);
+																				res_completed++;
+
+																			
+
+																		});
+
+														var oModel2_manual = new sap.ui.model.json.JSONModel();
+														oModel2_manual
+																.setData({
+																	modelData : completeData_manual
+																});
+														table_for_manual_so
+																.setModel(oModel2_manual);
+														table_for_manual_so
+																.bindRows("/modelData");
+
+													
+													}
+												});
+											 }
+										 
+										 else if(temp_manual.length == 2)
+										 {
+									$
+											.ajax({
+												method : "GET",
+												url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+													+ from_manu
+													+ "&so_to_date="
+													+ upto_manu
+													 + "&proj_name="
+													+ p_name_manu
+													+ "&so_proj_bu="
+													+ p_bu_manu
+													
+         											+ "&proj_loc[]="
+													+ temp_manual[0]
+										        	+ "&proj_loc[]="
+										    	     + temp_manual[1]
+													
+											        + "&proj_id="
+											        + p_id_manu
+											        + "&cust_name="
+											        + c_name_manu
+											        + "&capability="
+											        +  cap_manu
+											        +"&so_type="
+											        +so_type_text_manu,
+												success : function(odata) {
+													
+													sap.ui.core.BusyIndicator.hide(0);
+													console.log(odata);
+													var table_row;
+													var res = odata;
+													var res_length = 0;
+													var res_completed = 0;
+													var res_partial = 0;
+													var completeData_manual = [];
+
+													jQuery
+													.each(
+															res,
+															function(
+																	i,
+																	val) {
+
+																
+																
+																	var tmp = {
+																		so_pro_id_manual : val.so_proj_id,
+																		so_pro_name_manual : val.so_proj_name,
+																		so_cust_name_manual : val.cust_name,
+																		so_p_bu_manual : val.so_proj_bu,
+																		so_no_manual : val.so_pos_no
+																		
+																	
+																	};
+																
+																	completeData_manual
+																			.push(tmp);
+																	res_completed++;
+
+																
+
+															});
+
+													var oModel2_manual = new sap.ui.model.json.JSONModel();
+													oModel2_manual
+															.setData({
+																modelData : completeData_manual
+															});
+													table_for_manual_so
+															.setModel(oModel2_manual);
+													table_for_manual_so
+															.bindRows("/modelData");
+
+													
+												}
+											});
+										 }
+										 else if(temp_manual.length == 3)
+										 {
+									$
+											.ajax({
+												method : "GET",
+												url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+													+ from_manu
+													+ "&so_to_date="
+													+ upto_manu
+													 + "&proj_name="
+													+ p_name_manu
+													+ "&so_proj_bu="
+													+ p_bu_manu
+													
+         											+ "&proj_loc[]="
+													+ temp_manual[0]
+										        	+ "&proj_loc[]="
+										    	     + temp_manual[1]
+											+ "&proj_loc[]="
+								    	     + temp_manual[2]
+													
+											        + "&proj_id="
+											        + p_id_manu
+											        + "&cust_name="
+											        + c_name_manu
+											        + "&capability="
+											        +  cap_manu
+											        +"&so_type="
+											        +so_type_text_manu,
+												success : function(odata) {
+													
+													sap.ui.core.BusyIndicator.hide(0);
+													console.log(odata);
+													var table_row;
+													var res = odata;
+													var res_length = 0;
+													var res_completed = 0;
+													var res_partial = 0;
+													var completeData_manual = [];
+
+													jQuery
+													.each(
+															res,
+															function(
+																	i,
+																	val) {
+
+																
+																
+																	var tmp = {
+																		so_pro_id_manual : val.so_proj_id,
+																		so_pro_name_manual : val.so_proj_name,
+																		so_cust_name_manual : val.cust_name,
+																		so_p_bu_manual : val.so_proj_bu,
+																		so_no_manual : val.so_pos_no
+																		
+																	
+																	};
+																
+																	completeData_manual
+																			.push(tmp);
+																	res_completed++;
+
+																
+
+															});
+
+													var oModel2_manual = new sap.ui.model.json.JSONModel();
+													oModel2_manual
+															.setData({
+																modelData : completeData_manual
+															});
+													table_for_manual_so
+															.setModel(oModel2_manual);
+													table_for_manual_so
+															.bindRows("/modelData");
+
+												}
+											});
+										 }			 else if(temp_manual.length == 4)
+										 {
+												$
+														.ajax({
+															method : "GET",
+															url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+																+ from_manu
+																+ "&so_to_date="
+																+ upto_manu
+																 + "&proj_name="
+																+ p_name_manu
+																+ "&so_proj_bu="
+																+ p_bu_manu
+																
+			         											+ "&proj_loc[]="
+																+ temp_manual[0]
+													        	+ "&proj_loc[]="
+													    	     + temp_manual[1]
+														+ "&proj_loc[]="
+											    	     + temp_manual[2]
+														+ "&proj_loc[]="
+											    	     + temp_manual[3]
+																
+														        + "&proj_id="
+														        + p_id_manu
+														        + "&cust_name="
+														        + c_name_manu
+														        + "&capability="
+														        +  cap_manu
+														        +"&so_type="
+														        +so_type_text_manu,
+															success : function(odata) {
+																
+																sap.ui.core.BusyIndicator.hide(0);
+																console.log(odata);
+																var table_row;
+																var res = odata;
+																var res_length = 0;
+																var res_completed = 0;
+																var res_partial = 0;
+																var completeData_manual = [];
+
+																jQuery
+																.each(
+																		res,
+																		function(
+																				i,
+																				val) {
+
+																			
+																			
+																				var tmp = {
+																					so_pro_id_manual : val.so_proj_id,
+																					so_pro_name_manual : val.so_proj_name,
+																					so_cust_name_manual : val.cust_name,
+																					so_p_bu_manual : val.so_proj_bu,
+																					so_no_manual : val.so_pos_no
+																					
+																				
+																				};
+																			
+																				completeData_manual
+																						.push(tmp);
+																				res_completed++;
+
+																			
+
+																		});
+
+																var oModel2_manual = new sap.ui.model.json.JSONModel();
+																oModel2_manual
+																		.setData({
+																			modelData : completeData_manual
+																		});
+																table_for_manual_so
+																		.setModel(oModel2_manual);
+																table_for_manual_so
+																		.bindRows("/modelData");
+
+																
+															}
+														});
+													 }			 else if(temp_manual.length == 5)
+													 {
+															$
+																	.ajax({
+																		method : "GET",
+																		url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+																			+ from_manu
+																			+ "&so_to_date="
+																			+ upto_manu
+																			 + "&proj_name="
+																			+ p_name_manu
+																			+ "&so_proj_bu="
+																			+ p_bu_manu
+																			
+						         											+ "&proj_loc[]="
+																			+ temp_manual[0]
+																        	+ "&proj_loc[]="
+																    	     + temp_manual[1]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[2]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[3]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[4]
+																			
+																	        + "&proj_id="
+																	        + p_id_manu
+																	        + "&cust_name="
+																	        + c_name_manu
+																	        + "&capability="
+																	        +  cap_manu
+																	        +"&so_type="
+																	        +so_type_text_manu,
+																		success : function(odata) {
+																			
+																			sap.ui.core.BusyIndicator.hide(0);
+																			console.log(odata);
+																			var table_row;
+																			var res = odata;
+																			var res_length = 0;
+																			var res_completed = 0;
+																			var res_partial = 0;
+																			var completeData_manual = [];
+
+																			jQuery
+																			.each(
+																					res,
+																					function(
+																							i,
+																							val) {
+
+																						
+																						
+																							var tmp = {
+																								so_pro_id_manual : val.so_proj_id,
+																								so_pro_name_manual : val.so_proj_name,
+																								so_cust_name_manual : val.cust_name,
+																								so_p_bu_manual : val.so_proj_bu,
+																								so_no_manual : val.so_pos_no
+																								
+																							
+																							};
+																						
+																							completeData_manual
+																									.push(tmp);
+																							res_completed++;
+
+																						
+
+																					});
+																			var oModel2_manual = new sap.ui.model.json.JSONModel();
+																			oModel2_manual
+																					.setData({
+																						modelData : completeData_manual
+																					});
+																			table_for_manual_so
+																					.setModel(oModel2_manual);
+																			table_for_manual_so
+																					.bindRows("/modelData");
+
+																			
+																		}
+																	});
+																 }
+										 
+										 
+													 else if(temp_manual.length == 6)
+													 {
+															$
+																	.ajax({
+																		method : "GET",
+																		url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+																			+ from_manu
+																			+ "&so_to_date="
+																			+ upto_manu
+																			 + "&proj_name="
+																			+ p_name_manu
+																			+ "&so_proj_bu="
+																			+ p_bu_manu
+																			
+						         											+ "&proj_loc[]="
+																			+ temp_manual[0]
+																        	+ "&proj_loc[]="
+																    	     + temp_manual[1]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[2]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[3]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[4]
+																	+ "&proj_loc[]="
+														    	     + temp_manual[5]
+																			
+																	        + "&proj_id="
+																	        + p_id_manu
+																	        
+																	        + "&cust_name="
+																	        + c_name_manu
+																	        + "&capability="
+																	        +  cap_manu
+																	        +"&so_type="
+																	        +so_type_text_manu,
+																		success : function(odata) {
+																			
+																			sap.ui.core.BusyIndicator.hide(0);
+																			console.log(odata);
+																			var table_row;
+																			var res = odata;
+																			var res_length = 0;
+																			var res_completed = 0;
+																			var res_partial = 0;
+																			var completeData_manual = [];
+
+																			jQuery
+																			.each(
+																					res,
+																					function(
+																							i,
+																							val) {
+
+																						
+																						
+																							var tmp = {
+																								so_pro_id_manual : val.so_proj_id,
+																								so_pro_name_manual : val.so_proj_name,
+																								so_cust_name_manual : val.cust_name,
+																								so_p_bu_manual : val.so_proj_bu,
+																								so_no_manual : val.so_pos_no
+																								
+																							
+																							};
+																						
+																							completeData_manual
+																									.push(tmp);
+																							res_completed++;
+
+																						
+
+																					});
+
+																			var oModel2_manual = new sap.ui.model.json.JSONModel();
+																			oModel2_manual
+																					.setData({
+																						modelData : completeData_manual
+																					});
+																			table_for_manual_so
+																					.setModel(oModel2_manual);
+																			table_for_manual_so
+																					.bindRows("/modelData");
+
+																		}
+																	});
+																 }
+
+									
+						
+						
 						 
 						}
 						
@@ -3768,6 +4114,203 @@ var skill_Text_manual_emp;
 						
 						
 						/* ------------So's f4 help Ennds here----------------------- */
+						
+		//table for so search manual//
+					var table_for_manual_so = new sap.ui.table.Table(
+								{
+									id : 'table_for_manual_so1',
+									title : "List of SO's",
+									selectionMode: sap.ui.table.SelectionMode.Single,
+									visibleRowCount :20,
+									firstVisibleRow: 3,
+								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
+									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
+
+								}).addStyleClass("style_for_table");
+
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project ID.",
+								tooltip :"Project ID"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_pro_id_manual"),
+							sortProperty : "so_pro_id_manual",
+							filterProperty : "so_pro_id_manual",
+							width : "50px",
+						//setRowHeight:"200px"
+						}));
+
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project Name" ,
+								tooltip : "Project Name"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_pro_name_manual"),
+							sortProperty : "so_pro_name_manual",
+							filterProperty : "so_pro_name_manual",
+							width : "100px"
+						}));
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Customer Name" ,
+								tooltip : "Customer Name"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_cust_name_manual"),
+							sortProperty : "so_cust_name_manual",
+							filterProperty : "so_cust_name_manual",
+							width : "100px"
+						}));
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "SO Project BU",
+								tooltip : "SO Project BU"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_p_bu_manual"),
+							sortProperty : "so_p_bu_manual",
+							filterProperty : "so_p_bu_manual",
+							width : "50px"
+						}));
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "SO NO.",
+								tooltip : "SO NO."
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_no_manual"),
+							sortProperty : "so_no_manual",
+							filterProperty : "so_no_manual",
+							width : "50px"
+						}));
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Select.",
+								tooltip : "Select."
+							}),
+							template : new sap.ui.commons.RadioButton()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px"
+						}));
+						table_for_manual_so.sort(table_for_manual_so.getColumns()[0]);	
+		//-------------------table for so search manual ends here-----------------------//
+		 
+		
+			var table_for_manual_emp = new sap.ui.table.Table(
+								{
+									id : 'table_for_manual_emp1',
+									title : "List of Emp's",
+									selectionMode: sap.ui.table.SelectionMode.Single,
+									visibleRowCount :20,
+									firstVisibleRow: 3,
+								}).addStyleClass("style_for_table");
+
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Deployable.",
+								tooltip :"Deployable"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px",
+						//setRowHeight:"200px"
+						}));
+
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Future SO" ,
+								tooltip : "Future SO"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Capability" ,
+								tooltip : "Capability"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Skill",
+								tooltip : "Skill"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Location",
+								tooltip : "Location"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Current SO",
+								tooltip : "Current SO"
+							}),
+							template : new sap.ui.commons.RadioButton()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Emp ID",
+								tooltip : "Emp ID"
+							}),
+							template : new sap.ui.commons.RadioButton()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Emp Name",
+								tooltip : "Emp Name"
+							}),
+							template : new sap.ui.commons.RadioButton()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Select",
+								tooltip : "Select"
+							}),
+							template : new sap.ui.commons.RadioButton()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "30px"
+						}));
+						table_for_manual_emp.sort(table_for_manual_emp.getColumns()[0]);						
 						
 						
 ///////////////////////////////////////////////emp's f4 help starts here////////////////////////////////////////////////////////
@@ -3807,6 +4350,7 @@ var skill_Text_manual_emp;
 						 var future_manual_CB = new sap.ui.commons.CheckBox({
 								text : 'Blank',
 								tooltip : 'Blank',
+								checked : true 
 							
 								});
 						 
@@ -3827,18 +4371,53 @@ var skill_Text_manual_emp;
 									
 									change : function()
 									{
-										if($("#ct_drop_manual_emp-input").val()=="DCM")
+									 	if($("#ct_drop_manual_emp-input").val()=="")
+										{
+										
+										var oModel_manual0 = new sap.ui.model.json.JSONModel();
+										oModel_manual0.setData({
+											hardware:[
+												],
+											});
+										sap.ui.getCore().setModel(oModel_manual0);
+										
+										skill_Text_manual_emp.setModel(oModel_manual0);
+										var oItemTemplate0 = new sap.ui.core.ListItem();
+										oItemTemplate0.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware", oItemTemplate0);
+										
+										}
+										 
+									else if($("#ct_drop_manual_emp-input").val()=="DCM")
 											{
 											
 											var oModel_manual1 = new sap.ui.model.json.JSONModel();
 											oModel_manual1.setData({
 												hardware:[
-													{device:"PC"},
-													{device:"Monitor"},
-													{device:"Keyboard"},
-													{device:"Mouse"},
-													{device:"Speaker"},
-													{device:"Printer"}],
+													{device:"SAP CRM - Sales"},
+													{device:"SAP CRM - Service"},
+													{device:"SAP CRM - Marketing"},
+													{device:"SAP CRM - Interaction Center"},
+													{device:"SAP CRM - TPM"},
+													{device:"SAP CRM - ABAP"},
+													{device:"SAP CRM - C4C Functional"},
+													{device:"SAP CRM - C4C Technical "},
+													{device:"SAP CRM - Hybris"},
+													{device:"SAP CRM - ISU Middleware"},
+													{device:"SAP CRM - ISU Functional"},
+													{device:"SAP CRM - ISU Technical"},
+													{device:"SAP CRM - Middleware"},
+													{device:"SAP CRM - WEBUI"},
+													{device:"SAP SD"},
+													{device:"SAP SD EDI"},
+													{device:"SAP SD GTS"},
+													{device:"SAP SD LE"},
+													{device:"SAP SD TMS"},
+													{device:"SAP SD Vistex"},
+													{device:"SAP SD DSD / mDSD"},
+													{device:"SAP SD CS"},
+													],
 												});
 											sap.ui.getCore().setModel(oModel_manual1);
 											
@@ -3855,12 +4434,67 @@ var skill_Text_manual_emp;
 											var oModel_manual2 = new sap.ui.model.json.JSONModel();
 											oModel_manual2.setData({
 												hardware1:[
-													{device:"P"},
-													{device:"Q"},
-													{device:"R"},
-													{device:"S"},
-													{device:"T"},
-													{device:"U"}],
+															{device:"SAP ABAP"},
+															{device:"SAP ABAP OOPS"},
+															{device:"SAP ABAP with HANA"},
+															{device:"SAP ABAP Adobeforms"},
+															{device:"SAP ABAP Data Migration"},
+															{device:"SAP ABAP Webdynpro"},
+															{device:"SAP ABAP Workflow"},
+															{device:"SAP Archiving"},
+															{device:"SAP BRFPlus"},
+															{device:"SAP BOPF"},
+															{device:"SAP ALE/IDOC"},
+															{device:"SAP ABAP APO"},
+															{device:"SAP ABAP EWM"},
+															{device:"SAP ABAP PRA"},
+															{device:"SAP ABAP SRM"},
+															{device:"SAP UI5"},
+															{device:"SAP Fiori"},
+															{device:"SAP Netweaver Gateway"},
+															{device:"SAP Personas"},
+															{device:"SAP Uex Designer"},
+															{device:"SAP Netweaver EP"},
+															{device:"SAP Portal with HANA"},
+															{device:"SAP Netweaver EP Java Webdynpro"},
+															{device:"SAP Xapp Mfg Int&Intelli(xMII)"},
+															{device:"SAP Netweaver PI"},
+															{device:"SAP PI Hana"},
+															{device:"SAP HCI"},
+															{device:"SAP BPM/BRM"},
+															{device:"UI Architect"},
+															{device:"Integration Architect"},
+															{device:"Development / Application Architect"},
+															{device:"Data Architect"},
+															{device:"SAP ABAP_T"},
+															{device:"SAP ABAP OOPS_T"},
+															
+															{device:"SAP ABAP with HANA_T"},
+															{device:"SAP ABAP Adobeforms_T"},
+															{device:"SAP ABAP Data Migration_T"},
+															{device:"SAP ABAP Webdynpro_T"},
+															{device:"SAP ABAP Workflow_T"},
+															{device:"SAP Archiving_T"},
+															{device:"SAP BRFPlus_T"},
+															{device:"SAP BOPF_T"},
+															{device:"SAP ALE/IDOC_T"},
+															{device:"SAP ABAP APO_T"},
+															{device:"SAP ABAP EWM_T"},
+															{device:"SAP ABAP PRA_T"},
+															{device:"SAP ABAP SRM_T"},
+															{device:"SAP ABAP TM_T"},
+															{device:"SAP UI5_T"},
+															{device:"SAP Fiori_T"},
+															{device:"SAP Netweaver Gateway_T"},
+															{device:"SAP Personas_T"},
+															{device:"SAP Uex Designer_T"},
+															{device:"SAP Netweaver EP_T"},
+															{device:"SAP Netweaver EP Java Webdynpro_T"},
+															{device:"SAP Xapp Mfg Int&Intelli(xMII)_T"},
+															{device:"SAP Netweaver PI_T"},
+															{device:"SAP PI Hana_T"},
+															{device:"SAP HCI_T"}
+															],
 												});
 											sap.ui.getCore().setModel(oModel_manual2);
 											skill_Text_manual_emp.setModel(oModel_manual2);
@@ -3874,160 +4508,232 @@ var skill_Text_manual_emp;
 										
 										var oModel_manual3 = new sap.ui.model.json.JSONModel();
 										oModel_manual3.setData({
-											hardware1:[
-												{device:"a"},
-												{device:"b"},
-												{device:"c"},
-												{device:"d"},
-												{device:"e"},
-												{device:"f"}],
+											hardware2:[
+														{device:"SAP FI"},
+														{device:"SAP FSCM"},
+														{device:"SAP PRA"},
+														{device:"SAP JVA"},
+														{device:"SAP LA"},
+														{device:"SAP TRM"},
+														{device:"SAP PS"},
+														{device:"SAP PS TRM"},
+														{device:"SAP FSCM  PRA"},
+														{device:"SAP FSCM JVA"},
+														{device:"SAP JVA  PRA"},
+														{device:"SAP JVA LA"},
+														{device:"SAP JVA PRA FSCM"},
+														{device:"SAP JVA PRA TRM"},
+														{device:"SAP JVA TRM"},
+														{device:"SAP LA FSCM"},
+														{device:"SAP PRA LA TRM FSCM"},
+														{device:"SAP TRM  PRA"},
+														{device:"SAP TRM FSCM"},
+														{device:"SAP CO"},
+														{device:"SAP CO FSCM"},
+														{device:"SAP CO JVA"},
+														{device:"SAP CO PRA"},
+														{device:"SAP FICO"},
+														{device:"SAP FSCD"},
+														{device:"SAP FSCD LA"},
+														{device:"SAP Cash and Liquidity Management"},
+														{device:"SAP Treasury"},
+														{device:"SAP SEM-BCS"},
+														
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual3);
 										skill_Text_manual_emp.setModel(oModel_manual3);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware2", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="HCM")
 										{
 										
 										var oModel_manual4 = new sap.ui.model.json.JSONModel();
 										oModel_manual4.setData({
-											hardware1:[
-												{device:"m"},
-												{device:"n"},
-												{device:"o"},
-												{device:"p"},
-												{device:"q"},
-												{device:"r"}],
+											hardware3:[
+														{device:"SAP HR ABAP"},
+														{device:"SAP HR ABAP SAP UI5"},
+														{device:"SAP Payroll "},
+														{device:"Time Management"},
+														{device:"PA/ OM"},
+														{device:"ESS/MSS"},
+														{device:"Talent Management"},
+														{device:"Training & Event management"},
+														{device:"E-Recruiting"},
+														{device:"Travel Management"},
+														{device:"Compensation & Benefits"},
+														{device:"Enterprise Compensation"},
+														{device:"SF - Employee Central"},
+														{device:"SF - Performance & Goal Mastery (PMGM)"},
+														{device:"SF - Recruiting Management"},
+														{device:"SF - Recruiting Marketing"},
+														{device:"SF - Succession & Planning"},
+														{device:"SF - Compensation Management"},
+														{device:"SF - Variable Pay"},
+														{device:"SF - Learning Management (LSO)"},
+														{device:"SF - Workforce Analytics & Planning"},
+														{device:"SF - Onboarding"},
+														{device:"HR ABAP & Dell Boomi"},
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual4);
 										skill_Text_manual_emp.setModel(oModel_manual4);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware3", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="Misc")
 										{
 										
 										var oModel_manual5 = new sap.ui.model.json.JSONModel();
 										oModel_manual5.setData({
-											hardware1:[
-												{device:"s"},
-												{device:"ds"},
-												{device:"d"},
-												{device:"we"},
-												{device:"ewr"},
-												{device:"rty"}],
+											hardware4:[
+														{device:"Misc"},
+														
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual5);
 										skill_Text_manual_emp.setModel(oModel_manual5);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware4", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="Management")
 										{
 										
 										var oModel_manual2 = new sap.ui.model.json.JSONModel();
 										oModel_manual2.setData({
-											hardware1:[
-												{device:"qwe"},
-												{device:"sd"},
-												{device:"sd"},
-												{device:"dsf"},
-												{device:"cvcx"},
-												{device:"ert"}],
+											hardware5:[
+														{device:"Management"},
+														
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual2);
 										skill_Text_manual_emp.setModel(oModel_manual2);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware5", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="ISU")
 										{
 										
 										var oModel_manual7 = new sap.ui.model.json.JSONModel();
 										oModel_manual7.setData({
-											hardware1:[
-												{device:"qwe"},
-												{device:"Q12"},
-												{device:"R2"},
-												{device:"S21"},
-												{device:"T5"},
-												{device:"U7567"}],
+											hardware6:[
+														{device:"SAP ISU Technical DM"},
+														{device:"SAP ISU Technical Billing"},
+														{device:"SAP ISU Functional Billing"},
+														{device:"SAP ISU Functional - CS"},
+														{device:"SAP ISU Technical Generic"},
+														{device:"SAP ISU ABAP"},
+														{device:"SAP ISU Functional -Billing"},
+														{device:"SAP ISU Technical CS"},
+														{device:"SAP ISU ABAP FICA"},
+														{device:"SAP ISU Functional FICA"},
+														{device:"SAP ISU Technical FICA"},
+														{device:"SAP ISU Functional DM"},
+														{device:"SAP ISU Functional - FICA"},
+														{device:"SAP ISU Technical"},
+														{device:"SAP ISU Functional DM EDM"},
+														{device:"SAP ISU Functional FICA LA"},
+														{device:"SAP ISU DM EDM functional"},
+														{device:"SAP ISU FICA"},
+														{device:"SAP ISU Emigal"},
+														{device:"SAP ISU Functional - DM"},
+													
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual7);
 										skill_Text_manual_emp.setModel(oModel_manual7);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware6", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="Netweaver")
 										{
 										
 										var oModel_manual8 = new sap.ui.model.json.JSONModel();
 										oModel_manual8.setData({
-											hardware1:[
-												{device:"21P"},
-												{device:"21Q"},
-												{device:"fgR"},
-												{device:"435S"},
-												{device:"43T"},
-												{device:"434U"}],
+											hardware7:[
+														{device:"SAP Basis"},
+														{device:"SAP Security"},
+														{device:"SAP Solution Manager"},
+														{device:"SAP Process Control"},
+														{device:"SAP Access Control"},
+														{device:"SAP GRC"},
+														{device:"SAP Basis HANA"},
+														
+													
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual8);
 										skill_Text_manual_emp.setModel(oModel_manual8);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware7", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="SCM")
 										{
 										
 										var oModel_manual9 = new sap.ui.model.json.JSONModel();
 										oModel_manual9.setData({
-											hardware1:[
-												{device:"P"},
-												{device:"Q"},
-												{device:"R"},
-												{device:"S"},
-												{device:"T"},
-												{device:"U"}],
+											hardware8:[
+{device:"SAP MM"},
+{device:"SAP PP"},
+{device:"SAP APO DP - SNP"},
+{device:"SAP WM"},
+{device:"SAP PM"},
+{device:"SAP EWM"},
+
+														{device:"SAP EHS"},
+														{device:"SAP QM"},
+														{device:"SAP APO GATP"},
+														{device:"SAP APO PPDS"},
+														{device:"SAP EAM"},
+														{device:"SAP ARIBA"},
+														{device:"SAP PLM DMS"},
+														
+													
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual9);
 										skill_Text_manual_emp.setModel(oModel_manual9);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware8", oItemTemplate2);	
 										}
 										else if($("#ct_drop_manual_emp-input").val()=="Retail & AFS")
 										{
 										
 										var oModel_manual10 = new sap.ui.model.json.JSONModel();
 										oModel_manual10.setData({
-											hardware1:[
-												{device:"P"},
-												{device:"Q"},
-												{device:"R"},
-												{device:"S"},
-												{device:"T"},
-												{device:"U"}],
+											hardware9:[
+														{device:"SAP IS Retail"},
+														{device:"SAP PP AFS"},
+														{device:"SAP MM AFS"},
+														{device:"SAP MM WM AFS"},
+														{device:"SAP SD AFS"},
+														{device:"SAP IS Retail,SAP ABAP Workflow_T"},
+														
+														
+													
+														],
 											});
 										sap.ui.getCore().setModel(oModel_manual10);
 										skill_Text_manual_emp.setModel(oModel_manual10);
 										var oItemTemplate2 = new sap.ui.core.ListItem();
 										oItemTemplate2.bindProperty("text", "device");
 										
-										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										skill_Text_manual_emp.bindItems("/hardware9", oItemTemplate2);	
 										}
 										
 										
