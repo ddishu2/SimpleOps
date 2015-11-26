@@ -140,8 +140,9 @@ class m_utility extends CI_model
 // Get Bench Ageing File path
     public function BAfilepath()
     {
-        $lv_filepath = self::gc_filepath;
-        $lv_year     = date(self::gc_date_year);
+        $lv_filepath  = self::gc_filepath;
+        $lv_year      = date(self::gc_date_year);
+        $lv_filepath .= $lv_filepath.$lv_year;
     }
     
 // DateTime validator function

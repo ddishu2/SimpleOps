@@ -46,6 +46,9 @@ class m_ManualLocks extends CI_model
                                     $i_cust_name = '',
                                     $i_capability = ''  )
     {
+// Initialized
+        $lt_open_sos = [];
+        
 // Select SO Number from table        
         $this->db->select(self::gc_so_pos_no);
         
@@ -53,42 +56,48 @@ class m_ManualLocks extends CI_model
         $io_utility = new m_utility();
         
 // Check for filters and apply them if they're set.        
-        if(((isset($i_from_date)) && (($i_from_date !== '') && ($i_to_date !== '')) && ($io_utility->validateDate($i_from_date, self::gc_date_format)) === true) &&
-           ((isset($i_to_date)) && ($io_utility->validateDate($i_to_date, self::gc_date_format)) === true)) 
+        if((($this->isFilterset($i_from_date)) && ($io_utility->validateDate($i_from_date, self::gc_date_format)) === true) &&
+           (($this->isFilterset($i_to_date)) && ($io_utility->validateDate($i_to_date, self::gc_date_format)) === true)) 
         {
         $this->db->where(self::gc_so_sdate_new." BETWEEN CAST('$i_from_date' AS DATE)AND CAST('$i_to_date' AS DATE)");
         }
-        if(isset($i_proj_name) && ($i_proj_name !== ''))
+        if($this->isFilterset($i_proj_name))
         {
         $this->db->like(self::gc_so_proj_name, $i_proj_name, 'both');    
         }
-        if(isset($i_proj_bu) && ($i_proj_bu !== ''))
+        if($this->isFilterset($i_proj_bu))
         {
         $this->db->where(self::gc_so_proj_bu,$i_proj_bu);
         }        
-        if(isset($i_proj_loc) && ($i_proj_loc !== ''))
+        if($this->isFilterset($i_proj_loc))
         {
         $this->db->where_in(self::gc_so_loc,$i_proj_loc);
         }         
-        if(isset($i_capability) && ($i_capability !== ''))
+        if($this->isFilterset($i_capability))
         {
         $this->db->where(self::gc_so_capability,$i_capability);
         }
-        if(isset($i_proj_id) && ($i_proj_id !== ''))
+        if($this->isFilterset($i_proj_id))
         {
         $this->db->like(self::gc_so_proj_id, $i_proj_id, 'both'); 
         }
-        if(isset($i_cust_name) && ($i_cust_name !== ''))
+        if($this->isFilterset($i_cust_name))
         {
         $this->db->like(self::gc_cust_name, $i_cust_name, 'both'); 
         }
-        if(isset($i_type) && ($i_type !== ''))
+        if($this->isFilterset($i_type))
         {
         $this->db->where(self::gc_so_proj_type,$i_type);
         }
         
 // Once all filters are set, query the view and return the array.
-        return($this->db->get(self::gc_viewname)->result_array());
+        $lt_validso = $this->db->get(self::gc_viewname)->result_array();
+        foreach ($lt_validso as $lwa_so) 
+        {
+            $lv_so_id = $lwa_so[self::gc_so_pos_no];
+            $lt_open_sos[$lv_so_id] = $lwa_so;
+        }
+        return $lt_open_sos;
     }
     
     public function get_ValidEMPs()
@@ -99,5 +108,13 @@ class m_ManualLocks extends CI_model
     public function Lock_EMPs()
     {
         
+    }
+    private function isFilterset($fp_filter_value)
+    {
+        $filter_set = false;
+       if(!($fp_filter_value == ''|| $fp_filter_value == null)){
+            $filter_set = true;
+       }
+       return $filter_set;
     }
 }
