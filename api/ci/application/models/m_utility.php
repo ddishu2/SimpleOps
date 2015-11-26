@@ -24,7 +24,8 @@ class m_utility extends CI_model
           gc_bu             = 'Appsone SAP',
           gc_filepath       = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\',
           gc_date_year      = 'YY',
-          gc_default_format = 'Y-m-d H:i:s';
+          gc_default_format = 'Y-m-d H:i:s',
+          gc_filename       = '-BENCH_AGEING_DATA';
             
     private $gv_tab_name      = 'm_emp_ras_copy',
             $gv_so            = 'curr_so',          
@@ -155,13 +156,15 @@ class m_utility extends CI_model
     $io_date = DateTime::createFromFormat($i_format, $i_date);
     return $io_date && $io_date->format($i_format) == $i_date;
     }
-     public function loadRAS()
-     {
-         $loadRAS = m_loadFiles::loadRAS();
-     }
-     public function loadRRS()
-     {
-         $loadRRS = m_loadFiles::loadRRS();
-     }       
+    
+// Load RAS and RRS files    
+    public function loadRAS()
+    {
+    $loadRAS = m_loadFiles::loadRAS();
+    }
+    public function loadRRS()
+    {
+    $loadRRS = m_loadFiles::loadRRS();
+    }       
 }
 
