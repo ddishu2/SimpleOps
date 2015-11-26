@@ -98,8 +98,19 @@ class m_ManualLocks extends CI_model
     }
     
     public function Lock_EMPs()
-    {
-        
+    {   
+        $this->db->select_max(self::gc_lock_transid)->trans_id;
+        $data = array(        
+        self::gc_lock_transid => $lv_trans_id,
+        self::gc_lock_soid    => $lv_so_id,
+        self::gc_lock_empid   => $lv_empid,
+        self::gc_lock_status  => self::gc_hardlock,
+        self::gc_lock_propid  => $lv_prop_id,
+        self::gc_lock_reqid   => $lv_reqid,
+        self::gc_lock_sdate   => $lv_sdate,
+        self::gc_lock_edate   => $lv_edate,
+        self::gc_lock_multi   => $lv_multi
+        );
     }
     private function isFilterset($fp_filter_value)
     {

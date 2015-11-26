@@ -64,19 +64,20 @@ $route['open_so/(:any)'] = 'news/getOpenSO/$1';
 
 $route['sso'] = 'Utility/get_username';
 $route['hardlock_release_notification'] = 'Utility/check_hlr';
-$route['get_ValidSOs'] = 'ManualLocks/get_ValidSOs';
+$route['get_ValidSOs']  = 'ManualLocks/get_ValidSOs';
+$route['get_ValidEMPs'] = 'ManualLocks/get_ValidEMPs';
 //$route['dr'] = 'display_report/setreport';
 
 
 
-$route['deployable_emp'] = 'Proposals/deployable_emps';
-$route['approve_soft_lock'] = 'Locks/approve_soft_lock';
-$route['approve_hard_lock']= 'Locks/approve_hard_lock';
+$route['deployable_emp']     = 'Proposals/deployable_emps';
+$route['approve_soft_lock']  = 'Locks/approve_soft_lock';
+$route['approve_hard_lock']  = 'Locks/approve_hard_lock';
 $route['get_where_proposed'] = 'Locks/getwhereProposed';
-$route['get_partial'] = 'Proposals/getPartialProposals';
-$route['NoPerfectMatch'] = 'Proposals/getSoForPartialProposal';
-$route['loadRAS']='Utility/load_RAS_File';
-$route['loadRRS'] = 'Utility/load_RRS_File';
+$route['get_partial']        = 'Proposals/getPartialProposals';
+$route['NoPerfectMatch']     = 'Proposals/getSoForPartialProposal';
+$route['loadRAS']            = 'Utility/load_RAS_File';
+$route['loadRRS']            = 'Utility/load_RRS_File';
 
 
 
