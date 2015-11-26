@@ -17,6 +17,7 @@ class Utility extends CI_controller
     {
         parent::__construct();
         $this->load->model('m_utility');
+        
     }
     public function get_username()
     {
@@ -27,5 +28,13 @@ class Utility extends CI_controller
     public function check_hlr()
     {
        $this->m_utility->checkandnotify();       
+    }
+    public function load_RAS_File()
+    {
+        $this->m_utility->loadRAS();
+    }
+    public function load_RRS_File()
+    {
+        $this->m_utility->loadRAS();
     }
 }

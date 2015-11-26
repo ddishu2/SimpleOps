@@ -11,6 +11,8 @@ Class m_proposals extends CI_model
     /*
      * change
      */
+    public static  $arr_sowithperfectproposal = [];
+    public static $arr_sowithnoperfectproposal = [];
     private static $arr_slock_expired = [];
     private static $arr_perfect_proposals = [];
     private static $v_perfect_proposal_count = 0;
@@ -736,5 +738,37 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 //            self::$v_partial_proposal_count++;
 //        }
 //    }
+     
+     /*
+      * returns all the So's which have no proposed employee from input Array(result of get auto proposal)
+      */
     
+     
+     public function segregateProposals($fp_arr)
+     {
+      
+         foreach ($fp_arr as $key => $value) {
+             
+             if (!array_key_exists('emp', $value)||$value['emp']== null || $value['emp']=='')
+             {
+                self::$arr_sowithnoperfectproposal[$key] = $value;
+             }
+             else 
+             {
+                self::$arr_sowithperfectproposal[$key] = $value; 
+             }
+            
+         }
+         
+//         return $arr_no_employee_proposed;
+         
+     }
+     public function getSOWithEmployee()
+     {
+         return self::$arr_sowithperfectproposal;
+     }
+     public function getSOWithNoEmployee()
+     {
+         return self::$arr_sowithnoperfectproposal;
+     }
 }

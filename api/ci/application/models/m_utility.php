@@ -11,7 +11,11 @@
  *
  * @author Dikshant Mishra/Dikmishr
  */
+
+require (APPPATH.'models/m_loadFiles.php');
+
 require_once(APPPATH.'models/m_Notifications.php');
+
 class m_utility extends CI_model
 {
     const gc_business_days  = 23,
@@ -151,5 +155,13 @@ class m_utility extends CI_model
     $io_date = DateTime::createFromFormat($i_format, $i_date);
     return $io_date && $io_date->format($i_format) == $i_date;
     }
+     public function loadRAS()
+     {
+         $loadRAS = m_loadFiles::loadRAS();
+     }
+     public function loadRRS()
+     {
+         $loadRRS = m_loadFiles::loadRRS();
+     }       
 }
 

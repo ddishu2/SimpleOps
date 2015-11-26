@@ -74,6 +74,9 @@ $route['approve_soft_lock'] = 'Locks/approve_soft_lock';
 $route['approve_hard_lock']= 'Locks/approve_hard_lock';
 $route['get_where_proposed'] = 'Locks/getwhereProposed';
 $route['get_partial'] = 'Proposals/getPartialProposals';
+$route['NoPerfectMatch'] = 'Proposals/getSoForPartialProposal';
+$route['loadRAS']='Utility/load_RAS_File';
+$route['loadRRS'] = 'Utility/load_RRS_File';
 
 
 
