@@ -15,7 +15,7 @@
 require_once(APPPATH.'models/m_utility.php');
 class m_ManualLocks extends CI_model
 {   
-    const gc_date_format    = 'y-mm-dd',
+    const gc_date_format    = 'Y-m-d',
           gc_so_pos_no      = 'so_pos_no',
           gc_so_prim_skill  = 'so_primary_skill',
           gc_so_loc         = 'so_loc',
@@ -88,7 +88,7 @@ class m_ManualLocks extends CI_model
         $this->db->where(self::gc_so_proj_type,$i_type);
         }
         
-// Once all filters are set, query the view and return the array.
+// Once all filters are set, query the view and return the array.          
         return($this->db->get(self::gc_viewname)->result_array());
     }
     
