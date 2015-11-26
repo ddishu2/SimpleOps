@@ -30,7 +30,8 @@ var  amend_table_report_gen;
 var tp1;
 var oFor_so;
 var oFor_emp;
-var regex = /^[0-9]+$/
+var regex = /^[0-9]+$/;
+var skill_Text_manual_emp;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -2605,7 +2606,7 @@ var regex = /^[0-9]+$/
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find("#multipropose_check-CB").prop( "checked" );
+										 all_multi+="&allow_multi="+parent.find("#multipropose_check").prop( "checked" );
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -3815,12 +3816,222 @@ var regex = /^[0-9]+$/
 						
 						
 						var capabilityLabel_manual_emp = new sap.ui.commons.Label({
-							text : 'Capability'
+							text : 'Capability',
+							
+					
 						}).addStyleClass("for_text_style1");
 
 						var capabilityText_manual_emp = new sap.ui.commons.DropdownBox(
 								{
 									id: 'ct_drop_manual_emp',
+									
+									change : function()
+									{
+										if($("#ct_drop_manual_emp-input").val()=="DCM")
+											{
+											
+											var oModel_manual1 = new sap.ui.model.json.JSONModel();
+											oModel_manual1.setData({
+												hardware:[
+													{device:"PC"},
+													{device:"Monitor"},
+													{device:"Keyboard"},
+													{device:"Mouse"},
+													{device:"Speaker"},
+													{device:"Printer"}],
+												});
+											sap.ui.getCore().setModel(oModel_manual1);
+											
+											skill_Text_manual_emp.setModel(oModel_manual1);
+											var oItemTemplate1 = new sap.ui.core.ListItem();
+											oItemTemplate1.bindProperty("text", "device");
+											
+											skill_Text_manual_emp.bindItems("/hardware", oItemTemplate1);
+											
+											}
+										else if($("#ct_drop_manual_emp-input").val()=="Development")
+											{
+											
+											var oModel_manual2 = new sap.ui.model.json.JSONModel();
+											oModel_manual2.setData({
+												hardware1:[
+													{device:"P"},
+													{device:"Q"},
+													{device:"R"},
+													{device:"S"},
+													{device:"T"},
+													{device:"U"}],
+												});
+											sap.ui.getCore().setModel(oModel_manual2);
+											skill_Text_manual_emp.setModel(oModel_manual2);
+											var oItemTemplate2 = new sap.ui.core.ListItem();
+											oItemTemplate2.bindProperty("text", "device");
+											
+											skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+											}
+										else if($("#ct_drop_manual_emp-input").val()=="Finance")
+										{
+										
+										var oModel_manual3 = new sap.ui.model.json.JSONModel();
+										oModel_manual3.setData({
+											hardware1:[
+												{device:"a"},
+												{device:"b"},
+												{device:"c"},
+												{device:"d"},
+												{device:"e"},
+												{device:"f"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual3);
+										skill_Text_manual_emp.setModel(oModel_manual3);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="HCM")
+										{
+										
+										var oModel_manual4 = new sap.ui.model.json.JSONModel();
+										oModel_manual4.setData({
+											hardware1:[
+												{device:"m"},
+												{device:"n"},
+												{device:"o"},
+												{device:"p"},
+												{device:"q"},
+												{device:"r"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual4);
+										skill_Text_manual_emp.setModel(oModel_manual4);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="Misc")
+										{
+										
+										var oModel_manual5 = new sap.ui.model.json.JSONModel();
+										oModel_manual5.setData({
+											hardware1:[
+												{device:"s"},
+												{device:"ds"},
+												{device:"d"},
+												{device:"we"},
+												{device:"ewr"},
+												{device:"rty"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual5);
+										skill_Text_manual_emp.setModel(oModel_manual5);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="Management")
+										{
+										
+										var oModel_manual2 = new sap.ui.model.json.JSONModel();
+										oModel_manual2.setData({
+											hardware1:[
+												{device:"qwe"},
+												{device:"sd"},
+												{device:"sd"},
+												{device:"dsf"},
+												{device:"cvcx"},
+												{device:"ert"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual2);
+										skill_Text_manual_emp.setModel(oModel_manual2);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="ISU")
+										{
+										
+										var oModel_manual7 = new sap.ui.model.json.JSONModel();
+										oModel_manual7.setData({
+											hardware1:[
+												{device:"qwe"},
+												{device:"Q12"},
+												{device:"R2"},
+												{device:"S21"},
+												{device:"T5"},
+												{device:"U7567"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual7);
+										skill_Text_manual_emp.setModel(oModel_manual7);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="Netweaver")
+										{
+										
+										var oModel_manual8 = new sap.ui.model.json.JSONModel();
+										oModel_manual8.setData({
+											hardware1:[
+												{device:"21P"},
+												{device:"21Q"},
+												{device:"fgR"},
+												{device:"435S"},
+												{device:"43T"},
+												{device:"434U"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual8);
+										skill_Text_manual_emp.setModel(oModel_manual8);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="SCM")
+										{
+										
+										var oModel_manual9 = new sap.ui.model.json.JSONModel();
+										oModel_manual9.setData({
+											hardware1:[
+												{device:"P"},
+												{device:"Q"},
+												{device:"R"},
+												{device:"S"},
+												{device:"T"},
+												{device:"U"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual9);
+										skill_Text_manual_emp.setModel(oModel_manual9);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										else if($("#ct_drop_manual_emp-input").val()=="Retail & AFS")
+										{
+										
+										var oModel_manual10 = new sap.ui.model.json.JSONModel();
+										oModel_manual10.setData({
+											hardware1:[
+												{device:"P"},
+												{device:"Q"},
+												{device:"R"},
+												{device:"S"},
+												{device:"T"},
+												{device:"U"}],
+											});
+										sap.ui.getCore().setModel(oModel_manual10);
+										skill_Text_manual_emp.setModel(oModel_manual10);
+										var oItemTemplate2 = new sap.ui.core.ListItem();
+										oItemTemplate2.bindProperty("text", "device");
+										
+										skill_Text_manual_emp.bindItems("/hardware1", oItemTemplate2);	
+										}
+										
+										
+									}
 								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						capabilityText_manual_emp.setTooltip("Location");
 						capabilityText_manual_emp.setEditable(true);
@@ -3866,22 +4077,14 @@ var regex = /^[0-9]+$/
 							text : 'Skill'
 						}).addStyleClass("for_text_style1");
 						
-						var skill_Text_manual_emp = new sap.ui.commons.DropdownBox(
+						 skill_Text_manual_emp = new sap.ui.commons.DropdownBox(
 								{
 									id: 'skill_drop_manual_emp',
 								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						skill_Text_manual_emp.setTooltip("Skills");
 						skill_Text_manual_emp.setEditable(true);
 						skill_Text_manual_emp.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("skill0_manual_emp");
-						oItem.setText("A");
-						skill_Text_manual_emp.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("skill1_manual_emp");
-						oItem.setText("B");
-						skill_Text_manual_emp.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("skill2_manual_emp");
-						oItem.setText("C");
-						skill_Text_manual_emp.addItem(oItem);   
+						
 						
 						osearch_manual_emp.createRow(skill_Label_manual_emp,skill_Text_manual_emp)
 						
@@ -3995,7 +4198,7 @@ var regex = /^[0-9]+$/
 						
 					
 /////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
-         /* var aData = [ {
+         var aData_manual = [ {
 							Sl_No : "",
 							p_id : "12323",
 							p_name : "dsfsdf",
@@ -4010,7 +4213,7 @@ var regex = /^[0-9]+$/
 							//tag_type :"",
 							
 							
-						} ]; */ 
+						} ];
           
           
           
@@ -4065,9 +4268,8 @@ var regex = /^[0-9]+$/
 								text : "Project ID"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "p_id"),
+							
 							width : "40px"
 						}));
 						manual1_table.addColumn(new sap.ui.table.Column({
@@ -4075,9 +4277,8 @@ var regex = /^[0-9]+$/
 								text : "Project Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "p_name"),
+							
 							width : "70px"
 						}));
 						manual1_table.addColumn(new sap.ui.table.Column({
@@ -4085,9 +4286,8 @@ var regex = /^[0-9]+$/
 								text : "Start Date"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "srt_date"),
+							
 							width : "40px"
 						}));
 						manual1_table.addColumn(new sap.ui.table.Column({
@@ -4095,9 +4295,7 @@ var regex = /^[0-9]+$/
 								text : "End Date"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "end_date"),		
 							width : "40px"
 						}));
 						manual1_table
@@ -4137,9 +4335,8 @@ var regex = /^[0-9]+$/
 								text : "Emp Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_name"),
+							
 							width : "70px"
 						}));
 
@@ -4148,9 +4345,8 @@ var regex = /^[0-9]+$/
 								text : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "level"),
+							
 							width : "70px"
 						}));
 
@@ -4159,9 +4355,9 @@ var regex = /^[0-9]+$/
 								text : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "location"),
+							sortProperty : "location",
+							filterProperty : "location",
 							width : "70px"
 						}));
 						manual1_table.addColumn(new sap.ui.table.Column({
@@ -4171,9 +4367,8 @@ var regex = /^[0-9]+$/
 							template : new sap.ui.commons.TextField({
 								id: 'sm_pro_code1'
 							})
-									.bindProperty("value", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("value", "sm_proj_code").addStyleClass("smart_project_code1"),
+							
 							width : "70px"
 						}));
 						manual1_table.addColumn(new sap.ui.table.Column({
@@ -4184,9 +4379,8 @@ var regex = /^[0-9]+$/
 								
 								id: 'fte1'
 							})
-									.bindProperty("value", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("value", "fte").addStyleClass("fte_manual1"),
+							
 							width : "70px"
 						}));
 						manual1_table.addColumn(new sap.ui.table.Column({
@@ -4204,22 +4398,28 @@ var regex = /^[0-9]+$/
 
 						//Bring the table onto the UI 
 						manual1_table.placeAt("manual1");
+						var oModel_manual = new sap.ui.model.json.JSONModel();
+						oModel_manual.setData({modelData: aData_manual});
+						manual1_table.setModel(oModel_manual);
+						manual1_table.bindRows("/modelData");
+
+						//Initially sort the table
+						manual1_table.sort(manual1_table.getColumns()[0]);
 
 						var assign_manual = new sap.ui.commons.Button({
 							id : 'bt1_manual_assign',
 							text : "Assign",
 							press : function(){
-								 var input_manual1 = sap.ui.getCore().byId('sm_pro_code1').getValue();
-								 var input_manual2 = sap.ui.getCore().byId('fte1').getValue();
-								 
-								 
-						         if (!input_manual1.match(regex)) {
-						        alert("Entered Smart Project Code is not valid");
-						      } 
-						         else if(!input_manual2.match(regex))
-						        	 {
-						        	 alert("Entered FTE% is not valid");
-						        	 }
+								 var input_manual1 = $(".smart_project_code1").val();
+								 var input_manual2 =  $(".fte_manual1").val();
+	
+								  if (!input_manual1.match(regex)) {
+								        alert("Entered Smart Project Code is not valid");
+								      } 
+								         else if(!input_manual2.match(regex))
+								        	 {
+								        	 alert("Entered FTE% is not valid");
+								        	 }
 						         else{
 								
 								$("#manual2").removeClass("hide_div");
@@ -4243,6 +4443,7 @@ var regex = /^[0-9]+$/
 						assign_manual.placeAt("manual1");
 						back_manual.placeAt("manual1");
 
+						
 						
 						
 						
