@@ -3668,7 +3668,7 @@ var skill_Text_manual_emp;
 																			
 																				completeData_manual
 																						.push(tmp);
-																				res_completed++;
+																				
 
 																			
 
@@ -3722,9 +3722,7 @@ var skill_Text_manual_emp;
 													console.log(odata);
 													var table_row;
 													var res = odata;
-													var res_length = 0;
-													var res_completed = 0;
-													var res_partial = 0;
+													
 													var completeData_manual = [];
 
 													jQuery
@@ -3748,7 +3746,7 @@ var skill_Text_manual_emp;
 																
 																	completeData_manual
 																			.push(tmp);
-																	res_completed++;
+																
 
 																
 
@@ -3803,9 +3801,7 @@ var skill_Text_manual_emp;
 													console.log(odata);
 													var table_row;
 													var res = odata;
-													var res_length = 0;
-													var res_completed = 0;
-													var res_partial = 0;
+													
 													var completeData_manual = [];
 
 													jQuery
@@ -3829,7 +3825,7 @@ var skill_Text_manual_emp;
 																
 																	completeData_manual
 																			.push(tmp);
-																	res_completed++;
+																	
 
 																
 
@@ -3910,7 +3906,7 @@ var skill_Text_manual_emp;
 																			
 																				completeData_manual
 																						.push(tmp);
-																				res_completed++;
+																			
 
 																			
 
@@ -3994,7 +3990,7 @@ var skill_Text_manual_emp;
 																						
 																							completeData_manual
 																									.push(tmp);
-																							res_completed++;
+																							
 
 																						
 
@@ -4083,7 +4079,7 @@ var skill_Text_manual_emp;
 																						
 																							completeData_manual
 																									.push(tmp);
-																							res_completed++;
+																						
 
 																						
 
@@ -5352,6 +5348,7 @@ var repo_to1 = new sap.ui.commons.Label({
 					
 						
 						var view_report_sel = new sap.ui.commons.Button({
+							id : 'view_report_button',
 							text : "View Report",
 							tooltip : "View Report",
 							press : function()
