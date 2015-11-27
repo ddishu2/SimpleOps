@@ -29,7 +29,7 @@ class m_ManualLocks extends CI_model
           gc_so_capability  = 'so_capability',
           gc_viewname       = 'v_fulfill_stat_open',
           gc_so_proj_type   = 'so_proj_type',
-          gc_table          = 'trans_locks',
+          gc_tabname        = 'trans_locks',
           gc_so_status      = 'so_status',
           gc_view_name      = 'v_fulfill_stat_open',
           gc_hardlock       = 'S201',
@@ -40,7 +40,8 @@ class m_ManualLocks extends CI_model
           gc_lock_reqid     = 'requestor_id',
           gc_lock_multi     = 'allow_multi',
           gc_lock_transid   = 'trans_id',
-          gc_lock_status    = 'status';
+          gc_lock_status    = 'status',
+          gc_x              = 'X';
     
     public function __construct()
     {
@@ -118,7 +119,7 @@ class m_ManualLocks extends CI_model
         $lv_transid = $this->db->get(self::gc_tabname)->row()->trans_id; 
         $lt_transdata = [];
         $lt_transdata = [
-        self::gc_lock_transid => ++$lv_trans_id,
+        self::gc_lock_transid => ++$lv_transid,
         self::gc_lock_soid    => $i_so_no,
         self::gc_lock_empid   => $i_empid,
         self::gc_lock_status  => self::gc_hardlock,
