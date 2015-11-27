@@ -148,7 +148,7 @@ class m_ManualLocks extends CI_model
         self::gc_lock_edate   => $i_edate,
         self::gc_lock_multi   => $i_multi,            
         self::gc_lock_reqid   => $i_reqid,
-        self::gc_updated_by   => $io_utility->m_utility(),
+        self::gc_updated_by   => $io_utility->get_username(),
         self::gc_updated_on   => date(gc_date_format)
         ];       
         $this->db->trans_start();
