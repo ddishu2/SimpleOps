@@ -4995,6 +4995,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 				
 				widths : [ '300px','300px','300px','300px','300px']
 			});
+				/*  var oDivider0_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
+	                var oDivider0_1 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
+	                var oDivider0_2 = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
+	                var oDivider0_3 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
+	                
+	                matrix_for_manual_main.createRow(oDivider0_0,oDivider0_1,oDivider0_2,oDivider0_3,null); */
 				var son_name = new sap.ui.commons.Label({
 					
 					text : "SO No."
@@ -5063,12 +5069,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
                 matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
                 
                 
-                
+                var oDivider2_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
                 var oDivider2 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
                 var oDivider3 = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
                 var oDivider4 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
                 
-                matrix_for_manual_main.createRow(null,oDivider2,oDivider3,oDivider4,null);
+                matrix_for_manual_main.createRow(oDivider2_0,oDivider2,oDivider3,oDivider4,null);
           
          /////////////////for 3rd row
          var empid_name = new sap.ui.commons.Label({
@@ -5127,12 +5133,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 		    var loci_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label");
 		    
 		    matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
-		    
+		    var oDivider5_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		    var oDivider5 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
             var oDivider6 = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
             var oDivider7 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
             
-            matrix_for_manual_main.createRow(null,oDivider5,oDivider6,oDivider7,null);
+            matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
 		    
 		   ///5th row
 		   
@@ -5167,12 +5173,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 		                     							]}).addStyleClass("for_font_manual_label");
 		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
 		   
-		   
+		   var oDivider8_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		   var oDivider8 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
            var oDivider9 = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
            var oDivider10 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
            
-           matrix_for_manual_main.createRow(null,oDivider8,oDivider9,oDivider10,null);
+           matrix_for_manual_main.createRow(oDivider8_0,oDivider8,oDivider9,oDivider10,null);
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
 
 						var assign_manual = new sap.ui.commons.Button({
