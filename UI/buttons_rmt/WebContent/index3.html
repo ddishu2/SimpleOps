@@ -3564,7 +3564,7 @@ var so_no_manual_assign;
 
 						osearch_manual.createRow(capabilityLabel_manual, capabilityText_manual);
 					    
-						var search_manual1 =new sap.ui.commons.Button({id:'search_for_manual',text :"Search for SO's",
+						var search_manual1 =new sap.ui.commons.Button({id:'',text :"Search for SO's",
 							
 						press: function()
 						{
@@ -5135,12 +5135,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 	      
 	      var smprocode_man= new sap.ui.commons.TextField({
 				id: 'sm_pro_code1'
-			}).addStyleClass("smart_project_code1").addStyleClass("for_font_manual_label");
+			}).addStyleClass("smart_project_code1");
 	      
 		   var fte_man = new sap.ui.commons.TextField({
 				
 				id: 'fte1'
-			}).addStyleClass("fte_manual1").addStyleClass("for_font_manual_label");
+			}).addStyleClass("fte_manual1");
 			   
 		var taggtype =  new sap.ui.commons.ComboBox({items: [
 		                                                     new sap.ui.core.ListItem({text: ""}),
@@ -5179,6 +5179,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							      		success : function(odata){
 							      			console.log(odata);
 							      			 alert(odata);
+							      			window.location.reload();
 							      		}
 									
 									});
