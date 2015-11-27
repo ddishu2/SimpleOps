@@ -32,7 +32,12 @@ var oFor_so;
 var oFor_emp;
 var regex = /^[0-9]+$/;
 var skill_Text_manual_emp;
-var manual1_table
+var manual1_table;
+var so_pro_id_assign;
+var so_pro_name_assign;
+var so_cust_name_assign;
+var so_bu_manual_assign;
+var so_no_manual_assign;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -3662,8 +3667,9 @@ var manual1_table
 																					so_pro_name_manual : val.so_proj_name,
 																					so_cust_name_manual : val.cust_name,
 																					so_p_bu_manual : val.so_proj_bu,
-																					so_no_manual : val.so_pos_no
-																					
+																					so_no_manual : val.so_pos_no,
+																					so_start_date_manual : val.so_start_date_new,
+																					so_end_date_manual: val.so_end_date,
 																				
 																				};
 																			
@@ -3740,8 +3746,9 @@ var manual1_table
 																		so_pro_name_manual : val.so_proj_name,
 																		so_cust_name_manual : val.cust_name,
 																		so_p_bu_manual : val.so_proj_bu,
-																		so_no_manual : val.so_pos_no
-																		
+																		so_no_manual : val.so_pos_no,
+																		so_start_date_manual : val.so_start_date_new,
+																		so_end_date_manual: val.so_end_date,
 																	
 																	};
 																
@@ -3819,8 +3826,9 @@ var manual1_table
 																		so_pro_name_manual : val.so_proj_name,
 																		so_cust_name_manual : val.cust_name,
 																		so_p_bu_manual : val.so_proj_bu,
-																		so_no_manual : val.so_pos_no
-																		
+																		so_no_manual : val.so_pos_no,
+																		so_start_date_manual : val.so_start_date_new,
+																		so_end_date_manual: val.so_end_date,
 																	
 																	};
 																
@@ -3900,8 +3908,9 @@ var manual1_table
 																					so_pro_name_manual : val.so_proj_name,
 																					so_cust_name_manual : val.cust_name,
 																					so_p_bu_manual : val.so_proj_bu,
-																					so_no_manual : val.so_pos_no
-																					
+																					so_no_manual : val.so_pos_no,
+																					so_start_date_manual : val.so_start_date_new,
+																					so_end_date_manual: val.so_end_date,
 																				
 																				};
 																			
@@ -3984,8 +3993,9 @@ var manual1_table
 																								so_pro_name_manual : val.so_proj_name,
 																								so_cust_name_manual : val.cust_name,
 																								so_p_bu_manual : val.so_proj_bu,
-																								so_no_manual : val.so_pos_no
-																								
+																								so_no_manual : val.so_pos_no,
+																								so_start_date_manual : val.so_start_date_new,
+																								so_end_date_manual: val.so_end_date,
 																							
 																							};
 																						
@@ -4073,7 +4083,9 @@ var manual1_table
 																								so_pro_name_manual : val.so_proj_name,
 																								so_cust_name_manual : val.cust_name,
 																								so_p_bu_manual : val.so_proj_bu,
-																								so_no_manual : val.so_pos_no
+																								so_no_manual : val.so_pos_no,
+																								so_start_date_manual : val.so_start_date_new,
+																								so_end_date_manual: val.so_end_date,
 																								
 																							
 																							};
@@ -4120,9 +4132,39 @@ var manual1_table
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									visibleRowCount :20,
 									firstVisibleRow: 3,
+									rowSelectionChange: function(e) {
+									      var oIndex = e.getParameter('rowIndex');
+									      if (table_for_manual_so.isIndexSelected(oIndex )) {
+									        var oContext= table_for_manual_so.getContextByIndex(oIndex );
+									        var path = oContext.sPath;
+									        var object = table_for_manual_so.getModel().getProperty(path);
+									        var res_man=object;
+									        console.log(res_man);     
+									     console.log(object.so_pro_id_manual);
+									     so_pro_id_assign=object.so_pro_id_manual;
+									     so_pro_name_assign= object.so_pro_name_manual;
+									     so_cust_name_assign = object.so_cust_name_manual;
+									     so_bu_manual_assign= object.so_p_bu_manual;
+									     so_no_manual_assign = object.so_no_manual;
+									     so_sdate_manual_assign = object.so_start_date_manual;
+									     so_edate_manual_assign = object.so_end_date_manual;
+									     console.log(so_bu_manual_assign);
+									     
+									        
+									      }
+									    },
 									toolbar: new sap.ui.commons.Toolbar({items: [ 
 									                                     		new sap.ui.commons.Button({text: "Select", press: function() { alert("Button pressed!");
-									                                     		//oFor_so.close();
+									                                     		
+									                                     	$("#proname1_man1").html(so_pro_name_assign);
+									                                     	$("#proid1_man1").html(so_pro_id_assign);
+									                                     	$("#sono_man1").html(so_no_manual_assign);
+									                                     	$("#startdate_man1").html(so_sdate_manual_assign);
+									                                     	$("#enddate_man1").html(so_edate_manual_assign);
+									                                     	
+									                                     	
+									                                     	//sap.ui.getCore().byId("proname1_man1").setText(so_pro_name_assign);
+									                                     		oFor_so.close();
 									                                     		
 									                                     		
 									                                     		
@@ -4196,21 +4238,29 @@ var manual1_table
 							filterProperty : "so_no_manual",
 							width : "50px"
 						}));
-					/* 	table_for_manual_so.addColumn(new sap.ui.table.Column({
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : "Select.",
-								tooltip : "Select."
+								text : "Project Start Date .",
+								tooltip : "Project Start Date."
 							}),
-							template : new sap.ui.commons.RadioButton({
-								
-								id: 'select_manual_so1'
-								
-							})
-									.bindProperty("text", "").addStyleClass("manual_radio1"),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						})); */
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_start_date_manual"),
+							sortProperty : "so_start_date_manual",
+							filterProperty : "so_start_date_manual",
+							width : "50px"
+						}));
+						table_for_manual_so.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Project End Date.",
+								tooltip : "Project End Date."
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "so_end_date_manual"),
+							sortProperty : "so_end_date_manual",
+							filterProperty : "so_end_date_manual",
+							width : "50px"
+						}));
+					
 						table_for_manual_so.sort(table_for_manual_so.getColumns()[0]);	
 		//-------------------table for so search manual ends here-----------------------//
 		 
@@ -4222,9 +4272,10 @@ var manual1_table
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									visibleRowCount :20,
 									firstVisibleRow: 3,
+									 
 									toolbar: new sap.ui.commons.Toolbar({items: [ 
-										                                     		new sap.ui.commons.Button({text: "Select", press: function() { alert("Button pressed!");
-										                                     		
+										                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { alert(table_for_manual_emp.getSelectedIndex() );
+										                                     	   
 										                                     		//oFor_emp.close();
 										                                     		
 										                                     		}})
@@ -4934,214 +4985,169 @@ var manual1_table
 						
 					
 /////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
-         var aData_manual = [ {
-							Sl_No : "",
-							p_id : "12323",
-							p_name : "dsfsdf",
-							srt_date : "12312312",
-							end_date : "123123122",
-							emp_id : "546546",
-							emp_name : "gfghfgh",
-							level : "yy66",
-							location : "hfghfgh",
-							sm_proj_code : "",
-							fte :"",
-							//tag_type :"",
-							
-							
-						} ];
-          
-          
-          
-          
-          
-          
-           manual1_table = new sap.ui.table.Table(
-					{
-						id : 'manual_table1',
-						title : " ",
-						visibleRowCount : 2,
-						firstVisibleRow : 3,
-						selectionMode: sap.ui.table.SelectionMode.Single,
-					     
+ //////////////////////////////1st Row
 
-					}).addStyleClass("style_for_table");
+var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
+				id : 'matrix_for_manual_main',
+				layoutFixed : true,
+				width : '1000px',
+				columns : 5,
+				widths : [ '200px','200px','200px','200px','200px']
+			});
+				var son_name = new sap.ui.commons.Label({
+					
+					text : "SO No."
+				}); 
+          var pid_name = new sap.ui.commons.Label({
+				
+				text : "Project ID"
+			});
+	      var pname_name = new sap.ui.commons.Label({
+					
+					text : "Project Name"
+				});
+		    var sdate_name = new sap.ui.commons.Label({
 						
-						//Define the columns and the control templates to be used
-						manual1_table
-								.addColumn(new sap.ui.table.Column(
+						text : "Start Date"
+					});
+			          var edate_name = new sap.ui.commons.Label({
+							
+							text : "End Date"
+						});
+              
+						matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name)  ;
+          matrix_for_manual_main.placeAt("manual1");
+  /////2nd Row/////////////
+               var son =new sap.ui.commons.ValueHelpField(
+						{
+							id: 'sono_man1',
+							valueHelpRequest : function(
+									oEvent) {
+								console
+										.log(oEvent
+												.getParameters('newValue').newValue);
+
+								function handler(
+										oEvent) {
+									alert("Event '"
+											+ oEvent
+													.getId()
+											+ "' triggered");
+								}
+								 oFor_so = new sap.ui.ux3.OverlayContainer(
 										{
-											label : 'SO No',
-											template : new sap.ui.commons.ValueHelpField(
-													{
-														
-														valueHelpRequest : function(
-																oEvent) {
-															console
-																	.log(oEvent
-																			.getParameters('newValue').newValue);
+											width : '400px'
+										});
+								oFor_so
+										.addContent(osearch_manual);
 
-															function handler(
-																	oEvent) {
-																alert("Event '"
-																		+ oEvent
-																				.getId()
-																		+ "' triggered");
-															}
-															 oFor_so = new sap.ui.ux3.OverlayContainer(
-																	{
-																		width : '400px'
-																	});
-															oFor_so
-																	.addContent(osearch_manual);
-
-															oFor_so.open();
-														}
-													}),
-													width :"60px"
-										}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project ID"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "p_id"),
+								oFor_so.open();
+							}
+						});
+             var proid_man= new sap.ui.commons.TextView({id: 'proid1_man1',});
+             var proname_man = new sap.ui.commons.TextView(
+						{
 							
-							width : "40px"
-						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Project Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "p_name"),
-							
-							width : "70px"
-						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Start Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "srt_date"),
-							
-							width : "40px"
-						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "End Date"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "end_date"),		
-							width : "40px"
-						}));
-						manual1_table
-						.addColumn(new sap.ui.table.Column(
-								{
-									label : 'Emp ID',
-									template : new sap.ui.commons.ValueHelpField(
-											{
-												valueHelpRequest : function(
-														oEvent) {
-													console
-															.log(oEvent
-																	.getParameters('newValue').newValue);
+							id: 'proname1_man1',
+						});
+				var sdate_man =		 new sap.ui.commons.TextView({id: 'startdate_man1'});
+                var edate_man =  new sap.ui.commons.TextView({
+                	
+                	id: 'enddate_man1'
+                });
+          
+                matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
+          
+         /////////////////for 3rd row
+         var empid_name = new sap.ui.commons.Label({
+					
+					text : "Emp ID"
+				}); 
+          var empname_name = new sap.ui.commons.Label({
+				
+				text : "Emp Name"
+			});
+	      var emplevel_name = new sap.ui.commons.Label({
+					
+					text : "Level"
+				});
+		    var eloc_name = new sap.ui.commons.Label({
+						
+						text : "Location"
+					});
+         
+         
+		    matrix_for_manual_main.createRow(empid_name,empname_name,emplevel_name,eloc_name)  ;
+		    
+		    
+		    ///// for 4th Row
+		    
+		    var empid_man=  new sap.ui.commons.ValueHelpField(
+					 {
+						valueHelpRequest : function(
+								oEvent) {
+							console
+									.log(oEvent
+											.getParameters('newValue').newValue);
 
-													function handler(
-															oEvent) {
-														alert("Event '"
-																+ oEvent
-																		.getId()
-																+ "' triggered");
-													}
-													 oFor_emp = new sap.ui.ux3.OverlayContainer(
-															{
-																width : '400px'
-															});
-													oFor_emp
-															.addContent(osearch_manual_emp);
+							function handler(
+									oEvent) {
+								alert("Event '"
+										+ oEvent
+												.getId()
+										+ "' triggered");
+							}
+							 oFor_emp = new sap.ui.ux3.OverlayContainer(
+									{
+										width : '400px'
+									});
+							oFor_emp
+									.addContent(osearch_manual_emp);
 
-													oFor_emp.open();
-												}
-											}),
-											width :"60px"
-								}));
-
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_name"),
-							
-							width : "70px"
-						}));
-
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Level"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "level"),
-							
-							width : "70px"
-						}));
-
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Location"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "location"),
-							sortProperty : "location",
-							filterProperty : "location",
-							width : "70px"
-						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Smart Project Code"
-							}),
-							template : new sap.ui.commons.TextField({
-								id: 'sm_pro_code1'
-							})
-									.bindProperty("value", "sm_proj_code").addStyleClass("smart_project_code1"),
-							
-							width : "70px"
-						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "FTE%"
-							}),
-							template : new sap.ui.commons.TextField({
-								
-								id: 'fte1'
-							})
-									.bindProperty("value", "fte").addStyleClass("fte_manual1"),
-							
-							width : "70px"
-						}));
-						manual1_table.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Tagging Type"}),
-							template: new sap.ui.commons.ComboBox({items: [
-                                new sap.ui.core.ListItem({text: ""}),
-								new sap.ui.core.ListItem({text: "Expense"}),
-								new sap.ui.core.ListItem({text: "Effort Booking"})
-							]}).bindProperty("value",""),
-							sortProperty: "",
-							filterProperty: "",
-							width : "40px"
-						}));
-                     
-
-						//Bring the table onto the UI 
-						manual1_table.placeAt("manual1");
-						var oModel_manual = new sap.ui.model.json.JSONModel();
-						oModel_manual.setData({modelData: aData_manual});
-						manual1_table.setModel(oModel_manual);
-						manual1_table.bindRows("/modelData");
-
-						//Initially sort the table
-						manual1_table.sort(manual1_table.getColumns()[0]);
+							oFor_emp.open();
+						}
+					});
+		    
+		    var emp_name =new sap.ui.commons.TextView();
+		    var level_man = new sap.ui.commons.TextView();
+		    
+		    var loci_man = new sap.ui.commons.TextView();
+		    
+		    matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
+		    
+		   ///5th row
+		   
+		     var smprocode_name = new sap.ui.commons.Label({
+					
+					text : "Smart Project Code"
+				}); 
+          var fte_name = new sap.ui.commons.Label({
+				
+				text : "FTE%"
+			});
+	      var taggtype_name = new sap.ui.commons.Label({
+					
+					text : "Tagging Type"
+				});
+		    
+	      matrix_for_manual_main.createRow(smprocode_name,fte_name,taggtype_name);
+	      
+	      var smprocode_man= new sap.ui.commons.TextField({
+				id: 'sm_pro_code1'
+			}).addStyleClass("smart_project_code1");
+	      
+		   var fte_man = new sap.ui.commons.TextField({
+				
+				id: 'fte1'
+			}).addStyleClass("fte_manual1")
+			   
+		var taggtype =  new sap.ui.commons.ComboBox({items: [
+		                                                     new sap.ui.core.ListItem({text: ""}),
+		                     								new sap.ui.core.ListItem({text: "Expense"}),
+		                     								new sap.ui.core.ListItem({text: "Effort Booking"})
+		                     							]});
+		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
 
 						var assign_manual = new sap.ui.commons.Button({
 							id : 'bt1_manual_assign',
@@ -5149,6 +5155,9 @@ var manual1_table
 							press : function(){
 								 var input_manual1 = $(".smart_project_code1").val();
 								 var input_manual2 =  $(".fte_manual1").val();
+								 var to_send_sono =   $("#sono_man1").html();
+								 var to_send_sdate =  $("#startdate_man1").html();
+								 var to_send_edate =  $("#enddate_man1").html();
 	
 								  if (!input_manual1.match(regex)) {
 								        alert("Entered Smart Project Code is not valid");
@@ -5159,8 +5168,23 @@ var manual1_table
 								        	 }
 						         else{
 								
-								$("#manual2").removeClass("hide_div");
-								$("#manual1").addClass("hide_div");
+						        	 $.ajax({
+							      		  method: "GET",
+							      		  url: "/rmt/api/ci/index.php/Lock_EMPs/?so_id="+to_send_sono
+							      				  
+							      				  +"&emp_id=069535&lock_start_date="+to_send_sdate+"&lock_end_date="+to_send_edate+"&allow_multi=0&requestor_id=0",
+							      		
+							      				
+	///rmt/api/ci/index.php/Lock_EMPs/?so_id=291204&emp_id=069535&lock_start_date=2015-12-01&lock_end_date=2015-12-01&allow_multi=0&requestor_id=0
+							      		success : function(odata){
+							      			console.log(odata);
+							      			 alert(odata);
+							      		}
+									
+									});
+						        	 
+						        	 
+						        	 
 						         }
 								
 							}
@@ -5176,7 +5200,7 @@ var manual1_table
 							}
 						}).addStyleClass("for_normal_buttons_style1");
 						
-						manual1_table.placeAt("manual1");
+					//	manual1_table.placeAt("manual1");
 						assign_manual.placeAt("manual1");
 						back_manual.placeAt("manual1");
 
