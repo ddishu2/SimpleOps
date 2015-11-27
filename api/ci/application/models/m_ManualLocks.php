@@ -143,7 +143,7 @@ class m_ManualLocks extends CI_model
         self::gc_lock_reqid   => $i_reqid
         ];       
         $this->db->trans_start();
-        $this->db->set($lt_transdata);
+        $this->db->set($lt_translock_data);
         $this->db->insert($this->db->dbprefix.self::gc_tabname);
         $this->db->trans_complete();
         
