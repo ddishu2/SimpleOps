@@ -45,6 +45,7 @@ class m_ManualLocks extends CI_model
           gc_lock_fte       = 'FTE',
           gc_lock_tagtype   = 'tag_type',
           gc_trans_comment  = 'trans_comments',
+          gc_manual         = 'manual',
           gc_x              = 'X';
     
     public function __construct()
