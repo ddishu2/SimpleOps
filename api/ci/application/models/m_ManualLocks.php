@@ -60,7 +60,7 @@ class m_ManualLocks extends CI_model
     {
         
 // Select SO Number from table        
-        $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no);
+        $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no.','.self::gc_so_sdate_new.'.'.self::gc_so_edate);
         
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
