@@ -66,7 +66,7 @@ $route['sso'] = 'Utility/get_username';
 $route['hardlock_release_notification'] = 'Utility/check_hlr';
 $route['get_ValidSOs']  = 'ManualLocks/get_ValidSOs';
 $route['get_ValidEMPs'] = 'ManualLocks/get_ValidEMPs';
-//$route['dr'] = 'display_report/setreport';
+$route['Lock_EMPs']     = 'ManualLocks/Lock_EMPs';
 
 
 
@@ -80,5 +80,6 @@ $route['loadRAS']            = 'Utility/load_RAS_File';
 $route['loadRRS']            = 'Utility/load_RRS_File';
 
 
+$route['displayreport'] = 'Reports/setreports';
 
 
