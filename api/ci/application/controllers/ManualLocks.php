@@ -24,12 +24,13 @@ class ManualLocks extends CI_Controller
           gc_capability = 'capability',
           gc_deployable = 'deployable',
           gc_skill      = 'prime_skill',
-          gc_lock_soid      = 'so_id',
-          gc_lock_empid     = 'emp_id',
-          gc_lock_sdate     = 'lock_start_date',
-          gc_lock_edate     = 'lock_end_date',
-          gc_lock_reqid     = 'requestor_id',
-          gc_lock_multi     = 'allow_multi'; 
+          gc_level      = 'level',
+          gc_lock_soid  = 'so_id',
+          gc_lock_empid = 'emp_id',
+          gc_lock_sdate = 'lock_start_date',
+          gc_lock_edate = 'lock_end_date',
+          gc_lock_reqid = 'requestor_id',
+          gc_lock_multi = 'allow_multi'; 
 
     public function __construct()
     {
@@ -66,7 +67,13 @@ class ManualLocks extends CI_Controller
         $lv_deployable = $this->input->get(self::gc_deployable);
         $lv_capability = $this->input->get(self::gc_capability);
         $lv_skill      = $this->input->get(self::gc_skill);
-        $lt_validemp   = $this->m_ManualLocks->get_ValidEMPs();
+        $lv_location   = $this->input->get(self::gc_proj_loc);
+        $lv_level      = $this->input->get(self::gc_level);
+        $lt_validemp   = $this->m_ManualLocks->get_ValidEMPs(   $lv_deployable, 
+                                                                $lv_capability, 
+                                                                $lv_skill, 
+                                                                $lv_location, 
+                                                                $lv_level   );
         $this->output->set_content_type('application/json')->set_output(json_encode($lt_validemp,JSON_PRETTY_PRINT));      
     }
     
@@ -78,7 +85,12 @@ class ManualLocks extends CI_Controller
         $lv_edate  = $this->input->get(self::gc_lock_edate);
         $lv_reqid  = $this->input->get(self::gc_lock_reqid);
         $lv_multi  = $this->input->get(self::gc_lock_multi);
-        $lv_result = $this->m_ManualLocks->Lock_EMPs($lv_so_no, $lv_empid, $lv_sdate, $lv_edate, $lv_multi, $lv_reqid);
+        $lv_result = $this->m_ManualLocks->Lock_EMPs(   $lv_so_no, 
+                                                        $lv_empid, 
+                                                        $lv_sdate, 
+                                                        $lv_edate, 
+                                                        $lv_multi, 
+                                                        $lv_reqid   );
         $this->output->set_content_type('application/json')->set_output(json_encode($lv_result,JSON_PRETTY_PRINT));      
     }
 }

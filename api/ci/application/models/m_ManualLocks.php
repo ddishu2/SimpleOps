@@ -48,7 +48,9 @@ class m_ManualLocks extends CI_model
           gc_manual         = 'manual',
           gc_updated_by     = 'updated_by',
           gc_updated_on     = 'updated_on',
-          gc_x              = 'X';
+          gc_x              = 'X',
+          gc_emp_deploy     = 'deployable',
+          gc_emp_futso      = 'fut_so';
     
     public function __construct()
     {
@@ -113,20 +115,39 @@ class m_ManualLocks extends CI_model
         return($this->db->get(self::gc_fulfill_stat)->result_array());
     }
     
-    public function get_ValidEMPs()
+    public function get_ValidEMPs(  $i_deployable, 
+                                    $i_capability, 
+                                    $i_skill, 
+                                    $i_location, 
+                                    $i_level    )
     {
         
+// Select SO Number from table        
+        $this->db->select(self::gc_emp_deploy.','.self::gc_emp_futso.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no.','.self::gc_so_sdate_new.','.self::gc_so_edate);
+        
+// Instantiate utility model and use validateDate() to validate the input date format        
+        $io_utility = new m_utility();        
+        if($this->isFilterset($i_proj_loc))
+        {
+        $this->db->where_in(self::gc_so_loc,$i_proj_loc);
+        }
     }
     
     public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')
     {   
-// Validate if SO is really open.
+        
+// Validate if Employee exists.
         $lv_query = "SELECT ".self::gc_so_pos_no." FROM ".self::gc_fulfill_stat." WHERE ".self::gc_so_pos_no." = '$i_so_no' AND ".self::gc_so_status."!= 'X' LIMIT 1";
         $lt_so_no = ($this->db->query($lv_query)->result_array());
         if((count($lt_so_no)) > 0)
         {
         $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
-        
+
+// Validate the employee.
+        $lv_query_emp = "SELECT emp_id FROM m_emp_ras_copy WHERE emp_id = ".$i_empid;
+        $lt_emp       = $this->db->query($lv_query_emp)->result_array();
+        if(count($lt_emp) > 0)
+        {    
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
         
@@ -212,6 +233,12 @@ class m_ManualLocks extends CI_model
         $lv_return = "Tagging Failed, Please verify the data";
         }
         return $lv_return;
+        }
+        else
+        {
+        $lv_return = "Invalid Employee";
+        return $lv_return;
+        }
         }
         else
         {
