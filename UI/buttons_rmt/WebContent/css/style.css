@@ -15,9 +15,11 @@ font-size: 45px;
 	font-size: 19px;
 }
 
+
 #search_for_manual
 {
 	width: 165px !important;
+	margin-top: 13px !important;
 	
 }
 
