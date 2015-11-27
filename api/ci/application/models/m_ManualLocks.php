@@ -144,9 +144,9 @@ class m_ManualLocks extends CI_model
         $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
 
 // Validate the employee.
-        $lv_query_emp = "SELECT emp_id FROM m_emp_ras_copy WHERE emp_id = ".$i_empid;
+        $lv_query_emp = "SELECT emp_id FROM m_emp_ras_copy WHERE emp_id = '$i_empid'";
         $lt_emp       = $this->db->query($lv_query_emp)->result_array();
-        if(count($lt_emp) > 0)
+        if((count($lt_emp)) > 0)
         {    
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
