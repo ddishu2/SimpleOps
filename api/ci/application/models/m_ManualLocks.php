@@ -143,7 +143,8 @@ class m_ManualLocks extends CI_model
         self::gc_lock_reqid   => $i_reqid
         ];       
         $this->db->trans_start();
-        $this->db->insert(self::gc_tabname, $lt_transdata);
+        $this->db->set($lt_transdata);
+        $this->db->insert($this->db->dbprefix.self::gc_tabname);
         $this->db->trans_complete();
         
 // Transaction 3: Update Trans_Comments table
@@ -157,7 +158,8 @@ class m_ManualLocks extends CI_model
           self::gc_lock_tagtype => self::gc_manual
         ];
         $this->db->trans_start();
-        $this->db->insert(self::gc_trans_comment, $lt_transcomm_data);
+        $this->db->set($lt_transcomm_data);
+        $this->db->insert($this->db->dbprefix.self::gc_trans_comment);
         $this->db->trans_complete();        
         }
     }
