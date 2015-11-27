@@ -28,8 +28,19 @@ class m_ManualLocks extends CI_model
           gc_cust_name      = 'cust_name',
           gc_so_capability  = 'so_capability',
           gc_viewname       = 'v_fulfill_stat_open',
-          gc_so_proj_type   = 'so_proj_type';
-    
+          gc_so_proj_type   = 'so_proj_type',
+          gc_table          = 'trans_locks',
+          gc_so_status      = 'so_status',
+          gc_view_name      = 'v_fulfill_stat_open',
+          gc_hardlock       = 'S201',
+          gc_lock_soid      = 'so_id',
+          gc_lock_empid     = 'emp_id',
+          gc_lock_sdate     = 'lock_start_date',
+          gc_lock_edate     = 'lock_end_date',
+          gc_lock_reqid     = 'requestor_id',
+          gc_lock_multi     = 'allow_multi',
+          gc_lock_transid   = 'trans_id',
+          gc_lock_status    = 'status';
     
     public function __construct()
     {
@@ -97,20 +108,31 @@ class m_ManualLocks extends CI_model
         
     }
     
-    public function Lock_EMPs()
+    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '')
     {   
-        $this->db->select_max(self::gc_lock_transid)->trans_id;
-        $data = array(        
-        self::gc_lock_transid => $lv_trans_id,
-        self::gc_lock_soid    => $lv_so_id,
-        self::gc_lock_empid   => $lv_empid,
+// Validate if SO is really open.
+        if((count(($this->db->query('SELECT '.self::gc_so_pos_no.' FROM '.self::gc_viewname.' WHERE '.self::gc_so_pos_no.' = '.$i_so_no.' LIMIT 1')->result_array()))) > 0);
+        {
+// Get max transid in table.        
+        $this->db->select_max(self::gc_lock_transid);
+        $lv_transid = $this->db->get(self::gc_tabname)->row()->trans_id; 
+        $lt_transdata = [];
+        $lt_transdata = [
+        self::gc_lock_transid => ++$lv_trans_id,
+        self::gc_lock_soid    => $i_so_no,
+        self::gc_lock_empid   => $i_empid,
         self::gc_lock_status  => self::gc_hardlock,
-        self::gc_lock_propid  => $lv_prop_id,
-        self::gc_lock_reqid   => $lv_reqid,
-        self::gc_lock_sdate   => $lv_sdate,
-        self::gc_lock_edate   => $lv_edate,
-        self::gc_lock_multi   => $lv_multi
-        );
+        self::gc_lock_sdate   => $i_sdate,
+        self::gc_lock_edate   => $i_edate,
+        self::gc_lock_multi   => $i_multi,            
+        self::gc_lock_reqid   => $i_reqid
+        ];
+        $lt_so = [];
+        $lt_so = [self::gc_so_status => self::gc_x];
+        $this->db->where(self::gc_so_pos_no, $i_so_no);
+        $this->db->update(self::gc_view_name, $lt_so);
+        return $this->db->insert(self::gc_tabname, $lt_transdata);
+        }
     }
     private function isFilterset($fp_filter_value)
     {
