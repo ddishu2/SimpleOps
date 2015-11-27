@@ -5017,8 +5017,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
               
 						matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name);
 						
-										
-		
+						
           matrix_for_manual_main.placeAt("manual1");
           
   /////2nd Row/////////////
@@ -5163,7 +5162,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var to_send_sono =   $("#sono_man1").html();
 								 var to_send_sdate =  $("#startdate_man1").html();
 								 var to_send_edate =  $("#enddate_man1").html(); 
-								 var emp_to_send = $ ("#empid_man").html();
+								 var emp_to_send = $("#empid_man-input").val();
 	
 								  if (!input_manual1.match(regex)) {
 								        alert("Entered Smart Project Code is not valid");
