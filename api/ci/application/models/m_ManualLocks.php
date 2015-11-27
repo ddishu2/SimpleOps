@@ -44,7 +44,7 @@ class m_ManualLocks extends CI_model
           gc_lock_spcode    = 'smart_proj_code',
           gc_lock_fte       = 'FTE',
           gc_lock_tagtype   = 'tag_type',
-          gc_trans_comment  = 'trans_comments',
+          gc_trans_comment  = 'trans_comment',
           gc_manual         = 'manual',
           gc_updated_by     = 'updated_by',
           gc_updated_on     = 'updated_on',
