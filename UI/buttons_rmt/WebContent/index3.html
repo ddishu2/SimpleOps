@@ -32,6 +32,7 @@ var oFor_so;
 var oFor_emp;
 var regex = /^[0-9]+$/;
 var skill_Text_manual_emp;
+var manual1_table
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -4119,8 +4120,22 @@ var skill_Text_manual_emp;
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									visibleRowCount :20,
 									firstVisibleRow: 3,
-								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
-									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
+									toolbar: new sap.ui.commons.Toolbar({items: [ 
+									                                     		new sap.ui.commons.Button({text: "Select", press: function() { alert("Button pressed!");
+									                                     		//oFor_so.close();
+									                                     		
+									                                     		
+									                                     		
+									                                     		}})
+									                                     	]}),
+									                                     	extension: [
+									                                     		new sap.ui.commons.Button({text: "Back", press: function() { 
+									                                     			
+									                                     			 oFor_so.addContent(osearch_manual);
+									                        						 oFor_so.removeContent(table_for_manual_so);
+									                                     			
+									                                     		}})
+									                                     	]
 
 								}).addStyleClass("style_for_table");
 
@@ -4181,17 +4196,21 @@ var skill_Text_manual_emp;
 							filterProperty : "so_no_manual",
 							width : "50px"
 						}));
-						table_for_manual_so.addColumn(new sap.ui.table.Column({
+					/* 	table_for_manual_so.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Select.",
 								tooltip : "Select."
 							}),
-							template : new sap.ui.commons.RadioButton()
-									.bindProperty("text", ""),
+							template : new sap.ui.commons.RadioButton({
+								
+								id: 'select_manual_so1'
+								
+							})
+									.bindProperty("text", "").addStyleClass("manual_radio1"),
 							sortProperty : "",
 							filterProperty : "",
 							width : "30px"
-						}));
+						})); */
 						table_for_manual_so.sort(table_for_manual_so.getColumns()[0]);	
 		//-------------------table for so search manual ends here-----------------------//
 		 
@@ -4203,6 +4222,21 @@ var skill_Text_manual_emp;
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									visibleRowCount :20,
 									firstVisibleRow: 3,
+									toolbar: new sap.ui.commons.Toolbar({items: [ 
+										                                     		new sap.ui.commons.Button({text: "Select", press: function() { alert("Button pressed!");
+										                                     		
+										                                     		//oFor_emp.close();
+										                                     		
+										                                     		}})
+										                                     	]}),
+										                                     	extension: [
+										                                     		new sap.ui.commons.Button({text: "Back", press: function() { 
+										                                     			
+										                                     			 oFor_emp.addContent(osearch_manual_emp);
+										                            					 oFor_emp.removeContent(table_for_manual_emp);
+										                                     			
+										                                     		}})
+										                                     	]
 								}).addStyleClass("style_for_table");
 
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4267,7 +4301,7 @@ var skill_Text_manual_emp;
 								text : "Current SO",
 								tooltip : "Current SO"
 							}),
-							template : new sap.ui.commons.RadioButton()
+							template : new sap.ui.commons.TextView()
 									.bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",
@@ -4278,7 +4312,7 @@ var skill_Text_manual_emp;
 								text : "Emp ID",
 								tooltip : "Emp ID"
 							}),
-							template : new sap.ui.commons.RadioButton()
+							template : new sap.ui.commons.TextView()
 									.bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",
@@ -4289,7 +4323,7 @@ var skill_Text_manual_emp;
 								text : "Emp Name",
 								tooltip : "Emp Name"
 							}),
-							template : new sap.ui.commons.RadioButton()
+							template : new sap.ui.commons.TextView()
 									.bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",
@@ -4300,7 +4334,7 @@ var skill_Text_manual_emp;
 								text : "Select",
 								tooltip : "Select"
 							}),
-							template : new sap.ui.commons.RadioButton()
+							template : new sap.ui.commons.TextView()
 									.bindProperty("text", ""),
 							sortProperty : "",
 							filterProperty : "",
@@ -4922,14 +4956,14 @@ var skill_Text_manual_emp;
           
           
           
-          var manual1_table = new sap.ui.table.Table(
+           manual1_table = new sap.ui.table.Table(
 					{
 						id : 'manual_table1',
 						title : " ",
 						visibleRowCount : 2,
 						firstVisibleRow : 3,
 						selectionMode: sap.ui.table.SelectionMode.Single,
-						//navigationMode : sap.ui.table.NavigationMode.Paginator,
+					     
 
 					}).addStyleClass("style_for_table");
 						
