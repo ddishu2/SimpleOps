@@ -49,11 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['disprpt1'] = 'report/setreports';
+//$route['disprpt1'] = 'report/setreports';
 //$route['display_report/(:any)'] = 'display_report/setreport/$1';
 //$route['default_controller'] = 'open_so/getOpenSO';
 $route['default_controller'] = 'open_so/getOpenSO';
-$route['display_report/(:any)'] = 'display_report/setreport/$1';
+//$route['displayreport'] = 'Reports/setreports';
+//$route['disp'] = 'report/demo';
+//$route['displayreport'] = 'Reports/setreport';
 //$route['404_override'] = '';
 //$route['translate_uri_dashes'] = FALSE;
 
@@ -80,5 +82,6 @@ $route['loadRAS']            = 'Utility/load_RAS_File';
 $route['loadRRS']            = 'Utility/load_RRS_File';
 
 $route['displayreport']      = 'Reports/setreports';
-
+$route['getamendment']       = 'Amendments/getamendments';
+$route['approveamendment']   = 'Amendments/approveamendment';
 
