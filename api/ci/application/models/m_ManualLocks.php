@@ -122,9 +122,10 @@ class m_ManualLocks extends CI_model
     {   
 // Validate if SO is really open.
         $lt_so_no = ($this->db->query('SELECT '.self::gc_so_pos_no.' FROM '.self::gc_fulfill_stat.' WHERE '.self::gc_so_pos_no.' = '.$i_so_no.' LIMIT 1')->result_array());
-        if((count($lt_so_no)) > 0);
+        if((count($lt_so_no)) > 0)
         {
-            $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
+        $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
+        
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
         
@@ -138,7 +139,15 @@ class m_ManualLocks extends CI_model
         $this->db->trans_start();
         $this->db->where(self::gc_so_pos_no, $lv_so_act);
         $this->db->update(self::gc_fulfill_stat, $lt_so);
-        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) 
+        {   
+        $this->db->trans_rollback();
+        }
+        else
+        {
+        $this->db->trans_commit();
+        $lv_so_upd = true;
+        } 
 
 // Get username
         $lv_cred  = $io_utility->get_username();
@@ -161,7 +170,15 @@ class m_ManualLocks extends CI_model
         $this->db->trans_start();
         $this->db->set($lt_translock_data);
         $this->db->insert($this->db->dbprefix.self::gc_tabname);
-        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) 
+        {   
+        $this->db->trans_rollback();
+        }
+        else
+        {
+        $this->db->trans_commit();
+        $lv_tl_upd = true;
+        } 
         
 // Transaction 3: Update Trans_Comments table
         $lt_transcomm_data = [];
@@ -176,7 +193,29 @@ class m_ManualLocks extends CI_model
         $this->db->trans_start();
         $this->db->set($lt_transcomm_data);
         $this->db->insert($this->db->dbprefix.self::gc_trans_comment);
-        $this->db->trans_complete();        
+        if ($this->db->trans_status() === FALSE) 
+        {   
+        $this->db->trans_rollback();
+        }
+        else
+        {
+        $this->db->trans_commit();
+        $lv_tc_upd = true;
+        }      
+        if($lv_so_upd === true && $lv_tc_upd === true && $lv_tl_upd === true)
+        {
+        $lv_return = "Tagging Successful";
+        }
+        else
+        {
+        $lv_return = "Tagging Failed, Please verify the data";
+        }
+        return $lv_return;
+        }
+        else
+        {
+        $lv_return = "SO is already fulfilled, please chose another SO";
+        return $lv_return;
         }
     }
     private function isFilterset($fp_filter_value)
