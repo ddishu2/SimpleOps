@@ -5015,8 +5015,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							text : "End Date"
 						}).addStyleClass("for_font_manual_label");
               
-						matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name)  ;
+						matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name);
+						
+										
+		
           matrix_for_manual_main.placeAt("manual1");
+          
   /////2nd Row/////////////
                var son =new sap.ui.commons.ValueHelpField(
 						{
@@ -5043,7 +5047,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 
 								oFor_so.open();
 							}
-						}).addStyleClass("for_fields_style1");
+						});
              var proid_man= new sap.ui.commons.TextView({id: 'proid1_man1',}).addStyleClass("for_fields_style1");;
              var proname_man = new sap.ui.commons.TextView(
 						{
