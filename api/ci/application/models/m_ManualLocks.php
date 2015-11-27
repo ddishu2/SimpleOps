@@ -31,7 +31,6 @@ class m_ManualLocks extends CI_model
           gc_so_proj_type   = 'so_proj_type',
           gc_tabname        = 'trans_locks',
           gc_so_status      = 'so_status',
-          gc_view_name      = 'v_fulfill_stat_open',
           gc_hardlock       = 'S201',
           gc_lock_soid      = 'so_id',
           gc_lock_empid     = 'emp_id',
@@ -41,6 +40,11 @@ class m_ManualLocks extends CI_model
           gc_lock_multi     = 'allow_multi',
           gc_lock_transid   = 'trans_id',
           gc_lock_status    = 'status',
+          gc_lock_comment   = 'comment',
+          gc_lock_spc       = 'smart_proj_code',
+          gc_lock_fte       = 'FTE',
+          gc_lock_tagtype   = 'tag_type',
+          gc_trans_comment  = 'trans_comments',
           gc_x              = 'X';
     
     public function __construct()
@@ -60,7 +64,7 @@ class m_ManualLocks extends CI_model
     {
         
 // Select SO Number from table        
-        $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no.','.self::gc_so_sdate_new.'.'.self::gc_so_edate);
+        $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no.','.self::gc_so_sdate_new.','.self::gc_so_edate);
         
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
@@ -109,7 +113,7 @@ class m_ManualLocks extends CI_model
         
     }
     
-    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '')
+    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')
     {   
 // Validate if SO is really open.
         if((count(($this->db->query('SELECT '.self::gc_so_pos_no.' FROM '.self::gc_viewname.' WHERE '.self::gc_so_pos_no.' = '.$i_so_no.' LIMIT 1')->result_array()))) > 0);
@@ -117,9 +121,19 @@ class m_ManualLocks extends CI_model
 // Get max transid in table.        
         $this->db->select_max(self::gc_lock_transid);
         $lv_transid = $this->db->get(self::gc_tabname)->row()->trans_id; 
-        $lt_transdata = [];
-        $lt_transdata = [
-        self::gc_lock_transid => ++$lv_transid,
+        
+// Transaction 1: Update SO Open view and mark SO as complete        
+        $lt_so = [];
+        $lt_so = [self::gc_so_status => self::gc_x];   
+        $this->db->trans_start();
+        $this->db->where(self::gc_so_pos_no, $i_so_no);
+        $this->db->update(self::gc_viewname, $lt_so);
+        $this->db->trans_complete();
+               
+// Transaction 2: Update Trans_locks table.        
+        $lt_translock_data = [];
+        $lt_translock_data = [
+        self::gc_lock_transid => $lv_transid + 1,
         self::gc_lock_soid    => $i_so_no,
         self::gc_lock_empid   => $i_empid,
         self::gc_lock_status  => self::gc_hardlock,
@@ -127,12 +141,24 @@ class m_ManualLocks extends CI_model
         self::gc_lock_edate   => $i_edate,
         self::gc_lock_multi   => $i_multi,            
         self::gc_lock_reqid   => $i_reqid
+        ];       
+        $this->db->trans_start();
+        $this->db->insert(self::gc_tabname, $lt_transdata);
+        $this->db->trans_complete();
+        
+// Transaction 3: Update Trans_Comments table
+        $lt_transcomm_data = [];
+        $lt_transcomm_data = [
+          self::gc_lock_transid => $lv_transid + 1, 
+          self::gc_lock_status  => self::gc_hardlock,
+          self::gc_lock_comment => self::gc_manual,
+          self::gc_lock_spcode  => $i_spc,
+          self::gc_lock_fte     => $i_fte,
+          self::gc_lock_tagtype => self::gc_manual
         ];
-        $lt_so = [];
-        $lt_so = [self::gc_so_status => self::gc_x];
-        $this->db->where(self::gc_so_pos_no, $i_so_no);
-        $this->db->update(self::gc_view_name, $lt_so);
-        return $this->db->insert(self::gc_tabname, $lt_transdata);
+        $this->db->trans_start();
+        $this->db->insert(self::gc_trans_comment, $lt_transcomm_data);
+        $this->db->trans_complete();        
         }
     }
     private function isFilterset($fp_filter_value)
