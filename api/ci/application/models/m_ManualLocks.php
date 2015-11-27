@@ -52,7 +52,8 @@ class m_ManualLocks extends CI_model
     
     public function __construct()
     {
-        $this->load->database();// Instantiate utility model and use validateDate() to validate the input date format        
+        $this->load->database();
+// Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
     }
     
@@ -120,9 +121,10 @@ class m_ManualLocks extends CI_model
     public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')
     {   
 // Validate if SO is really open.
-        if((count(($this->db->query('SELECT '.self::gc_so_pos_no.' FROM '.self::gc_fulfill_stat.' WHERE '.self::gc_so_pos_no.' = '.$i_so_no.' LIMIT 1')->result_array()))) > 0);
+        $lt_so_no = ($this->db->query('SELECT '.self::gc_so_pos_no.' FROM '.self::gc_fulfill_stat.' WHERE '.self::gc_so_pos_no.' = '.$i_so_no.' LIMIT 1')->result_array());
+        if((count($lt_so_no)) > 0);
         {
-            
+            $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
         
@@ -134,13 +136,14 @@ class m_ManualLocks extends CI_model
         $lt_so = [];
         $lt_so = [self::gc_so_status => self::gc_x];   
         $this->db->trans_start();
-        $this->db->where(self::gc_so_pos_no, $i_so_no);
+        $this->db->where(self::gc_so_pos_no, $lv_so_act);
         $this->db->update(self::gc_fulfill_stat, $lt_so);
         $this->db->trans_complete();
 
 // Get username
         $lv_cred  = $io_utility->get_username();
         $lv_name  = $lv_cred[0];
+        
 // Transaction 2: Update Trans_locks table.        
         $lt_translock_data = [];
         $lt_translock_data = [
