@@ -79,7 +79,6 @@ $route['NoPerfectMatch']     = 'Proposals/getSoForPartialProposal';
 $route['loadRAS']            = 'Utility/load_RAS_File';
 $route['loadRRS']            = 'Utility/load_RRS_File';
 
-
-$route['displayreport'] = 'Reports/setreports';
+$route['displayreport']      = 'Reports/setreports';
 
 
