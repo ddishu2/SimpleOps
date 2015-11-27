@@ -27,7 +27,7 @@ class m_ManualLocks extends CI_model
           gc_so_proj_bu     = 'so_proj_bu',
           gc_cust_name      = 'cust_name',
           gc_so_capability  = 'so_capability',
-          gc_fulfill_stat       = 'm_so_fulfill_stat',
+          gc_fulfill_stat   = 'm_so_fulfill_stat',
           gc_so_proj_type   = 'so_proj_type',
           gc_tabname        = 'trans_locks',
           gc_so_status      = 'so_status',
@@ -45,6 +45,7 @@ class m_ManualLocks extends CI_model
           gc_lock_fte       = 'FTE',
           gc_lock_tagtype   = 'tag_type',
           gc_trans_comment  = 'trans_comments',
+          gc_manual         = 'manual',
           gc_updated_by     = 'updated_by',
           gc_updated_on     = 'updated_on',
           gc_x              = 'X';
@@ -152,7 +153,7 @@ class m_ManualLocks extends CI_model
         self::gc_lock_multi   => $i_multi,            
         self::gc_lock_reqid   => $i_reqid,
         self::gc_updated_by   => $lv_name,
-        self::gc_updated_on   => date(gc_date_format)
+        self::gc_updated_on   => date(self::gc_date_format)
         ];       
         $this->db->trans_start();
         $this->db->set($lt_translock_data);
