@@ -121,7 +121,8 @@ class m_ManualLocks extends CI_model
     public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')
     {   
 // Validate if SO is really open.
-        $lt_so_no = ($this->db->query('SELECT '.self::gc_so_pos_no.' FROM '.self::gc_fulfill_stat.' WHERE '.self::gc_so_pos_no.' = '.$i_so_no.' LIMIT 1')->result_array());
+        $lv_query = "SELECT ".self::gc_so_pos_no." FROM ".self::gc_fulfill_stat." WHERE ".self::gc_so_pos_no." = '$i_so_no' AND ".self::gc_so_status."!= 'X' LIMIT 1";
+        $lt_so_no = ($this->db->query($lv_query)->result_array());
         if((count($lt_so_no)) > 0)
         {
         $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
@@ -145,7 +146,7 @@ class m_ManualLocks extends CI_model
         }
         else
         {
-        $this->db->trans_commit();
+        $this->db->trans_complete();
         $lv_so_upd = true;
         } 
 
@@ -176,7 +177,7 @@ class m_ManualLocks extends CI_model
         }
         else
         {
-        $this->db->trans_commit();
+        $this->db->trans_complete();
         $lv_tl_upd = true;
         } 
         
@@ -199,7 +200,7 @@ class m_ManualLocks extends CI_model
         }
         else
         {
-        $this->db->trans_commit();
+        $this->db->trans_complete();
         $lv_tc_upd = true;
         }      
         if($lv_so_upd === true && $lv_tc_upd === true && $lv_tl_upd === true)
