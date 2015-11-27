@@ -136,7 +136,10 @@ class m_ManualLocks extends CI_model
         $this->db->where(self::gc_so_pos_no, $i_so_no);
         $this->db->update(self::gc_fulfill_stat, $lt_so);
         $this->db->trans_complete();
-               
+
+// Get username
+        $lv_cred  = $io_utility->get_username();
+        $lv_name  = $lv_cred[0];
 // Transaction 2: Update Trans_locks table.        
         $lt_translock_data = [];
         $lt_translock_data = [
@@ -148,7 +151,7 @@ class m_ManualLocks extends CI_model
         self::gc_lock_edate   => $i_edate,
         self::gc_lock_multi   => $i_multi,            
         self::gc_lock_reqid   => $i_reqid,
-        self::gc_updated_by   => $io_utility->get_username(),
+        self::gc_updated_by   => $lv_name,
         self::gc_updated_on   => date(gc_date_format)
         ];       
         $this->db->trans_start();
