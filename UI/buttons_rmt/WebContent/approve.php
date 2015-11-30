@@ -107,7 +107,7 @@
 			
 			<div>
 				<h3>Employee Details</h3>
-				<input type="text" id="transaction_id" class="get_trans_id" value="<?php echo htmlspecialchars($_GET["trans_id"]);?>"/>
+				<input type="hidden" id="transaction_id" class="get_trans_id" value="<?php echo htmlspecialchars($_GET["trans_id"]);?>"/>
 				<table cellpadding="0" cellspacing="0" class="details_table">
 					<tr>
 						<th>BU</th>
