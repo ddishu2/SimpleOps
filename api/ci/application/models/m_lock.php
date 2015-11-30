@@ -499,7 +499,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
       returns 1 if successfull 
      *returns  -1 if unsuccessful */
     
-    public function rejectSoftLock($fp_v_lock_trans_id,$fp_v_comments) {
+    public function rejectSoftLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type) {
 
         
 //        $lv_obj = new cl_DB();
@@ -538,7 +538,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             $this->db->trans_complete();
            
             
-            if($lv_Rej_count >= 3&&$this->db->trans_status() === TRUE)
+            if($lv_Rej_count >= 3 && $this->db->trans_status() === TRUE)
             {
                 //method to send mail to so_owner to clsoe the SO
                  $this->m_Notifications->sendSORejectionNotification($lv_so_id, $lv_emp_id,  $lv_trans_id);
