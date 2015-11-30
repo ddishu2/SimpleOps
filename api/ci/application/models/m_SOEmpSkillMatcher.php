@@ -133,7 +133,7 @@ class m_SOEmpSkillMatcher extends CI_model
 //        $this->db->select('*');
         $query = $this->db->get(self::C_EMP_SKILLS_TABLE);
         $larr_skills = $query->result_array();
-        echo $this->db->last_query();
+//        echo $this->db->last_query();
         return $larr_skills;
     }
     
@@ -192,7 +192,7 @@ class m_SOEmpSkillMatcher extends CI_model
 //        $this->db->select('*');
         $query = $this->db->get(self::C_SO_EMP_SKILL_XREF_TABLE);
         $larr_so_emp_skill_xref = $query->result_array();
-        echo $this->db->last_query();
+//        echo $this->db->last_query();
         return $larr_so_emp_skill_xref;
     }
     
