@@ -5,13 +5,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require __DIR__ . DIRECTORY_SEPARATOR . 'cl_DB.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'cl_NotificationMails.php';
+//require __DIR__ . DIRECTORY_SEPARATOR . 'cl_DB.php';
+//require __DIR__ . DIRECTORY_SEPARATOR . 'cl_NotificationMails.php';
 // $lv_query = "SELECT * FROM trans_locks where status = 'S121' and current_date > lock_end_date";
 // $lt_data = cl_DB::getResultsFromQuery($lv_query);
 // constants
 const c_trans_locks =  'trans_locks';
-$status = $value['S121'];
+const C_softlock_status = 'S121';
+$status = $value[self::C_softlock_status];
 $lock_end_date = $value['lock_end_date'];
 //$this->db->select('*');
 $this->db->from(self::c_trans_locks. 'AS trans_locks');
@@ -19,8 +20,8 @@ $this->db->where('status =', $status);
 $this->db->and_where('current_date >',$lock_end_date);
 
 //        print_r($lt_data);
-$lv_obj = new cl_DB();
-$lv_db = $lv_obj->getDBHandle();
+//$lv_obj = new cl_DB();
+//$lv_db = $lv_obj->getDBHandle();
 //        print_r($lt_data);
 foreach ($lt_data as $key => $value) {
 //            print_r($value);
@@ -38,7 +39,7 @@ foreach ($lt_data as $key => $value) {
     $updated_on = $value['updated_on'];
 //    echo $lv_trans_id;
     try {
-        mysqli_begin_transaction($lv_db);
+//        mysqli_begin_transaction($lv_db);
         //$queryUpdate = "update trans_locks set status ='S300' where trans_id =  $lv_trans_id ";
         //$lv_app_result = cl_DB::updateResultIntoTable($queryUpdate);
         $this->db->update(self::c_trans_locks. 'AS trans_locks'); 
@@ -58,20 +59,20 @@ foreach ($lt_data as $key => $value) {
         $this->db->query($lv_history);
 
 //        echo $result1;
-        mysqli_commit($lv_db);
+//        mysqli_commit($lv_db);
     } catch (Exception $ex) {
-        mysqli_rollback($lv_db);
+//        mysqli_rollback($lv_db);
         echo 'Failed-' . $ex->getMessage();
     }
-      if ($lv_app_result == TRUE && $lv_history == TRUE){
-                    
-                     // call method to send mail 
-                   
-                    $lo_mail_noti = new cl_NotificationMails();
-                    //$lo_mail_noti->sendnotification($lv_so_id, $i_mode,$lv_link ,$lv_trans_id,$lv_emp_id);
-               
-                    $lo_mail_noti->sendSoftLockReleaseNotification($lv_so_id, $lv_emp_id, $lv_trans_id);
-                    
-                    
-                }
+//      if ($lv_app_result == TRUE && $lv_history == TRUE){
+//                    
+//                     // call method to send mail 
+//                   
+//                    $lo_mail_noti = new cl_NotificationMails();
+//                    //$lo_mail_noti->sendnotification($lv_so_id, $i_mode,$lv_link ,$lv_trans_id,$lv_emp_id);
+//               
+//                    $lo_mail_noti->sendSoftLockReleaseNotification($lv_so_id, $lv_emp_id, $lv_trans_id);
+//                    
+//                    
+//                }
 }    
