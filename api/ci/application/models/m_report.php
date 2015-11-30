@@ -130,7 +130,7 @@ $this->setHeaders();
        
          switch ($this->v_report_type) {
         case self::C_TYPE_HL:
-                   fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking','Updated By','Time Stamp )'));
+                   fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking','Updated By','Time Stamp '));
                     break;
 //                case self::C_TYPE_HL_RELEASE:
 //                
