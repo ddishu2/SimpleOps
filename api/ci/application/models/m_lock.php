@@ -638,7 +638,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         
         //$lv_link = "http://localhost/rmt1/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate";
       
-        $lv_link = "http://localhost/rmt/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate&trans_id=$fp_v_trans_id";
+        $lv_link = "http://10.74.163.157:8080/rmt/UI/buttons_rmt/WebContent/approve.php/?bu=$lv_bu&subbu=$lv_sub_bu&svcline=$lv_svc_line&loc=$lv_loc&emp_id=$lv_emp_id&emp_name=$lv_emp_name&lv_prime_skill=$lv_prime_skill&lvl=$lv_lvl&proj_code=$lv_proj_code&proj_name=$lv_proj_name&so_no=$lv_so_no&sdate=$lv_sdate&edate=$lv_edate&trans_id=$fp_v_trans_id";
         return $lv_link;
         
     }
