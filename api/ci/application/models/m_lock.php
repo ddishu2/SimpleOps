@@ -502,8 +502,8 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
     public function rejectSoftLock($fp_v_lock_trans_id,$fp_v_comments) {
 
         
-        $lv_obj = new cl_DB();
-        $lv_db = $lv_obj->getDBHandle();
+//        $lv_obj = new cl_DB();
+//        $lv_db = $lv_obj->getDBHandle();
         $lv_trans_result = self::getTransDetails($fp_v_lock_trans_id);
         foreach ($lv_trans_result as $key => $value) {
             $lv_trans_id = $value[self::C_TRANS_ID];
@@ -518,7 +518,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         }
         if($lv_status==self::C_STATUS_SOFT_LOCK){
         try {
-            mysqli_begin_transaction($lv_db);
+//            mysqli_begin_transaction($lv_db);
            // $sql = "UPDATE trans_locks SET status='S221' WHERE trans_id = $fp_v_lock_trans_id";
             
             $this->db->where(self::C_TRANS_ID,$fp_v_lock_trans_id);
@@ -542,10 +542,10 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             }
             
             
-            mysqli_commit($lv_db);
+//            mysqli_commit($lv_db);
             return 1;
         } catch (Exception $ex) {
-            mysqli_rollback($lv_db);
+//            mysqli_rollback($lv_db);
            // echo 'Failed-' . $ex->getMessage();
             return -1;
         }
