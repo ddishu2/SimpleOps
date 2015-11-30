@@ -22,10 +22,12 @@ class m_utility extends CI_model
           gc_date_format    = 'd-M-y',
           gc_date_from      = 'date_from',
           gc_bu             = 'Appsone SAP',
-          gc_filepath       = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\\',
-          gc_date_year      = 'YY',
+          gc_filepath       = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\Bench Ageing Data\\',
+          gc_date_year      = 'Y',
           gc_default_format = 'Y-m-d H:i:s',
-          gc_filename       = '-BENCH_AGEING_DATA';
+          gc_filename       = '-BENCH_AGEING_DATA.xlsm',
+          gc_date_ba        = 'd F',
+          gc_date_month     = 'F';
             
     private $gv_tab_name      = 'm_emp_ras_copy',
             $gv_so            = 'curr_so',          
@@ -147,7 +149,8 @@ class m_utility extends CI_model
     {
         $lv_filepath  = self::gc_filepath;
         $lv_year      = date(self::gc_date_year);
-        $lv_filepath .= $lv_filepath.$lv_year;
+        $lv_filepath .= $lv_year.DIRECTORY_SEPARATOR.date(self::gc_date_month).DIRECTORY_SEPARATOR.date(self::gc_date_ba).self::gc_filename;
+        return $lv_filepath;
     }
     
 // DateTime validator function

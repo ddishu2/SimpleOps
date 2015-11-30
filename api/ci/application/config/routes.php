@@ -68,7 +68,9 @@ $route['sso'] = 'Utility/get_username';
 $route['hardlock_release_notification'] = 'Utility/check_hlr';
 $route['get_ValidSOs']  = 'ManualLocks/get_ValidSOs';
 $route['get_ValidEMPs'] = 'ManualLocks/get_ValidEMPs';
+$route['get_ValidTNEs'] = 'ManualLocks/get_ValidTNEs';
 $route['Lock_EMPs']     = 'ManualLocks/Lock_EMPs';
+$route['BAfilepath']    = 'Utility/BAfilepath';
 
 
 

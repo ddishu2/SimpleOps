@@ -54,14 +54,15 @@ class m_ManualLocks extends CI_model
           gc_emp_futso      = 'fut_so',
           gc_emp_cust       = 'cust_name',
           gc_emp_capab      = 'comp',
-          gc_emp_skil       = 'prime_skill',
+          gc_emp_skill      = 'prime_skill',
           gc_emp_level      = 'level',
           gc_emp_curso      = 'curr_so',
           gc_emp_empname    = 'emp_name',
           gc_emp_empid      = 'emp_id',
           gc_emp_loc        = 'loc',
           gc_m_emp_ras_copy = 'm_emp_ras_copy',
-          gc_m_emp_rec      = 'm_emp_record';  
+          gc_m_emp_rec      = 'm_emp_record',
+          gc_emp_corpid     = 'domain_id';  
           
     private $lt_org_arr = [];
     public function __construct()
@@ -131,17 +132,18 @@ class m_ManualLocks extends CI_model
 // So Number
         if($this->isFilterset($i_so_no))
         {
-        $this->db->where(self::gc_so_pos_no,$i_so_no);
+        $this->db->where(self::gc_so_pos_no.' = '.$i_so_no);
         }
         
 // Filter out processed SO
-        $this->db->where(self::gc_so_status_ne,self::gc_x);
+        $this->db->where(self::gc_so_status_ne,self::gc_x);        
         
 // Once all filters are set, query the view and return the array.          
-        return($this->db->get(self::gc_fulfill_stat)->result_array());        
+        return($this->db->get(self::gc_fulfill_stat)->result_array());
     }
     
-    public function get_ValidEMPs(  $i_empid = '',
+//  Get Employee Details
+    Public function get_ValidEMPs(  $i_empid = '',
                                     $i_deployable = '',
                                     $i_futso = '',
                                     $i_capability = '', 
@@ -150,7 +152,7 @@ class m_ManualLocks extends CI_model
                                     $i_level = ''    )
     {        
         
-// Select SO Number from table        
+// Select Employee Details from table        
         $this->db->select(self::gc_emp_deploy.','.self::gc_emp_futso.','.self::gc_emp_capab.','.self::gc_emp_skill.','.self::gc_emp_loc.','.self::gc_emp_curso.','.self::gc_emp_empid.','.self::gc_emp_empname);
         
 // Instantiate utility model and use validateDate() to validate the input date format        
@@ -201,7 +203,32 @@ class m_ManualLocks extends CI_model
 // Once all filters are set, query the view and return the array.            
         return($this->db->get(self::gc_m_emp_ras_copy)->result_array());        
     }
+        
+// Get T&E Approver details 
+    public function get_ValidTNEs(  $i_empid  = '',
+                                    $i_corpid = ''  )
+    {
+// Select Employee Details from table        
+//        $this->db->select(self::gc_emp_empid.','.self::gc_emp_empname);
+        $this->db->select(self::gc_emp_empid);
+        
+// Employee Id        
+        if($this->isFilterset($i_empid))
+        {
+        $this->db->where(self::gc_emp_empid,$i_empid);
+        }
+        
+// Corp Id        
+        if($this->isFilterset($i_corpid))
+        {
+        $this->db->where(self::gc_emp_corpid,$i_corpid);
+        }        
+        
+// Once all filters are set, query the view and return the array.            
+        return($this->db->get(self::gc_m_emp_rec)->result_array()); 
+    }
     
+// Lock Employees to SO    
     public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')
     {   
         
