@@ -32,7 +32,9 @@ class ManualLocks extends CI_Controller
           gc_lock_edate = 'lock_end_date',
           gc_lock_reqid = 'requestor_id',
           gc_lock_multi = 'allow_multi',
-          gc_emp_empid  = 'emp_id'; 
+          gc_emp_empid  = 'emp_id',
+          gc_emp_corpid = 'domain_id',
+          gc_emp_futso  = 'fut_so'; 
 
     public function __construct()
     {
@@ -71,17 +73,28 @@ class ManualLocks extends CI_Controller
         $lv_deployable = $this->input->get(self::gc_deployable);
         $lv_capability = $this->input->get(self::gc_capability);
         $lv_skill      = $this->input->get(self::gc_skill);
-        $lv_location   = $this->input->get(self::gc_proj_loc);
+        $lv_location   = array_filter($this->input->get(self::gc_proj_loc));
         $lv_level      = $this->input->get(self::gc_level);
         $lv_empid      = $this->input->get(self::gc_emp_empid);
+        $lv_futso      = $this->input->get(self::gc_emp_futso);
         $lt_validemp   = $this->m_ManualLocks->get_ValidEMPs(   $lv_empid,
-                                                                $lv_deployable, 
+                                                                $lv_deployable,
+                                                                $lv_futso,
                                                                 $lv_capability, 
                                                                 $lv_skill, 
                                                                 $lv_location, 
                                                                 $lv_level   );
         $this->output->set_content_type('application/json')->set_output(json_encode($lt_validemp,JSON_PRETTY_PRINT));      
     }
+    
+    Public function get_ValidTNEs()
+    {
+        $lv_empid      = $this->input->get(self::gc_emp_empid);
+        $lv_corpid     = $this->input->get(self::gc_emp_corpid);
+        $lt_validtne   = $this->m_ManualLocks->get_ValidTNEs(   $lv_empid,
+                                                                $lv_corpid  );
+        $this->output->set_content_type('application/json')->set_output(json_encode($lt_validtne,JSON_PRETTY_PRINT));      
+    }   
     
     Public function Lock_EMPs( )
     {

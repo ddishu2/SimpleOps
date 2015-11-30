@@ -29,6 +29,13 @@ class Utility extends CI_controller
     {
        $this->m_utility->checkandnotify();       
     }
+    
+    public function BAfilepath()
+    {
+        $lv_filepath = $this->m_utility->BAfilepath();
+        $this->output->set_content_type('application/json')->set_output(json_encode($lv_filepath,JSON_PRETTY_PRINT));      
+    }        
+    
     public function load_RAS_File()
     {
         $this->m_utility->loadRAS();
