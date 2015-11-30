@@ -137,10 +137,12 @@ class m_ManualLocks extends CI_model
     {   
         
 // Validate if Employee exists.
-        $lv_query = "SELECT ".self::gc_so_pos_no." FROM ".self::gc_fulfill_stat." WHERE ".self::gc_so_pos_no." = '$i_so_no' AND ".self::gc_so_status."!= 'X' LIMIT 1";
+        $lv_query = "SELECT ".self::gc_so_pos_no.','.self::gc_so_status." FROM ".self::gc_fulfill_stat." WHERE ".self::gc_so_pos_no." = '$i_so_no' LIMIT 1";
         $lt_so_no = ($this->db->query($lv_query)->result_array());
         if((count($lt_so_no)) > 0)
         {
+        if($lt_so_no[0][self::gc_so_status] !== self::gc_x)
+        {    
         $lv_so_act = $lt_so_no[0][self::gc_so_pos_no];
 
 // Validate the employee.
@@ -148,6 +150,7 @@ class m_ManualLocks extends CI_model
         $lt_emp       = $this->db->query($lv_query_emp)->result_array();
         if((count($lt_emp)) > 0)
         {    
+            
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
         
@@ -243,6 +246,12 @@ class m_ManualLocks extends CI_model
         else
         {
         $lv_return = "SO is already fulfilled, please chose another SO";
+        return $lv_return;
+        }    
+        }
+        else
+        {
+        $lv_return = "Invalid SO";
         return $lv_return;
         }
     }
