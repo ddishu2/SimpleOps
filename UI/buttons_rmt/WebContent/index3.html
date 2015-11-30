@@ -2612,7 +2612,7 @@ var so_no_manual_assign;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find("#multipropose_check").prop( "checked" );
+										 all_multi+="&allow_multi="+parent.find("#multipropose_check-CB").is(':checked');
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
