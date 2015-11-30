@@ -89,7 +89,8 @@ class Locks extends CI_Controller
             else 
             if($lv_status == 'Reject')
             {
-            $lv_result=$this->m_lock->rejectSoftLock($lv_trans_id,$lv_comments);
+           // $lv_result=$this->m_lock->rejectSoftLock($lv_trans_id,$lv_comments);
+           $lv_result=$this->m_lock->rejectSoftLock($lv_trans_id,$lv_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);
                 if($lv_result == 1)
                 {
                 $lv_msg = "Resource Rejected";
