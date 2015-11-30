@@ -38,6 +38,7 @@ var so_pro_name_assign;
 var so_cust_name_assign;
 var so_bu_manual_assign;
 var so_no_manual_assign;
+var all_multi="";
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -2599,7 +2600,15 @@ var so_no_manual_assign;
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								var all_multi="";
+								if($("#multipropose_check-CB").is(':checked')== true)
+									{
+	
+								 all_multi="X";
+									}
+								else
+									{
+									all_multi="";
+									}
 								 
 							
 
@@ -2612,7 +2621,7 @@ var so_no_manual_assign;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find("#multipropose_check-CB").is(':checked');
+										 all_multi+="&allow_multi="+all_multi;
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -5206,6 +5215,22 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							      			console.log(odata);
 							      			 alert(odata);
 							      			window.location.reload();
+							      			$("#second").addClass("hide_div");	
+											$("#first").addClass("hide_div");
+											$("#amend_first").addClass("hide_div");
+											$("#amend_zero").addClass("hide_div");
+											$("#report_first").addClass("hide_div");
+											$("#report_first_open").addClass("hide_div");
+											$("#report_first_zero").addClass("hide_div");
+											$("#amend_report_view").addClass("hide_div");
+											$("#soft_report_view").addClass("hide_div");
+											$("#hard_report_view").addClass("hide_div");
+											$("#soft_expiry_report_view").addClass("hide_div");
+											$("#manual1").removeClass("hide_div");
+											$("#third").addClass("hide_div");
+											$("#four1").addClass("hide_div");
+											
+											$("#four2_core").addClass("hide_div");
 							      		}
 									
 									});
@@ -5558,7 +5583,19 @@ var repo_to1 = new sap.ui.commons.Label({
 					}
 								else if ($("#soft_expiry_check-RB").is(":checked") == true)
 								{
-							
+							   
+									var from_hardlock_expiry_report = $("#__picker0-input").val();
+									var to_hardlock_expiry_report = $("#__picker1-input").val();
+									
+			//[11/30/2015 3:39 PM] Kumthekar, Reshma: 
+//http://localhost/rmt/api/CI/index.php/getslockexp/?lv_from_date=2015-11-19&lv_to_date=2015-11-25
+			
+
+							 window.open("/rmt/api/CI/index.php/getslockexp/?lv_from_date="
+										+from_hardlock_expiry_report+
+										"&lv_to_date="
+										+to_hardlock_expiry_report)
+									
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
 								$("#report_first_zero").addClass("hide_div");
@@ -5566,20 +5603,18 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#amend_report_view").addClass("hide_div");
 								$("#soft_report_view").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
-								$("#soft_expiry_report_view").removeClass("hide_div");
+								$("#soft_expiry_report_view").removeClass("hide_div"); 
 					}
 								
 								else if ($("#bench_age_check-RB").is(":checked") == true)	
 									{
 							tp1 = new sap.ui.ux3.ToolPopup({
-								        id: 'bench_age_popup' ,
+								       // id: 'bench_age_popup' ,
 										content : [ for_desicion ],
 										opener : view_report_sel
 									}).addStyleClass("for_hide");
 					
 									}
-								
-								
 									tp1.open();
 									
 							
@@ -5596,7 +5631,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" ,		
 					press: function()
 					{
-						jQuery( '#bench_age_popup' ).hide().css( 'visibility','hidden')
+						jQuery( '.for_hide' ).hide().css( 'visibility','hidden')
 					}
 						}).addStyleClass("for_normal_buttons_style1");
 
