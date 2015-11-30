@@ -31,6 +31,7 @@ class m_ManualLocks extends CI_model
           gc_so_proj_type   = 'so_proj_type',
           gc_tabname        = 'trans_locks',
           gc_so_status      = 'so_status',
+          gc_so_status_ne   = 'so_status !=',
           gc_hardlock       = 'S201',
           gc_lock_soid      = 'so_id',
           gc_lock_empid     = 'emp_id',
@@ -50,8 +51,18 @@ class m_ManualLocks extends CI_model
           gc_updated_on     = 'updated_on',
           gc_x              = 'X',
           gc_emp_deploy     = 'deployable',
-          gc_emp_futso      = 'fut_so';
-    
+          gc_emp_futso      = 'fut_so',
+          gc_emp_cust       = 'cust_name',
+          gc_emp_capab      = 'comp',
+          gc_emp_skil       = 'prime_skill',
+          gc_emp_level      = 'level',
+          gc_emp_curso      = 'curr_so',
+          gc_emp_empname    = 'emp_name',
+          gc_emp_empid      = 'emp_id',
+          gc_emp_loc        = 'loc',
+          gc_m_emp_ras_copy = 'm_emp_ras_copy',
+          gc_m_emp_rec      = 'm_emp_record';  
+          
     private $lt_org_arr = [];
     public function __construct()
     {
@@ -60,7 +71,8 @@ class m_ManualLocks extends CI_model
         $io_utility = new m_utility();
     }
     
-    public function get_ValidSOs(   $i_from_date = '', 
+    public function get_ValidSOs(   $i_so_no = '',
+                                    $i_from_date = '', 
                                     $i_to_date = '', 
                                     $i_proj_bu = '', 
                                     $i_type = '', 
@@ -116,26 +128,78 @@ class m_ManualLocks extends CI_model
         $this->db->where(self::gc_so_proj_type,$i_type);
         }
         
+// So Number
+        if($this->isFilterset($i_so_no))
+        {
+        $this->db->where(self::gc_so_pos_no,$i_so_no);
+        }
+        
+// Filter out processed SO
+        $this->db->where(self::gc_so_status_ne,self::gc_x);
+        
 // Once all filters are set, query the view and return the array.          
         return($this->db->get(self::gc_fulfill_stat)->result_array());        
     }
     
-    public function get_ValidEMPs(  $i_deployable, 
-                                    $i_capability, 
-                                    $i_skill, 
-                                    $i_location, 
-                                    $i_level    )
-    {
+    public function get_ValidEMPs(  $i_empid = '',
+                                    $i_deployable = '',
+                                    $i_futso = '',
+                                    $i_capability = '', 
+                                    $i_skill = '', 
+                                    $i_location = '', 
+                                    $i_level = ''    )
+    {        
         
 // Select SO Number from table        
-        $this->db->select(self::gc_emp_deploy.','.self::gc_emp_futso.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no.','.self::gc_so_sdate_new.','.self::gc_so_edate);
+        $this->db->select(self::gc_emp_deploy.','.self::gc_emp_futso.','.self::gc_emp_capab.','.self::gc_emp_skill.','.self::gc_emp_loc.','.self::gc_emp_curso.','.self::gc_emp_empid.','.self::gc_emp_empname);
         
 // Instantiate utility model and use validateDate() to validate the input date format        
-        $io_utility = new m_utility();        
-        if($this->isFilterset($i_proj_loc))
+        $io_utility = new m_utility();
+        
+// Employee Id        
+        if($this->isFilterset($i_empid))
         {
-        $this->db->where_in(self::gc_so_loc,$i_proj_loc);
+        $this->db->where(self::gc_emp_empid,$i_empid);
+        }               
+        
+// Deployable        
+        if($this->isFilterset($i_deployable))
+        {
+        $this->db->where(self::gc_emp_deploy,$i_deployable);
         }
+
+// Future SO
+        if($this->isFilterset($i_futso))
+        {
+        $this->db->where(self::gc_emp_futso,$i_futso);
+        }        
+
+// Capability
+        if($this->isFilterset($i_capability))
+        {
+        $this->db->where(self::gc_emp_capab,$i_capability);
+        }
+        
+// Skill
+        if($this->isFilterset($i_skill))
+        {
+        $this->db->where(self::gc_emp_skill,$i_skill);
+        }    
+                
+// Level
+        if($this->isFilterset($i_level))
+        {
+        $this->db->where(self::gc_emp_level,$i_level);
+        }         
+        
+// Location        
+        if($this->isFilterset($i_location))
+        {
+        $this->db->where_in(self::gc_emp_loc,$i_location);
+        }
+        
+// Once all filters are set, query the view and return the array.            
+        return($this->db->get(self::gc_m_emp_ras_copy)->result_array());        
     }
     
     public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')

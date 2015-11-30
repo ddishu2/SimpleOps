@@ -14,6 +14,7 @@
 class ManualLocks extends CI_Controller
 {   
     const gc_from_date  = 'so_from_date',
+          gc_so_pos_no  = 'so_pos_no',  
           gc_to_date    = 'so_to_date',
           gc_proj_bu    = 'proj_bu',
           gc_type       = 'so_type',
@@ -30,7 +31,8 @@ class ManualLocks extends CI_Controller
           gc_lock_sdate = 'lock_start_date',
           gc_lock_edate = 'lock_end_date',
           gc_lock_reqid = 'requestor_id',
-          gc_lock_multi = 'allow_multi'; 
+          gc_lock_multi = 'allow_multi',
+          gc_emp_empid  = 'emp_id'; 
 
     public function __construct()
     {
@@ -50,7 +52,9 @@ class ManualLocks extends CI_Controller
         $lv_proj_id    = $this->input->get(self::gc_proj_id);
         $lv_cust_name  = $this->input->get(self::gc_cust_name);
         $lv_capability = $this->input->get(self::gc_capability);
-        $lt_validso = $this->m_ManualLocks->get_ValidSOs(   $lv_from_date, 
+        $lv_so_no      = $this->input->get(self::gc_so_pos_no);
+        $lt_validso = $this->m_ManualLocks->get_ValidSOs(   $lv_so_no,
+                                                            $lv_from_date, 
                                                             $lv_to_date, 
                                                             $lv_proj_bu, 
                                                             $lv_type, 
@@ -69,7 +73,9 @@ class ManualLocks extends CI_Controller
         $lv_skill      = $this->input->get(self::gc_skill);
         $lv_location   = $this->input->get(self::gc_proj_loc);
         $lv_level      = $this->input->get(self::gc_level);
-        $lt_validemp   = $this->m_ManualLocks->get_ValidEMPs(   $lv_deployable, 
+        $lv_empid      = $this->input->get(self::gc_emp_empid);
+        $lt_validemp   = $this->m_ManualLocks->get_ValidEMPs(   $lv_empid,
+                                                                $lv_deployable, 
                                                                 $lv_capability, 
                                                                 $lv_skill, 
                                                                 $lv_location, 
