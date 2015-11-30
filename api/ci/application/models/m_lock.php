@@ -520,7 +520,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         try {
 //            mysqli_begin_transaction($lv_db);
            // $sql = "UPDATE trans_locks SET status='S221' WHERE trans_id = $fp_v_lock_trans_id";
-            
+             $this->db->trans_start();
             $this->db->where(self::C_TRANS_ID,$fp_v_lock_trans_id);
             $data = array(
                 self::C_FNAME_STATUS =>self::C_STATUS_SOFT_LOCK_REJECTED 
@@ -530,12 +530,15 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             
             
             //$re_sos = cl_DB::updateResultIntoTable($sql);
-            $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, 'S221', $lv_prop_id, $lv_req_id);
-            $lv_comments = self::setComments($lv_trans_id,'S221',$fp_v_comments);
-            
+            $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, self::C_STATUS_SOFT_LOCK_REJECTED, $lv_prop_id, $lv_req_id);
+            //$lv_comments = self::setComments($lv_trans_id,'S221',$fp_v_comments);
+             $lv_comments = self::setComments($lv_trans_id,self::C_STATUS_SOFT_LOCK_REJECTED,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);
             $lv_result = self::setRejectionCount($lv_so_id);
             $lv_Rej_count = self ::getRejectionCount($lv_so_id);
-            if($lv_Rej_count >= 3)
+            $this->db->trans_complete();
+           
+            
+            if($lv_Rej_count >= 3&&$this->db->trans_status() === TRUE)
             {
                 //method to send mail to so_owner to clsoe the SO
                  $this->m_Notifications->sendSORejectionNotification($lv_so_id, $lv_emp_id,  $lv_trans_id);
