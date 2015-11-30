@@ -88,8 +88,8 @@
     		success : function(odata){
 
     		      alert("Submitted");
-    		     /*  window.open('','_parent',''); 
-    		      window.close(); */
+    		      window.open('','_parent',''); 
+    		      window.close(); 
     		}
 		});
 	         }
