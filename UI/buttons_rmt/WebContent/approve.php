@@ -79,7 +79,7 @@
 	        	 alert("Please Enter the Comments");
 	         }
 	         else{
-			
+			console.log("/rmt/api/ci/index.php/approve_hard_lock/?"+asc1);
 			$.ajax({
     		  method: "GET",
     		  url: "/rmt/api/ci/index.php/approve_hard_lock/?"+asc1,
@@ -107,7 +107,7 @@
 			
 			<div>
 				<h3>Employee Details</h3>
-				<input type="hidden" id="transaction_id" value="<?php echo htmlspecialchars($_GET["trans_id"]);?>"/>
+				<input type="text" id="transaction_id" class="get_trans_id" value="<?php echo htmlspecialchars($_GET["trans_id"]);?>"/>
 				<table cellpadding="0" cellspacing="0" class="details_table">
 					<tr>
 						<th>BU</th>
