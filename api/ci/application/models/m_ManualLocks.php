@@ -52,6 +52,7 @@ class m_ManualLocks extends CI_model
           gc_emp_deploy     = 'deployable',
           gc_emp_futso      = 'fut_so';
     
+    private $lt_org_arr = [];
     public function __construct()
     {
         $this->load->database();
@@ -69,6 +70,10 @@ class m_ManualLocks extends CI_model
                                     $i_cust_name = '',
                                     $i_capability = ''  )
     {
+        if($this->isFilterset($i_proj_loc))
+        {    
+        $this->lt_org_arr = $this->normaliseloc($i_proj_loc);
+        }
         
 // Select SO Number from table        
         $this->db->select(self::gc_so_proj_id.','.self::gc_so_proj_name.','.self::gc_cust_name.','.self::gc_so_proj_bu.','.self::gc_so_pos_no.','.self::gc_so_sdate_new.','.self::gc_so_edate);
@@ -90,9 +95,9 @@ class m_ManualLocks extends CI_model
         {
         $this->db->where(self::gc_so_proj_bu,$i_proj_bu);
         }        
-        if($this->isFilterset($i_proj_loc))
-        {
-        $this->db->where_in(self::gc_so_loc,$i_proj_loc);
+        if($this->isFilterset($this->lt_org_arr))
+        {           
+        $this->db->where_in(self::gc_so_loc,$this->lt_org_arr);
         }         
         if($this->isFilterset($i_capability))
         {
@@ -112,7 +117,7 @@ class m_ManualLocks extends CI_model
         }
         
 // Once all filters are set, query the view and return the array.          
-        return($this->db->get(self::gc_fulfill_stat)->result_array());
+        return($this->db->get(self::gc_fulfill_stat)->result_array());        
     }
     
     public function get_ValidEMPs(  $i_deployable, 
@@ -258,9 +263,16 @@ class m_ManualLocks extends CI_model
     private function isFilterset($fp_filter_value)
     {
         $filter_set = false;
-       if(!($fp_filter_value == ''|| $fp_filter_value == null)){
+        if(!($fp_filter_value == ''|| $fp_filter_value == null)){
             $filter_set = true;
        }
        return $filter_set;
+    }
+    Private function normaliseloc($i_loc_arr)
+    {
+        $this->db->select('org');
+        $this->db->where_in('loc',$i_loc_arr);
+        $lt_arr = $this->db->get('v_locations')->result_array();
+        return(array_column($lt_arr,'org'));
     }
 }
