@@ -193,14 +193,18 @@ class m_lock extends ci_model
 //                }
                 $lv_trans_id++; //newly generated trans id
 
-
-                try {
+//
+//                try {
                     
 //                    mysqli_autocommit( $lv_db,false);
 //                    mysqli_begin_transaction($lv_db);
-                        $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], self::C_STATUS_SOFT_LOCK, $lv_prop_id, $lv_request_id);
+                    $this->db->trans_start();
+                    
+                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$fp_arr_Multi[$i]);
+                    
+                    $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], self::C_STATUS_SOFT_LOCK, $lv_prop_id, $lv_request_id);
                         
-                        $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$fp_arr_Multi[$i]);
+                       
                          
                         // if allow multi is set to false update and set allow multi = false  all the entries in translocks for that employee 
                         if ($fp_arr_Multi[$i] == '')
@@ -213,30 +217,23 @@ class m_lock extends ci_model
                                 $this->db->update(self::C_TABNAME, $data); 
 
                                  }
-//                    mysqli_commit($lv_db);
-                   // echo 'History'.$lv_history;
-                } catch (Exception $ex) {
-                    mysqli_rollback($lv_db);
-                    echo 'Failed-' . $ex->getMessage();
-                }
-                   
-                if ($lv_app_result == TRUE && $lv_history == TRUE) {
+                                 
+                        $this->db->trans_complete();         
+//                   
+                  
+                        if ($this->db->trans_status() === TRUE)
+                    {
                     $softlock_count++;      //counting no of soft lock
                     
                     
                     $lv_link = self::getLink($fp_arr_so[$i], $fp_arr_emp[$i],$lv_trans_id);
-                    
-                    
-                     // call method to send mail 
-                      
-                     
-                    //$i_mode = 'SL';
-                   // $lo_mail_noti = new cl_NotificationMails();
-                    //$lo_mail_noti->sendnotification($fp_arr_so[$i], $i_mode,$lv_link ,$lv_trans_id,$fp_arr_emp[$i]);
                    
-                   $this->m_Notifications->sendSoftLockNotification($fp_arr_so[$i],$lv_link,$fp_arr_emp[$i],$lv_trans_id);
-                   
-                }
+                   $this->m_Notifications->sendSoftLockNotification($fp_arr_so[$i],$lv_link,$fp_arr_emp[$i],$lv_trans_id);                  
+                    }
+                    else if($this->db->trans_status() === FALSE)
+                    {
+                    Echo "transaction failed";
+                    }
             } elseif ($fp_arr_stat[$i] == 'Reject') {
                 $lv_result = self::rejectProposal($lv_prop_id, $fp_arr_emp[$i], $fp_arr_so[$i]);
                 $rejected_proposal_count++;
@@ -400,8 +397,9 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         
         if($lv_status == self::C_STATUS_SOFT_LOCK )
             {
-        try {
+//        try {
 //            mysqli_begin_transaction($lv_db);
+            $this->db->trans_start();
             $lv_set_hardlock = self::setHardLock($lv_trans_id,$fp_sdate,$fp_edate);
             $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, self::C_STATUS_HARD_LOCK, $lv_prop_id, $lv_req_id);
           
@@ -424,12 +422,21 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             }
             
 //            mysqli_commit($lv_db);
+            $this->db->trans_complete();
+            if($this->db->trans_status() === TRUE)
+            {
             return 1;
-        } catch (Exception $ex) {
-//            mysqli_rollback($lv_db);
-            echo 'Failed-' . $ex->getMessage();
-            return -1;
-        }
+            }
+            else
+            {
+                return -1;
+            }
+//        } catch (Exception $ex) {
+////            mysqli_rollback($lv_db);
+//            echo 'Failed-' . $ex->getMessage();
+//            return -1;
+//        }
+            
         }
         else
         {

@@ -275,7 +275,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
         $lv_result = false;
         if (
                $lock->getRejectionCount($lv_so_id) >= 3
-               )
+            )
         {
             $lv_result = true;
         }
