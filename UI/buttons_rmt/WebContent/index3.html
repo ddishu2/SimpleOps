@@ -4990,17 +4990,12 @@ var so_no_manual_assign;
 var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 				id : 'matrix_for_manual_main',
 				layoutFixed : true,
-				width : '1500px',
+				width : '1400px',
 				columns : 5,
 				
-				widths : [ '300px','300px','300px','300px','300px']
+				widths : [ '300px','300px','300px','200px','300px']
 			});
-				/*  var oDivider0_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
-	                var oDivider0_1 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
-	                var oDivider0_2 = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
-	                var oDivider0_3 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
-	                
-	                matrix_for_manual_main.createRow(oDivider0_0,oDivider0_1,oDivider0_2,oDivider0_3,null); */
+				
 				var son_name = new sap.ui.commons.Label({
 					
 					text : "SO No."
@@ -5054,17 +5049,17 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								oFor_so.open();
 							}
 						});
-             var proid_man= new sap.ui.commons.TextView({id: 'proid1_man1',}).addStyleClass("for_fields_style1");;
+             var proid_man= new sap.ui.commons.TextView({id: 'proid1_man1',}).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
              var proname_man = new sap.ui.commons.TextView(
 						{
 							
 							id: 'proname1_man1',
-						}).addStyleClass("for_fields_style1");;
-				var sdate_man =		 new sap.ui.commons.TextView({id: 'startdate_man1'}).addStyleClass("for_fields_style1");;
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
+				var sdate_man =		 new sap.ui.commons.TextView({id: 'startdate_man1'}).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
                 var edate_man =  new sap.ui.commons.TextView({
                 	
                 	id: 'enddate_man1'
-                }).addStyleClass("for_fields_style1");;
+                }).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
           
                 matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
                 
@@ -5125,12 +5120,12 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 
 							oFor_emp.open();
 						}
-					}).addStyleClass("for_font_manual_label");
+					});
 		    
-		    var emp_name =new sap.ui.commons.TextView().addStyleClass("for_font_manual_label");
-		    var level_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label");
+		    var emp_name =new sap.ui.commons.TextView().addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
+		    var level_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
 		    
-		    var loci_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label");
+		    var loci_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
 		    
 		    matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
 		    var oDivider5_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
