@@ -31,7 +31,8 @@ class cl_releasenotification {
             $gv_level         = 'level',
             $gv_sup_id        = 'sup_id',
             $gv_sup_name      = 'sup_name',
-            $gv_pm_name       = 'proj_m_name';
+            $gv_pm_name       = 'proj_m_name',
+            $gv_cust_name     = 'cust_name';
     
     private function add_business_days($i_sdate) {
         $lv_count = 1;
@@ -49,6 +50,7 @@ class cl_releasenotification {
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
     {
+        $lt_invalid_project = "('Bench','Campus Hire', 'Apps1 Long  Leave & Ml')";
         $lv_edate = $this->add_business_days(date(self::gc_date_format)); 
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
@@ -67,7 +69,8 @@ class cl_releasenotification {
                             $this->gv_pm_name.
                             " FROM m_emp_ras_copy
                             WHERE curr_end_date = '$lv_edate' and ".
-                            $this->gv_idp . " = 'Appsone SAP' ORDER BY ". $this->gv_proj_code;
+                            $this->gv_idp . " = 'Appsone SAP' and "
+                            .$this->gv_cust_name." NOT IN " .$lt_invalid_project." ORDER BY ". $this->gv_proj_code;
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
