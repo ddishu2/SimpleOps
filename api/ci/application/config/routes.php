@@ -84,6 +84,7 @@ $route['loadRAS']            = 'Utility/load_RAS_File';
 $route['loadRRS']            = 'Utility/load_RRS_File';
 
 $route['displayreport']      = 'Reports/setreports';
+$route['viewreport']         =  'Reports/viewreports';
 $route['getamendment']       = 'Amendments/getamendments';
 $route['approveamendment']   = 'Amendments/approveamendment';
 
