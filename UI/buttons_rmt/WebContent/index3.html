@@ -38,6 +38,14 @@ var so_pro_name_assign;
 var so_cust_name_assign;
 var so_bu_manual_assign;
 var so_no_manual_assign;
+var emp_deploy_assign;
+var emp_future_assign;
+var emp_capability_assign ;
+var emp_skill_assign;
+var emp_loc_assign;
+var emp_currentso_assign;
+var emp_empid_assign;
+var emp_emp_name_assign
 var all_multi="";
 	sap.ui
 			.getCore()
@@ -3285,22 +3293,23 @@ var all_multi="";
 
 						}).addStyleClass("for_text_style1");
 						
-						var date1_manual = new Date();
-						              date1_manual.setDate(date1_manual.getDate());
+					 	var date1_manual = new Date();
+						              date1_manual.setDate();
 					   var date2_manual = new Date();
-						              date2_manual.setDate(date2_manual.getDate());
+						              date2_manual.setDate();
 
 						var for_from_date_manual = new sap.ui.model.json.JSONModel();
 						for_from_date_manual.setData({
 							dateValue : date1_manual
 						});
-						sap.ui.getCore().setModel(for_from_date_manual, "fromModel_manual");
+						sap.ui.getCore().setModel(for_from_date_manual, "fromModel_manual"); 
 
 						// create DatePickers and bind to model
 						var so_from_manual = new sap.ui.commons.DatePicker({
 							id : 'sfrom1_manual',
 							width : "10em",
 							value : {
+								
 								path : "fromModel_manual>/dateValue",
 								type : new sap.ui.model.type.Date({
 									pattern : "yyyy-MM-dd",
@@ -3309,10 +3318,21 @@ var all_multi="";
 							}
 						}).addStyleClass("for_fields_style1");
 						so_from_manual.setDate
-						/* date1.placeAt("sample2"); */
 
 						oLabel_manual.setLabelFor(so_from_manual);
-						osearch_manual.createRow(oLabel_manual, so_from_manual);
+						
+						var oLabel_manual_so_no = new sap.ui.commons.Label({
+						
+							text : 'SO NO.',
+
+						}).addStyleClass("for_text_style1");
+						var sonoText_manual = new sap.ui.commons.TextField({
+							id : 'so_no_form_manual',
+							editable : true,	
+							width : '200px'
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						
+						osearch_manual.createRow(oLabel_manual, so_from_manual,oLabel_manual_so_no,sonoText_manual);
 
 						var soDateToLabel_manual = new sap.ui.commons.Label({
 							id : 'so_date_to_manual',
@@ -3320,11 +3340,11 @@ var all_multi="";
 
 						}).addStyleClass("for_text_style1");
 
-						var for_to_date_manual = new sap.ui.model.json.JSONModel();
+					 	var for_to_date_manual = new sap.ui.model.json.JSONModel();
 						for_to_date_manual.setData({
 							dateValue : date2_manual
 						});
-						sap.ui.getCore().setModel(for_to_date_manual, "toModel_manual");
+						sap.ui.getCore().setModel(for_to_date_manual, "toModel_manual"); 
 
 						var so_to_manual = new sap.ui.commons.DatePicker({
 							id : 'sto1_manual',
@@ -3448,6 +3468,9 @@ var all_multi="";
 						so_type_select_manual.setEditable(true);
 						so_type_select_manual.setWidth("200px");
 						var oItem = new sap.ui.core.ListItem("so_type0_manual");
+						oItem.setText("");
+						so_type_select_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("so_type2_manual");
 						oItem.setText("Project");
 						so_type_select_manual.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("so_type1_manual");
@@ -3593,22 +3616,22 @@ var all_multi="";
 										temp_manual = p_loc_manu.split(",");
 										
 									console.log(temp_manual.length);
-				
+				                         var so_pos_no=$("#so_no_form_manual").val();
 										var p_id_manu=$("#pro_id_form_manual").val();
 										var c_name_manu=$("#cust_name1_manual").val();
 											var cap_manu=$("#ct_drop-input").val();
 									 var so_type_text_manu=$("#so_type_id1-input").val();//so_type_id1
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
-										
-										/*  /rmt/api/CI/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31 */	
-										  //[11/26/2015 2:07 PM] Mishra, Dikshant: 
+									
 
 
 //0.74.163.157:8080/rmt/api/ci/index.php/get_ValidSOs/?so_from_date=&so_to_date=&proj_bu=&so_type=&proj_name=&proj_loc=&proj_id=&cust_name=&capability=
 
 										 console
-												.log("/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+												.log("/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+														so_pos_no+
+														+"&so_from_date="
 														+ from_manu
 														+ "&so_to_date="
 														+ upto_manu
@@ -3634,7 +3657,9 @@ var all_multi="";
 										$
 												.ajax({
 													method : "GET",
-													url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+													url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+													so_pos_no+
+													+"&so_from_date="
 														+ from_manu
 														+ "&so_to_date="
 														+ upto_manu
@@ -3710,7 +3735,9 @@ var all_multi="";
 									$
 											.ajax({
 												method : "GET",
-												url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+												url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+												so_pos_no+
+												+"&so_from_date="
 													+ from_manu
 													+ "&so_to_date="
 													+ upto_manu
@@ -3788,7 +3815,9 @@ var all_multi="";
 									$
 											.ajax({
 												method : "GET",
-												url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+												url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+												so_pos_no+
+												+"&so_from_date="
 													+ from_manu
 													+ "&so_to_date="
 													+ upto_manu
@@ -3866,7 +3895,9 @@ var all_multi="";
 												$
 														.ajax({
 															method : "GET",
-															url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+															url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+															so_pos_no+
+															+"&so_from_date="
 																+ from_manu
 																+ "&so_to_date="
 																+ upto_manu
@@ -3949,7 +3980,9 @@ var all_multi="";
 															$
 																	.ajax({
 																		method : "GET",
-																		url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+																		url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+																		so_pos_no+
+																		+"&so_from_date="
 																			+ from_manu
 																			+ "&so_to_date="
 																			+ upto_manu
@@ -4036,7 +4069,9 @@ var all_multi="";
 															$
 																	.ajax({
 																		method : "GET",
-																		url : "/rmt/api/ci/index.php/get_ValidSOs/?so_from_date="
+																		url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
+																		so_pos_no+
+																		+"&so_from_date="
 																			+ from_manu
 																			+ "&so_to_date="
 																			+ upto_manu
@@ -4073,9 +4108,7 @@ var all_multi="";
 																			console.log(odata);
 																			var table_row;
 																			var res = odata;
-																			var res_length = 0;
-																			var res_completed = 0;
-																			var res_partial = 0;
+																		
 																			var completeData_manual = [];
 
 																			jQuery
@@ -4149,7 +4182,7 @@ var all_multi="";
 									        var object = table_for_manual_so.getModel().getProperty(path);
 									        var res_man=object;
 									        console.log(res_man);     
-									     console.log(object.so_pro_id_manual);
+									   
 									     so_pro_id_assign=object.so_pro_id_manual;
 									     so_pro_name_assign= object.so_pro_name_manual;
 									     so_cust_name_assign = object.so_cust_name_manual;
@@ -4157,7 +4190,7 @@ var all_multi="";
 									     so_no_manual_assign = object.so_no_manual;
 									     so_sdate_manual_assign = object.so_start_date_manual;
 									     so_edate_manual_assign = object.so_end_date_manual;
-									     console.log(so_bu_manual_assign);
+									   
 									     
 									        
 									      }
@@ -4168,8 +4201,8 @@ var all_multi="";
 									                                     	$("#proname1_man1").html(so_pro_name_assign);
 									                                     	$("#proid1_man1").html(so_pro_id_assign);
 									                                     	$("#sono_man1").html(so_no_manual_assign);
-									                                     	$("#startdate_man1").html(so_sdate_manual_assign);
-									                                     	$("#enddate_man1").html(so_edate_manual_assign);
+									                                     	$("#sdate1_man-input").val(so_sdate_manual_assign);
+									                                     	$("#edate1_man-input").val(so_edate_manual_assign);
 									                                     	
 									                                     	
 									                                     	//sap.ui.getCore().byId("proname1_man1").setText(so_pro_name_assign);
@@ -4281,6 +4314,27 @@ var all_multi="";
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									visibleRowCount :20,
 									firstVisibleRow: 3,
+									rowSelectionChange: function(e) {
+									      var oIndex = e.getParameter('rowIndex');
+									      if (table_for_manual_emp.isIndexSelected(oIndex )) {
+									        var oContext= table_for_manual_emp.getContextByIndex(oIndex );
+									        var path = oContext.sPath;
+									        var object = table_for_manual_emp.getModel().getProperty(path);
+									        var res_man=object;
+									        console.log(res_man);     
+									   
+									     emp_deploy_assign=object.emp_deploy_manual;
+									     emp_future_assign= object.emp_future_manual;
+									     emp_capability_assign = object.emp_capability_manual;
+									     emp_skill_assign= object.emp_skill_manual;
+									    emp_loc_assign = object.emp_loc_manual;
+									     emp_currentso_assign = object.emp_currentso_manual;
+									     emp_empid_assign = object.emp_empid_manual;
+									     emp_emp_name_assign = object.emp_emp_name_manual
+									     
+									        
+									      }
+									    },
 									 
 									toolbar: new sap.ui.commons.Toolbar({items: [ 
 										                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { alert(table_for_manual_emp.getSelectedIndex() );
@@ -4294,6 +4348,11 @@ var all_multi="";
 										                                     			
 										                                     			 oFor_emp.addContent(osearch_manual_emp);
 										                            					 oFor_emp.removeContent(table_for_manual_emp);
+										                            					 
+										                            					 $("#empid_man-input").html(emp_empid_assign);
+										                            					 $("#emp_name_main").html(emp_emp_name_assign);
+										                            					// $("#emp_level_main").html(emp_loc_assign);
+										                            					 $("#emp_location_main").html(emp_empid_assign);
 										                                     			
 										                                     		}})
 										                                     	]
@@ -4305,9 +4364,9 @@ var all_multi="";
 								tooltip :"Deployable"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_deploy_manual"),
+							sortProperty : "emp_deploy_manual",
+							filterProperty : "emp_deploy_manual",
 							width : "50px",
 						//setRowHeight:"200px"
 						}));
@@ -4318,9 +4377,9 @@ var all_multi="";
 								tooltip : "Future SO"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_future_manual"),
+							sortProperty : "emp_future_manual",
+							filterProperty : "emp_future_manual",
 							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4329,9 +4388,9 @@ var all_multi="";
 								tooltip : "Capability"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_capability_manual"),
+							sortProperty : "emp_capability_manual",
+							filterProperty : "emp_capability_manual",
 							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4340,9 +4399,9 @@ var all_multi="";
 								tooltip : "Skill"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_skill_manual"),
+							sortProperty : "emp_skill_manual",
+							filterProperty : "emp_skill_manual",
 							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4351,9 +4410,9 @@ var all_multi="";
 								tooltip : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_loc_manual"),
+							sortProperty : "emp_loc_manual",
+							filterProperty : "emp_loc_manual",
 							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4362,9 +4421,9 @@ var all_multi="";
 								tooltip : "Current SO"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_currentso_manual"),
+							sortProperty : "emp_currentso_manual",
+							filterProperty : "emp_currentso_manual",
 							width : "30px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4373,9 +4432,9 @@ var all_multi="";
 								tooltip : "Emp ID"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_empid_manual"),
+							sortProperty : "emp_empid_manual",
+							filterProperty : "emp_empid_manual",
 							width : "30px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -4384,22 +4443,12 @@ var all_multi="";
 								tooltip : "Emp Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_emp_name_manual"),
+							sortProperty : "emp_emp_name_manual",
+							filterProperty : "emp_emp_name_manual",
 							width : "50px"
 						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Select",
-								tooltip : "Select"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "30px"
-						}));
+					
 						table_for_manual_emp.sort(table_for_manual_emp.getColumns()[0]);						
 						
 						
@@ -4413,9 +4462,19 @@ var all_multi="";
 							widths : [ '200px', '200px']
 						});
 						
-						var deployable_manual = new sap.ui.commons.Label({
-							text : 'Deployable :'
-						}).addStyleClass("for_text_style1");
+						
+                          var emp_id_manual = new sap.ui.commons.Label({
+  							text : 'Emp ID :'
+  						}).addStyleClass("for_text_style1");
+  						var emp_id_manual_text = new sap.ui.commons.TextField({
+  							id : 'emp_id_manual1'
+  							
+  						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						
+  						osearch_manual_emp.createRow(emp_id_manual, emp_id_manual_text);
+                          var deployable_manual = new sap.ui.commons.Label({
+  							text : 'Deployable :'
+  						}).addStyleClass("for_text_style1");
 
 						var deployable_dropdown = new sap.ui.commons.DropdownBox(
 								{
@@ -4424,6 +4483,9 @@ var all_multi="";
 						deployable_dropdown.setTooltip("Deployable");
 						deployable_dropdown.setEditable(true);
 						deployable_dropdown.setWidth("200px");
+						var oItem = new sap.ui.core.ListItem("Capability01_manual_deploy");
+						oItem.setText("");
+						deployable_dropdown.addItem(oItem);
 						var oItem = new sap.ui.core.ListItem("Capability0_manual_deploy");
 						oItem.setText("YES");
 						deployable_dropdown.addItem(oItem);
@@ -4438,6 +4500,7 @@ var all_multi="";
 						}).addStyleClass("for_text_style1");
 						 
 						 var future_manual_CB = new sap.ui.commons.CheckBox({
+							 id: 'check_for_future_so',
 								text : 'Blank',
 								tooltip : 'Blank',
 								checked : true 
@@ -4984,6 +5047,81 @@ var all_multi="";
 					{
 					 oFor_emp.removeContent(osearch_manual_emp);
 					 oFor_emp.addContent(table_for_manual_emp);
+					   var emp_send_id= $("#emp_id_manual1").val();
+				     var emp_send_deploy= $("#ct_deploy_manual-input").val();
+				      var emp_send_futso= $("#check_for_future_so-CB").is(':checked');
+			         var emp_send_cap= $("#ct_drop_manual_emp-input").val();
+		              var emp_send_skill=$("#skill_drop_manual_emp-input").val();
+				      var emp_send_location=$("#ct_drop_manual_location-input").val();
+				      var emp_send_level= $("#__box6-input").val() ;
+				    	 
+					 	$
+						.ajax({
+							method : "GET",
+							url : 
+								
+		///rmt/api/ci/index.php/get_ValidEMPs/?emp_id=&deployable=&fut_so=0&capability=&prime_skil=&proj_loc[]=&level=
+								
+								
+								"/rmt/api/ci/index.php/get_ValidEMPs/?emp_id="+emp_send_id+
+							"&deployable="
+							+emp_send_deploy+"&fut_so="+emp_send_futso+"&capability="+emp_send_cap+"&prime_skil="
+							+emp_send_skill+"&proj_loc[]="+emp_send_location+"&level="+emp_send_level,
+	
+							success : function(odata) {
+								
+								sap.ui.core.BusyIndicator.hide(0);
+								console.log(odata);
+								var table_row;
+								var res = odata;
+							
+								var completeData_manual_emp = [];
+
+								jQuery
+								.each(
+										res,
+										function(
+												i,
+												val) {
+
+											
+											
+												var tmp_emp = {
+													emp_deploy_manual : val.deployable,
+												emp_future_manual : val.fut_so,
+													emp_capability_manual : val.comp,
+													emp_skill_manual : val.prime_skill,
+													emp_loc_manual : val.loc,
+													emp_currentso_manual : val.curr_so,
+													emp_empid_manual: val.emp_id,
+													emp_emp_name_manual: val.emp_name,
+												
+													
+												
+												};
+											
+												completeData_manual_emp
+														.push(tmp_emp);
+											
+
+											
+
+										});
+
+								var oModel2_manual_emp = new sap.ui.model.json.JSONModel();
+								oModel2_manual_emp
+										.setData({
+											modelData : completeData_manual_emp
+										});
+								table_for_manual_emp
+										.setModel(oModel2_manual_emp);
+								table_for_manual_emp
+										.bindRows("/modelData");
+
+							}
+				});
+					 
+					 
 					
 					}
 				
@@ -4999,10 +5137,10 @@ var all_multi="";
 var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 				id : 'matrix_for_manual_main',
 				layoutFixed : true,
-				width : '1400px',
+				width : '1500px',
 				columns : 5,
 				
-				widths : [ '300px','300px','300px','200px','300px']
+				widths : [ '300px','300px','300px','300px','300px']
 			});
 				
 				var son_name = new sap.ui.commons.Label({
@@ -5064,12 +5202,48 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							
 							id: 'proname1_man1',
 						}).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
-				var sdate_man =		 new sap.ui.commons.TextView({id: 'startdate_man1'}).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
-                var edate_man =  new sap.ui.commons.TextView({
-                	
-                	id: 'enddate_man1'
-                }).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
-          
+			
+             var dateformat1_man = new Date();
+				              dateformat1_man.setDate();
+			   var dateformat2_man = new Date();
+				              dateformat2_man.setDate();
+
+				var for_from_date1_man = new sap.ui.model.json.JSONModel();
+				for_from_date1_man.setData({
+					dateValue : dateformat1_man
+				});
+				sap.ui.getCore().setModel(for_from_date1_man, "fromModel1_man");
+
+				// create DatePickers and bind to model
+				var sdate_man = new sap.ui.commons.DatePicker({
+					id : 'sdate1_man',
+					width : "10em",
+					value : {
+						path : "fromModel1_man>/dateValue",
+						type : new sap.ui.model.type.Date({
+							pattern : "yyyy-MM-dd",
+							strictParsing : true
+						})
+					}
+				});
+				
+				
+				var for_to_date1_man = new sap.ui.model.json.JSONModel();
+				for_to_date1_man.setData({
+					dateValue : dateformat2_man
+				});
+				sap.ui.getCore().setModel(for_to_date1_man, "toModel1_man");
+				var edate_man = new sap.ui.commons.DatePicker({
+					id : 'edate1_man',
+					width : "10em",
+					value : {
+						path : "toModel1_man>/dateValue",
+						type : new sap.ui.model.type.Date({
+							pattern : "yyyy-MM-dd",
+							strictParsing : true
+						})
+					}
+				});
                 matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
                 
                 
@@ -5086,7 +5260,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 					text : "Emp ID"
 				}).addStyleClass("for_font_manual_label"); 
           var empname_name = new sap.ui.commons.Label({
-				
+        	  
 				text : "Emp Name"
 			}).addStyleClass("for_font_manual_label");
 	      var emplevel_name = new sap.ui.commons.Label({
@@ -5108,8 +5282,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 					 {
 						 id: 'empid_man',
 						 
-						valueHelpRequest : function(
-								oEvent) {
+						valueHelpRequest : function(oEvent
+								) {
 							console
 									.log(oEvent
 											.getParameters('newValue').newValue);
@@ -5132,10 +5306,10 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 						}
 					});
 		    
-		    var emp_name =new sap.ui.commons.TextView().addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
-		    var level_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
+		    var emp_name =new sap.ui.commons.TextView({id: 'emp_name_main'}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
+		    var level_man = new sap.ui.commons.TextView({id: 'emp_level_main' }).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
 		    
-		    var loci_man = new sap.ui.commons.TextView().addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
+		    var loci_man = new sap.ui.commons.TextView({id: 'emp_location_main'}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
 		    
 		    matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
 		    var oDivider5_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
@@ -5145,8 +5319,34 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
             
             matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
 		    
-		   ///5th row
-		   
+            var teid_name = new sap.ui.commons.Label({
+				
+				text : "T & E Approver ID"
+			}).addStyleClass("for_font_manual_label"); 
+      var tename_name = new sap.ui.commons.Label({
+    	  
+			text : "T & E Approver Name"
+		}).addStyleClass("for_font_manual_label");
+      
+      matrix_for_manual_main.createRow(null,teid_name,tename_name,null,null)  ;
+
+            var teapproveid=  new sap.ui.commons.ValueHelpField(
+					 {
+						 id: 'teid',
+						 
+						
+					});
+            
+            var teapprove_name = new sap.ui.commons.TextView({id: 'tename',value:"hii"}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
+            matrix_for_manual_main.createRow(null,teapproveid,teapprove_name,null,null)  ;
+		   ///5th ro
+		     var oDivider5_0up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
+		    var oDivider5up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
+            var oDivider6up = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
+            var oDivider7up = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
+       
+            
+            matrix_for_manual_main.createRow(oDivider5_0up,oDivider5up,oDivider6up,oDivider7up,null);
 		     var smprocode_name = new sap.ui.commons.Label({
 					
 					text : "Smart Project Code"
@@ -5175,7 +5375,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 		                                                     new sap.ui.core.ListItem({text: ""}),
 		                     								new sap.ui.core.ListItem({text: "Expense"}),
 		                     								new sap.ui.core.ListItem({text: "Effort Booking"})
-		                     							]}).addStyleClass("for_font_manual_label");
+		                     							]}).addStyleClass("for_font_manual_label").addStyleClass("fte_manual1");
 		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
 		   
 		   var oDivider8_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
@@ -5193,8 +5393,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var input_manual1 = $(".smart_project_code1").val();
 								 var input_manual2 =  $(".fte_manual1").val();
 								 var to_send_sono =   $("#sono_man1").html();
-								 var to_send_sdate =  $("#startdate_man1").html();
-								 var to_send_edate =  $("#enddate_man1").html(); 
+								 var to_send_sdate =  $("#sdate1_man-input").html();
+								 var to_send_edate =  $("#edate1_man-input").html(); 
 								 var emp_to_send = $("#empid_man-input").val();
 	
 								  if (!input_manual1.match(regex)) {
