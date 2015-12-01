@@ -209,8 +209,7 @@ class m_ManualLocks extends CI_model
                                     $i_corpid = ''  )
     {
 // Select Employee Details from table        
-//        $this->db->select(self::gc_emp_empid.','.self::gc_emp_empname);
-        $this->db->select(self::gc_emp_empid);
+        $this->db->select(self::gc_emp_empid.','.self::gc_emp_empname);        
         
 // Employee Id        
         if($this->isFilterset($i_empid))
