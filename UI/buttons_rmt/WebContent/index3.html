@@ -4475,7 +4475,7 @@ var te_emp_name_assign;
   						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						
   						osearch_manual_emp.createRow(emp_id_manual, emp_id_manual_text);
-                          var deployable_manual = new sap.ui.commons.Label({
+                         /* var deployable_manual = new sap.ui.commons.Label({
   							text : 'Deployable :'
   						}).addStyleClass("for_text_style1");
 
@@ -4512,7 +4512,7 @@ var te_emp_name_assign;
 						 
                           
 						
-						osearch_manual_emp.createRow(future_manual, future_manual_CB); 
+						osearch_manual_emp.createRow(future_manual, future_manual_CB);  */
 						
 						
 						var capabilityLabel_manual_emp = new sap.ui.commons.Label({
@@ -4991,11 +4991,12 @@ var te_emp_name_assign;
 				
 				
 				var level_manual = new sap.ui.commons.Label({
-					text : "Level :"
+					text : "Level :",
+				
 				}).addStyleClass("for_text_style1");
 				var capabilityText_level = new sap.ui.commons.DropdownBox(
 						{
-							//id: 'ct_drop_manual_emp',
+							id:'emp_level1'
 						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 				capabilityText_level.setTooltip("Location");
 				capabilityText_level.setEditable(true);
@@ -5051,12 +5052,12 @@ var te_emp_name_assign;
 					 oFor_emp.removeContent(osearch_manual_emp);
 					 oFor_emp.addContent(table_for_manual_emp);
 					   var emp_send_id= $("#emp_id_manual1").val();
-				     var emp_send_deploy= $("#ct_deploy_manual-input").val();
-				      var emp_send_futso= $("#check_for_future_so-CB").is(':checked');
+				   //  var emp_send_deploy= $("#ct_deploy_manual-input").val();
+				   //   var emp_send_futso= $("#check_for_future_so-CB").is(':checked');
 			         var emp_send_cap= $("#ct_drop_manual_emp-input").val();
 		              var emp_send_skill=$("#skill_drop_manual_emp-input").val();
 				      var emp_send_location=$("#ct_drop_manual_location-input").val();
-				      var emp_send_level= $("#__box6-input").val() ;
+				      var emp_send_level= $("#emp_level1-input").val() ;
 				    	 
 					 	$
 						.ajax({
@@ -5067,8 +5068,8 @@ var te_emp_name_assign;
 								
 								
 								"/rmt/api/ci/index.php/get_ValidEMPs/?emp_id="+emp_send_id+
-							"&deployable="
-							+emp_send_deploy+"&fut_so="+emp_send_futso+"&capability="+emp_send_cap+"&prime_skil="
+							"&deployable=YES"
+							+"&fut_so=0"+"&capability="+emp_send_cap+"&prime_skil="
 							+emp_send_skill+"&proj_loc[]="+emp_send_location+"&level="+emp_send_level,
 	
 							success : function(odata) {
