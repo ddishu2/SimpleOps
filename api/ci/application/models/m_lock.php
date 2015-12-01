@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once(APPATH.'models/m_utility');
 require_once(APPPATH.'models/getDetails.php');
 class m_lock extends ci_model
 { 
@@ -206,7 +207,7 @@ class m_lock extends ci_model
 //                    $lv_trans_id = $value['MAX(trans_id)'];
 //                }
                 $lv_trans_id++; //newly generated trans id
-
+                $lo_utility = new m_utility(); 
                 $lv_updated_by = $lo_utility->get_username();// get the Ops team guys name
                 $lv_updated_on = date('Y-m-d');
 //                try {
