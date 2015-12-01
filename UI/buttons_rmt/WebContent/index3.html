@@ -47,6 +47,9 @@ var emp_currentso_assign;
 var emp_empid_assign;
 var emp_emp_name_assign
 var all_multi="";
+var oFor_te;
+var te_emp_id_assign;
+var te_emp_name_assign;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -4337,9 +4340,12 @@ var all_multi="";
 									    },
 									 
 									toolbar: new sap.ui.commons.Toolbar({items: [ 
-										                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { alert(table_for_manual_emp.getSelectedIndex() );
-										                                     	   
-										                                     		//oFor_emp.close();
+										                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { 
+										                                     			$("#empid_man-input").html(emp_empid_assign);
+										                            					 $("#emp_name_main").html(emp_emp_name_assign);
+										                            					// $("#emp_level_main").html(emp_loc_assign);
+										                            					 $("#emp_location_main").html(emp_empid_assign);
+										                                     		oFor_emp.close();
 										                                     		
 										                                     		}})
 										                                     	]}),
@@ -4349,10 +4355,7 @@ var all_multi="";
 										                                     			 oFor_emp.addContent(osearch_manual_emp);
 										                            					 oFor_emp.removeContent(table_for_manual_emp);
 										                            					 
-										                            					 $("#empid_man-input").html(emp_empid_assign);
-										                            					 $("#emp_name_main").html(emp_emp_name_assign);
-										                            					// $("#emp_level_main").html(emp_loc_assign);
-										                            					 $("#emp_location_main").html(emp_empid_assign);
+										                            					 
 										                                     			
 										                                     		}})
 										                                     	]
@@ -5132,6 +5135,68 @@ var all_multi="";
 						
 					
 /////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
+
+var table_for_te_approve_id = new sap.ui.table.Table(
+								{
+									id : 'table_for_te_approve_id',
+									title : "List of T&E Approver",
+									selectionMode: sap.ui.table.SelectionMode.Single,
+									visibleRowCount :20,
+									firstVisibleRow: 3,
+								
+									rowSelectionChange: function(e) {
+									      var oIndex = e.getParameter('rowIndex');
+									      if (table_for_te_approve_id.isIndexSelected(oIndex )) {
+									        var oContext= table_for_te_approve_id.getContextByIndex(oIndex );
+									        var path = oContext.sPath;
+									        var object = table_for_te_approve_id.getModel().getProperty(path);
+									        
+									        var res_man=object;
+									        console.log(res_man);     
+									   
+									     te_emp_id_assign=object.emp_id_te;
+									     te_emp_name_assign= object.emp_name_te;
+									      }
+									},
+									 
+									     toolbar: new sap.ui.commons.Toolbar({items: [ 
+											                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { 
+											                                     			$("#teid-input").val(te_emp_id_assign);
+											                            					 $("#tename").html(te_emp_name_assign);
+											                            					 oFor_te.close();
+											                                     	
+											                                     		
+											                                     		}})
+											                                     	]}),
+								}).addStyleClass("style_for_table");
+
+				table_for_te_approve_id.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Emp ID.",
+								tooltip :"Emp ID"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "emp_id_te"),
+							sortProperty : "emp_id_te",
+							filterProperty : "emp_id_te",
+							width : "50px",
+						//setRowHeight:"200px"
+						}));
+
+				table_for_te_approve_id.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Emp Name" ,
+								tooltip : "Emp Name"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "emp_name_te"),
+							sortProperty : "emp_name_te",
+							filterProperty : "emp_name_te",
+							width : "50px"
+						}));
+
+				table_for_te_approve_id.sort(table_for_te_approve_id.getColumns()[0]);		
+
  //////////////////////////////1st Row
 
 var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
@@ -5318,27 +5383,124 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
             var oDivider7 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
             
             matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
-		    
+		    var corp_id =new sap.ui.commons.Label({
+				
+				text : "T & E Corp. ID"
+			}).addStyleClass("for_font_manual_label"); 
             var teid_name = new sap.ui.commons.Label({
 				
-				text : "T & E Approver ID"
+				text : "T & E Approver Emp ID"
 			}).addStyleClass("for_font_manual_label"); 
       var tename_name = new sap.ui.commons.Label({
     	  
 			text : "T & E Approver Name"
 		}).addStyleClass("for_font_manual_label");
       
-      matrix_for_manual_main.createRow(null,teid_name,tename_name,null,null)  ;
+      matrix_for_manual_main.createRow(corp_id,teid_name,tename_name,null,null)  ;
+      var tecorpid=  new sap.ui.commons.ValueHelpField(
+				 {
+					 id: 'tecorpid',
+					 valueHelpRequest : function(oEvent
+						) {
+					console
+							.log(oEvent
+									.getParameters('newValue').newValue);
+
+					function handler(
+							oEvent) {
+						alert("Event '"
+								+ oEvent
+										.getId()
+								+ "' triggered");
+					}
+					
+		
+			}
+					
+					
+				
+					
+				});
 
             var teapproveid=  new sap.ui.commons.ValueHelpField(
 					 {
 						 id: 'teid',
-						 
+						 valueHelpRequest : function(oEvent
+							) {
+						console
+								.log(oEvent
+										.getParameters('newValue').newValue);
+
+						function handler(
+								oEvent) {
+							alert("Event '"
+									+ oEvent
+											.getId()
+									+ "' triggered");
+						}
+						
+					 	$
+						.ajax({
+							method : "GET",
+							url : 
+						"/rmt/api/ci/index.php/get_ValidTNEs",
+	
+							success : function(odata) {
+								
+								sap.ui.core.BusyIndicator.hide(0);
+								console.log(odata);	
+								var res = odata;
+							
+								var completeData_manual_te = [];
+
+								jQuery
+								.each(
+										res,
+										function(
+												i,
+												val) {
+
+											
+											
+												var tmp_te = {
+												   
+														emp_id_te : val.emp_id,
+														emp_name_te : val.emp_name
+							
+												};
+											
+												completeData_manual_te
+														.push(tmp_te);
+										});
+
+								var oModel2_manual_te = new sap.ui.model.json.JSONModel();
+								oModel2_manual_te
+										.setData({
+											modelData : completeData_manual_te
+										});
+								table_for_te_approve_id
+										.setModel(oModel2_manual_te);
+								table_for_te_approve_id
+										.bindRows("/modelData");
+
+							}
+				});
+						
+						
+						 oFor_te = new sap.ui.ux3.OverlayContainer(
+								{
+									width : '400px'
+								});
+						oFor_te
+								.addContent(table_for_te_approve_id);
+
+						oFor_te.open();
+					} 
 						
 					});
             
-            var teapprove_name = new sap.ui.commons.TextView({id: 'tename',value:"hii"}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
-            matrix_for_manual_main.createRow(null,teapproveid,teapprove_name,null,null)  ;
+            var teapprove_name = new sap.ui.commons.TextView({id: 'tename'}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
+            matrix_for_manual_main.createRow(tecorpid,teapproveid,teapprove_name,null,null)  ;
 		   ///5th ro
 		     var oDivider5_0up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		    var oDivider5up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
@@ -5404,6 +5566,18 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								        	 {
 								        	 alert("Entered FTE% is not valid");
 								        	 }
+								         else if($("#sdate1_man-input").val()=="")
+								        	 {
+								        	 alert("Please Enter Project Start Date")
+								        	 }
+								         else if($("#edate1_man-input").val()=="")
+							        	 {
+							        	 alert("Please Enter Project End Date")
+							        	 }
+								         else if($("#empid_man-input").val()=="")
+							        	 {
+							        	 alert("Please Enter Employee ID")
+							        	 }
 						         else{
 								
 						        	 $.ajax({
