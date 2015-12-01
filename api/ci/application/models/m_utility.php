@@ -44,7 +44,8 @@ class m_utility extends CI_model
             $gv_level         = 'level',
             $gv_sup_id        = 'sup_id',
             $gv_sup_name      = 'sup_name',
-            $gv_pm_name       = 'proj_m_name';
+            $gv_pm_name       = 'proj_m_name'
+            $gv_cust_name     = 'cust_name';
     
     public function __construct()
     {
@@ -80,7 +81,8 @@ class m_utility extends CI_model
     
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
-    {
+    {   
+        $lt_invalid_project = ['Bench','Campus Hire', 'Apps1 Long  Leave & Ml'];
         $lv_edate = $this->add_business_days(date(self::gc_date_format));  
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
@@ -99,8 +101,10 @@ class m_utility extends CI_model
                             $this->gv_pm_name.
                             ' FROM '. $this->gv_tab_name.
                             " WHERE curr_end_date = '$lv_edate' and ".
-                            $this->gv_idp . " = 'Appsone SAP' ORDER BY ". $this->gv_proj_code;
-        return($this->db->query($lv_query_empid)->result_array());                 
+                            $this->gv_idp . " = 'Appsone SAP' and "
+                            .$this->gv_cust_name." NOT IN " .$lt_invalid_project. " ORDER BY ". $this->gv_proj_code;
+                    print_r($this->db->query($lv_query_empid)->result_array());
+//        return($this->db->query($lv_query_empid)->result_array());                 
     }
     
     public function checkandnotify()
@@ -120,8 +124,8 @@ class m_utility extends CI_model
                     if($this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code))
                     {
                       array_push($lt_proj_details, $lwa_values);
-                      $io_mail = new m_Notifications();                      
-                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
+//                      $io_mail = new m_Notifications();                      
+//                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
                       $lt_proj_details = [];
                     }
                     
