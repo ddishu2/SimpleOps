@@ -32,6 +32,23 @@ class Reports extends CI_Controller
         
 
     }
+    
+    public function viewreports(){
+         $rp_type      =  $this->input->get(self::C_RTYPE); 
+       $rp_from_date =  $this->input->get(self::C_FROM_DATE); // Start Date
+       $rp_to_date   =  $this->input->get(self::C_TO_DATE); // End Date
+       
+       
+       $this->m_report->isreportvalid($rp_type,$rp_from_date,$rp_to_date);
+       $arr_softlock = $this->m_report->viewreport($rp_from_date,$rp_to_date);
+       
+//       print_r($arr_softlock);
+       
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($arr_softlock,JSON_PRETTY_PRINT));
+    }
+    
 }
 //    public function softLocked($from_date, $to_date )
 //    {
