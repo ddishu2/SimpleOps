@@ -209,7 +209,8 @@ class m_lock extends ci_model
 //                }
                 $lv_trans_id++; //newly generated trans id
                 $lo_utility = new m_utility(); 
-                $lv_updated_by = $lo_utility->get_username();// get the Ops team guys name
+                $temp= $lo_utility->get_username();// get the Ops team guys name
+                $lv_updated_by = $temp[0];
                 $lv_updated_on = date('Y-m-d');
 //                try {
                     
