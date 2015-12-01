@@ -4319,14 +4319,10 @@ var te_emp_name_assign;
 									        var path = oContext.sPath;
 									        var object = table_for_manual_emp.getModel().getProperty(path);
 									        var res_man=object;
-									        console.log(res_man);     
-									   
-									     emp_deploy_assign=object.emp_deploy_manual;
-									     emp_future_assign= object.emp_future_manual;
-									     emp_capability_assign = object.emp_capability_manual;
+									        console.log(res_man);      
 									     emp_skill_assign= object.emp_skill_manual;
 									    emp_loc_assign = object.emp_loc_manual;
-									     emp_currentso_assign = object.emp_currentso_manual;
+									   
 									     emp_empid_assign = object.emp_empid_manual;
 									     emp_emp_name_assign = object.emp_emp_name_manual
 									     
@@ -4339,7 +4335,7 @@ var te_emp_name_assign;
 										                                     			$("#empid_man-input").html(emp_empid_assign);
 										                            					 $("#emp_name_main").html(emp_emp_name_assign);
 										                            					// $("#emp_level_main").html(emp_loc_assign);
-										                            					 $("#emp_location_main").html(emp_empid_assign);
+										                            					 $("#emp_location_main").html(emp_loc_assign);
 										                                     		oFor_emp.close();
 										                                     		
 										                                     		}})
