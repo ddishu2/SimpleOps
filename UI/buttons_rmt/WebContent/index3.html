@@ -3623,7 +3623,8 @@ var te_emp_name_assign;
 										var p_id_manu=$("#pro_id_form_manual").val();
 										var c_name_manu=$("#cust_name1_manual").val();
 											var cap_manu=$("#ct_drop-input").val();
-									 var so_type_text_manu=$("#so_type_id1-input").val();//so_type_id1
+									 var so_type_text_manu=$("#so_type_id1-input").val();
+									  //so_type_id1
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
 									
@@ -3632,8 +3633,7 @@ var te_emp_name_assign;
 //0.74.163.157:8080/rmt/api/ci/index.php/get_ValidSOs/?so_from_date=&so_to_date=&proj_bu=&so_type=&proj_name=&proj_loc=&proj_id=&cust_name=&capability=
 
 										 console
-												.log("/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
-														so_pos_no+
+												.log("/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+so_pos_no
 														+"&so_from_date="
 														+ from_manu
 														+ "&so_to_date="
@@ -3661,7 +3661,7 @@ var te_emp_name_assign;
 												.ajax({
 													method : "GET",
 													url : "/rmt/api/ci/index.php/get_ValidSOs/?so_pos_no="+
-													so_pos_no+
+													so_pos_no +
 													+"&so_from_date="
 														+ from_manu
 														+ "&so_to_date="
@@ -5196,7 +5196,14 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 							width : "50px"
 						}));
 
-				table_for_te_approve_id.sort(table_for_te_approve_id.getColumns()[0]);		
+				table_for_te_approve_id.sort(table_for_te_approve_id.getColumns()[0]);
+				
+				
+//////////////////////////////////////////////////Table for Corp ID//////////////////////////////////////////////////////////
+
+
+
+
 
  //////////////////////////////1st Row
 
@@ -5401,23 +5408,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
       var tecorpid=  new sap.ui.commons.ValueHelpField(
 				 {
 					 id: 'tecorpid',
-					 valueHelpRequest : function(oEvent
-						) {
-					console
-							.log(oEvent
-									.getParameters('newValue').newValue);
-
-					function handler(
-							oEvent) {
-						alert("Event '"
-								+ oEvent
-										.getId()
-								+ "' triggered");
-					}
-					
-		
-			}
-					
+					 
 					
 				
 					
