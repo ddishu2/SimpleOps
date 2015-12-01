@@ -699,7 +699,7 @@ class cl_NotificationMails {
         self::get_recievers();   
         if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4'))
         {
-        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);  
+        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);          
         }
         else
         {
