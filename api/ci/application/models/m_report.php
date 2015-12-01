@@ -43,6 +43,8 @@ class m_report extends CI_model
     CONST C_TYPE_REJ_EMP    = 'Rejected_Employees';
     const C_TYPE_REJ_SO     = 'Rejected_SO';
     const C_EX_INVALID      = 'Invalid Mail Type';
+    
+    const C_softlock_display = 'v_softlock_display';
         const C_TYPE_AMMENDMENTS = 'Amendment_Report';
     
     
@@ -135,9 +137,9 @@ $this->setHeaders();
 //                case self::C_TYPE_HL_RELEASE:
 //                
 //                    break;
-//                case self::C_TYPE_SL:
-//                
-//                    break;
+                case self::C_TYPE_SL:
+                 fputcsv($lo_csv_output,array('Type','Ten digit SO number,SO line number,SO quantity number','Numeric Emp ID'));
+                    break;
 //                case self::C_TYPE_SL_RELEASE:
 //                                    break;
 //                case self::C_TYPE_AMMENDMENTS:
@@ -188,9 +190,11 @@ $this->setHeaders();
 ////                case self::C_TYPE_HL_RELEASE:
 ////                
 ////                    break;
-////                case self::C_TYPE_SL:
-////                
-////                    break;
+                case self::C_TYPE_SL:
+                    
+                $re_data = $this->m_lock->getsoftlockdata($this->v_start_date,$this->v_end_date);
+                    
+                    break;
 ////                case self::C_TYPE_SL_RELEASE:
 ////                
 ////                    break;
@@ -234,5 +238,24 @@ $this->setHeaders();
                        .$re_timestamp
                       .self::C_FILENAME_SUFFIX;
         return $re_filename;
+    }
+    
+    public function viewreport($fp_start_date,$fp_end_date){
+
+        switch ($this->v_report_type) 
+            {
+           case self::C_TYPE_SL: 
+        $arr_result = [];
+        $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,`level`,prime_skill,loc,end_date,skill_cat,reason');
+        $this->db->from(self::C_softlock_display);
+        $this->db->where('updated_on >=',$fp_start_date); 
+       $this->db->where('updated_on <=',$fp_end_date);
+       $arr_result = $this->db->get();
+       $arr_result_final = $arr_result->result_array();     
+       return $arr_result_final;
+       break;
+   
+            }
+        
     }
 }
