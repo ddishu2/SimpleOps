@@ -5201,10 +5201,10 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 				id : 'matrix_for_manual_main',
 				layoutFixed : true,
-				width : '1500px',
+				width : '1450px',
 				columns : 5,
 				
-				widths : [ '300px','300px','300px','300px','300px']
+				widths : [ '300px','300px','300px','250px','300px']
 			});
 				
 				var son_name = new sap.ui.commons.Label({
@@ -5421,12 +5421,13 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 											.getId()
 									+ "' triggered");
 						}
+						var tne_emp_id=$("#teid-input").val();
 						
 					 	$
 						.ajax({
 							method : "GET",
 							url : 
-						"/rmt/api/ci/index.php/get_ValidTNEs",
+						"/rmt/api/ci/index.php/get_ValidTNEs/?emp_id="+tne_emp_id+"&domain_id=",
 	
 							success : function(odata) {
 								
