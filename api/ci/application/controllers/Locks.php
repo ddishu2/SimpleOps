@@ -66,6 +66,10 @@ class Locks extends CI_Controller
             $lv_smart_project_code = $this->input->get(m_lock::C_SMART_PROJECT_CODE);
             $lv_FTE = $this->input->get(m_lock::C_FTE);
             $lv_tag_type = $this->input->get(m_lock::C_TAG_TYPE);
+            $lv_sdate = $this->input->get(m_lock::C_HLOCK_SDATE);
+            $lv_edate = $this->input->get(m_lock::C_HLOCK_EDATE);
+            $lv_tne_id = $this->input->get(m_lock::C_HLOCK_TNE_ID);
+            $lv_tne_name = $this->input->get(m_lock::C_HLOCK_TNE_NAME);
 //            $lv_obj = new cl_Lock();
 //            $lv_trans_id = 1;
             $lv_msg = "";
@@ -75,7 +79,7 @@ class Locks extends CI_Controller
             if ($lv_status == 'Approve')
             {
               
-            $lv_result = $this->m_lock->ApproveHardLock($lv_trans_id,$lv_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);//S201
+            $lv_result = $this->m_lock->ApproveHardLock($lv_trans_id,$lv_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type,$lv_sdate,$lv_edate,$lv_tne_id,$lv_tne_name);//S201
                 if($lv_result == 1)
                 {
                 $lv_msg = "resource hard locked";
@@ -90,7 +94,7 @@ class Locks extends CI_Controller
             if($lv_status == 'Reject')
             {
            // $lv_result=$this->m_lock->rejectSoftLock($lv_trans_id,$lv_comments);
-           $lv_result=$this->m_lock->rejectSoftLock($lv_trans_id,$lv_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);
+           $lv_result=$this->m_lock->rejectSoftLock($lv_trans_id,$lv_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type,$lv_sdate,$lv_edate,$lv_tne_id,$lv_tne_name);
                 if($lv_result == 1)
                 {
                 $lv_msg = "Resource Rejected";

@@ -68,6 +68,12 @@ class m_lock extends ci_model
     const C_curr_start_date = 'curr_start_date';
     const C_curr_end_date = 'curr_end_date';
     
+    
+    const C_HLOCK_SDATE = 'hlock_sdate';
+    const C_HLOCK_EDATE = 'hlock_edate';
+    const C_HLOCK_TNE_ID = 'tne_id';
+    const C_HLOCK_TNE_NAME = 'tne_name';
+    
     private static $arr_SO_that_rejectedemps = [];
 //    private static $arr_result = [];
     
