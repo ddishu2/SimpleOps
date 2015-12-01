@@ -643,9 +643,12 @@ public function createProposal( $fp_so_id , $fp_emp_id )
      
      
      // partial proposals method 
-     public function getpartialProposals($fp_v_so_id, $fp_v_so_skill, $fp_v_so_level, $fp_v_so_loc)
+     public function getpartialProposals($fp_v_so_id,$fp_v_so_skill, $fp_v_so_level,$fp_v_so_loc)
      {
-         echo count($this->it_deployable_emps)."</BR>";
+        
+         
+        // echo $fp_v_so_id ."     " .$fp_v_so_skill."       ".$fp_v_so_level."     ".$fp_v_so_loc;
+//         echo count($this->it_deployable_emps)."</BR>";
           $lwa_deployable_emp = [];
           $re_wa_emps_for_so = null;
         foreach ($this->it_deployable_emps as $lwa_deployable_emp) {

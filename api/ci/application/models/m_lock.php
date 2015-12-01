@@ -17,6 +17,9 @@ class m_lock extends ci_model
                $this->load->model('m_Notifications');
 
         }
+//     const C_FNAME_SDATE    = 'lock_start_date';
+//     const C_FNAME_EDATE    = 'lock_end_date';
+    
      const C_SMART_PROJECT_CODE ='smart_proj_code';
     const C_FTE = 'FTE';
     const C_TAG_TYPE = 'tag_type';   
@@ -43,7 +46,8 @@ class m_lock extends ci_model
     const C_FNAME_LOCK_END_DATE = 'lock_end_date';
     const C_FNAME_LOCK_START_DATE = 'lock_start_date';
     const C_FNAME_PROP_ID = 'parent_prop_id';
-    
+     Const C_FNAME_TNE_ID   = 'tne_app_id';
+     const C_FNAME_TNE_NAME = 'tne_name';
     
     
     const C_STATUS_HARD_LOCK = 'S201';
@@ -246,7 +250,7 @@ class m_lock extends ci_model
         return $res_count; //returns number of employess soft locked and rejected proposals
     }
 //HardLock
-    public function setHardLock($fp_v_lock_trans_id,$fp_sdate,$fp_edate) {
+    public function setHardLock($fp_v_lock_trans_id,$fp_sdate,$fp_edate,$lv_tne_id,$lv_tne_name) {
         
 //        $sql1 = "UPDATE trans_locks SET status='S201',lock_start_date ='$fp_sdate',lock_end_date = '$fp_edate' WHERE trans_id = $fp_v_lock_trans_id";
 //        $re_sos = cl_DB::updateResultIntoTable($sql1); 
@@ -256,7 +260,9 @@ class m_lock extends ci_model
 
     self::C_FNAME_LOCK_START_DATE =>  $fp_sdate,
 
-    self::C_FNAME_LOCK_END_DATE   =>  $fp_edate
+    self::C_FNAME_LOCK_END_DATE   =>  $fp_edate,
+    self::C_FNAME_TNE_ID =>   $lv_tne_id,
+    self::C_FNAME_TNE_NAME => $lv_tne_name   
 
 );
 
@@ -366,7 +372,7 @@ $this->db->update(self::C_TABNAME, $data);
     /*hardlocks an employee  
       returns 1 if successfull
      returns -1 if failed     */
-public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type) {
+public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type,$lv_sdate,$lv_edate,$lv_tne_id,$lv_tne_name) {
    
       
 //        $lv_obj = new cl_DB();
@@ -384,9 +390,11 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
 //            $lv_up_by = $value['updated_by'];
         }
      
-        $fp_sdate = self::getsostartdate($lv_so_id);
-       
-        $fp_edate = self::getsoenddate($lv_so_id);
+//        $fp_sdate = self::getsostartdate($lv_so_id);
+        
+        $fp_sdate = $lv_sdate;
+//        $fp_edate = self::getsoenddate($lv_so_id);
+        $fp_edate = $lv_edate;
        
         // get other locks acquired for same Emp
         $lv_alredy_proposed  = self::getDetailsWhereEmpIsAlreadyProposed($lv_emp_id);
@@ -400,7 +408,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
 //        try {
 //            mysqli_begin_transaction($lv_db);
             $this->db->trans_start();
-            $lv_set_hardlock = self::setHardLock($lv_trans_id,$fp_sdate,$fp_edate);
+            $lv_set_hardlock = self::setHardLock($lv_trans_id,$fp_sdate,$fp_edate,$lv_tne_id,$lv_tne_name);
             $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, self::C_STATUS_HARD_LOCK, $lv_prop_id, $lv_req_id);
           
             $lv_comments = self::setComments($lv_trans_id,self::C_STATUS_HARD_LOCK,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);
@@ -499,7 +507,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
       returns 1 if successfull 
      *returns  -1 if unsuccessful */
     
-    public function rejectSoftLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type) {
+    public function rejectSoftLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type,$lv_sdate,$lv_edate,$lv_tne_id,$lv_tne_name) {
 
         
 //        $lv_obj = new cl_DB();
@@ -520,17 +528,23 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         try {
 //            mysqli_begin_transaction($lv_db);
            // $sql = "UPDATE trans_locks SET status='S221' WHERE trans_id = $fp_v_lock_trans_id";
-             $this->db->trans_start();
+            $this->db->trans_start();
             $this->db->where(self::C_TRANS_ID,$fp_v_lock_trans_id);
             $data = array(
-                self::C_FNAME_STATUS =>self::C_STATUS_SOFT_LOCK_REJECTED 
+                
+                self::C_FNAME_STATUS =>self::C_STATUS_SOFT_LOCK_REJECTED ,
+                self::C_FNAME_LOCK_START_DATE =>$lv_sdate,
+                self::C_FNAME_LOCK_END_DATE  =>$lv_edate ,
+                self::C_FNAME_TNE_ID =>$lv_tne_id,
+                self::C_FNAME_TNE_NAME =>$lv_tne_name,
+                    
             );
             
             $re_sos =$this->db->update(self::C_TABNAME,$data);
             
             
             //$re_sos = cl_DB::updateResultIntoTable($sql);
-            $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, self::C_STATUS_SOFT_LOCK_REJECTED, $lv_prop_id, $lv_req_id);
+            $lv_history = self::setLockHistory($lv_trans_id, $lv_so_id, $lv_emp_id, self::C_STATUS_SOFT_LOCK_REJECTED, $lv_prop_id, $lv_req_id,$lv_tne_id,$lv_tne_name);
             //$lv_comments = self::setComments($lv_trans_id,'S221',$fp_v_comments);
              $lv_comments = self::setComments($lv_trans_id,self::C_STATUS_SOFT_LOCK_REJECTED,$fp_v_comments,$lv_smart_project_code,$lv_FTE,$lv_tag_type);
             $lv_result = self::setRejectionCount($lv_so_id);
