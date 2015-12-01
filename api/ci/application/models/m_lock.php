@@ -5,9 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once(APPPATH.'models/m_utility');
+require_once(APPATH.'models/m_utility');
 
-require_once(APPPATH.'models/getDetails.php');
+require_once(APPATH.'models/getDetails.php');
 class m_lock extends ci_model
 { 
    
