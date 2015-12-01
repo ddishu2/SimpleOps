@@ -46,8 +46,10 @@ class m_lock extends ci_model
     const C_FNAME_LOCK_END_DATE = 'lock_end_date';
     const C_FNAME_LOCK_START_DATE = 'lock_start_date';
     const C_FNAME_PROP_ID = 'parent_prop_id';
-     Const C_FNAME_TNE_ID   = 'tne_app_id';
+     const C_FNAME_TNE_ID   = 'tne_app_id';
      const C_FNAME_TNE_NAME = 'tne_name';
+     const C_FNAME_UPDATED_BY = 'updated_by';
+     const C_FNAME_UPDATED_ON = 'updated_on';
     
     
     const C_STATUS_HARD_LOCK = 'S201';
@@ -118,7 +120,7 @@ class m_lock extends ci_model
         return $lv_max_trans_id;
     }
     
-    public function setSoftLock($lv_trans_id, $fp_v_so_id, $fp_v_emp_id, $lv_prop_id, $fp_v_requestor_id,$fp_v_Multi) {
+    public function setSoftLock($lv_trans_id, $fp_v_so_id, $fp_v_emp_id, $lv_prop_id, $fp_v_requestor_id,$fp_v_Multi,$fp_v_updated_by,$lv_updated_on) {
 
         //To Retrieve lock Start & end date  
         $lv_start_date = date('y-m-d');
@@ -141,7 +143,9 @@ class m_lock extends ci_model
         self::C_REQUESTOR_ID =>$fp_v_requestor_id,
         self::C_FNAME_LOCK_START_DATE =>$lv_start_date ,
         self::C_FNAME_LOCK_END_DATE =>$lv_end_date,
-        self::C_FNAME_ALLOW_MULTI =>$fp_v_Multi
+        self::C_FNAME_ALLOW_MULTI =>$fp_v_Multi,
+        self::C_FNAME_UPDATED_BY =>$fp_v_updated_by,    
+        self::C_FNAME_UPDATED_ON  => $lv_updated_on        
         );
 
        return $this->db->insert(self::C_TABNAME, $data);
@@ -203,14 +207,15 @@ class m_lock extends ci_model
 //                }
                 $lv_trans_id++; //newly generated trans id
 
-//
+                $lv_updated_by = $lo_utility->get_username();// get the Ops team guys name
+                $lv_updated_on = date('Y-m-d');
 //                try {
                     
 //                    mysqli_autocommit( $lv_db,false);
 //                    mysqli_begin_transaction($lv_db);
                     $this->db->trans_start();
                     
-                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$fp_arr_Multi[$i]);
+                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$fp_arr_Multi[$i],$lv_updated_by,$lv_updated_on);
                     
                     $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], self::C_STATUS_SOFT_LOCK, $lv_prop_id, $lv_request_id);
                         
