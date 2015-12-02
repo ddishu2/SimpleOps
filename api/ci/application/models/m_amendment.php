@@ -12,7 +12,7 @@
  * @author vkhisty
  */
 //  $autoload["libraries"] = array("database");
-class m_getamendment extends CI_model {
+class m_amendment extends CI_model {
        
     const C_DATE_FORMAT = 'Y-m-d';
     const C_V_AMENDTMENT = 'v_amendment';
@@ -25,8 +25,9 @@ class m_getamendment extends CI_model {
     const C_COMPETENCY = 'competency';
     const C_Star = '*';
     const C_M_AMMENDMENT = '`m_ammendment`';
-    const C_TRANS_AMMENDMENT = 'trans_ammendment';
+//    const C_TRANS_AMMENDMENT = 'trans_ammendment';
     const C_ID = 'id';
+    const C_STAT ='status';
     private static $arr_amendments = [];
   public function __construct() 
     {   
@@ -413,6 +414,21 @@ $sql = self::getQuery($fp_cust_name,$fp_proj_name,$fp_arr_competency);
        $this->db->select(self::C_ID);
        $this->db->from(self::C_TRANS_AMMENDMENT);
        self::$arr_amendments = $this->db->get();
+    }
+    
+    
+// Amendments Report
+    public function getamendmentdata($fp_start_date , $fp_end_date){
+       $arr_result = [];
+       $this->db->select(self::C_Star);
+       $this->db->from(self::C_TRANS_AMMENDMENT);
+       $this->db->where('Updated On >=',$fp_start_date); 
+       $this->db->where('Updated On <=',$fp_end_date);
+       $this->db->where(self::C_STAT,'Approve');
+       $arr_result = $this->db->get();
+       $arr_result_final = $arr_result->result_array();     
+    return $arr_result_final;
+//    print_r($arr_result_final);
     }
 }
 
