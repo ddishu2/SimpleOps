@@ -11,7 +11,7 @@
  *
  * @author vkhisty
  */
-class cl_methods {
+class l_methods {
     const C_DATE_FORMAT      = 'd-m-Y';
     const C_DATE_DELIMITER   = '-';
     const C_DATE_COUNT       = 3;
