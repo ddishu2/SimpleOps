@@ -809,4 +809,6 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
        $arr_result_final = $arr_result->result_array();     
     return $arr_result_final;
     }
+    
+   
 }
