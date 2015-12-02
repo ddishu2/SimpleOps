@@ -26,7 +26,7 @@ class Amendments extends CI_Controller
 //        $this->load->database();
         $this->load->model('m_getamendment');
         $this->load->model('m_approveamendment');
-        $this->load->model('m_Notificarions');
+        $this->load->model('m_Notifications');
     }
     
     public  function getamendments()
@@ -34,7 +34,7 @@ class Amendments extends CI_Controller
     $lv_cust_name = $this->input->get(self::C_CUST_NAME);
     $lv_proj_name = $this->input->get(self::C_PROJ_NAME);                
     $lv_arr_competency = $this->input->get(self::C_COMPETENCY);
-    $re_ammendments = $this->m_getamendment->getamnedments($lv_cust_name,$lv_proj_name,$lv_arr_competency);
+    $re_ammendments = $this->m_amendment->getamnedments($lv_cust_name,$lv_proj_name,$lv_arr_competency);
 //    $app->response->setStatus(200);
 //    $app->response->headers->set('Content-Type', 'application/json');  
     $this->output
@@ -51,7 +51,7 @@ public function approveamendment()
     $lv_arr_comments = $this->input->get(self::C_COMMENTS);
     $lv_arr_stat = $this->input->get(self::C_STAT);
     
-     $re_result = $this->m_approveamendment->approveammendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
+     $re_result = $this->m_amendment->approveammendments($lv_arr_emp_id, $lv_arr_comments,$lv_arr_stat);
      
      $this->output
         ->set_content_type('application/json')
