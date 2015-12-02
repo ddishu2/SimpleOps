@@ -9,8 +9,9 @@
  *
  * @author vkhisty
  */
-require_once(APPPATH.'models/cl_methods.php');
+require_once(APPPATH.'libraries/l_methods.php');
 require_once(APPPATH.'models/m_lock.php');
+require_once(APPPATH.'models/m_amendment.php');
 class m_report extends CI_model
 {
     const C_HDR_LINE1          = 'Content-Type: text/csv'; 
@@ -41,11 +42,12 @@ class m_report extends CI_model
     const C_TYPE_HL         = 'Hard_Lock';
     const C_TYPE_HL_RELEASE = 'Hard_Lock_Release';
     CONST C_TYPE_REJ_EMP    = 'Rejected_Employees';
+    const C_TYPE_AMMENDMENTS = 'Amendment_Report';
     const C_TYPE_REJ_SO     = 'Rejected_SO';
     const C_EX_INVALID      = 'Invalid Mail Type';
     
     const C_softlock_display = 'v_softlock_display';
-        const C_TYPE_AMMENDMENTS = 'Amendment_Report';
+ 
     
     
     protected $v_report_type;
@@ -77,6 +79,7 @@ class m_report extends CI_model
         {
             $re_valid = true;
         }
+//        echo $re_valid;
         if($re_valid === true){
             $this->set_attributes($fp_v_report_type);
             $this->setdates($fp_v_start_date, $fp_v_end_date);
@@ -88,6 +91,7 @@ class m_report extends CI_model
   public function set_attributes($fp_report_type)
     {
        $this->v_report_type = $fp_report_type;
+       
       
     }
    public function setdates($fp_start_dates,$fp_end_dates){
@@ -129,25 +133,29 @@ $this->setHeaders();
 ////        
 //     fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking )'));
         
-       
+
          switch ($this->v_report_type) {
         case self::C_TYPE_HL:
                    fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking)','Updated By','Time Stamp '));
                     break;
+                
 //                case self::C_TYPE_HL_RELEASE:
 //                
 //                    break;
+                
                 case self::C_TYPE_SL:
                  fputcsv($lo_csv_output,array('Type','Ten digit SO number,SO line number,SO quantity number','Numeric Emp ID'));
                     break;
+                
 //                case self::C_TYPE_SL_RELEASE:
+//                     fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','Action','Roll Off lead time','Extension Notice','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));
 //                                    break;
-//                case self::C_TYPE_AMMENDMENTS:
-//                     fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking )'));
-                ////////                            $lo_ammendments = new cl_ammendments();
-//////                           $re_data = $lo_ammendments->getAmmendmentsReport($this->v_start_date,$this->v_end_date);
-//////                    $re_data1 = [];                 
-//                     break;
+                
+                case self::C_TYPE_AMMENDMENTS:
+//                 case   'Amendment_Report':
+                   fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','Action','Roll Off lead time','Extension Notice','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));       
+                     break;
+                 
                 default:
 //////
                    break;
@@ -193,23 +201,21 @@ $this->setHeaders();
                 case self::C_TYPE_SL:
                     
                 $re_data = $this->m_lock->getsoftlockdata($this->v_start_date,$this->v_end_date);
-                    
+//                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
                     break;
-////                case self::C_TYPE_SL_RELEASE:
+//                case self::C_TYPE_SL_RELEASE:
+//                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
+//                    break;
 ////                
 ////                    break;
 //                case self::C_TYPE_AMMENDMENTS:
-//                    $re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
-//                            $lo_ammendments = new cl_ammendments();
-////////                           $re_data = $lo_ammendments->getAmmendmentsReport($this->v_start_date,$this->v_end_date);
-////////                    $re_data1 = [];
-////////                    $re_data['ID'] = '1234';
-////////                    $re_data['Name'] = 'abcd';
-////////                    $re_data['level'] = 'P1';
-//                   break;
-//                default:
-//                    $re_data = [];
+//                    
+//                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
+//                    
 //                    break;
+                default:
+                    $re_data = [];
+                    break;
             }
         return $re_data;
         }
