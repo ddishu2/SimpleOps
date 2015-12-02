@@ -4332,7 +4332,7 @@ var te_emp_name_assign;
 									 
 									toolbar: new sap.ui.commons.Toolbar({items: [ 
 										                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { 
-										                                     			$("#empid_man-input").html(emp_empid_assign);
+										                                     			$("#empid_man-input").val(emp_empid_assign);
 										                            					 $("#emp_name_main").html(emp_emp_name_assign);
 										                            					// $("#emp_level_main").html(emp_loc_assign);
 										                            					 $("#emp_location_main").html(emp_loc_assign);
@@ -5127,6 +5127,92 @@ var te_emp_name_assign;
 						
 					
 /////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
+var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
+				id : 'matrix_for_te_main',
+				layoutFixed : true,
+				width : '450px',
+				columns : 2,
+				
+				widths : [ '250px','200px']
+			});
+
+				var te_id_manual_text = new sap.ui.commons.Label({
+						text : 'T & E Approver  ID :'
+					}).addStyleClass("for_text_style1");
+					var te_id_manual = new sap.ui.commons.TextField({
+						id : 'te_id_manual1'
+						
+					}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+					matrix_for_te_main.createRow(te_id_manual_text,te_id_manual);
+					var te_name_manual_text = new sap.ui.commons.Label({
+						text : 'T & E Approver Corp ID :'
+					}).addStyleClass("for_text_style1");
+					var te_name_manual = new sap.ui.commons.TextField({
+						id : 'te_name_manual1'
+						
+					}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+					matrix_for_te_main.createRow(te_name_manual_text,te_name_manual);
+					
+					var search_te = new sap.ui.commons.Button({
+						id : 'te_serach_button',
+						text : "Assign",
+						press : function()
+						{
+							
+							oFor_te.removeContent(matrix_for_te_main);
+							oFor_te.addContent(table_for_te_approve_id);
+						var tne_emp_id =$("#te_id_manual1").val();	
+						var tne_emp_name =$("#te_name_manual1").val();	
+							$
+							.ajax({
+								method : "GET",
+								url : 
+							"/rmt/api/ci/index.php/get_ValidTNEs/?emp_id="+tne_emp_id+"&domain_id="+tne_emp_name,
+		
+								success : function(odata) {
+									
+									sap.ui.core.BusyIndicator.hide(0);
+									console.log(odata);	
+									var res = odata;
+								
+									var completeData_manual_te = [];
+
+									jQuery
+									.each(
+											res,
+											function(
+													i,
+													val) {
+
+												
+												
+													var tmp_te = {
+													   
+															emp_id_te : val.emp_id,
+															emp_name_te : val.emp_name
+								
+													};
+												
+													completeData_manual_te
+															.push(tmp_te);
+											});
+
+									var oModel2_manual_te = new sap.ui.model.json.JSONModel();
+									oModel2_manual_te
+											.setData({
+												modelData : completeData_manual_te
+											});
+									table_for_te_approve_id
+											.setModel(oModel2_manual_te);
+									table_for_te_approve_id
+											.bindRows("/modelData");
+
+								}
+					});
+							
+						}
+					}).addStyleClass("for_normal_buttons_style1");
+					matrix_for_te_main.createRow(search_te)
 
 var table_for_te_approve_id = new sap.ui.table.Table(
 								{
@@ -5160,6 +5246,16 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 											                                     		
 											                                     		}})
 											                                     	]}),
+											                                     	extension: [
+													                                     		new sap.ui.commons.Button({text: "Back", press: function() { 
+													                                     			
+													                                     			 oFor_te.addContent(matrix_for_te_main);
+													                            					 oFor_te.removeContent(table_for_te_approve_id);
+													                            					 
+													                            					 
+													                                     			
+													                                     		}})
+													                                     	]
 								}).addStyleClass("style_for_table");
 
 				table_for_te_approve_id.addColumn(new sap.ui.table.Column({
@@ -5382,10 +5478,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
             var oDivider7 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
             
             matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
-		    var corp_id =new sap.ui.commons.Label({
-				
-				text : "T & E Corp. ID"
-			}).addStyleClass("for_font_manual_label"); 
+		    
             var teid_name = new sap.ui.commons.Label({
 				
 				text : "T & E Approver Emp ID"
@@ -5395,15 +5488,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 			text : "T & E Approver Name"
 		}).addStyleClass("for_font_manual_label");
       
-      matrix_for_manual_main.createRow(corp_id,teid_name,tename_name,null,null)  ;
-      var tecorpid=  new sap.ui.commons.ValueHelpField(
-				 {
-					 id: 'tecorpid',
-					 
-					
-				
-					
-				});
+      matrix_for_manual_main.createRow(teid_name,tename_name,null,null)  ;
 
             var teapproveid=  new sap.ui.commons.ValueHelpField(
 					 {
@@ -5421,54 +5506,9 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 											.getId()
 									+ "' triggered");
 						}
-						var tne_emp_id=$("#teid-input").val();
+					//	var tne_emp_id=$("#teid-input").val();
 						
-					 	$
-						.ajax({
-							method : "GET",
-							url : 
-						"/rmt/api/ci/index.php/get_ValidTNEs/?emp_id="+tne_emp_id+"&domain_id=",
-	
-							success : function(odata) {
-								
-								sap.ui.core.BusyIndicator.hide(0);
-								console.log(odata);	
-								var res = odata;
-							
-								var completeData_manual_te = [];
-
-								jQuery
-								.each(
-										res,
-										function(
-												i,
-												val) {
-
-											
-											
-												var tmp_te = {
-												   
-														emp_id_te : val.emp_id,
-														emp_name_te : val.emp_name
-							
-												};
-											
-												completeData_manual_te
-														.push(tmp_te);
-										});
-
-								var oModel2_manual_te = new sap.ui.model.json.JSONModel();
-								oModel2_manual_te
-										.setData({
-											modelData : completeData_manual_te
-										});
-								table_for_te_approve_id
-										.setModel(oModel2_manual_te);
-								table_for_te_approve_id
-										.bindRows("/modelData");
-
-							}
-				});
+					 
 						
 						
 						 oFor_te = new sap.ui.ux3.OverlayContainer(
@@ -5476,7 +5516,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 									width : '400px'
 								});
 						oFor_te
-								.addContent(table_for_te_approve_id);
+								.addContent(matrix_for_te_main);
 
 						oFor_te.open();
 					} 
@@ -5484,7 +5524,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 					});
             
             var teapprove_name = new sap.ui.commons.TextView({id: 'tename'}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
-            matrix_for_manual_main.createRow(tecorpid,teapproveid,teapprove_name,null,null)  ;
+            matrix_for_manual_main.createRow(teapproveid,teapprove_name,null,null)  ;
 		   ///5th ro
 		     var oDivider5_0up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		    var oDivider5up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
