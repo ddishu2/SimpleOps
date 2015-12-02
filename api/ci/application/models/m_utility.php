@@ -168,9 +168,13 @@ class m_utility extends CI_model
     {
     $loadRAS = m_loadFiles::loadRAS();
     }
-    public function loadRRS()
+    public function loadFULLFILLSTAT()
     {
-    $loadRRS = m_loadFiles::loadRRS();
-    }       
+    $loadRRS = m_loadFiles::loadFULLFILLSTAT();
+    }   
+    public function loadAmendments()
+    {
+      $loadAmendments = m_loadFiles::loadAmendments();  
+    }
 }
 

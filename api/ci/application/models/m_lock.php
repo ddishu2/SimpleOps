@@ -690,7 +690,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         $this->db->select(self::C_ARR_SO_ID);
         $this->db->select(self::C_TRANS_ID);
         $query = $this-> db-> get(self::C_TABNAME);
-//       echo $this->db->last_query();
+       //echo $this->db->last_query();
         $arr_so_id = $query->result_array();
         
         // get Emp name from emp id
@@ -718,7 +718,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         $arr_result[self::C_ARR_EMP_ID] = $lv_emp_id;
         $arr_result[getDetails::C_FNAME_EMPNAME] = $lv_emp_name;
         
-        
+//        print_r($arr_result);
         return $arr_result;
         
     }

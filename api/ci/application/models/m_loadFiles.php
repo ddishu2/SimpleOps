@@ -9,29 +9,34 @@
 class m_loadFiles 
 {
     const ROOT_DIR           = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\\';
-    const AMENDMENT_SRC_DIR  = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment\\';
+    const AMENDMENT_SRC_DIR  = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\CSV\\';
     const AMENDMENT_SRC_FILENAME = 'RMT_Amendment.csv';
     const RESUME_SRC_DIR     = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\Resumes\\'; 
-    const AMENDMENT_DEST_DIR = 'D:\\\\rmt\\\\loadFiles\\\\';
+    const AMENDMENT_DEST_DIR = 'D:\\\\rmt\\\\loadFiles\\\\Amendments\\\\';
     const EX_FILE            = 'Could not copy file';
     
     const AMENDMENT_EXCEL_FILENAME = 'Change in T&E Approver and release date of resources.xlsm';
-    
+    const AMENDMENTS_TABNAME = 'm_ammendment';
     private static $v_amendment_local_file = null;
-    private static $v_RAS_local_file = null;
     
     
-    const RAS_SRC_DIR = 'D:\\\\rmt\\\\loadFiles\\\\RAS\\\\'; 
+    
+   // const RAS_SRC_DIR = 'D:\\\\rmt\\\\loadFiles\\\\RAS\\\\'; 
+    const RAS_SRC_DIR = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\CSV\RAS\\';
     const RAS_SRC_FILENAME = 'RAS.csv';
     const RAS_DEST_DIR= 'D:\\\\rmt\\\\loadFiles\\\\RAS\\\\';
     const RAS_TABNAME = 'm_emp_ras_copy';
+    private static $v_RAS_local_file = null;
     
     
+    //const FULLFILLSTAT_SRC_DIR = 'D:\\\\rmt\\\\loadFiles\\\\Fulfillment_stat\\\\'; 
+    const FULLFILLSTAT_SRC_DIR = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\CSV\FULFILLMENTSTAT\\';
+    const FULLFILLSTAT_SRC_FILENAME = 'fulfill_stat.csv';
+    const FULLFILLSTAT_DEST_DIR= 'D:\\\\rmt\\\\loadFiles\\\\Fulfillment_stat\\\\';
+    const FULLFILLSTAT_TABNAME = 'm_so_fulfill_stat';
+    private static $v_FULLFILLSTAT_local_file = null;
     
-    const RRS_SRC_DIR = 'D:\\\\rmt\\\\loadFiles\\\\RRS\\\\'; 
-    const RRS_SRC_FILENAME = 'SO_fulfill_stat.csv';
-    const RRS_DEST_DIR= 'D:\\\\rmt\\\\loadFiles\\\\RRS\\\\';
-    const RRS_TABNAME = 'm_so_fulfill_stat';
+    
     
     private static function copyAmendmentToLocal()
     {
@@ -76,13 +81,13 @@ class m_loadFiles
      private static function copySOFulfillStatToLocal()
     {
         $v_date = date('Y_m_d_H_i_s');
-        self::$v_RRS_local_file  = self::RRS_DEST_DIR.'RAS'.$v_date.'.csv';
-        $v_remote_filename = self::RRS_SRC_DIR.self::RRS_SRC_FILENAME; 
+        self::$v_FULLFILLSTAT_local_file  = self::FULLFILLSTAT_DEST_DIR.'FULLFILLMENTSTAT'.$v_date.'.csv';
+        $v_remote_filename = self::FULLFILLSTAT_SRC_DIR.self::FULLFILLSTAT_SRC_FILENAME; 
        // $v_remote_excel = self::AMENDMENT_SRC_DIR.self::AMENDMENT_EXCEL_FILENAME;
-        $v_copy_success_flag = copy($v_remote_filename, self::$v_RRS_local_file);
+        $v_copy_success_flag = copy($v_remote_filename, self::$v_FULLFILLSTAT_local_file);
         if ($v_copy_success_flag === TRUE) 
         {
-            echo 'Copied RRS Successfully from'.$v_remote_filename.' to: '.self::$v_RRS_local_file.PHP_EOL;
+            echo 'Copied RRS Successfully from'.$v_remote_filename.' to: '.self::$v_FULLFILLSTAT_local_file.PHP_EOL;
           //  $v_delete_success_flag = unlink($v_remote_filename);
 //            $v_delete_excel = unlink($v_remote_excel);
              
@@ -91,7 +96,7 @@ class m_loadFiles
         {
             throw new Exception(self::EX_FILE);
         }
-        return self::$v_RRS_local_file;
+        return self::$v_FULLFILLSTAT_local_file;
     }
     private static function loadTableWithCSVFileData($fp_v_table_name = '', $fp_v_file_name = '',$fp_colname,$fp_empty_value)
     {
@@ -162,7 +167,7 @@ class m_loadFiles
         if($lv_amendments_file !== null)
         {
             
-            self::loadTableWithCSVFileData(cl_ammendments::AMENDMENTS_TABNAME,$lv_amendments_file,'id',0);
+            self::loadTableWithCSVFileData(self::AMENDMENTS_TABNAME,$lv_amendments_file,'id',0);
            
         }
     }
@@ -174,12 +179,12 @@ class m_loadFiles
            self::loadTableWithCSVFileData(self::RAS_TABNAME,$lv_Ras_File,'emp_id',0); 
         }
     }
-    public static function loadRRS()
+    public static function loadFULLFILLSTAT()
     {
-        $lv_Rrs_File = self::copySOFulfillStatToLocal();
-        if($lv_Rrs_File !== null)
+        $lv_so_fulfill_stat_File = self::copySOFulfillStatToLocal();
+        if($lv_so_fulfill_stat_File !== null)
         {
-           self::loadTableWithCSVFileData(self::RRS_TABNAME,$lv_Rrs_File,'emp_id',0); 
+           self::loadTableWithCSVFileData(self::FULLFILLSTAT_TABNAME,$lv_so_fulfill_stat_File,'so_proj_id',0); 
         }
     }
     
