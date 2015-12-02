@@ -16,6 +16,7 @@ class Reports extends CI_Controller
         
         $this->load->model('m_report');
         $this->load->model('m_lock');
+        $this->load->model('m_amendment');
     }
     
     public function setreports()
@@ -25,16 +26,14 @@ class Reports extends CI_Controller
        $rp_from_date =  $this->input->get(self::C_FROM_DATE); // Start Date
        $rp_to_date   =  $this->input->get(self::C_TO_DATE); // End Date
        
-       
-       $this->m_report->isreportvalid($rp_type,$rp_from_date,$rp_to_date);
-       $this->m_report->download();
-        
-        
+//       echo $rp_type;
+       $this->m_report->isreportvalid($rp_type,$rp_from_date,$rp_to_date);  
+       $this->m_report->download();       
 
     }
     
     public function viewreports(){
-         $rp_type      =  $this->input->get(self::C_RTYPE); 
+       $rp_type      =  $this->input->get(self::C_RTYPE); 
        $rp_from_date =  $this->input->get(self::C_FROM_DATE); // Start Date
        $rp_to_date   =  $this->input->get(self::C_TO_DATE); // End Date
        
