@@ -40,8 +40,14 @@ class Utility extends CI_controller
     {
         $this->m_utility->loadRAS();
     }
-    public function load_RRS_File()
+    public function load_FULLFILLSTAT_File()
     {
-        $this->m_utility->loadRAS();
+        $this->m_utility->loadFULLFILLSTAT();
     }
+    public function loadAmendments()
+    {
+        //echo "Hello";
+        $this->m_utility->loadAmendments();
+    }
+   
 }

@@ -81,7 +81,9 @@ $route['get_where_proposed'] = 'Locks/getwhereProposed';
 $route['get_partial']        = 'Proposals/getPartialProposals';
 $route['NoPerfectMatch']     = 'Proposals/getSoForPartialProposal';
 $route['loadRAS']            = 'Utility/load_RAS_File';
-$route['loadRRS']            = 'Utility/load_RRS_File';
+$route['loadFULLFILLSTAT']   = 'Utility/load_FULLFILLSTAT_File';
+$route['loadAmendments']     = 'Utility/loadAmendments';
+//$route['hello']              = 'Utility/hello';
 
 $route['displayreport']      = 'Reports/setreports';
 $route['viewreport']         =  'Reports/viewreports';
