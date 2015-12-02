@@ -45,7 +45,8 @@ var emp_skill_assign;
 var emp_loc_assign;
 var emp_currentso_assign;
 var emp_empid_assign;
-var emp_emp_name_assign
+var emp_emp_name_assign;
+ var emp_level_assign
 var all_multi="";
 var oFor_te;
 var te_emp_id_assign;
@@ -3667,9 +3668,7 @@ var te_emp_name_assign;
 														 + "&proj_name="
 														+ p_name_manu
 														+ "&proj_bu="
-														+ p_bu_manu
-														
-             											+ "&proj_loc[]="
+														+ p_bu_manu	+ "&proj_loc[]="
 														+ temp_manual[0]
 														
 												        + "&proj_id="
@@ -4308,7 +4307,7 @@ var te_emp_name_assign;
 									        console.log(res_man);      
 									     emp_skill_assign= object.emp_skill_manual;
 									    emp_loc_assign = object.emp_loc_manual;
-									   
+									   emp_level_assign=object.emp_lev_manual;
 									     emp_empid_assign = object.emp_empid_manual;
 									     emp_emp_name_assign = object.emp_emp_name_manual
 									     
@@ -4320,7 +4319,7 @@ var te_emp_name_assign;
 										                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { 
 										                                     			$("#empid_man-input").val(emp_empid_assign);
 										                            					 $("#emp_name_main").html(emp_emp_name_assign);
-										                            					// $("#emp_level_main").html(emp_loc_assign);
+										                            					 $("#emp_level_main").html(emp_level_assign);
 										                            					 $("#emp_location_main").html(emp_loc_assign);
 										                                     		oFor_emp.close();
 										                                     		
@@ -4390,9 +4389,9 @@ var te_emp_name_assign;
 								tooltip : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "emp_lev_manual"),
+							sortProperty : "emp_lev_manual",
+							filterProperty : "emp_lev_manual",
 							width : "50px"
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
@@ -5050,13 +5049,14 @@ var te_emp_name_assign;
 											
 												var tmp_emp = {
 													emp_deploy_manual : val.deployable,
-												emp_future_manual : val.fut_so,
+											      	emp_future_manual : val.fut_so,
 													emp_capability_manual : val.comp,
 													emp_skill_manual : val.prime_skill,
 													emp_loc_manual : val.loc,
 													emp_currentso_manual : val.curr_so,
 													emp_empid_manual: val.emp_id,
 													emp_emp_name_manual: val.emp_name,
+													emp_lev_manual : val.level,
 												
 													
 												
@@ -5122,7 +5122,7 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 					
 					var search_te = new sap.ui.commons.Button({
 						id : 'te_serach_button',
-						text : "Assign",
+						text : "Search",
 						press : function()
 						{
 							
