@@ -2556,6 +2556,7 @@ var te_emp_name_assign;
 								tooltip : "Already Proposed"
 							}),
 							template : new sap.ui.commons.Link({
+								id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
 								press: function(oEvent){ 
@@ -2611,15 +2612,7 @@ var te_emp_name_assign;
 								var emp_str = "";
 								var status_str = "";
 								var p1_id = "";
-								if($("#multipropose_check-CB").is(':checked')== true)
-									{
-	
-								 all_multi="X";
-									}
-								else
-									{
-									all_multi="";
-									}
+								var all_multi = "";
 								 
 							
 
@@ -2632,7 +2625,7 @@ var te_emp_name_assign;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+all_multi;
+										 all_multi+="&allow_multi="+parent.find("#multipropose_check-CB").is(':checked');
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -3465,7 +3458,7 @@ var te_emp_name_assign;
                      
 						var so_type_select_manual = new sap.ui.commons.DropdownBox(
 								{
-									//id: 'ct_drop',
+									id: 'so_type_id1_manual',
 								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						so_type_select_manual.setTooltip("so_type");
 						so_type_select_manual.setEditable(true);
@@ -3599,7 +3592,7 @@ var te_emp_name_assign;
 
 						osearch_manual.createRow(capabilityLabel_manual, capabilityText_manual);
 					    
-						var search_manual1 =new sap.ui.commons.Button({id:'',text :"Search for SO's",
+						var search_manual1 =new sap.ui.commons.Button({id:'search_for_so_manual',text :"Search for SO's",
 							
 						press: function()
 						{
@@ -3629,7 +3622,7 @@ var te_emp_name_assign;
 										var p_id_manu=$("#pro_id_form_manual").val();
 										var c_name_manu=$("#cust_name1_manual").val();
 											var cap_manu=$("#ct_drop-input").val();
-									 var so_type_text_manu=$("#so_type_id1-input").val();
+									 var so_type_text_manu=$("#so_type_id1_manual-input").val();
 									  //so_type_id1
 										 sap.ui.core.BusyIndicator.show(0);
 							 			
@@ -3688,6 +3681,7 @@ var te_emp_name_assign;
 												        +"&so_type="
 												        +so_type_text_manu,
 													success : function(odata) {
+														
 														
 														sap.ui.core.BusyIndicator.hide(0);
 														console.log(odata);
@@ -3755,9 +3749,7 @@ var te_emp_name_assign;
          											+ "&proj_loc[]="
 													+ temp_manual[0]
 										        	+ "&proj_loc[]="
-										    	     + temp_manual[1]
-													
-											        + "&proj_id="
+										    	     + temp_manual[1] + "&proj_id="
 											        + p_id_manu
 											        + "&cust_name="
 											        + c_name_manu
@@ -3812,7 +3804,7 @@ var te_emp_name_assign;
 													table_for_manual_so
 															.bindRows("/modelData");
 
-													
+												
 												}
 											});
 										 }
@@ -3828,11 +3820,8 @@ var te_emp_name_assign;
 													 + "&proj_name="
 													+ p_name_manu
 													+ "&proj_bu=="
-													+ p_bu_manu
-													
-         											+ "&proj_loc[]="
-													+ temp_manual[0]
-										        	+ "&proj_loc[]="
+													+ p_bu_manu	+ "&proj_loc[]="
+													+ temp_manual[0]+ "&proj_loc[]="
 										    	     + temp_manual[1]
 											+ "&proj_loc[]="
 								    	     + temp_manual[2]
@@ -3908,10 +3897,7 @@ var te_emp_name_assign;
 																+ "&proj_bu=="
 																+ p_bu_manu
 																
-			         											+ "&proj_loc[]="
-																+ temp_manual[0]
-													        	+ "&proj_loc[]="
-													    	     + temp_manual[1]
+			         											+ "&proj_loc[]="+ temp_manual[0]+ "&proj_loc[]="+ temp_manual[1]
 														+ "&proj_loc[]="
 											    	     + temp_manual[2]
 														+ "&proj_loc[]="
@@ -4400,6 +4386,17 @@ var te_emp_name_assign;
 						}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
+								text : "Level",
+								tooltip : "Level"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", ""),
+							sortProperty : "",
+							filterProperty : "",
+							width : "50px"
+						}));
+						table_for_manual_emp.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
 								text : "Location",
 								tooltip : "Location"
 							}),
@@ -4466,44 +4463,7 @@ var te_emp_name_assign;
   						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
 						
   						osearch_manual_emp.createRow(emp_id_manual, emp_id_manual_text);
-                         /* var deployable_manual = new sap.ui.commons.Label({
-  							text : 'Deployable :'
-  						}).addStyleClass("for_text_style1");
-
-						var deployable_dropdown = new sap.ui.commons.DropdownBox(
-								{
-									id: 'ct_deploy_manual',
-								}).addStyleClass("for_fields_style1").addStyleClass("for_font");
-						deployable_dropdown.setTooltip("Deployable");
-						deployable_dropdown.setEditable(true);
-						deployable_dropdown.setWidth("200px");
-						var oItem = new sap.ui.core.ListItem("Capability01_manual_deploy");
-						oItem.setText("");
-						deployable_dropdown.addItem(oItem);
-						var oItem = new sap.ui.core.ListItem("Capability0_manual_deploy");
-						oItem.setText("YES");
-						deployable_dropdown.addItem(oItem);
-						oItem = new sap.ui.core.ListItem("Capability1_manual_deploy");
-						oItem.setText("NO");
-						deployable_dropdown.addItem(oItem);
-						deployable_manual.setLabelFor(deployable_dropdown);
-						osearch_manual_emp.createRow(deployable_manual, deployable_dropdown);
-						
-						 var future_manual = new sap.ui.commons.Label({
-							text : "Future SO :"
-						}).addStyleClass("for_text_style1");
-						 
-						 var future_manual_CB = new sap.ui.commons.CheckBox({
-							 id: 'check_for_future_so',
-								text : 'Blank',
-								tooltip : 'Blank',
-								checked : true 
-							
-								});
-						 
-                          
-						
-						osearch_manual_emp.createRow(future_manual, future_manual_CB);  */
+                       
 						
 						
 						var capabilityLabel_manual_emp = new sap.ui.commons.Label({
@@ -5064,11 +5024,18 @@ var te_emp_name_assign;
 							+emp_send_skill+"&proj_loc[]="+emp_send_location+"&level="+emp_send_level,
 	
 							success : function(odata) {
-								
 								sap.ui.core.BusyIndicator.hide(0);
 								console.log(odata);
 								var table_row;
 								var res = odata;
+								if(res.length==0){
+									
+									alert("Entered Employee ID not found");
+									
+								}
+								else
+									{
+								
 							
 								var completeData_manual_emp = [];
 
@@ -5112,7 +5079,7 @@ var te_emp_name_assign;
 										.setModel(oModel2_manual_emp);
 								table_for_manual_emp
 										.bindRows("/modelData");
-
+							}
 							}
 				});
 					 
@@ -5176,6 +5143,13 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 									var res = odata;
 								
 									var completeData_manual_te = [];
+                               if(res.length==0){
+										
+										alert("T & E Approver not found");
+										
+									}
+									else
+										{
 
 									jQuery
 									.each(
@@ -5206,7 +5180,7 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 											.setModel(oModel2_manual_te);
 									table_for_te_approve_id
 											.bindRows("/modelData");
-
+								}
 								}
 					});
 							
