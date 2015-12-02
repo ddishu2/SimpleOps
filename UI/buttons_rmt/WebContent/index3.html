@@ -1581,6 +1581,7 @@ var te_emp_name_assign;
 									text : "Get Tagging Results",
 									id : 'tag_result',
 									press : function display_third() {
+										
 										$("#third").removeClass("hide_div");
 										$("#second").addClass("hide_div");
                                         
@@ -3687,6 +3688,12 @@ var te_emp_name_assign;
 														var table_row;
 														var res = odata;		
 														var completeData_manual = [];
+														if(res.length==0)
+														{
+															
+															alert("Entered SO is already fullfilled");
+														}
+													else{
 
 														jQuery
 																.each(
@@ -3726,7 +3733,7 @@ var te_emp_name_assign;
 														table_for_manual_so
 																.bindRows("/modelData");
 
-													
+													}
 													}
 												});
 											 }
@@ -4336,7 +4343,72 @@ var te_emp_name_assign;
 										                                     		}})
 										                                     	]
 								}).addStyleClass("style_for_table");
-
+			table_for_manual_emp.addColumn(new sap.ui.table.Column({
+				label : new sap.ui.commons.Label({
+					text : "Emp ID",
+					tooltip : "Emp ID"
+				}),
+				template : new sap.ui.commons.TextView()
+						.bindProperty("text", "emp_empid_manual"),
+				sortProperty : "emp_empid_manual",
+				filterProperty : "emp_empid_manual",
+				width : "30px"
+			}));
+			table_for_manual_emp.addColumn(new sap.ui.table.Column({
+				label : new sap.ui.commons.Label({
+					text : "Emp Name",
+					tooltip : "Emp Name"
+				}),
+				template : new sap.ui.commons.TextView()
+						.bindProperty("text", "emp_emp_name_manual"),
+				sortProperty : "emp_emp_name_manual",
+				filterProperty : "emp_emp_name_manual",
+				width : "50px"
+			}));
+			table_for_manual_emp.addColumn(new sap.ui.table.Column({
+				label : new sap.ui.commons.Label({
+					text : "Level",
+					tooltip : "Level"
+				}),
+				template : new sap.ui.commons.TextView()
+						.bindProperty("text", "emp_lev_manual"),
+				sortProperty : "emp_lev_manual",
+				filterProperty : "emp_lev_manual",
+				width : "50px"
+			}));
+			table_for_manual_emp.addColumn(new sap.ui.table.Column({
+				label : new sap.ui.commons.Label({
+					text : "Location",
+					tooltip : "Location"
+				}),
+				template : new sap.ui.commons.TextView()
+						.bindProperty("text", "emp_loc_manual"),
+				sortProperty : "emp_loc_manual",
+				filterProperty : "emp_loc_manual",
+				width : "50px"
+			}));
+			table_for_manual_emp.addColumn(new sap.ui.table.Column({
+				label : new sap.ui.commons.Label({
+					text : "Capability" ,
+					tooltip : "Capability"
+				}),
+				template : new sap.ui.commons.TextView()
+						.bindProperty("text", "emp_capability_manual"),
+				sortProperty : "emp_capability_manual",
+				filterProperty : "emp_capability_manual",
+				width : "50px"
+			}));
+			table_for_manual_emp.addColumn(new sap.ui.table.Column({
+				label : new sap.ui.commons.Label({
+					text : "Skill",
+					tooltip : "Skill"
+				}),
+				template : new sap.ui.commons.TextView()
+						.bindProperty("text", "emp_skill_manual"),
+				sortProperty : "emp_skill_manual",
+				filterProperty : "emp_skill_manual",
+				width : "50px"
+			}));
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Deployable.",
@@ -4361,50 +4433,8 @@ var te_emp_name_assign;
 							filterProperty : "emp_future_manual",
 							width : "50px"
 						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Capability" ,
-								tooltip : "Capability"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_capability_manual"),
-							sortProperty : "emp_capability_manual",
-							filterProperty : "emp_capability_manual",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Skill",
-								tooltip : "Skill"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_skill_manual"),
-							sortProperty : "emp_skill_manual",
-							filterProperty : "emp_skill_manual",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Level",
-								tooltip : "Level"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_lev_manual"),
-							sortProperty : "emp_lev_manual",
-							filterProperty : "emp_lev_manual",
-							width : "50px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Location",
-								tooltip : "Location"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_loc_manual"),
-							sortProperty : "emp_loc_manual",
-							filterProperty : "emp_loc_manual",
-							width : "50px"
-						}));
+						
+						
 						table_for_manual_emp.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Current SO",
@@ -4416,28 +4446,7 @@ var te_emp_name_assign;
 							filterProperty : "emp_currentso_manual",
 							width : "30px"
 						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp ID",
-								tooltip : "Emp ID"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_empid_manual"),
-							sortProperty : "emp_empid_manual",
-							filterProperty : "emp_empid_manual",
-							width : "30px"
-						}));
-						table_for_manual_emp.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp Name",
-								tooltip : "Emp Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_emp_name_manual"),
-							sortProperty : "emp_emp_name_manual",
-							filterProperty : "emp_emp_name_manual",
-							width : "50px"
-						}));
+						
 					
 						table_for_manual_emp.sort(table_for_manual_emp.getColumns()[0]);						
 						
@@ -5536,7 +5545,19 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 		                     								new sap.ui.core.ListItem({text: "Expense"}),
 		                     								new sap.ui.core.ListItem({text: "Effort Booking"})
 		                     							]}).addStyleClass("for_font_manual_label").addStyleClass("fte_manual1");
-		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
+		
+		
+		var checkbox_for_service = new sap.ui.commons.CheckBox({
+			id: 'for_service_cb',
+			change :function()
+			{
+				
+				alert("Hii");
+			}
+			
+			
+		})
+		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype,checkbox_for_service);
 		   
 		   var oDivider8_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		   var oDivider8 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
