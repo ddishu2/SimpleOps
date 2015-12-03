@@ -5532,7 +5532,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 				value : "100"
 			}).addStyleClass("fte_manual1");
 			   
-		var taggtype =  new sap.ui.commons.ComboBox({items: [
+		var taggtype =  new sap.ui.commons.ComboBox({id: 'tag_type',items: [
 		                                                     new sap.ui.core.ListItem({text: ""}),
 		                     								new sap.ui.core.ListItem({text: "Expense"}),
 		                     								new sap.ui.core.ListItem({text: "Effort Booking"})
@@ -5560,6 +5560,9 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var to_send_sdate =  $("#sdate1_man-input").html();
 								 var to_send_edate =  $("#edate1_man-input").html(); 
 								 var emp_to_send = $("#empid_man-input").val();
+								 var smart_pro_code_send = $("#sm_pro_code1").val();
+								 var fte_to_send =  $("#fte1").val();
+								 var tagtype_send = $("#tag_type-input").val();
 	
 								   if(!input_manual2.match(regex))
 								        	 {
@@ -5581,7 +5584,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								
 						        	 $.ajax({
 							      		  method: "GET",
-							      		  url: "/rmt/api/ci/index.php/Lock_EMPs/?so_id="+to_send_sono+"&emp_id="+emp_to_send+"&lock_start_date="+to_send_sdate+"&lock_end_date="+to_send_edate+"&allow_multi=0&requestor_id=0",
+							      		  url: "/rmt/api/ci/index.php/Lock_EMPs/?so_id="+to_send_sono+"&emp_id="+emp_to_send+"&lock_start_date="+to_send_sdate+"&lock_end_date="+to_send_edate+"&allow_multi=0&requestor_id=0&smart_proj_code="
+							      				  +smart_pro_code_send+"&FTE="+fte_to_send+"&tag_type="+tagtype_send,
 							      		
 							      				
 	///rmt/api/ci/index.php/Lock_EMPs/?so_id=291204&emp_id=069535&lock_start_date=2015-12-01&lock_end_date=2015-12-01&allow_multi=0&requestor_id=0
