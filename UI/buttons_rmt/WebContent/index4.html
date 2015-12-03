@@ -51,6 +51,10 @@ var all_multi="";
 var oFor_te;
 var te_emp_id_assign;
 var te_emp_name_assign;
+var so_id_partial_assign;
+var skill_partial_assign;
+ var level_partial_name_assign;
+var loc_partial_assign;
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -2352,9 +2356,12 @@ var te_emp_name_assign;
 																		edate_partial : val.so.so_end_date,
 																	    empid_partial : "",
 																	    empname_partial : "",
-																	    level_partial : "" ,
-																	    skill_partial : "" ,
-																	    loc_partial   : "" ,
+																	    level_come_partial :  "",
+																	    skill_come_partial :  "",
+																	    loc_come_partial   : "" ,
+																	    level_partial : val.so.so_level,
+																	    skill_partial : val.so.so_primary_skill ,
+																	    loc_partial   : val.so.so_loc ,
 																	    reason_partial : "" ,
 																};
 															
@@ -2624,17 +2631,25 @@ var te_emp_name_assign;
 								id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-								press: function(oEvent){ 
+								press: function(oEvent){
+
+									$(".approveDropdown input").each(function(index,val){
+					
+										if($(this).val() == "Approve" || $(this).val() == "Reject"){
+											var parent = $(this).parent().parent().parent().parent();
+									var emp_id_for_service= parent.find(".empoid").text();
+									console.log("/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service)
 									 $.ajax({
 							      		  method: "GET",
-							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761",
+							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service,
 							      		//localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761				
 							      		success : function(odata){
 							      			console.log(odata);
 
 							      		}
 									});
-									 
+										}
+									});
 									
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
@@ -2773,16 +2788,17 @@ var te_emp_name_assign;
 									selectionMode: sap.ui.table.SelectionMode.Single, 
 									rowSelectionChange: function(e) {
 									      var oIndex = e.getParameter('rowIndex');
-									      if (table_for_manual_so.isIndexSelected(oIndex )) {
+									      if (partial_match.isIndexSelected(oIndex )) {
 									        var oContext= partial_match.getContextByIndex(oIndex );
 									        var path = oContext.sPath;
 									        var object = partial_match.getModel().getProperty(path);
-									        var res_man=object;
-									
-									   
-									  
-		 
-									        
+									        so_id_partial_assign=object.sname_partial;
+										     skill_partial_assign= object.skill_partial;
+										     level_partial_name_assign = object.level_partial;
+										     loc_partial_assign= object.loc_partial;
+										     console.log(so_id_partial_assign);
+										     console.log(skill_partial_assign);
+		
 									      }
 									    },
 									
@@ -2866,9 +2882,9 @@ var te_emp_name_assign;
 								text : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "level_partial"),
-							sortProperty : "level_partial",
-							filterProperty : "level_partial",
+									.bindProperty("text", "level_come_partial"),
+							sortProperty : "level_come_partial",
+							filterProperty : "level_come_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2876,9 +2892,9 @@ var te_emp_name_assign;
 								text : "Skill"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "skill_partial"),
-							sortProperty : "skill_partial",
-							filterProperty : "skill_partial",
+									.bindProperty("text", "skill_come_partial"),
+							sortProperty : "skill_come_partial",
+							filterProperty : "skill_come_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2886,9 +2902,9 @@ var te_emp_name_assign;
 								text : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "loc_partial"),
-							sortProperty : "loc_partial",
-							filterProperty : "loc_partial",
+									.bindProperty("text", "loc_come_partial"),
+							sortProperty : "loc_come_partial",
+							filterProperty : "loc_come_partial",
 							width : "100px"
 						}));
 					
@@ -2920,7 +2936,22 @@ var te_emp_name_assign;
 								$("#fs2").removeClass("hide_div");
 								$("#fs3").addClass("hide_div");
 								$("#fs4").addClass("hide_div");
+								console.log("/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign)
+								$.ajax({
+						      		  method: "GET",
+						      		  url: "/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign,
+						      		
+						     //http://localhost/rmt/api/ci/index.php/get_partial/?so_id=0000291204&skill=SAP%20ABAP&level=P1&loc=Mumbai
+ 				
+
+						      		success : function(odata){
+						      			console.log(odata);
+						      			 
+                                     
+						      		
+						      		}
 								
+								});
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
@@ -5629,10 +5660,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var to_send_edate =  $("#edate1_man-input").html(); 
 								 var emp_to_send = $("#empid_man-input").val();
 	
-								  if (!input_manual1.match(regex)) {
-								        alert("Entered Smart Project Code is not valid");
-								      } 
-								         else if(!input_manual2.match(regex))
+								if(!input_manual2.match(regex))
 								        	 {
 								        	 alert("Entered FTE% is not valid");
 								        	 }
@@ -5660,22 +5688,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							      			console.log(odata);
 							      			 alert(odata);
 	                                         window.location.reload();
-							      			$("#second").addClass("hide_div");	
-											$("#first").addClass("hide_div");
-											$("#amend_first").addClass("hide_div");
-											$("#amend_zero").addClass("hide_div");
-											$("#report_first").addClass("hide_div");
-											$("#report_first_open").addClass("hide_div");
-											$("#report_first_zero").addClass("hide_div");
-											$("#amend_report_view").addClass("hide_div");
-											$("#soft_report_view").addClass("hide_div");
-											$("#hard_report_view").addClass("hide_div");
-											$("#soft_expiry_report_view").addClass("hide_div");
-											$("#manual1").removeClass("hide_div");
-											$("#third").addClass("hide_div");
-											$("#four1").addClass("hide_div");
-											
-											$("#four2_core").addClass("hide_div"); 
+							      		
 							      		}
 									
 									});
@@ -6034,12 +6047,54 @@ var repo_to1 = new sap.ui.commons.Label({
 									
 			//[11/30/2015 3:39 PM] Kumthekar, Reshma: 
 //http://localhost/rmt/api/CI/index.php/getslockexp/?lv_from_date=2015-11-19&lv_to_date=2015-11-25
-			
+			      	$
+		.ajax({
+			method : "GET",
+			url : 
+				"/rmt/api/CI/index.php/getslockexp/?lv_from_date="+from_hardlock_expiry_report+"&lv_to_date="+to_hardlock_expiry_report,
 
-							 window.open("/rmt/api/CI/index.php/getslockexp/?lv_from_date="
-										+from_hardlock_expiry_report+
-										"&lv_to_date="
-										+to_hardlock_expiry_report)
+			success : function(odata) {
+				console.log(odata);
+				var res_expiry = odata;
+				var completeData1_expiry = [];
+
+				jQuery
+						.each(
+								res_expiry,
+								function(
+										i,
+										val) {
+
+									
+										var tmp1_expiry = {
+												
+												
+												
+											
+										};
+									
+										completeData1
+												.push(tmp1_expiry);
+										 Model_amend_expiry = new sap.ui.model.json.JSONModel();
+										Model_amend_expiry
+												.setData({
+													modelData : completeData1_expiry
+												});
+										soft_expiry_report_gen
+												.setModel(Model_amend_expiry);
+										soft_expiry_report_gen
+												.bindRows("/modelData");
+	
+									}
+
+								);
+
+		
+				
+	}
+});
+                               
+							 
 									
 								$("#report_first").addClass("hide_div");
 								$("#report_first_open").addClass("hide_div");
