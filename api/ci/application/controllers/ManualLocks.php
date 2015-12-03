@@ -13,28 +13,31 @@
  */
 class ManualLocks extends CI_Controller
 {   
-    const gc_from_date  = 'so_from_date',
-          gc_so_pos_no  = 'so_pos_no',  
-          gc_to_date    = 'so_to_date',
-          gc_proj_bu    = 'proj_bu',
-          gc_type       = 'so_type',
-          gc_proj_name  = 'proj_name',
-          gc_proj_loc   = 'proj_loc',
-          gc_proj_id    = 'proj_id',
-          gc_cust_name  = 'cust_name',
-          gc_capability = 'capability',
-          gc_deployable = 'deployable',
-          gc_skill      = 'prime_skill',
-          gc_level      = 'level',
-          gc_lock_soid  = 'so_id',
-          gc_lock_empid = 'emp_id',
-          gc_lock_sdate = 'lock_start_date',
-          gc_lock_edate = 'lock_end_date',
-          gc_lock_reqid = 'requestor_id',
-          gc_lock_multi = 'allow_multi',
-          gc_emp_empid  = 'emp_id',
-          gc_emp_corpid = 'domain_id',
-          gc_emp_futso  = 'fut_so'; 
+    const gc_from_date   = 'so_from_date',
+          gc_so_pos_no   = 'so_pos_no',  
+          gc_to_date     = 'so_to_date',
+          gc_proj_bu     = 'proj_bu',
+          gc_type        = 'so_type',
+          gc_proj_name   = 'proj_name',
+          gc_proj_loc    = 'proj_loc',
+          gc_proj_id     = 'proj_id',
+          gc_cust_name   = 'cust_name',
+          gc_capability  = 'capability',
+          gc_deployable  = 'deployable',
+          gc_skill       = 'prime_skill',
+          gc_level       = 'level',
+          gc_lock_soid   = 'so_id',
+          gc_lock_empid  = 'emp_id',
+          gc_lock_sdate  = 'lock_start_date',
+          gc_lock_edate  = 'lock_end_date',
+          gc_lock_reqid  = 'requestor_id',
+          gc_lock_multi  = 'allow_multi',
+          gc_emp_empid   = 'emp_id',
+          gc_emp_corpid  = 'domain_id',
+          gc_emp_futso   = 'fut_so',
+          gc_lock_spcode = 'smart_proj_code',
+          gc_lock_fte    = 'FTE',
+          gc_lock_ttype  = 'tag_type';
 
     public function __construct()
     {
@@ -104,12 +107,18 @@ class ManualLocks extends CI_Controller
         $lv_edate  = $this->input->get(self::gc_lock_edate);
         $lv_reqid  = $this->input->get(self::gc_lock_reqid);
         $lv_multi  = $this->input->get(self::gc_lock_multi);
+        $lv_spc    = $this->input->get(self::gc_lock_spcode);
+        $lv_fte    = $this->input->get(self::gc_lock_fte);
+        $lv_ttype  = $this->input->get(self::gc_lock_ttype);
         $lv_result = $this->m_ManualLocks->Lock_EMPs(   $lv_so_no, 
                                                         $lv_empid, 
                                                         $lv_sdate, 
                                                         $lv_edate, 
                                                         $lv_multi, 
-                                                        $lv_reqid   );
+                                                        $lv_reqid,
+                                                        $lv_spc,
+                                                        $lv_fte,
+                                                        $lv_ttype   );
         $this->output->set_content_type('application/json')->set_output(json_encode($lv_result,JSON_PRETTY_PRINT));      
     }
 }
