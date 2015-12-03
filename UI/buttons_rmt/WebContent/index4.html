@@ -2320,7 +2320,70 @@ var te_emp_name_assign;
 							press : function partial_complete() {
 								$("#four2_core").removeClass("hide_div");
 								$("#third").addClass("hide_div");
+								
+								
+								console.log("/rmt/api/ci/index.php/NoPerfectMatch");
+							   	$
+								.ajax({
+									method : "GET",
+									url : 
+			
+										"/rmt/api/ci/index.php/NoPerfectMatch",
+				///rmt/api/ci/index.php/NoPerfectMatch
+									success : function(odata) {
+										console.log(odata);
+										
+										var res_partial = odata;
+										var completeData1_partial = [];
 
+										jQuery
+												.each(
+														res_partial,
+														function(
+																i,
+																val) {
+
+															
+																var tmp1_partial = {
+																		sname_partial : val.so.so_pos_no,
+																		pcode_partial : val.so.so_proj_id,
+																		pname_partial : val.so.so_proj_name,
+																		sdate_partial : val.so.so_start_date_new,
+																		edate_partial : val.so.so_end_date,
+																	    empid_partial : "",
+																	    empname_partial : "",
+																	    level_partial : "" ,
+																	    skill_partial : "" ,
+																	    loc_partial   : "" ,
+																	    reason_partial : "" ,
+																};
+															
+																completeData1_partial
+																		.push(tmp1_partial);
+																 Model_amend_partial = new sap.ui.model.json.JSONModel();
+																Model_amend_partial
+																		.setData({
+																			modelData : completeData1_partial
+																		});
+																partial_match
+																		.setModel(Model_amend_partial);
+																partial_match
+																		.bindRows("/modelData");
+																
+																
+															//	pass_data = Model_amend.getData().modelData;
+
+
+															}
+
+														);
+
+								
+										
+							}
+						});
+							
+                             
 							}
 						}).addStyleClass("buttons_common_style1");
 						oNav1.createRow(oSuitable, oPartial);
@@ -2717,9 +2780,9 @@ var te_emp_name_assign;
 								text : "SO No."
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "sname"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "sname_partial"),
+							sortProperty : "sname_partial",
+							filterProperty : "sname_partial",
 							width : "100px"
 						}));
 
@@ -2728,9 +2791,9 @@ var te_emp_name_assign;
 								text : "Project Code"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "pcode"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "pcode_partial"),
+							sortProperty : "pcode_partial",
+							filterProperty : "pcode_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2738,9 +2801,9 @@ var te_emp_name_assign;
 								text : "Project Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "pname"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "pname_partial"),
+							sortProperty : "pname_partial",
+							filterProperty : "pname_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2748,9 +2811,9 @@ var te_emp_name_assign;
 								text : "Start Date"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "sdate"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "sdate_partial"),
+							sortProperty : "sdate_partial",
+							filterProperty : "sdate_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2758,9 +2821,9 @@ var te_emp_name_assign;
 								text : "End Date"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "edate"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "edate_partial"),
+							sortProperty : "edate_partial",
+							filterProperty : "edate_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2768,9 +2831,9 @@ var te_emp_name_assign;
 								text : "Emp ID"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "eid"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "empid_partial"),
+							sortProperty : "empid_partial",
+							filterProperty : "empid_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2778,9 +2841,9 @@ var te_emp_name_assign;
 								text : "Emp Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "ename"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "empname_partial"),
+							sortProperty : "empname_partial",
+							filterProperty : "empname_partial",
 							width : "100px"
 						}));
 
@@ -2789,9 +2852,9 @@ var te_emp_name_assign;
 								text : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "lev"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "level_partial"),
+							sortProperty : "level_partial",
+							filterProperty : "level_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2799,9 +2862,9 @@ var te_emp_name_assign;
 								text : "Skill"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "skill"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "skill_partial"),
+							sortProperty : "skill_partial",
+							filterProperty : "skill_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -2809,46 +2872,29 @@ var te_emp_name_assign;
 								text : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "eloc"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "loc_partial"),
+							sortProperty : "loc_partial",
+							filterProperty : "loc_partial",
 							width : "100px"
 						}));
 					
 						
-						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Select"
-							}),
-							template :  new sap.ui.commons.RadioButton({
-								text : '',
-								tooltip : 'Select',
-								groupName : 'decision_partial',
-									
-								}),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
+						
 						partial_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Reason"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "reason"),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "reason_partial"),
+							sortProperty : "reason_partial",
+							filterProperty : "reason_partial",
 							width : "100px"
 						}));
 
-						var oModel3 = new sap.ui.model.json.JSONModel();
-						oModel3.setData({
-							modelData : bData
-						});
-						partial_match.setModel(oModel3);
+						
 						partial_match.bindRows("/modelData");
 
-						partial_match.sort(partial_match.getColumns()[0]);
+						//partial_match.sort(partial_match.getColumns()[0]);
 
 						partial_match.placeAt("four2");
 						var further_search = new sap.ui.commons.Button({
