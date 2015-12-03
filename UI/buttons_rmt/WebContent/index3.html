@@ -3474,6 +3474,12 @@ var te_emp_name_assign;
 						oItem = new sap.ui.core.ListItem("so_type1_manual");
 						oItem.setText("Persuit");
 						so_type_select_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("so_type3_manual");
+						oItem.setText("FO-Billable");
+						so_type_select_manual.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("so_type4_manual");
+						oItem.setText("Internal");
+						so_type_select_manual.addItem(oItem);
 						
 						
 						
@@ -5569,10 +5575,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var to_send_edate =  $("#edate1_man-input").html(); 
 								 var emp_to_send = $("#empid_man-input").val();
 	
-								  if (!input_manual1.match(regex)) {
-								        alert("Entered Smart Project Code is not valid");
-								      } 
-								         else if(!input_manual2.match(regex))
+								   if(!input_manual2.match(regex))
 								        	 {
 								        	 alert("Entered FTE% is not valid");
 								        	 }
@@ -5986,7 +5989,7 @@ var repo_to1 = new sap.ui.commons.Label({
 								$("#report_first_zero").addClass("hide_div");
 								$("#first").addClass("hide_div");
 								$("#amend_report_view").addClass("hide_div");
-								$("#soft_report_view").addClass("hide_div");
+								$("#soft_report_").addClass("hide_div");
 								$("#hard_report_view").addClass("hide_div");
 								$("#soft_expiry_report_view").removeClass("hide_div"); 
 					}
