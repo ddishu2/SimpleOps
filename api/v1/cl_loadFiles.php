@@ -30,7 +30,7 @@ class cl_loadFiles
         {
             echo 'Copied Amendment Successfully from'.$v_remote_filename.' to: '.self::$v_amendment_local_file.PHP_EOL;
             $v_delete_success_flag = unlink($v_remote_filename);
-//            $v_delete_excel = unlink($v_remote_excel);
+            $v_delete_excel = unlink($v_remote_excel);
              
         }
         else
