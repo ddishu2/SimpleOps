@@ -43,7 +43,7 @@ class open_so extends CI_controller
        $lv_type = $this->input->get(self::C_TYPE);
        
       
-       $filtered_so_locs = array_filter($larr_so_locs); 
+       $filtered_so_locs = array_filter($lv_arr_locs); 
        
         $lt_open_sos = [];
         $this->m_open_so->set_attributes($so_from_date, $so_to_date,$lv_project_name,$lv_project_bu,$filtered_so_locs,$lv_capability,$lv_proj_id,$lv_cust_name,$lv_type);
