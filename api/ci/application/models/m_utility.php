@@ -18,7 +18,7 @@ require_once(APPPATH.'models/m_Notifications.php');
 
 class m_utility extends CI_model
 {
-    const gc_business_days  = 23,
+    const gc_business_days  = 22,
           gc_date_format    = 'd-M-y',
           gc_date_from      = 'date_from',
           gc_bu             = 'Appsone SAP',
@@ -65,25 +65,22 @@ class m_utility extends CI_model
     return $lv_cred;
     }
 
-    private function add_business_days($i_sdate) {
-        $lv_count = 1;
-        $lv_dayx = strtotime($i_sdate);
-        while ($lv_count < self::gc_business_days) 
+    private function add_business_days($i_sdate) 
+    {   $i_sdate = '09-DEC-15';
+        $io_date = new DateTime($i_sdate);
+        $io_date->modify('+'.self::gc_business_days.' weekdays');
+        while (($io_date->format('N')) > 5)
         {
-                $lv_day = date('N', $lv_dayx);
-                $lv_date = date('Y-m-d', $lv_dayx);
-                if ($lv_day < 6)
-                $lv_count++;
-                $lv_dayx = strtotime($lv_date . ' +1 day');
+            $io_date->modify('+1 day');
         }
-        return date(self::gc_date_format, $lv_dayx);
+        return ($io_date->format(self::gc_date_format));
     }
     
 // Function to get all the hard locks which will be released on a particular date.
     private function getreleasablehardlocks()
     {   
         $lt_invalid_project = "('Bench','Campus Hire', 'Apps1 Long  Leave & Ml')";
-        $lv_edate = $this->add_business_days(date(self::gc_date_format));  
+        $lv_edate = $this->add_business_days(date(self::gc_date_format));
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
@@ -110,6 +107,7 @@ class m_utility extends CI_model
     {   
         $lv_prev_proj_code = '';
         $lt_proj_details   = [];
+        $lt_sup_details    = [];
         $lt_emp_details = $this->getreleasablehardlocks();
         $lv_count = count($lt_emp_details);
         if ($lv_count > 0) 
@@ -119,15 +117,22 @@ class m_utility extends CI_model
                 
 // Check if the current record is the last record in the table for that field's value.                                                                
 // If its the last record, we'll collect the current record and send out email notifications.
-// Then we'll clear the table to be used for next set of records.                    
+// Then we'll clear the table to be used for next set of records. 
                     if($this->atendofvalue($lt_emp_details, $lv_key, $lwa_values, $this->gv_proj_code))
                     {
-                      array_push($lt_proj_details, $lwa_values);
+                    array_push($lt_proj_details, $lwa_values);
+                    foreach($lt_proj_details as $lv_key_proj => $lwa_values_proj)
+                    if($this->atendofvalue($lt_proj_details, $lv_key_proj, $lwa_values_proj, $this->gv_sup_id))
+                    {
+                      array_push($lt_sup_details, $lwa_values_proj);
                       $io_mail = new m_Notifications();                      
-                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_proj_details);                     
-                      $lt_proj_details = [];
-                    }
-                    
+                      $lv_mail = $io_mail->sendhardlockreleasenotification($lt_sup_details);                     
+                      $lt_sup_details = [];                        
+                    }                    
+                    else
+                    {array_push($lt_sup_details, $lwa_values);}
+                    $lt_proj_details = [];
+                    }                                    
 // If its not the last record then we'll just collect the current record and 
 // wait for the last record to come                     
                     else
