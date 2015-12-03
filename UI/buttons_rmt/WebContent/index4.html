@@ -2658,10 +2658,47 @@ var loc_partial_assign;
 							      		  method: "GET",
 							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service,
 							      		//localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761				
-							      		success : function(odata){
-							      			console.log(odata);
+							      			success : function(odata) {
+				console.log(odata);
+				var table_row1;
+				var res = odata;
+				var completeData1 = [];
 
-							      		}
+				jQuery
+						.each(
+								res,
+								function(
+										i,
+										val) {
+
+									
+										var tmp1 = {
+										
+										};
+									
+										completeData1
+												.push(tmp1);
+										 Model_amend = new sap.ui.model.json.JSONModel();
+										Model_amend
+												.setData({
+													modelData : completeData1
+												});
+										amend_table1
+												.setModel(Model_amend);
+										amend_table1
+												.bindRows("/modelData");
+										
+										
+										pass_data = Model_amend.getData().modelData;
+
+
+									}
+
+								);
+
+		
+				
+	}
 									});
 										}
 									});
