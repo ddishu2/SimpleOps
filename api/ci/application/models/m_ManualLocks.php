@@ -228,7 +228,7 @@ class m_ManualLocks extends CI_model
     }
     
 // Lock Employees to SO    
-    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '')
+    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '', $i_tagtype = '')
     {   
         
 // Validate if Employee exists.
@@ -308,7 +308,7 @@ class m_ManualLocks extends CI_model
           self::gc_lock_comment => self::gc_manual,
           self::gc_lock_spcode  => $i_spc,
           self::gc_lock_fte     => $i_fte,
-          self::gc_lock_tagtype => self::gc_manual
+          self::gc_lock_tagtype => $i_tagtype
         ];
         $this->db->trans_start();
         $this->db->set($lt_transcomm_data);
