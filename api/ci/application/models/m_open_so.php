@@ -72,7 +72,7 @@ class m_open_so extends CI_model
        $this->v_so_type = $fp_type;
     }
     public function get()
-    {
+    { 
         $this->set();  
         return $this->arr_open_sos;
     }
@@ -123,7 +123,8 @@ class m_open_so extends CI_model
             $larr_open_sos[$lv_so_id] = $lwa_so;
         }
         $this->arr_open_sos =  $larr_open_sos;
-        
+//                print_r($this->arr_open_sos);
+
     }
     private function isFilterset($fp_filter_value)
     {
