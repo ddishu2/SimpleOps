@@ -12,6 +12,7 @@
 require_once(APPPATH.'libraries/l_methods.php');
 require_once(APPPATH.'models/m_lock.php');
 require_once(APPPATH.'models/m_amendment.php');
+require_once(APPPATH.'models/m_open_so.php');
 class m_report extends CI_model
 {
     const C_HDR_LINE1          = 'Content-Type: text/csv'; 
@@ -30,6 +31,7 @@ class m_report extends CI_model
      * C_DATE_FORMAT DD-MM-YYYY_HH:MM:SS
      */
     const C_RTYPE = 'type';
+    const C_ZER0 = '0';
                 
     
     const C_PHP_OUT_STREAM    = 'php://output';
@@ -39,6 +41,7 @@ class m_report extends CI_model
     const C_FILENAME_DELIMITER = '_';
     const C_TYPE_SL         = 'Soft_Lock';
     const C_TYPE_SL_RELEASE = 'Soft_Lock_Release';
+    const C_TYPE_OPEN_SO    = 'Open_So_Report';
     const C_TYPE_HL         = 'Hard_Lock';
     const C_TYPE_HL_RELEASE = 'Hard_Lock_Release';
     CONST C_TYPE_REJ_EMP    = 'Rejected_Employees';
@@ -75,7 +78,8 @@ class m_report extends CI_model
             ||  $fp_v_report_type === self::C_TYPE_SL_RELEASE
             ||  $fp_v_report_type === self::C_TYPE_HL
             ||  $fp_v_report_type === self::C_TYPE_HL_RELEASE
-            ||  $fp_v_report_type == self::C_TYPE_AMMENDMENTS)
+            ||  $fp_v_report_type == self::C_TYPE_AMMENDMENTS
+            ||  $fp_v_report_type == self::C_TYPE_OPEN_SO)
         {
             $re_valid = true;
         }
@@ -139,9 +143,9 @@ $this->setHeaders();
                    fputcsv($lo_csv_output,array('Emp ID','Employee Name','Service Line','Project Code','Project Name','Start date','End date','SO #','SO Level (P0-M7)','T&E approver ID','T&E approver Name','Smart Project Code','FTE%','Tagging Type (expense / effort booking)','Updated By','Time Stamp '));
                     break;
                 
-//                case self::C_TYPE_HL_RELEASE:
-//                
-//                    break;
+                case self::C_TYPE_HL_RELEASE:
+                fputcsv($lo_csv_output,array('Emp ID','Employee Name','Skill','Service Line','Project Code','Project Name','Start date','End date'));
+                    break;
                 
                 case self::C_TYPE_SL:
                  fputcsv($lo_csv_output,array('Type','Ten digit SO number,SO line number,SO quantity number','Numeric Emp ID'));
@@ -156,6 +160,11 @@ $this->setHeaders();
                    fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','Action','Roll Off lead time','Extension Notice','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));       
                      break;
                  
+        case self::C_TYPE_OPEN_SO:
+            
+             fputcsv($lo_csv_output,array('So ID','Project Code','Project Name','Customer Name','Project Bu','Project Type','Start Date New','Description','Service Line','Skills','Capability','Location','End Date','Create Date','Submit Date','Entered By','Owner','Region','Level','Status'));
+                    break;
+                
                 default:
 //////
                    break;
@@ -163,11 +172,23 @@ $this->setHeaders();
 ////         
 ////        
         $arr_data = $this->getData();
-        for($i=0;$i<count($arr_data);$i++)
+        
+        switch ($this->v_report_type)
         {
-           $row = $arr_data[$i]; 
+             case self::C_TYPE_OPEN_SO:
+              foreach ($arr_data as $key => $value) {
+            
+            fputcsv($lo_csv_output,$value);
+        }
+        
+           default :
+               for($i=0;$i<count($arr_data);$i++)
+        {
+        $row = $arr_data[$i]; 
         fputcsv($lo_csv_output,$row);
         }
+        }
+        
         // make php send the generated csv lines to the browser
         fpassthru($lo_csv_output);
         fclose($lo_csv_output);
@@ -188,6 +209,7 @@ $this->setHeaders();
             $re_data = [];
              //$re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
           // $lo_lock = new cl_Lock();
+//            echo $this->v_report_type;
             switch ($this->v_report_type) 
             {
                 case self::C_TYPE_HL:
@@ -195,24 +217,37 @@ $this->setHeaders();
                     $re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
 //////                    
                     break;
-////                case self::C_TYPE_HL_RELEASE:
-////                
-////                    break;
+                
+                case self::C_TYPE_HL_RELEASE:
+                $re_data = $this->m_lock->gethardlockreleasedata($this->v_start_date,$this->v_end_date);
+                    break;
+                
                 case self::C_TYPE_SL:
                     
                 $re_data = $this->m_lock->getsoftlockdata($this->v_start_date,$this->v_end_date);
 //                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
                     break;
+                
 //                case self::C_TYPE_SL_RELEASE:
 //                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
 //                    break;
 ////                
 ////                    break;
-//                case self::C_TYPE_AMMENDMENTS:
-//                    
-//                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
-//                    
-//                    break;
+                case self::C_TYPE_AMMENDMENTS:
+                    
+                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
+                    
+//                    print_r($re_data);
+                    break;
+                
+                case self::C_TYPE_OPEN_SO:
+            
+             $re_data = $this->m_open_so->get();
+                    
+//             print_r($re_data);
+             
+                    break;
+                
                 default:
                     $re_data = [];
                     break;
