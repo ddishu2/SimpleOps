@@ -2561,22 +2561,7 @@ var te_emp_name_assign;
 								id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-								press: function(oEvent){ 
-									 $.ajax({
-							      		  method: "GET",
-							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761",
-							      		//localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761				
-							      		success : function(odata){
-							      			console.log(odata);
-
-							      		}
-									});
-									 
-									
-									if(!oOverlayContainer.isOpen()){
-										oOverlayContainer.open();
-									}
-								}
+								
 							}),
 							width : "100px",
 						}));
