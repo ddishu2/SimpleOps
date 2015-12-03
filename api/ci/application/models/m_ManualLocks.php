@@ -132,7 +132,7 @@ class m_ManualLocks extends CI_model
 // So Number
         if($this->isFilterset($i_so_no))
         {
-        $this->db->where(self::gc_so_pos_no.' = '.$i_so_no);
+        $this->db->like(self::gc_so_pos_no, $i_so_no);
         }
         
 // Filter out processed SO

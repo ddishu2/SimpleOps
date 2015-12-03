@@ -97,7 +97,7 @@ class m_report extends CI_model
    public function setdates($fp_start_dates,$fp_end_dates){
       
 
-$lv_dates_valid = cl_methods::isDateRangeValid($fp_start_dates, $fp_end_dates);
+$lv_dates_valid = l_methods::isDateRangeValid($fp_start_dates, $fp_end_dates);
 if($lv_dates_valid === true)
 {
 $this->v_start_date  = $fp_start_dates;
