@@ -1699,6 +1699,7 @@ var loc_partial_assign;
 																					reason : val.emp[0].reason,
 																					propose_id : val.prop_id,
 																					multi_prop : "",
+																					multi_decide : "",
 																				
 																				};
 																			
@@ -1800,7 +1801,8 @@ var loc_partial_assign;
 																				skill_cat : val.emp[0].skill_cat ,
 																				reason : val.emp[0].reason,
 																				propose_id : val.prop_id,
-																				multi_prop : ""
+																				multi_prop : "",
+																				multi_decide : "",
 																			
 																			};
 																		
@@ -1903,7 +1905,8 @@ var loc_partial_assign;
 																				skill_cat : val.emp[0].skill_cat ,
 																				reason : val.emp[0].reason,
 																				propose_id : val.prop_id,
-																				multi_prop : ""
+																				multi_prop : "",
+																				multi_decide : "",
 																			
 																			};
 																		
@@ -2008,6 +2011,7 @@ var loc_partial_assign;
 																							reason : val.emp[0].reason,
 																							propose_id : val.prop_id,
 																							multi_prop : "",
+																							multi_decide : "",
 																						
 																						};
 																					
@@ -2113,7 +2117,8 @@ var loc_partial_assign;
 																										skill_cat : val.emp[0].skill_cat ,
 																										reason : val.emp[0].reason,
 																										propose_id : val.prop_id,
-																										multi_prop : ""
+																										multi_prop : "",
+																										multi_decide : "",
 																									
 																									};
 																								
@@ -2219,7 +2224,7 @@ var loc_partial_assign;
 																										fulfill : "",
 																										status : "",
 																										assign : "",
-																										approve1 : "--Select--",
+																										multi_decide : "",
 																										pro_enddate : val.emp[0].proj_endda  ,
 																										skill_cat : val.emp[0].skill_cat ,
 																										reason : val.emp[0].reason,
@@ -2611,16 +2616,24 @@ var loc_partial_assign;
 								text : "Multiproposal" ,
 								tooltip : "Multiproposal"
 							}),
-							template : new sap.ui.commons.CheckBox({
-								id :'multipropose_check'
-						
-							}).addStyleClass("multi_check_so")
-									 .bindProperty("text", "multi_prop"),
-							sortProperty : "multi_prop",
-							filterProperty : "multi_prop",
-							width : "100px", 
-						
+							template : new sap.ui.commons.ComboBox({
+								
+								id:'multi_decision',
+								tooltip : "Decision for MultiProposal",
+								items : [ new sap.ui.core.ListItem("decidem0", {
+									text : "",
+									key : "",
+								}),
+								         new sap.ui.core.ListItem("decidem", {
+									text : "YES",
+				
+								}), new sap.ui.core.ListItem("decidem1", {
+									text : "NO",
+									
+								}),  ]
+							}).bindProperty("value","multi_decide").addStyleClass("decide_multi"),
 							
+							width : "100px"
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2635,7 +2648,9 @@ var loc_partial_assign;
 
 									$(".approveDropdown input").each(function(index,val){
 					
-										if($(this).val() == "Approve" || $(this).val() == "Reject" ){
+										if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "--Select--"
+												
+										|| $(this).val()=="None"){
 											var parent = $(this).parent().parent().parent().parent();
 									var emp_id_for_service= parent.find(".empoid").text();
 									console.log("/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service)
@@ -2705,7 +2720,7 @@ var loc_partial_assign;
 										emp_str += "&emp_id[]="+parent.find(".empoid").text();
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
-										 all_multi+="&allow_multi="+parent.find("#multipropose_check-CB").is(':checked');
+										 all_multi+="&allow_multi="+parent.find(".decide_multi input").val();
 										 
 										 parent.addClass("change_color");
 											$(this).val("Done");
@@ -2720,6 +2735,7 @@ var loc_partial_assign;
 									if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "None"){
 										$(this).val("Done");
 										$(this).remove();
+										
 									}
 									
 									});
