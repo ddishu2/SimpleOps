@@ -2770,7 +2770,21 @@ var te_emp_name_assign;
 									title : " Pending Transaction List",
 									visibleRowCount : 5,
 									firstVisibleRow : 3,
-									/* selectionMode: sap.ui.table.SelectionMode.Single, */
+									selectionMode: sap.ui.table.SelectionMode.Single, 
+									rowSelectionChange: function(e) {
+									      var oIndex = e.getParameter('rowIndex');
+									      if (table_for_manual_so.isIndexSelected(oIndex )) {
+									        var oContext= partial_match.getContextByIndex(oIndex );
+									        var path = oContext.sPath;
+									        var object = partial_match.getModel().getProperty(path);
+									        var res_man=object;
+									
+									   
+									  
+		 
+									        
+									      }
+									    },
 									
 
 								}).addStyleClass("style_for_table");
