@@ -30,7 +30,7 @@
  * @uses cl_DB()->getResultsFromQuery to retrieve results. 
  * 
  */
-class m_SOEmpSkillMatcher extends CI_model
+class l_SOEmpSkillMatcher
 {
     const   C_SO_SKILL_FNAME         = 'so_skill';
     const   C_EMP_SKILL_FNAME        = 'emp_skill';
@@ -47,7 +47,6 @@ class m_SOEmpSkillMatcher extends CI_model
     const C_SO_SKILL = 'lv_v_so_skill'; 
     const C_EMP_SKILL = 'lv_v_emp_skill'; 
  
-    private $o_dbhandle;
     
    /**
    * @var array $arr_so_emp_skill_xref Cross-reference between SO and Emp. Skills.
@@ -66,7 +65,9 @@ class m_SOEmpSkillMatcher extends CI_model
      */
     public function __construct() {
 //        $this->o_dbhandle = new cl_DB();
-        $this->load->database();
+//        
+//  * Commented by Diskshant Mishra (load database doesnt work with libraries/Classes)      
+//        $this->load->database();
         $this->_setEmpSkillMatrix();
         $this->_set_SO_Emp_Skill_Xref();
          
@@ -130,10 +131,11 @@ class m_SOEmpSkillMatcher extends CI_model
 //        $larr_skills = $this->o_dbhandle->getResultsFromQuery($lv_query);
 //        return $larr_skills;
         
-//        $this->db->select('*');
-        $query = $this->db->get(self::C_EMP_SKILLS_TABLE);
+//        $ci_ins->db->select('*');
+        $ci_ins =& get_instance();
+        $query = $ci_ins->db->get(self::C_EMP_SKILLS_TABLE);
         $larr_skills = $query->result_array();
-//        echo $this->db->last_query();
+//        echo $ci_ins->db->last_query();
         return $larr_skills;
     }
     
@@ -189,10 +191,11 @@ class m_SOEmpSkillMatcher extends CI_model
 //       
 //        $larr_so_emp_skill_xref = $this->o_dbhandle->getResultsFromQuery($lv_query);
 //        return $larr_so_emp_skill_xref;
-//        $this->db->select('*');
-        $query = $this->db->get(self::C_SO_EMP_SKILL_XREF_TABLE);
+//        $ci_ins->db->select('*');
+        $ci_ins =& get_instance();
+        $query = $ci_ins->db->get(self::C_SO_EMP_SKILL_XREF_TABLE);
         $larr_so_emp_skill_xref = $query->result_array();
-//        echo $this->db->last_query();
+//        echo $ci_ins->db->last_query();
         return $larr_so_emp_skill_xref;
     }
     
