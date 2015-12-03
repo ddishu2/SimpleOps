@@ -30,6 +30,7 @@ class m_lock extends ci_model
      const C_TABNAME_COUNT = 'trans_count';   
      const C_TABNAME = 'trans_locks';
      const C_softlock_report = 'v_softlock_report';
+     const C_HARDLOCK_RELEASE ='v_hard_lock_release';
      const C_TABNAMEHISTORY = 'trans_locks_history';
      const C_TABNAMECOMMENTS = 'trans_comment';
      const C_FNAME_COMMENTS = 'comment';
@@ -809,6 +810,21 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
        $arr_result_final = $arr_result->result_array();     
     return $arr_result_final;
     }
+    
+     public function gethardlockreleasedata($fp_start_date , $fp_end_date){
+         
+        $arr_result =[];
+        $this->db->select('emp_id,emp_name,prime_skill,svc_line,so_proj_id,so_proj_name,lock_start_date,lock_end_date');
+        $this->db->from(self::C_HARDLOCK_RELEASE);
+        $this->db->where('updated_on >=',$fp_start_date); 
+       $this->db->where('updated_on <=',$fp_end_date);
+       $arr_result = $this->db->get();
+       $arr_result_final = $arr_result->result_array();     
+    return $arr_result_final;
+             
+     }
+    
+    
     
    
 }
