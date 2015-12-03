@@ -66,8 +66,7 @@ class m_utility extends CI_model
     }
 
     private function add_business_days($i_sdate) 
-    {   $i_sdate = '09-DEC-15';
-        $io_date = new DateTime($i_sdate);
+    {   $io_date = new DateTime($i_sdate);
         $io_date->modify('+'.self::gc_business_days.' weekdays');
         while (($io_date->format('N')) > 5)
         {
