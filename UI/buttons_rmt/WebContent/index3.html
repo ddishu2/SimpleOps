@@ -2708,7 +2708,7 @@ var te_emp_name_assign;
 									visibleRowCount : 5,
 									firstVisibleRow : 3,
 									/* selectionMode: sap.ui.table.SelectionMode.Single, */
-									navigationMode : sap.ui.table.NavigationMode.Paginator,
+									
 
 								}).addStyleClass("style_for_table");
 
@@ -5547,17 +5547,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 		                     							]}).addStyleClass("for_font_manual_label").addStyleClass("fte_manual1");
 		
 		
-		var checkbox_for_service = new sap.ui.commons.CheckBox({
-			id: 'for_service_cb',
-			change :function()
-			{
-				
-				alert("Hii");
-			}
-			
-			
-		})
-		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype,checkbox_for_service);
+		
+		   matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
 		   
 		   var oDivider8_0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		   var oDivider8 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
@@ -5608,7 +5599,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							      		success : function(odata){
 							      			console.log(odata);
 							      			 alert(odata);
-							      			window.location.reload();
+	                                         window.location.reload();
 							      			$("#second").addClass("hide_div");	
 											$("#first").addClass("hide_div");
 											$("#amend_first").addClass("hide_div");
@@ -5624,7 +5615,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 											$("#third").addClass("hide_div");
 											$("#four1").addClass("hide_div");
 											
-											$("#four2_core").addClass("hide_div");
+											$("#four2_core").addClass("hide_div"); 
 							      		}
 									
 									});
