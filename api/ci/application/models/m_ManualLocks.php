@@ -153,7 +153,7 @@ class m_ManualLocks extends CI_model
     {        
         
 // Select Employee Details from table        
-        $this->db->select(self::gc_emp_deploy.','.self::gc_emp_futso.','.self::gc_emp_capab.','.self::gc_emp_skill.','.self::gc_emp_loc.','.self::gc_emp_curso.','.self::gc_emp_empid.','.self::gc_emp_empname);
+        $this->db->select(self::gc_emp_deploy.','.self::gc_emp_futso.','.self::gc_emp_capab.','.self::gc_emp_skill.','.self::gc_emp_loc.','.self::gc_emp_curso.','.self::gc_emp_empid.','.self::gc_emp_empname.','.self::gc_emp_level);
         
 // Instantiate utility model and use validateDate() to validate the input date format        
         $io_utility = new m_utility();
