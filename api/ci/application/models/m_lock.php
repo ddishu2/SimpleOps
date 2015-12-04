@@ -50,8 +50,8 @@ class m_lock extends ci_model
     const C_FNAME_LOCK_END_DATE = 'lock_end_date';
     const C_FNAME_LOCK_START_DATE = 'lock_start_date';
     const C_FNAME_PROP_ID = 'parent_prop_id';
-     const C_FNAME_TNE_ID   = 'tne_app_id';
-     const C_FNAME_TNE_NAME = 'tne_name';
+     const C_FNAME_TNE_ID   = 'sup_id';
+     const C_FNAME_TNE_NAME = 'sup_name';
      const C_FNAME_UPDATED_BY = 'updated_by';
      const C_FNAME_UPDATED_ON = 'updated_on';
     
@@ -219,15 +219,22 @@ class m_lock extends ci_model
 //                    mysqli_autocommit( $lv_db,false);
 //                    mysqli_begin_transaction($lv_db);
                     $this->db->trans_start();
-                    
-                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$fp_arr_Multi[$i],$lv_updated_by,$lv_updated_on);
+                    if($fp_arr_Multi[$i] == 'Yes')
+                    {
+                        $lv_multi = 'X';
+                    }
+                    else 
+                    {
+                        $lv_multi = '';
+                    }
+                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$lv_multi,$lv_updated_by,$lv_updated_on);
                     
                     $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], self::C_STATUS_SOFT_LOCK, $lv_prop_id, $lv_request_id);
                         
                        
                          
                         // if allow multi is set to false update and set allow multi = false  all the entries in translocks for that employee 
-                        if ($fp_arr_Multi[$i] == '')
+                        if ($fp_arr_Multi[$i] == 'NO')
                                  {
                                          $data = array(
                                         self::C_FNAME_ALLOW_MULTI =>''                                                                              
@@ -282,9 +289,9 @@ class m_lock extends ci_model
 
 );
 
-$this->db->where(self::C_TRANS_ID, $fp_v_lock_trans_id);
+    $this->db->where(self::C_TRANS_ID, $fp_v_lock_trans_id);
 
-$this->db->update(self::C_TABNAME, $data);
+    $this->db->update(self::C_TABNAME, $data);
 
         //print_r($re_sos);
     }
