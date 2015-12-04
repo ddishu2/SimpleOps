@@ -54,18 +54,23 @@
 			var fte_pass="";
 			var tag_type1="";
 			var transactn = "&trans_id="+$("#transaction_id").val();
+			var hard_sdate="";
+			var hard_edate =""
 			stat1 += "&status="+$(".selection1").val();
 			comm1 += "&comments="+$(".comments1").val();
 			smart1 += "&smart_proj_code="+$(".project_code_text1").val();
 			fte_pass+= "&FTE="+$(".fte_text1").val();
 			tag_type1+= "&tag_type="+$(".tag_type_value").val();
+			hard_sdate+="&hlock_sdate="+$("#start_date").val();
+			hard_edate+="&hlock_edate="+$("#end_date").val();
 			
 			
-            var asc1= comm1 + stat1 + transactn+smart1+fte_pass+tag_type1;
+            var asc1= comm1 + stat1 + transactn+smart1+fte_pass+tag_type1+hard_sdate+hard_edate;
 
             var input_manual1 = $(".project_code_text1").val();
 			 var input_manual2 = $(".fte_text1").val();
-			 
+			/*  var hard_sdate = $("#start_date").val();
+			 var hard_edate = $("#end_date").val(); */
 			 
 	         if (!input_manual1.match(regex)) {
 	        alert("Entered Smart Project Code is not valid");
@@ -152,10 +157,10 @@
 						<td><input type="text" id="start_date"  value="<?php echo htmlspecialchars($_GET["sdate"]);?>"/></td>
                 		<td><input type="text" id="end_date" value="<?php echo htmlspecialchars($_GET["edate"]);?>"/></td>
 						<td><input type="text" class="project_code_text1" ></td>
-						<td><input type="text"  class="fte_text1" ></td>
+						<td><input type="text"  value="100" class="fte_text1" ></td>
 						<td><select class="tag_type_value">
-  <option value="Expense">Expense</option>
   <option value="Effort Booking">Effort Booking</option>
+  <option value="Expense">Expense</option>
 </select></td>
 					</tr>
 				</table>
