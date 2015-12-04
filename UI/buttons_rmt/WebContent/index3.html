@@ -5557,8 +5557,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var input_manual1 = $(".smart_project_code1").val();
 								 var input_manual2 =  $(".fte_manual1").val();
 								 var to_send_sono =   $("#sono_man1").html();
-								 var to_send_sdate =  $("#sdate1_man-input").html();
-								 var to_send_edate =  $("#edate1_man-input").html(); 
+								 var to_send_sdate =  $("#sdate1_man-input").val();
+								 var to_send_edate =  $("#edate1_man-input").val(); 
 								 var emp_to_send = $("#empid_man-input").val();
 								 var smart_pro_code_send = $("#sm_pro_code1").val();
 								 var fte_to_send =  $("#fte1").val();
@@ -5591,7 +5591,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 	///rmt/api/ci/index.php/Lock_EMPs/?so_id=291204&emp_id=069535&lock_start_date=2015-12-01&lock_end_date=2015-12-01&allow_multi=0&requestor_id=0
 							      		success : function(odata){
 							      			console.log(odata);
-							      			 alert(odata);
+							      			 //alert(odata);
 	                                         window.location.reload();
 							      			$("#second").addClass("hide_div");	
 											$("#first").addClass("hide_div");
