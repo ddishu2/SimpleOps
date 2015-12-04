@@ -213,13 +213,13 @@ class m_lock extends ci_model
                 $lo_utility = new m_utility(); 
                 $temp= $lo_utility->get_username();// get the Ops team guys name
                 $lv_updated_by = $temp[0];
-                $lv_updated_on = date('Y-m-d');
+                $lv_updated_on = date('Y-m-d H:i:s');
 //                try {
                     
 //                    mysqli_autocommit( $lv_db,false);
 //                    mysqli_begin_transaction($lv_db);
                     $this->db->trans_start();
-                    if($fp_arr_Multi[$i] == 'Yes')
+                    if($fp_arr_Multi[$i] == 'YES')
                     {
                         $lv_multi = 'X';
                     }
