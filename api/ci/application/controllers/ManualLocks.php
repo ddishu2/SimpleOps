@@ -113,7 +113,7 @@ class ManualLocks extends CI_Controller
         $lv_fte     = $this->input->get(self::gc_lock_fte);
         $lv_ttype   = $this->input->get(self::gc_lock_ttype);
         $lv_supid   = $this->input->get(self::gc_lock_supid);
-        $lv_supname = $this->input->get(self::gc_lock_sup_name);
+        $lv_supname = $this->input->get(self::gc_lock_supname);
         $lv_result = $this->m_ManualLocks->Lock_EMPs(   $lv_so_no, 
                                                         $lv_empid, 
                                                         $lv_sdate, 
