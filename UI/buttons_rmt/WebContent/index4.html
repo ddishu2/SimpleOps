@@ -1247,7 +1247,7 @@ var loc_partial_assign;
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
-							text : 'Welcome To RMT Tool',
+							text : 'Welcome To RMU',
 						})
 
 						var oImage = new sap.ui.commons.Image({
@@ -1459,7 +1459,12 @@ var loc_partial_assign;
 						oItem = new sap.ui.core.ListItem("so_type1");
 						oItem.setText("Persuit");
 						so_type_select.addItem(oItem);
-						
+						oItem = new sap.ui.core.ListItem("so_type2");
+						oItem.setText("FO-Billable");
+						so_type_select.addItem(oItem);
+						oItem = new sap.ui.core.ListItem("so_type3");
+						oItem.setText("Internal");
+						so_type_select.addItem(oItem);
 						
 						
 						var locationLabel = new sap.ui.commons.Label({
@@ -5692,9 +5697,9 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 			}).addStyleClass("fte_manual1");
 			   
 		var taggtype =  new sap.ui.commons.ComboBox({items: [
-		                                                     new sap.ui.core.ListItem({text: ""}),
+                                                      new sap.ui.core.ListItem({text: "Effort Booking"}),
 		                     								new sap.ui.core.ListItem({text: "Expense"}),
-		                     								new sap.ui.core.ListItem({text: "Effort Booking"})
+		                     								
 		                     							]}).addStyleClass("for_font_manual_label").addStyleClass("fte_manual1");
 		
 		
@@ -5716,8 +5721,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var input_manual1 = $(".smart_project_code1").val();
 								 var input_manual2 =  $(".fte_manual1").val();
 								 var to_send_sono =   $("#sono_man1").html();
-								 var to_send_sdate =  $("#sdate1_man-input").html();
-								 var to_send_edate =  $("#edate1_man-input").html(); 
+								 var to_send_sdate =  $("#sdate1_man-input").val();
+								 var to_send_edate =  $("#edate1_man-input").val(); 
 								 var emp_to_send = $("#empid_man-input").val();
 								 var smart_pro_code_send = $("#sm_pro_code1").val();
 								 var fte_to_send =  $("#fte1").val();
