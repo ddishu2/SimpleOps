@@ -12,7 +12,7 @@
  * @author vkhisty
  */
 class l_methods {
-    const C_DATE_FORMAT      = 'd-m-Y';
+    const C_DATE_FORMAT      = 'Y-m-d';
     const C_DATE_DELIMITER   = '-';
     const C_DATE_COUNT       = 3;
     const C_DATE_DD_INDEX    = 2;
