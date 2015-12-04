@@ -45,6 +45,8 @@ class m_ManualLocks extends CI_model
           gc_lock_spcode    = 'smart_proj_code',
           gc_lock_fte       = 'FTE',
           gc_lock_tagtype   = 'tag_type',
+          gc_lock_supid     = 'sup_id',
+          gc_lock_supname   = 'sup_name',
           gc_trans_comment  = 'trans_comment',
           gc_manual         = 'manual',
           gc_updated_by     = 'updated_by',
@@ -228,7 +230,7 @@ class m_ManualLocks extends CI_model
     }
     
 // Lock Employees to SO    
-    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '', $i_tagtype = '')
+    public function Lock_EMPs($i_so_no, $i_empid, $i_sdate, $i_edate, $i_multi = '', $i_reqid = '', $i_spc = '', $i_fte = '', $i_tagtype = '', $i_supid = '', $i_supname = '')
     {   
         
 // Validate if Employee exists.
@@ -285,6 +287,8 @@ class m_ManualLocks extends CI_model
         self::gc_lock_multi   => $i_multi,            
         self::gc_lock_reqid   => $i_reqid,
         self::gc_updated_by   => $lv_name,
+        self::gc_lock_supid   => $i_supid,
+        self::gc_lock_supname => $i_supname,
         self::gc_updated_on   => date(self::gc_date_format)
         ];       
         $this->db->trans_start();
