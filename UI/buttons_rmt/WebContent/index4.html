@@ -55,6 +55,7 @@ var so_id_partial_assign;
 var skill_partial_assign;
  var level_partial_name_assign;
 var loc_partial_assign;
+
 	sap.ui
 			.getCore()
 			.attachInit(
@@ -1708,7 +1709,7 @@ var loc_partial_assign;
 																					propose_id : val.prop_id,
 																					multi_prop : "",
 																					multi_decide : "",
-																				
+																					 multiprop_val : val.emp.ProposedAnyWhereElse,
 																				};
 																			
 																				completeData
@@ -1811,7 +1812,7 @@ var loc_partial_assign;
 																				propose_id : val.prop_id,
 																				multi_prop : "",
 																				multi_decide : "",
-																			
+																				 multiprop_val : val.emp.ProposedAnyWhereElse,
 																			};
 																		
 																			completeData
@@ -1915,7 +1916,7 @@ var loc_partial_assign;
 																				propose_id : val.prop_id,
 																				multi_prop : "",
 																				multi_decide : "",
-																			
+																				 multiprop_val : val.emp.ProposedAnyWhereElse,
 																			};
 																		
 																			completeData
@@ -2020,7 +2021,7 @@ var loc_partial_assign;
 																							propose_id : val.prop_id,
 																							multi_prop : "",
 																							multi_decide : "",
-																						
+																							 multiprop_val : val.emp.ProposedAnyWhereElse,
 																						};
 																					
 																						completeData
@@ -2127,7 +2128,7 @@ var loc_partial_assign;
 																										propose_id : val.prop_id,
 																										multi_prop : "",
 																										multi_decide : "",
-																									
+																										 multiprop_val : val.emp.ProposedAnyWhereElse,
 																									};
 																								
 																									completeData
@@ -2238,6 +2239,7 @@ var loc_partial_assign;
 																										reason : val.emp[0].reason,
 																										propose_id : val.prop_id,
 																										multi_prop : "",
+																										multiprop_val : val.emp.ProposedAnyWhereElse,
 																									
 																									};
 																								
@@ -2315,13 +2317,14 @@ var loc_partial_assign;
                             
                   $(".approveDropdown input").each(function(index,val){	
 									
-									var parent2 = $(this).parent().parent().parent().parent();	
+								var	 parent = $(this).parent().parent().parent().parent();	
               
 									if($(".approveDropdown input").val()=="Reject" || $(".approveDropdown input").val()=="Approve")
 										
 									{
 									
-									parent2.addStyleClass("change_color1");
+									parent.removeStyleClass("change_color");
+									parent.addStyleClass("change_color1");
 									$(".approveDropdown input").val("--Select--");
 								//	parent2.find(".status_of_emp").html("");
 									}
@@ -2376,6 +2379,7 @@ var loc_partial_assign;
 																	    skill_partial : val.so.so_primary_skill ,
 																	    loc_partial   : val.so.so_loc ,
 																	    reason_partial : "" ,
+																	   
 																};
 															
 																completeData1_partial
@@ -2653,14 +2657,14 @@ var loc_partial_assign;
 								text: "View",
 								Tooltip:"View",
 								press: function(oEvent){
-
+		
 									$(".approveDropdown input").each(function(index,val){
 					
 										if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "--Select--"
 												
 										|| $(this).val()=="None"){
-											var parent = $(this).parent().parent().parent().parent();
-									var emp_id_for_service= parent.find(".empoid").text();
+											var parent1 = $(this).parent().parent().parent().parent();
+									var emp_id_for_service= parent1.find(".empoid").text();
 									console.log("/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service)
 									 $.ajax({
 							      		  method: "GET",
@@ -2728,6 +2732,19 @@ var loc_partial_assign;
 								//id:'p_s_id'
 							})
 									.bindProperty("text", "propose_id").addStyleClass("propo_id").addStyleClass("hide_proposed"),
+							
+							width : "10px",
+							/* visible:false, */
+							
+						}));
+						suitable_match.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "check for Multiple" ,
+								tooltip : "check for Multiple"
+							}),
+							template : new sap.ui.commons.TextView({
+								//id:'p_s_id'
+							}).bindProperty("text", "multiprop_val").addStyleClass("multiple_to_test"),
 							
 							width : "10px",
 							/* visible:false, */
@@ -2815,6 +2832,7 @@ var loc_partial_assign;
 							text : "Back",
 							tooltip : "Back",
 							press : function backtothird() {
+								window.location.reload();
 
 								$("#four1").addClass("hide_div");
 								$("#third").removeClass("hide_div");
