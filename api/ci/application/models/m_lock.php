@@ -788,14 +788,15 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
 //       return $re_data;
 //   }    
     
-    public function gethardlockdata($fp_start_date , $fp_end_date){
+    public function gethardlockdata($fp_start_date){
        $arr_result = [];
        $this->db->select('emp_id,emp_name,svc_line ,so_proj_id,so_proj_name,lock_start_date,lock_end_date,so_id,so_level ,tne_app_id,tne_name,smart_proj_code,FTE,tag_type,updated_by,updated_on');
        $this->db->from(self::C_V_hard_lock);
        $this->db->where('updated_on >=',$fp_start_date); 
-       $this->db->where('updated_on <=',$fp_end_date);
+//       $this->db->where('updated_on <=',$fp_end_date);
        $arr_result = $this->db->get();
-       $arr_result_final = $arr_result->result_array();     
+       $arr_result_final = $arr_result->result_array();   
+//       print_r($arr_result_final);
     return $arr_result_final;
            
     }

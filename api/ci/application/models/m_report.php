@@ -35,7 +35,7 @@ class m_report extends CI_model
                 
     
     const C_PHP_OUT_STREAM    = 'php://output';
-    const C_DATE_FORMAT       = 'd-m-Y_H:i:s';
+    const C_DATE_FORMAT       = 'Y-m-d_H:i:s';
     const C_MODE_FILE_WRITE   = 'w';
     const C_FILENAME_SUFFIX   = '.csv';
     const C_FILENAME_DELIMITER = '_';
@@ -116,7 +116,7 @@ $this->setDefaultDates();
 public function setDefaultDates() {
 
 
-$this->v_start_date  = date(cl_methods::C_DATE_FORMAT);
+$this->v_start_date  = date(l_methods::C_DATE_FORMAT);
 $this->v_end_date = $this->v_start_date;
 }
 
@@ -214,7 +214,9 @@ $this->setHeaders();
             {
                 case self::C_TYPE_HL:
 //                     
-                    $re_data = $this->m_lock->gethardlockdata($this->v_start_date,$this->v_end_date);
+                    $re_data = $this->m_lock->gethardlockdata($this->v_start_date);
+                    
+//                    print_r($re_data);
 //////                    
                     break;
                 
