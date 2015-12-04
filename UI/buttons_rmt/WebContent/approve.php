@@ -73,8 +73,7 @@
 
             var input_manual1 = $(".project_code_text1").val();
 			 var input_manual2 = $(".fte_text1").val();
-			/*  var hard_sdate = $("#start_date").val();
-			 var hard_edate = $("#end_date").val(); */
+			
 			 
 	         if (!input_manual1.match(regex)) {
 	        alert("Entered Smart Project Code is not valid");
