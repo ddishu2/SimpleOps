@@ -31,7 +31,7 @@ class m_loadFiles
     
     //const FULLFILLSTAT_SRC_DIR = 'D:\\\\rmt\\\\loadFiles\\\\Fulfillment_stat\\\\'; 
     const FULLFILLSTAT_SRC_DIR = '\\\\10.75.250.149\Datagrp\AppsOne SAP RMT\CSV\FULFILLMENTSTAT\\';
-    const FULLFILLSTAT_SRC_FILENAME = 'fulfill_stat.csv';
+    const FULLFILLSTAT_SRC_FILENAME = 'Fulfillment.csv';
     const FULLFILLSTAT_DEST_DIR= 'D:\\\\rmt\\\\loadFiles\\\\Fulfillment_stat\\\\';
     const FULLFILLSTAT_TABNAME = 'm_so_fulfill_stat';
     private static $v_FULLFILLSTAT_local_file = null;

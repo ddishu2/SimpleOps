@@ -137,8 +137,6 @@ class m_open_so extends CI_model
     private function isArrayEmpty($fp_arr)
     {
         $filter_set = false;
-        
-        
-        
+             
     }
 }

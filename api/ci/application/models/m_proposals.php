@@ -503,6 +503,19 @@ public function createProposal( $fp_so_id , $fp_emp_id )
                             {
                 $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
                 $re_wa_emp_for_so[] = $lwa_deployable_emp;
+                /*
+                 * check if it is already proposed
+                 */
+                $arr = $this->m_lock->getDetailsWhereEmpIsAlreadyProposed($lv_emp_id);
+                if(!array_key_exists('0', $arr))
+               {
+                   $re_wa_emp_for_so['ProposedAnyWhereElse'] = 'NO';
+              }
+              else  
+               {
+                   $re_wa_emp_for_so['ProposedAnyWhereElse'] = 'Yes';
+              }
+                 //$re_wa_emp_for_so[] = $lwa_deployable_emp;
 //                    echo 'Match'.$fp_v_so_id.'--->'.$lwa_deployable_emp['emp_id'].'======'.json_encode($re_wa_emp_for_so ).PHP_EOL;
                 break;
             }
@@ -579,7 +592,18 @@ public function createProposal( $fp_so_id , $fp_emp_id )
             )
                             {
                 $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
-                $re_wa_emp_for_so[] = $lwa_deployable_emp;
+                
+               $re_wa_emp_for_so[] = $lwa_deployable_emp;
+                $arr = $this->m_lock->getDetailsWhereEmpIsAlreadyProposed($lv_emp_id);
+                if(!array_key_exists('0', $arr))
+                {
+                    $re_wa_emp_for_so['ProposedAnyWhereElse'] = false;
+                }
+                else  
+                {
+                    $re_wa_emp_for_so['ProposedAnyWhereElse'] = true;
+                }   
+                 //$re_wa_emp_for_so[] = $lwa_deployable_emp; 
 //                    echo 'Match'.$fp_v_so_id.'--->'.$lwa_deployable_emp['emp_id'].'======'.json_encode($re_wa_emp_for_so ).PHP_EOL;
                 break;
             }
