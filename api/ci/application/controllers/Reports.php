@@ -64,9 +64,10 @@ class Reports extends CI_Controller
        
        
        $this->m_report->isreportvalid($rp_type,$rp_from_date,$rp_to_date);
+       
+    
        $arr_softlock = $this->m_report->viewreport($rp_from_date,$rp_to_date);
        
-//       print_r($arr_softlock);
        
         $this->output
         ->set_content_type('application/json')
