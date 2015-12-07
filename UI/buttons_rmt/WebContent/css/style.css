@@ -1,6 +1,7 @@
 #tag_type
 {
 	
+	
 	margin-top : 0px;
 }
 
@@ -328,10 +329,26 @@ height: 35px !important;
 	cursor: pointer !important;
 }
 
+#te_serach_button {
+	width: 175px !important;
+	height: 40px !important;
+	white-space: pre-wrap !important;
+	font-size: 16px !important;
+	border-radius: 10px !important;
+	margin-top: 30px !important;
+	background-color: #AAAAAA !important
+}
+
+#te_serach_button.selected, #te_serach_button:hover {
+	background: #303030 !important;
+	color: #E0E0E0 !important;
+	cursor: pointer !important;
+}
+/* 
 #suitable_match1 tr {
 	font-size: 40px !important;
 }
-
+ */
 #partial_match tr {
 	font-size: 40px !important;
 }
@@ -361,11 +378,28 @@ height: 35px !important;
 .for_fields_style1 input {
 	font-size: 18px !important;
 }
+#te_id_manual1,#te_name_manual1,#spdrop_manual
+ {
+	width: 200px !important;
+	margin-top: 15px;
+	height: 30px !important;
+}
 
-.for_text_style1 {
-	font-size: 20px !important;
+#te_id_manual1-input, #te_name_manual1-input,#spdrop_manual-input
+{
+	font-size: 18px !important;
+}
+#te_id_man_text,#te_id_corp_text,#spb_manual
+ {
+	font-size: 20px !important; /* //.for_text_style1 */
 	margin-top: 15px;
 }
+.for_text_style1
+ {
+	font-size: 20px !important; /* //.for_text_style1 */
+	margin-top: 15px;
+}
+
 
 .manual_form_common_style {
 	direction: inherit;
