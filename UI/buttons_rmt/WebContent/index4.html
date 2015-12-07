@@ -1458,7 +1458,7 @@ var loc_partial_assign;
 						oItem.setText("Project");
 						so_type_select.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("so_type1");
-						oItem.setText("Persuit");
+						oItem.setText("Pursuit");
 						so_type_select.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("so_type2");
 						oItem.setText("FO-Billable");
@@ -2335,7 +2335,21 @@ var loc_partial_assign;
 									}
                  
                  }) 
-								
+				$(".approveDropdown input").each(function(index,val){
+				
+									if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "None" || $(this).val() == "--Select--" ){
+										var parent = $(this).parent().parent().parent().parent();
+										if(parent.find(".multiple_to_test").text()=="NO")
+											{
+											parent.find(".is_proposed_show").hide();
+											}
+										else{
+											
+											parent.find(".is_proposed_show").show();
+										}
+										
+									}
+									})
 								
 								
 							}
@@ -2661,8 +2675,10 @@ var loc_partial_assign;
 								//id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-								press: function(oEvent){
-									
+								press: function(){
+									if(!oOverlayContainer.isOpen()){
+										oOverlayContainer.open();
+									}
 										
 									$(".approveDropdown input").each(function(index,val){
                                         
@@ -2870,16 +2886,7 @@ jQuery
 						back.placeAt("four1");
 
 						/* for the partial fitment(four2) */
-						var bData = [
-
-						{
-							sname : "so111",
-							lev : "P3",
-							skill : "abap",
-						}
-
-						];
-
+					
 //-----------------------------Table for Partial Match---------------------------------------------------------------//
 
 
@@ -3666,7 +3673,7 @@ jQuery
 						oItem.setText("Project");
 						so_type_select_manual.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("so_type3_manual");
-						oItem.setText("Persuit");
+						oItem.setText("Pursuit");
 						so_type_select_manual.addItem(oItem);
 						oItem = new sap.ui.core.ListItem("so_type4_manual");
 						oItem.setText("FO-Billable");
@@ -3968,7 +3975,8 @@ jQuery
 									                                     	$("#sono_man1").html(so_no_manual_assign);
 									                                     	$("#sdate1_man-input").val(so_sdate_manual_assign);
 									                                     	$("#edate1_man-input").val(so_edate_manual_assign);
-									                                     	 
+									                                     	 oFor_so.removeContent(osearch_manual);
+							                        						 oFor_so.removeContent(table_for_manual_so);
 									                                     	
 									                                     	
 									                                     	//sap.ui.getCore().byId("proname1_man1").setText(so_pro_name_assign);
@@ -4104,7 +4112,8 @@ jQuery
 										                            					 $("#emp_name_main").html(emp_emp_name_assign);
 										                            					 $("#emp_level_main").html(emp_level_assign);
 										                            					 $("#emp_location_main").html(emp_loc_assign);
-										                            					 
+										                            					 oFor_emp.removeContent(osearch_manual_emp);
+										                            					 oFor_emp.removeContent(table_for_manual_emp); 
 										                                     		oFor_emp.close();
 										                                     		
 										                                     		}})
@@ -5003,6 +5012,8 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 											                                     		new sap.ui.commons.Button({text: "Select", press: function(e) { 
 											                                     			$("#teid-input").val(te_emp_id_assign);
 											                            					 $("#tename").html(te_emp_name_assign);
+											                            					 oFor_te.removeContent(matrix_for_te_main);
+											                            					 oFor_te.removeContent(table_for_te_approve_id);
 											                            					 oFor_te.close();
 											                                     	
 											                                     		
@@ -5097,17 +5108,17 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							id: 'sono_man1',
 							valueHelpRequest : function(
 									oEvent1) {
-								console
+								 console
 										.log(oEvent1
-												.getParameters('newValue').newValue);
+												.getParameters('newValue').newValue); 
 
-								function handler(
+								 function handler(
 										oEvent1) {
 									alert("Event '"
 											+ oEvent1
 													.getId()
 											+ "' triggered");
-								}
+								} 
 								 oFor_so = new sap.ui.ux3.OverlayContainer(
 										{
 											width : '400px'
