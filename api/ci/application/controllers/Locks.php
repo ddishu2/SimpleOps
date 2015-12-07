@@ -16,9 +16,7 @@ class Locks extends CI_Controller
         $this->load->model('m_proposals');
         $this->load->model('m_BuEmployees');
         $this->load->model('m_lock');
-     
-        
-     
+//        $this->load->model('m_SOEmpSkillMatcher');
     }
     
                
@@ -117,4 +115,18 @@ class Locks extends CI_Controller
         ->set_content_type('application/json')
         ->set_output(json_encode($lv_result,JSON_PRETTY_PRINT));
     }
+    public function getslockexp()
+    {
+       $lv_from_date =  $this->input->get(m_lock::C_FROM_DATE);
+       $lv_to_date =  $this->input->get(m_lock::C_TO_DATE);
+       
+//       echo $lv_from_date;
+//       echo $lv_to_date;
+       
+       $lv_result=$this->m_lock->getDataSlockExpired($lv_from_date,$lv_to_date);
+          $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($lv_result,JSON_PRETTY_PRINT));
+    }
+    
 }
