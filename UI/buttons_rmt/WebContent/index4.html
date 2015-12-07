@@ -2736,10 +2736,10 @@ jQuery
 								text : "Ops Comments" ,
 								tooltip : "Ops Comments"
 							}),
-							template : new sap.ui.commons.TextView({
+							template : new sap.ui.commons.TextField({
 								
 							})
-									.bindProperty("text", "ops_comm"),
+									.bindProperty("value", "ops_comm"),
 							sortProperty : "ops_comm",
 							filterProperty : "ops_comm",
 							width : "100px",
@@ -3968,6 +3968,7 @@ jQuery
 									                                     	$("#sono_man1").html(so_no_manual_assign);
 									                                     	$("#sdate1_man-input").val(so_sdate_manual_assign);
 									                                     	$("#edate1_man-input").val(so_edate_manual_assign);
+									                                     	 
 									                                     	
 									                                     	
 									                                     	//sap.ui.getCore().byId("proname1_man1").setText(so_pro_name_assign);
@@ -4103,6 +4104,7 @@ jQuery
 										                            					 $("#emp_name_main").html(emp_emp_name_assign);
 										                            					 $("#emp_level_main").html(emp_level_assign);
 										                            					 $("#emp_location_main").html(emp_loc_assign);
+										                            					 
 										                                     		oFor_emp.close();
 										                                     		
 										                                     		}})
@@ -5110,6 +5112,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 										{
 											width : '400px'
 										});
+								 
 								oFor_so
 										.addContent(osearch_manual);
 
@@ -5219,6 +5222,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 									{
 										width : '400px'
 									});
+							 
 							oFor_emp
 									.addContent(osearch_manual_emp);
 
