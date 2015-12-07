@@ -13,7 +13,7 @@
  */
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 class cl_releasenotification {
-    const gc_business_days = 23,
+    const gc_business_days = 22,
           gc_date_format   = 'd-M-y',
           gc_date_from     = 'date_from';
             
@@ -34,17 +34,14 @@ class cl_releasenotification {
             $gv_pm_name       = 'proj_m_name',
             $gv_cust_name     = 'cust_name';
     
-    private function add_business_days($i_sdate) {
-        $lv_count = 1;
-        $lv_dayx = strtotime($i_sdate);
-        while ($lv_count < self::gc_business_days) {
-                $lv_day = date('N', $lv_dayx);
-                $lv_date = date('Y-m-d', $lv_dayx);
-                if ($lv_day < 6)
-                $lv_count++;
-                $lv_dayx = strtotime($lv_date . ' +1 day');
+    private function add_business_days($i_sdate) 
+    {   $io_date = new DateTime($i_sdate);
+        $io_date->modify('+'.self::gc_business_days.' weekdays');
+        while (($io_date->format('N')) > 5)
+        {
+            $io_date->modify('+1 day');
         }
-        return date(self::gc_date_format, $lv_dayx);
+        return ($io_date->format(self::gc_date_format));
     }
     
 // Function to get all the hard locks which will be released on a particular date.

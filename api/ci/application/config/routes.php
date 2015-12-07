@@ -89,4 +89,5 @@ $route['displayreport']      = 'Reports/setreports';
 $route['viewreport']         =  'Reports/viewreports';
 $route['getamendment']       = 'Amendments/getamendments';
 $route['approveamendment']   = 'Amendments/approveamendment';
+$route['get_ValidSOs/(:any)'] = 'ManualLocks/get_ValidSOs/$1';
 

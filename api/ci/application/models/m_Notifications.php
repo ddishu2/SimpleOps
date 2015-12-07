@@ -96,7 +96,7 @@ class m_Notifications extends CI_model
     public function sendReleasedateChangeNotification($fp_v_crd, $fp_v_status, $fp_v_comments) {
 
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_crd, 'CRD', '', $fp_v_status, $fp_v_comments);
+        $lv_return = self::sendnotification($fp_v_crd, 'CRD', '', $fp_v_status, '', $fp_v_comments);
         return $lv_return;
     }
 
@@ -104,21 +104,21 @@ class m_Notifications extends CI_model
     public function sendTEApproverChangeNotification($fp_v_cte, $fp_v_status, $fp_v_comments) {
 
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_cte, 'CTE', '', $fp_v_status, $fp_v_comments);
+        $lv_return = self::sendnotification($fp_v_cte, 'CTE', '', $fp_v_status, '', $fp_v_comments);
         return $lv_return;
     }
 
 // Method to send SO Rejection notification.
     public function sendSORejectionNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id) {
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_so_id, 'SOR', '', $fp_v_trans_id, $fp_v_emp_id);
+        $lv_return = self::sendnotification($fp_v_so_id, 'SOR', '', $fp_v_trans_id, $fp_v_emp_id, '');
         return $lv_return;
     }
 
 // Method to send Soft lock release notification.
     public function sendSoftLockReleaseNotification($fp_v_so_id, $fp_v_emp_id, $fp_v_trans_id) {
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_so_id, 'SLR', '', $fp_v_trans_id, $fp_v_emp_id);
+        $lv_return = self::sendnotification($fp_v_so_id, 'SLR', '', $fp_v_trans_id, $fp_v_emp_id, '');
         return $lv_return;
     }
 
@@ -126,14 +126,14 @@ class m_Notifications extends CI_model
     public function sendhardlockreleasenotification($fp_arr_locks)
     {
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_arr_locks, 'RL4', '', '', '');
+        $lv_return = self::sendnotification($fp_arr_locks, 'RL4', '', '', '', '');
         return $lv_return;
     }
     
 // Method to send Soft lock release notification.
-    public function sendSoftLockNotification($fp_v_so_id, $i_link, $fp_v_emp_id, $fp_v_trans_id) {
+    public function sendSoftLockNotification($fp_v_so_id, $i_link, $fp_v_emp_id, $fp_v_trans_id, $fp_v_comments) {
         $lv_return = false;
-        $lv_return = self::sendnotification($fp_v_so_id, 'SL', $i_link, $fp_v_trans_id, $fp_v_emp_id);
+        $lv_return = self::sendnotification($fp_v_so_id, 'SL', $i_link, $fp_v_trans_id, $fp_v_emp_id, $fp_v_comments);
         return $lv_return;
     }
 
@@ -590,6 +590,7 @@ class m_Notifications extends CI_model
                 $this->lv_content = str_replace("GV_EDATE", $this->lv_edate, $this->lv_content);
                 $this->lv_content = str_replace("GV_LINK", $this->lv_link, $this->lv_content);
                 $this->lv_content = str_replace("GV_SL_REL_DATE", $this->lv_rel_date, $this->lv_content);
+                $this->lv_content = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);
                 break;
 
             case 'SLR':
@@ -691,23 +692,24 @@ class m_Notifications extends CI_model
 
 // Function to send notifications per SO number.
     private function sendnotification(
-    $i_so_number, $i_mode, $i_link = '', $i_transid, $i_emp_id) {
+    $i_so_number, $i_mode, $i_link = '', $i_transid, $i_emp_id, $i_comments = '') {
 
 //  Set the SO number and empid to global variables.
         if ($i_mode == 'CRD') {
             $this->lt_crd_details = $i_so_number;
             $this->lv_status = $i_transid;
-            $this->lv_comments = $i_emp_id;
+            $this->lv_comments = $i_comments;
         } elseif ($i_mode == 'CTE') {
             $this->lt_cte_details = $i_so_number;
             $this->lv_status = $i_transid;
-            $this->lv_comments = $i_emp_id;
+            $this->lv_comments = $i_comments;
         } elseif ($i_mode == 'RL4') {
             $this->lt_hlr_details = $i_so_number;            
         } else {
             $this->lv_so_number = $i_so_number;
-            $this->lv_empid = $i_emp_id;
-            $this->lv_link = $i_link;
+            $this->lv_empid     = $i_emp_id;
+            $this->lv_link      = $i_link;
+            $this->lv_comments  = $i_comments;
         }
 
 // Get the email contetnt.
