@@ -36,7 +36,9 @@ class m_lock extends ci_model
      const C_FNAME_COMMENTS = 'comment';
      const C_COMMENT_STATUS = 'status';
      const C_SO_NO = 'so_no';
-     
+     const C_FROM_DATE = 'lv_from_date';
+     const C_TO_DATE = 'lv_to_date';
+     const c_v_slock_expiry = 'v_slock_expiry';
      
     const C_STATUS_SL = 'S';
     const C_ARR_SO_ID = 'so_id';
@@ -79,6 +81,7 @@ class m_lock extends ci_model
     const C_HLOCK_EDATE = 'hlock_edate';
     const C_HLOCK_TNE_ID = 'tne_id';
     const C_HLOCK_TNE_NAME = 'tne_name';
+    const c_v_slock_expiry_download = 'v_slock_expiry_download';
     
     private static $arr_SO_that_rejectedemps = [];
 //    private static $arr_result = [];
@@ -825,12 +828,31 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
         $this->db->select('emp_id,emp_name,prime_skill,svc_line,so_proj_id,so_proj_name,lock_start_date,lock_end_date');
         $this->db->from(self::C_HARDLOCK_RELEASE);
         $this->db->where('updated_on >=',$fp_start_date); 
-       $this->db->where('updated_on <=',$fp_end_date);
-       $arr_result = $this->db->get();
-       $arr_result_final = $arr_result->result_array();     
+        $this->db->where('updated_on <=',$fp_end_date);
+        $arr_result = $this->db->get();
+        $arr_result_final = $arr_result->result_array();     
     return $arr_result_final;
              
      }
+     
+//     Changes by Vineet Khisty
+         public function getDataSlockExpired($fp_start_date , $fp_end_date)
+    { 
+        
+        $lv_from_date = $fp_start_date;
+        $lv_to_date = $fp_end_date;
+        
+        $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,level,prime_skill,loc,end_date,skill_cat,reason');
+        $this->db->from(self::c_v_slock_expiry_download);
+        $this->db->where(self::C_FNAME_LOCK_START_DATE." BETWEEN CAST('$lv_from_date' AS DATE)AND CAST('$lv_to_date' AS DATE)");
+        $lt_data = $this->db->get();
+        $lt_result = $lt_data->result_array();
+        return $lt_result;
+        
+    }    
+    
+//    end of changes by vineet khisty
+
     
     
     

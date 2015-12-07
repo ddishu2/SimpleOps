@@ -50,7 +50,8 @@ class m_report extends CI_model
     const C_EX_INVALID      = 'Invalid Mail Type';
     
     const C_softlock_display = 'v_softlock_display';
- 
+    const C_FNAME_LOCK_START_DATE = 'lock_start_date';
+    const c_v_slock_expiry_display ='v_slock_expiry_display';
     
     
     protected $v_report_type;
@@ -151,9 +152,9 @@ $this->setHeaders();
                  fputcsv($lo_csv_output,array('Type','Ten digit SO number,SO line number,SO quantity number','Numeric Emp ID'));
                     break;
                 
-//                case self::C_TYPE_SL_RELEASE:
-//                     fputcsv($lo_csv_output,array('ID','Name','Level','IDP','Location','Billing Status','Competancy','current project name','curr start date','current End date','project end date projected','supervisor name','Customer name','Domain ID','New end Date','Action','Roll Off lead time','Extension Notice','new Supervisor Corp ID','New Supervisor ID','New Supervisor Name','Reason','Requested BY','status','comments by ops team','updated on'));
-//                                    break;
+                case self::C_TYPE_SL_RELEASE:
+                     fputcsv($lo_csv_output,array('So ID','Project Code','Project Name','Start Date','End Date','Emp ID','Emp Name','Level','Skill','Location','Projected End Date','Skill Category','Reason'));
+                                    break;
                 
                 case self::C_TYPE_AMMENDMENTS:
 //                 case   'Amendment_Report':
@@ -230,9 +231,9 @@ $this->setHeaders();
 //                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
                     break;
                 
-//                case self::C_TYPE_SL_RELEASE:
-//                    $re_data = $this->m_amendment->getamendmentdata($this->v_start_date,$this->v_end_date);
-//                    break;
+                case self::C_TYPE_SL_RELEASE:
+                    $re_data = $this->m_lock->getDataSlockExpired($this->v_start_date,$this->v_end_date);
+                    break;
 ////                
 ////                    break;
                 case self::C_TYPE_AMMENDMENTS:
@@ -288,15 +289,24 @@ $this->setHeaders();
         switch ($this->v_report_type) 
             {
            case self::C_TYPE_SL: 
-        $arr_result = [];
-        $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,`level`,prime_skill,loc,end_date,skill_cat,reason');
-        $this->db->from(self::C_softlock_display);
-        $this->db->where('updated_on >=',$fp_start_date); 
-       $this->db->where('updated_on <=',$fp_end_date);
-       $arr_result = $this->db->get();
-       $arr_result_final = $arr_result->result_array();     
-       return $arr_result_final;
-       break;
+            $arr_result = [];
+            $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,`level`,prime_skill,loc,end_date,skill_cat,reason');
+            $this->db->from(self::C_softlock_display);
+            $this->db->where('updated_on >=',$fp_start_date); 
+            $this->db->where('updated_on <=',$fp_end_date);
+            $arr_result = $this->db->get();
+            $arr_result_final = $arr_result->result_array();     
+            return $arr_result_final;
+            break;
+       
+           case self::C_TYPE_SL_RELEASE:
+            $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,level,prime_skill,loc,end_date,skill_cat,reason');
+            $this->db->from(self::c_v_slock_expiry_display);
+            $this->db->where(self::C_FNAME_LOCK_START_DATE." BETWEEN CAST('$fp_start_date' AS DATE)AND CAST('$fp_end_date' AS DATE)");
+            $lt_data = $this->db->get();
+            $lt_result = $lt_data->result_array();
+            return $lt_result;
+            break;
    
             }
         
