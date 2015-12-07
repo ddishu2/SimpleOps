@@ -32,9 +32,6 @@
             <td bgcolor='blue'style='color:white'>
                <CENTER>Level</CENTER>
             </td>
-            <td bgcolor='blue' style='color:white'>
-               <CENTER>RMG Comments</CENTER>
-            </td>
          </tr>
          <tr>
            <td>
@@ -98,6 +95,17 @@
            <td>
                <CENTER>GV_EDATE</CENTER>
             </td>
+         </tr>
+      </table>
+      <h4><u>RMG Comments:</u></h4>
+      <p>
+      <table class="font" border='1'>
+         <tr>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>RMG Comments</CENTER>
+            </td>
+         </tr>
+	 <tr>
            <td>
                <CENTER>GV_RMGC</CENTER>
             </td>
