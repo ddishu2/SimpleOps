@@ -64,7 +64,8 @@ class m_ManualLocks extends CI_model
           gc_emp_loc        = 'loc',
           gc_m_emp_ras_copy = 'm_emp_ras_copy',
           gc_m_emp_rec      = 'm_emp_record',
-          gc_emp_corpid     = 'domain_id';  
+          gc_emp_corpid     = 'domain_id',
+          gc_updated_date   = 'Y-m-d H:i:s';  
           
     private $lt_org_arr = [];
     public function __construct()
@@ -289,7 +290,7 @@ class m_ManualLocks extends CI_model
         self::gc_updated_by   => $lv_name,
         self::gc_lock_supid   => $i_supid,
         self::gc_lock_supname => $i_supname,
-        self::gc_updated_on   => date(self::gc_date_format)
+        self::gc_updated_on   => date(self::gc_updated_date)
         ];       
         $this->db->trans_start();
         $this->db->set($lt_translock_data);
