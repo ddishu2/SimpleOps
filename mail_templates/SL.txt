@@ -1,3 +1,4 @@
+
 <html>
    <style>.font{font-size:15;font-family:Calibri}</style>
    <body class="font">
@@ -30,6 +31,9 @@
             </td>
             <td bgcolor='blue'style='color:white'>
                <CENTER>Level</CENTER>
+            </td>
+            <td bgcolor='blue' style='color:white'>
+               <CENTER>RMG Comments</CENTER>
             </td>
          </tr>
          <tr>
@@ -93,6 +97,9 @@
             </td>
            <td>
                <CENTER>GV_EDATE</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_RMGC</CENTER>
             </td>
          </tr>
       </table>
