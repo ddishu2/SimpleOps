@@ -458,8 +458,8 @@ class m_Notifications extends CI_model
                 {
                 $this->lv_projname = $this->lt_so_details[0]['so_proj_name'];
                 $this->lv_proj_code = $this->lt_so_details[0]['so_proj_id'];
-                $this->lv_sdate = $this->lt_so_details[0]['so_sdate'];
-                $this->lv_edate = $this->lt_so_details[0]['so_endate'];
+                $this->lv_sdate = $this->lt_so_details[0]['so_start_date_new'];
+                $this->lv_edate = $this->lt_so_details[0]['so_end_date'];
                 }
                 if(array_key_exists(0,$this->lt_emp_details))
                 {
