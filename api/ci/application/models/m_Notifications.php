@@ -706,7 +706,7 @@ class m_Notifications extends CI_model
         } elseif ($i_mode == 'RL4') {
             $this->lt_hlr_details = $i_so_number;            
         } else {
-            $this->lv_so_number = $i_so_number;
+            $this->lv_so_number = ltrim($i_so_number, '0');
             $this->lv_empid     = $i_emp_id;
             $this->lv_link      = $i_link;
             $this->lv_comments  = $i_comments;
