@@ -67,7 +67,13 @@ var loc_partial_assign;
 							visibleRowCount: 7,
 							firstVisibleRow: 3,
 							selectionMode: sap.ui.table.SelectionMode.Single,
-							
+							toolbar: new sap.ui.commons.Toolbar({items: [ 
+								                                     		new sap.ui.commons.Button({text: "CLOSE", press: function() {
+								                                     			oOverlayContainer.close();
+								                                     			
+								                                     		}}),
+								                                     		
+								                                     	]}),
 						});
 
 						//Define the columns and the control templates to be used
@@ -1732,12 +1738,12 @@ var loc_partial_assign;
 																.bindRows("/modelData");
 
 														descript
-																.setText(res_length
-																		+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																		+ res_completed
-																		+ " SO's.\n\n\nIdentified Partial match for "
-																		
-																		+ "SO's \n\n\n");
+														.setText(res_length
+																+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																+ res_completed
+																+ " SO's.\n\n\n "
+																
+																);
 													}
 												});
 											 }
@@ -1836,12 +1842,12 @@ var loc_partial_assign;
 															.bindRows("/modelData");
 
 													descript
-															.setText(res_length
-																	+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																	+ res_completed
-																	+ " SO's.\n\n\nIdentified Partial match for "
-																	
-																	+ "SO's \n\n\n");
+													.setText(res_length
+															+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+															+ res_completed
+															+ " SO's.\n\n\n "
+															
+															);
 												}
 											});
 										 }
@@ -1941,12 +1947,12 @@ var loc_partial_assign;
 															.bindRows("/modelData");
 
 													descript
-															.setText(res_length
-																	+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																	+ res_completed
-																	+ " SO's.\n\n\nIdentified Partial match for "
-																	
-																	+ "SO's \n\n\n");
+													.setText(res_length
+															+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+															+ res_completed
+															+ " SO's.\n\n\n "
+															
+															);
 												}
 											});
 										 }			 else if(temp.length == 4)
@@ -2047,12 +2053,12 @@ var loc_partial_assign;
 																		.bindRows("/modelData");
 
 																descript
-																		.setText(res_length
-																				+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
-																				+ res_completed
-																				+ " SO's.\n\n\nIdentified Partial match for "
-																				
-																				+ "SO's \n\n\n");
+																.setText(res_length
+																		+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
+																		+ res_completed
+																		+ " SO's.\n\n\n "
+																		
+																		);
 															}
 														});
 													 }			 else if(temp.length == 5)
@@ -2158,9 +2164,9 @@ var loc_partial_assign;
 																					.setText(res_length
 																							+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
 																							+ res_completed
-																							+ " SO's.\n\n\nIdentified Partial match for "
+																							+ " SO's.\n\n\n "
 																							
-																							+ "SO's \n\n\n");
+																							);
 																		}
 																	});
 																 }
@@ -2270,9 +2276,9 @@ var loc_partial_assign;
 																					.setText(res_length
 																							+ " OPEN SO's are processed.\n\n\n Identified suitable match for "
 																							+ res_completed
-																							+ " SO's.\n\n\nIdentified Partial match for "
+																							+ " SO's.\n\n\n "
 																							
-																							+ "SO's \n\n\n");
+																							);
 																		}
 																	});
 																 }
@@ -2302,7 +2308,7 @@ var loc_partial_assign;
 								{
 									id : "desc1",
 
-									text : " OPEN SO's are processed.\n\n\n Identified suitable match for  SOs.\n\n\nIdentified Partial match for  SOs.\n\n\n"
+									text : " OPEN SO's are processed.\n\n\n Identified suitable match for  SOs.\n\n\n"
 
 								});
 
@@ -2341,8 +2347,9 @@ var loc_partial_assign;
 										var parent = $(this).parent().parent().parent().parent();
 										if(parent.find(".multiple_to_test").text()=="NO")
 											{
-											parent.find(".is_proposed_show").hide();
-											}
+										parent.find(".is_proposed_show").remove();
+										
+											};
 										
 										
 									}
@@ -2444,15 +2451,15 @@ var loc_partial_assign;
 //--------------------------Table for suitable Match--------------------------------------------------------------------//
 						var suitable_match = new sap.ui.table.Table(
 								{
-									id : 'suitable_match1',
+									//id : 'suitable_match1',
 									title : "Transaction List",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :20,
+								visibleRowCount :40,
 									firstVisibleRow: 3,
 								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
 									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
 
-								}).addStyleClass("style_for_table");
+								});
 
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2678,13 +2685,30 @@ var loc_partial_assign;
 										oOverlayContainer.open();
 									}
 									
+									var parent = $(".approveDropdown input").parent().parent().parent().parent();
+									
+									var emp_id_to_pass = parent.find(".empoid").text();
+									
+									$.ajax({
+							      		  method: "GET",
+							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_to_pass,
+							      		
+							      				
+	
+							      		success : function(odata){
+							      			console.log(odata);
+							      			 
+							      		}
+									
+									});
+									
 									
 									
 
 									
 								}
 							}).addStyleClass("is_proposed_show"),
-							width : "100px",
+							width : "150px",
 						}));
 						
 						
@@ -2714,7 +2738,7 @@ var loc_partial_assign;
 							})
 									.bindProperty("text", "propose_id").addStyleClass("propo_id").addStyleClass("hide_proposed"),
 							
-							width : "10px",
+							width : "5px",
 							/* visible:false, */
 							
 						}));
@@ -2727,7 +2751,7 @@ var loc_partial_assign;
 								id:'multi_for_test'
 							}).bindProperty("text", "multiprop_val").addStyleClass("multiple_to_test"),
 							
-							width : "10px",
+							width : "5px",
 							/* visible:false, */
 							
 						}));
@@ -2817,7 +2841,7 @@ var loc_partial_assign;
 
 								$("#four1").addClass("hide_div");
 								$("#third").removeClass("hide_div");
-								
+								suitable_match.setNoData();
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
@@ -3819,7 +3843,8 @@ var loc_partial_assign;
 														if(res.length==0)
 														{
 															
-															alert("Entered SO is already fullfilled");
+															alert("Entered SO not found");
+															var tmp_empty=[];
 														}
 													else{
 
@@ -3831,7 +3856,7 @@ var loc_partial_assign;
 																				val) {
 
 																			
-																			
+																 			
 																				var tmp = {
 																					so_pro_id_manual : val.so_proj_id,
 																					so_pro_name_manual : val.so_proj_name,
@@ -3913,18 +3938,22 @@ var loc_partial_assign;
 									                                     		
 									                                     	$("#proname1_man1").html(so_pro_name_assign);
 									                                     	$("#proid1_man1").html(so_pro_id_assign);
-									                                     	$("#sono_man1").html(so_no_manual_assign);
+									                                     	$("#sono_man1-input").val(so_no_manual_assign);
 									                                     	$("#sdate1_man-input").val(so_sdate_manual_assign);
 									                                     	$("#edate1_man-input").val(so_edate_manual_assign);
 									                                     	 oFor_so.removeContent(osearch_manual);
 							                        						 oFor_so.removeContent(table_for_manual_so);
-									                                     	
-									                                     	
-									                                     	//sap.ui.getCore().byId("proname1_man1").setText(so_pro_name_assign);
 									                                     		oFor_so.close();
 									                                     		
 									                                     		
 									                                     		
+									                                     		}}),
+									                                     		new sap.ui.commons.Button({text: "Close", press: function() { 
+									                                     			
+									                                     			 oFor_so.removeContent(osearch_manual);
+									                        						 oFor_so.removeContent(table_for_manual_so);
+											                                     		oFor_so.close();
+
 									                                     		}})
 									                                     	]}),
 									                                     	extension: [
@@ -4057,6 +4086,13 @@ var loc_partial_assign;
 										                            					 oFor_emp.removeContent(table_for_manual_emp); 
 										                                     		oFor_emp.close();
 										                                     		
+										                                     		}}),
+										                                    		new sap.ui.commons.Button({text: "Close", press: function() { 
+										                                     			
+										                                    			oFor_emp.removeContent(osearch_manual_emp);
+										                            					 oFor_emp.removeContent(table_for_manual_emp); 
+										                                     		oFor_emp.close();
+
 										                                     		}})
 										                                     	]}),
 										                                     	extension: [
@@ -4956,8 +4992,14 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 											                            					 oFor_te.removeContent(matrix_for_te_main);
 											                            					 oFor_te.removeContent(table_for_te_approve_id);
 											                            					 oFor_te.close();
-											                                     	
-											                                     		
+	
+											                                     		}}),
+											                                     		new sap.ui.commons.Button({text: "Close", press: function() { 
+											                                     			
+											                            					 oFor_te.removeContent(matrix_for_te_main);
+											                            					 oFor_te.removeContent(table_for_te_approve_id);
+											                            					 oFor_te.close();
+	
 											                                     		}})
 											                                     	]}),
 											                                     	extension: [
@@ -5044,33 +5086,27 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
           matrix_for_manual_main.placeAt("manual1");
           
   /////2nd Row/////////////
-               var son =new sap.ui.commons.ValueHelpField(
-						{
-							id: 'sono_man1',
-							valueHelpRequest : function(
-									oEvent1) {
-								 console
-										.log(oEvent1
-												.getParameters('newValue').newValue); 
+             var son=  new sap.ui.commons.ValueHelpField(
+					 {
+						 id: 'sono_man1',
+						 
+						valueHelpRequest : function(
+								) {
+							
 
-								 function handler(
-										oEvent1) {
-									alert("Event '"
-											+ oEvent1
-													.getId()
-											+ "' triggered");
-								} 
-								 oFor_so = new sap.ui.ux3.OverlayContainer(
-										{
-											width : '400px'
-										});
-								 
-								oFor_so
-										.addContent(osearch_manual);
+							
+							oFor_so = new sap.ui.ux3.OverlayContainer(
+									{
+										width : '400px'
+									});
+							 
+							oFor_so
+									.addContent(osearch_manual);
 
-								oFor_so.open();
-							}
-						});
+							oFor_so.open();
+						}
+					});
+		     
              var proid_man= new sap.ui.commons.TextView({id: 'proid1_man1',}).addStyleClass("for_fields_style1").addStyleClass("for_font_size_manual_textview");
              var proname_man = new sap.ui.commons.TextView(
 						{
@@ -5306,7 +5342,7 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							press : function(){
 								 var input_manual1 = $(".smart_project_code1").val();
 								 var input_manual2 =  $(".fte_manual1").val();
-								 var to_send_sono =   $("#sono_man1").html();
+								 var to_send_sono =   $("#sono_man1-input").val();
 								 var to_send_sdate =  $("#sdate1_man-input").val();
 								 var to_send_edate =  $("#edate1_man-input").val(); 
 								 var emp_to_send = $("#empid_man-input").val();
@@ -5344,8 +5380,19 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							      		success : function(odata){
 							      			console.log(odata);
 							      			 alert(odata);
-	                                         window.location.reload();
-							      		
+	                                        // window.location.reload();
+							      			sap.ui.getCore().byId("matrix_for_manual_main").removeAllRows();
+							      			matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name);
+							      		  matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
+							      		 matrix_for_manual_main.createRow(oDivider2_0,oDivider2,oDivider3,oDivider4,null);
+							      		 matrix_for_manual_main.createRow(empid_name,empname_name,emplevel_name,eloc_name)  ;
+							      		matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
+							      		 matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
+							      		matrix_for_manual_main.createRow(teid_name,tename_name,null,null)  ;
+							      		  matrix_for_manual_main.createRow(teapproveid,teapprove_name,null,null)  ;
+							      		 matrix_for_manual_main.createRow(oDivider5_0up,oDivider5up,oDivider6up,oDivider7up,null);
+							      		matrix_for_manual_main.createRow(smprocode_name,fte_name,taggtype_name);
+							      		 matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
 							      		}
 									
 									});
