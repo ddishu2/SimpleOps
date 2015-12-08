@@ -137,6 +137,14 @@ class m_Notifications extends CI_model
         return $lv_return;
     }
 
+// Method to send email to someoen if the employee they're approving has already been tagged
+
+    public function sendAlreadyTaggedNotification($i_so_no, $i_emp_id)
+    {
+        $lv_return = false;
+        $lv_return = self::sendnotification($i_so_no, 'ATN', '', '', $i_emp_id, '');
+        return $lv_return;
+    }
 // Function to get the query.
     private function set_query($i_mode) {
         $this->lv_query_notifcn  =  "SELECT * FROM c_notifications_config WHERE action_type = '$i_mode' LIMIT 1";
@@ -444,6 +452,27 @@ class m_Notifications extends CI_model
                 $this->lt_act_type    = $this->db->query($this->lv_query_act_type)->result_array();
                 $this->lt_sup_details = $lo_details->get_emp_details($this->lt_hlr_details[0][self::gc_sup_id], 'm_emp_record');
                 break;            
+            
+            case 'ATN':
+// Get details of all capabilities email ids.
+                $this->lt_recievers   = $this->db->query($this->lv_query_notifcn)->result_array();
+                $this->lt_act_type    = $this->db->query($this->lv_query_act_type)->result_array();
+
+// Get SO details            
+                $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);                
+                if(array_key_exists(0,$this->lt_so_details))
+                {                
+                $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+                if(array_key_exists(0,$this->lt_corpid_details))
+                {
+                $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
+                $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
+                }
+                }
+
+// Get employee details.
+                $this->lt_emp_details = $lo_details->get_emp_details($this->lv_empid);
+                break;
             default:
                 break;
         }
@@ -565,6 +594,14 @@ class m_Notifications extends CI_model
                 }
                 break;
             
+            case 'ATN':
+                $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
+                $this->lv_so_owner   = $this->lv_so_creator_name;
+                if(array_key_exists(0,$this->lt_emp_details))
+                {                
+                $this->lv_empname = $this->lt_emp_details[0]['emp_name'];
+                }
+                break;
             default:
                 break;
         }
@@ -685,6 +722,12 @@ class m_Notifications extends CI_model
                 }
                 $this->lv_content .= $lv_content[2];
                 break;
+                
+            case 'ATN':
+                $this->lv_content = str_replace("GV_SO_OWNER", $this->lv_so_creator_name, $this->lv_content);
+                $this->lv_content = str_replace("GV_EMPNAME", $this->lv_empname, $this->lv_content);
+                break;
+            
             default:                
                 break;
         }
@@ -740,7 +783,8 @@ class m_Notifications extends CI_model
 
 // Get recievers for email.                
         self::get_recievers();      
-        if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4'))
+        $this->lv_subject .= 'TEST '.$this->lv_subject;
+        if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4') || ($i_mode = 'SL'))
         {
 //      $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);              \
         $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
