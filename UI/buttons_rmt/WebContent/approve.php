@@ -78,12 +78,9 @@
 
             var input_manual1 = $(".project_code_text1").val();
 			 var input_manual2 = $(".fte_text1").val();
-			
 			 
-	         if (!input_manual1.match(regex)) {
-	        alert("Entered Smart Project Code is not valid");
-	      } 
-	         else if(!input_manual2.match(regex))
+			
+			if(!input_manual2.match(regex))
 	        	 {
 	        	 alert("Entered FTE% is not valid");
 	        	 }
@@ -91,16 +88,33 @@
 	         {
 	        	 alert("Please Enter the Comments");
 	         }
+	         else if($("#start_date").val()=="")
+	         {
+	        	 alert("Please Enter the Assignment Start Date");
+	         }
+	         else if($("#end_date").val() == "")
+	         {
+	        	 alert("Please Enter the Assignment End Date");
+	         }
+	         else if($(".teidval").val()=="")
+	         {
+	        	 alert("Please Enter the T & E Approver ID");
+	         }
+	         else if($(".tenameval").val()=="")
+	         {
+	        	 alert("Please Enter the T & E Approver Name");
+	         }
+	        
 	         else{
 			console.log("/rmt/api/ci/index.php/approve_hard_lock/?"+asc1);
 			$.ajax({
     		  method: "GET",
     		  url: "/rmt/api/ci/index.php/approve_hard_lock/?"+asc1,
-    		///rmt/api/v1/index.php/deployable_emp/?so_from_date="
-    		///rmt/api/ci/index.php/approve_hard_lock/?trans_id=2&comments=Abc&status=Approve&smart_proj_code=A&FTE=B&tag_type=hard
+    		
     		success : function(odata){
+        		console.log(odata)
 
-    		      alert("Submitted");
+    		      alert(odata);
     		      window.open('','_parent',''); 
     		      window.close(); 
     		}
@@ -109,8 +123,7 @@
 
 		
 	}	
-	</script>
-	<script>
+
 	function search_tne(){
         $("#tne_table_to_display").removeClass("hide_div")  ;
          var tne_emp_id_to_send =$(".teidval").val();
@@ -132,6 +145,9 @@ $("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td>" +
 
 }
 	</script>
+
+	
+
 
 	</script>
 	
