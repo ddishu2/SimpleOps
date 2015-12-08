@@ -4,6 +4,11 @@
 	
 	margin-top : 0px;
 }
+.sapUiUx3OverlayCloseButton
+{
+	
+	display : none;
+}
 
 #search_for_so_manual
 {
