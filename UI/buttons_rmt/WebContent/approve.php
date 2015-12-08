@@ -13,6 +13,7 @@
 
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript" ></script>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico">
@@ -37,6 +38,10 @@
 			{
 			width: 435px !important;
             height: 80px;
+			}
+			.hide_div
+			{
+			display: none
 			}
 			
 			
@@ -105,6 +110,31 @@
 		
 	}	
 	</script>
+	<script>
+	function search_tne(){
+        $("#tne_table_to_display").removeClass("hide_div")  ;
+         var tne_emp_id_to_send =$(".teidval").val();
+     	$.ajax({
+       		  method: "GET",
+       		  url: "/rmt/api/ci/index.php/get_ValidTNEs/?emp_id="+tne_emp_id_to_send+"&domain_id=",
+       		  success : function(odata){
+      			
+      			  var res_tne= odata;
+//       			  var table_row;
+      			for (var i = 0; i < res_tne.length; i++) {
+$("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td>" + res_tne[i].emp_name + "</td></tr>");
+}
+			 
+       		}
+	  
+      	
+       	}); 
+
+}
+	</script>
+
+	</script>
+	
 	</head>
 
 	<body>
@@ -127,7 +157,9 @@
 						<th>Primary Skill</th>
 						<th>Level</th>
 						<th>T & E Approver ID</th>
+						<th></th>
 						<th>T & E Approver Name </th>
+						
 						
 					</tr>
 					<tr>
@@ -140,6 +172,7 @@
 						<td><?php echo htmlspecialchars($_GET["lv_prime_skill"]);?></td>
 						<td><?php echo htmlspecialchars($_GET["lvl"]);?></td>
 						<td><input type="text" class="teidval" ></td>
+						<td><input type="button" class="search_button" value="SEARCH" onclick="search_tne()"/>
 						<td><input type="text" class="tenameval" ></td>
 					</tr>
 				</table>
@@ -172,6 +205,10 @@
 </select></td>
 					</tr>
 				</table>
+				
+				
+				
+				
 			</div>
 			<br>
 			<div>
@@ -197,6 +234,26 @@
 </td>
 					</tr>
 				</table>
+				<table id="tne_table_to_display" class="hide_div"  border="1" >
+						<caption>T & E Approver List
+						</caption>
+						<colgroup width="10%" />
+						<colgroup id="colgroup" class="colgroup" align="center" valign="middle" title="title" width="1*" span="2"  />
+						<thead>
+							<tr>
+								<th scope="col">Approver ID</th>
+								<th scope="col">Approver Name</th>
+								<th>
+								
+							</tr>
+						</thead>
+					
+						</tbody>
+					</table>
+			
+			
+			
+			
 				
 			</div>
 			<div>
@@ -204,6 +261,7 @@
 			</div>
 
 		</div>
+		
 	</body>
 	
 	

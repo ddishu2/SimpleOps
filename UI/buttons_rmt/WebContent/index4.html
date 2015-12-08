@@ -2673,71 +2673,15 @@ var loc_partial_assign;
 								text: "View",
 								Tooltip:"View",
 								press: function(){
+
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
 									}
-										
-									$(".approveDropdown input").each(function(index,val){
-                                        
-                                        if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "--Select--"
-                                                                        
-                                        || $(this).val()=="None"){
-                                                        var parent = $(this).parent().parent().parent().parent();
-                        var emp_id_for_service= parent.find(".empoid").text();
-                        console.log("/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service)
-                        $.ajax({
-                          method: "GET",
-                          url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_for_service,
-                        //localhost/rmt/api/ci/index.php/get_where_proposed/?emp_id=14761                                                            
-/*                                                                                           success : function(odata) {
-console.log(odata);
-var table_row1;
-var res = odata;
-var completeData1 = [];
-
-jQuery
-.each(
-        res,
-        function(
-                                        i,
-                                        val) {
-
-                        
-                                        var tmp1 = {
-                                        
-                                        };
-                        
-                                        completeData1
-                                                                        .push(tmp1);
-                                        Model_amend = new sap.ui.model.json.JSONModel();
-                                        Model_amend
-                                                                        .setData({
-                                                                                        modelData : completeData1
-                                                                        });
-                                        
-                                                                        .setModel(Model_amend);
-                                                                        popup_detail
-                                                                        .bindRows("/modelData");
-                                        
-                                        
-                                        pass_data = Model_amend.getData().modelData;
-
-
-                        }
-
-        );
-
-
-
-}
-*/                                                                                          });
-                                        }
-                        });
+									
+									
+									
 
 									
-									if(!oOverlayContainer.isOpen()){
-										oOverlayContainer.open();
-									}
 								}
 							}).addStyleClass("is_proposed_show"),
 							width : "100px",
