@@ -783,7 +783,7 @@ class m_Notifications extends CI_model
 
 // Get recievers for email.                
         self::get_recievers();      
-        $this->lv_subject .= 'TEST '.$this->lv_subject;
+        $this->lv_subject = 'TEST '.$this->lv_subject;
         if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4') || ($i_mode = 'SL'))
         {
 //      $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);              \
