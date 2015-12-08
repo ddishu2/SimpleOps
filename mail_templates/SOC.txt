@@ -1,0 +1,9 @@
+<html>
+   <style>.font{font-size:15;font-family:Calibri}</style>
+   <body class="font">
+      <p>Dear GV_SO_OWNER,</p>
+      <d>The proposed employee, GV_EMPNAME, has already been tagged to another project. We will get back to you shortly with a new proposal.
+      </d>    
+      <p>Regards,<br><b></b>Resource Management Group (RMG).</p>
+   </body>
+</html>
