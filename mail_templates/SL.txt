@@ -116,6 +116,5 @@
       <p><font color=#FF0000><B>If the required resume is not appended with the mail, kindly get in touch with the RMG team at <a href="mailto:appsonesap.in@capgemini.com">Appsone SAP</a></B></font>
       <p><font color=#FF0000><B>Please be aware that employees can be multi proposed and employees and the request would be processed on first come first serve basis</B></font>
       <p>Regards,<br><b></b>Resource Management Group (RMG).</p>
-      </table>
    </body>
 </html>

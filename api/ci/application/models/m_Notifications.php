@@ -321,7 +321,7 @@ class m_Notifications extends CI_model
         switch ($i_mode) {
             case 'SL':
 // Get SO details            
-                $this->lt_so_details = $lo_details->getSODetails($this->lv_so_number);                
+                $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);                
                 if(array_key_exists(0,$this->lt_so_details))
                 {
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
@@ -353,7 +353,7 @@ class m_Notifications extends CI_model
 
             case 'SLR':
 // Get SO details            
-                $this->lt_so_details = $lo_details->getSODetails($this->lv_so_number);
+                $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);
                 if(array_key_exists(0,$this->lt_so_details))
                 {
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
@@ -374,7 +374,7 @@ class m_Notifications extends CI_model
 
             case 'SOR':
 // Get SO details            
-                $this->lt_so_details = $lo_details->getSODetails($this->lv_so_number);
+                $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);
                 if(array_key_exists(0,$this->lt_so_details))
                 {
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);

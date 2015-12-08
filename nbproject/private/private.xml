@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/index.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_NotificationMails.php</file>
+            <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_vo_open_sos.php</file>
             <file>file:/C:/xampp/htdocs/rmt/api/v1/cl_releasenotification.php</file>
         </group>
     </open-files>

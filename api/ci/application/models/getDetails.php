@@ -14,7 +14,8 @@ private
     $lv_tabname,
     $lv_query_alias;
 
-//    const C_SO_MASTER = 'm_so_fulfill_stat';
+    const c_so_fulfill_stat = 'm_so_fulfill_stat';
+    const c_so_pos_no      = 'so_pos_no';
     const C_SO_MASTER  = 'v_fulfill_stat_open';
     const C_EMP_MASTER = 'm_emp_ras';
     const C_EMP_ID = 'emp_id';
@@ -59,6 +60,15 @@ private
         return $lt_result;
     }
    
+    
+// Get SO details ( New method since old one breaks the email query )
+
+    public function get_so_details($i_so_no)
+    {
+        $ci_ins =& get_instance();
+        $ci_ins->db->like(self::c_so_pos_no, $i_so_no);
+        return(($ci_ins->db->get(self::c_so_fulfill_stat)->result_array()));
+    }
 // Get Employee details based on employee ID from different table    
     public function get_emp_details($i_emp_id,$i_tabname = '') 
         {
