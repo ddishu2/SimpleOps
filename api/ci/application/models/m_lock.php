@@ -155,8 +155,9 @@ class m_lock extends ci_model
         self::C_FNAME_UPDATED_ON  => $lv_updated_on        
         );
 
-       return $this->db->insert(self::C_TABNAME, $data);
-        
+      $res=$this->db->insert(self::C_TABNAME, $data);
+//      echo $this->db->last_query();
+        return $res;
         
 
         //return true or false
@@ -192,7 +193,7 @@ class m_lock extends ci_model
     }
     
 
-    public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id,$fp_arr_Multi ) {
+    public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id,$fp_arr_Multi) {
        
 //        $lv_obj = new cl_DB();
 //        $lv_db = $lv_obj->getDBHandle();
@@ -221,6 +222,7 @@ class m_lock extends ci_model
                     
 //                    mysqli_autocommit( $lv_db,false);
 //                    mysqli_begin_transaction($lv_db);
+//                echo $fp_arr_Multi[$i];
                     $this->db->trans_start();
                     if($fp_arr_Multi[$i] == 'YES')
                     {
@@ -422,10 +424,6 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
 //        $fp_edate = self::getsoenddate($lv_so_id);
         $fp_edate = $lv_edate;
        
-        // get other locks acquired for same Emp
-        $lv_alredy_proposed  = self::getDetailsWhereEmpIsAlreadyProposed($lv_emp_id);
-        
-        
         
         
         
@@ -441,18 +439,48 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
            
             
             // change the status of other locks which were acquired for same Employee
+            // get other locks acquired for same Emp
+        $lv_alredy_proposed  = self::getDetailsWhereEmpIsAlreadyProposed($lv_emp_id);
+        
+//        print_r($lv_alredy_proposed );
+        
             foreach($lv_alredy_proposed as $key => $value )
             {
-                $data = array(
+//                 echo $key. "       " .$value[0][self::C_TRANS_ID]. "</br>";
+//                if($key !='emp_id'&&$key !='emp_name')
+                if($key === 0)
+                {
+//                   echo $key. "       " .$value[0][self::C_TRANS_ID]. "</br>";
+                   $data = array
+                       (                       
                    self::C_FNAME_STATUS => self::C_STATUS_SOFT_LOCK_EXPIRED_DUE_TO_OTHERS_APPROVAL 
-                ) ;
-                $this->db->where(self::C_TRANS_ID,$value[self::C_TRANS_ID]);
+                        ) ;
+                   
+                $this->db->where(self::C_TRANS_ID,$value[0][self::C_TRANS_ID]);
                 $this->db->update(self::C_TABNAME,$data);
-                
+                //echo $this->db->last_query();
                 /*
                  * logic to send mail to owners of other So's
                  */
-              
+                }
+                
+                
+                    else if($key !='emp_id'&& $key !='emp_name')
+                {
+                   echo $key. "       " .$value[0][self::C_TRANS_ID]. "</br>";
+                   $data = array
+                       (                       
+                   self::C_FNAME_STATUS => self::C_STATUS_SOFT_LOCK_EXPIRED_DUE_TO_OTHERS_APPROVAL 
+                        ) ;
+                   
+                $this->db->where(self::C_TRANS_ID,$value[0][self::C_TRANS_ID]);
+                $this->db->update(self::C_TABNAME,$data);
+                //echo $this->db->last_query();
+                /*
+                 * logic to send mail to owners of other So's
+                 */
+                }
+                
             }
             
 //            mysqli_commit($lv_db);

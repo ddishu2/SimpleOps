@@ -44,7 +44,9 @@ private
         $ci_ins =& get_instance();
 //      $ci_ins->db->query();
        
-        $query = $ci_ins->db->get_where(self::C_SO_MASTER, array(self::C_SO_POS_NO =>(int)$fp_v_so_no));
+        //$query = $ci_ins->db->get_where(self::C_SO_MASTER, array(self::C_SO_POS_NO =>(int)$fp_v_so_no));
+        $ci_ins->db->like(self::c_so_pos_no,$fp_v_so_no);
+        $query = $ci_ins->db->get(self::c_so_fulfill_stat);
 //      echo $ci_ins->db->last_query();
         $lt_result = $query->result_array();
 //      print_r($lt_result);
