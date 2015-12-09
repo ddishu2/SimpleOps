@@ -79,54 +79,54 @@ var loc_partial_assign;
 						//Define the columns and the control templates to be used
 						var oColumn = new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "SO NO."  ,tooltip :"SO NO"}),
-							template: new sap.ui.commons.TextView().bindProperty("text", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextView().bindProperty("text", "so_no_pop"),
+							sortProperty: "so_no_pop",
+							filterProperty: "so_no_pop",
 							width: "70px"
 						});
 					
 						popup_detail.addColumn(oColumn);
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextField().bindProperty("value", "pro_id_pop"),
+							sortProperty: "pro_id_pop",
+							filterProperty: "pro_id_pop",
 							width :"50px"
 						}));
 						
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextField().bindProperty("value", "pro_name_pop"),
+							sortProperty: "pro_name_pop",
+							filterProperty: "pro_name_pop",
 							width: "60px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Start Date" ,tooltip :"Start Date"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextField().bindProperty("value", "start_date_pop"),
+							sortProperty: "start_date_pop",
+							filterProperty: "start_date_pop",
 							width: "50px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "End Date" ,tooltip :"End Date"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextField().bindProperty("value", "end_date_pop"),
+							sortProperty: "end_date_pop",
+							filterProperty: "end_date_pop",
 							width: "50px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextField().bindProperty("value", "emp_id_pop"),
+							sortProperty: "emp_id_pop",
+							filterProperty: "emp_id_pop",
 							width: "50px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", ""),
-							sortProperty: "",
-							filterProperty: "",
+							template: new sap.ui.commons.TextField().bindProperty("value", "emp_name_pop"),
+							sortProperty: "emp_name_pop",
+							filterProperty: "emp_name_pop",
 							width: "50px"
 						}));
 
@@ -2709,16 +2709,18 @@ var loc_partial_assign;
 								//id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-								press: function(oEv){
+								press: function(){
 
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
 									}
 									
 
-									var parent = $(".approveDropdown input").parent().parent().parent().parent();
+									//var parent = $(".approveDropdown input").parent().parent().parent().parent();
+									var emp_id_to_pass = $(".is_proposed_show").closest("tr").find('td:eq(6)').text();
 									
-									var emp_id_to_pass = parent.find(".empoid").text();
+									console.log(emp_id_to_pass);
+									
 									
 									$.ajax({
 							      		  method: "GET",
@@ -2728,6 +2730,47 @@ var loc_partial_assign;
 	
 							      		success : function(odata){
 							      			console.log(odata);
+											
+											var res = odata;
+											var completeData_popup1 = [];
+
+											jQuery
+													.each(
+															res,
+															function(
+																	i,
+																	val) {
+
+																
+																	var tmp_popup1 = {
+																		so_no_pop : val.so.so_pos_no,
+																		pro_id_pop : val.so.so_proj_id,
+																		pro_name_pop : val.so.so_proj_name,
+																		start_date_pop : val.so.so_start_date_new,
+																		end_date_pop : val.so.so_end_date,
+																		emp_id_pop : val.emp[0].emp_id,
+																		emp_name_pop : val.emp[0].emp_name,
+																	};
+																
+																	completeData_popup1
+																			.push(tmp_popup1);
+																	 Model_popup = new sap.ui.model.json.JSONModel();
+																	Model_popup
+																			.setData({
+																				modelData : completeData_popup1
+																			});
+																	popup_detail
+																			.setModel(Model_popup);
+																	popup_detail
+																			.bindRows("/modelData");
+																	
+																	
+																
+
+
+																}
+
+															);
 							      			 
 							      		}
 									
