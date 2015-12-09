@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-<title>RMT Tool</title>
+<title>RMU</title>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script id='sap-ui-bootstrap' src='resources/sap-ui-core.js'
 	data-sap-ui-theme='sap_bluecrystal'
@@ -2717,7 +2717,8 @@ var loc_partial_assign;
 									
 
 									//var parent = $(".approveDropdown input").parent().parent().parent().parent();
-									var emp_id_to_pass = $(".is_proposed_show").closest("tr").find('td:eq(6)').text();
+									var emp_id_to_pass = $(".is_proposed_show").closest("tr").find('td:eq(2)').text();
+									//var emp_id_to_pass = $(this).children('td:nth-child(2)').text()
 									
 									console.log(emp_id_to_pass);
 									
@@ -2782,7 +2783,7 @@ var loc_partial_assign;
 									
 								}
 							}).addStyleClass("is_proposed_show"),
-							width : "150px",
+							width : "100px",
 							 resizable : false,
 							    flexible : false,
 						}));
@@ -2796,10 +2797,10 @@ var loc_partial_assign;
 							template : new sap.ui.commons.TextField({
 								
 							})
-									.bindProperty("value", "ops_comm"),
+									.bindProperty("value", "ops_comm").addStyleClass("ops_comm_to_send"),
 							sortProperty : "ops_comm",
 							filterProperty : "ops_comm",
-							width : "150px",
+							width : "200px",
 							resizable : false,
 						    flexible : false,
 							
@@ -2856,6 +2857,7 @@ var loc_partial_assign;
 								var status_str = "";
 								var p1_id = "";
 								var all_multi = "";
+								var ops_comm ="";
 								 
 							
 
@@ -2869,10 +2871,11 @@ var loc_partial_assign;
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
 										 all_multi+="&allow_multi[]="+parent.find(".decide_multi input").val();
+										 ops_comm+="&ops_comments="+parent.find(".ops_comm_to_send").val();
 										 
 										 parent.addClass("change_color");
-											$(this).val("Done");
-								
+											$(this).remove();
+								           
 										
 											
 											
@@ -2881,8 +2884,10 @@ var loc_partial_assign;
 								$(".approveDropdown input").each(function(index,val){
 									
 									if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "None"){
-										$(this).val("Done");
+										
 										$(this).remove();
+										//parent.find(".decide_multi input").remove();
+										
 										
 									}
 									
@@ -3849,7 +3854,15 @@ var loc_partial_assign;
 						capabilityText_manual.addItem(oItem);
 
 						osearch_manual.createRow(capabilityLabel_manual, capabilityText_manual);
-					    
+					    var search_manual1_close =new sap.ui.commons.Button({id:'search_for_so_manual_close',text :"Close",
+							
+							press: function()
+							{
+								 oFor_so.removeContent(osearch_manual);
+        						 oFor_so.removeContent(table_for_manual_so);
+                             		oFor_so.close();	
+							}
+							}).addStyleClass("for_normal_buttons_style1");
 						var search_manual1 =new sap.ui.commons.Button({id:'search_for_so_manual',text :"Search for SO's",
 							
 						press: function()
@@ -3980,7 +3993,7 @@ var loc_partial_assign;
 						}
 						
 						}).addStyleClass("for_normal_buttons_style1");
-						osearch_manual.createRow(search_manual1)
+						osearch_manual.createRow(search_manual1,search_manual1_close)
 						
 						
 						/* ------------So's f4 help Ennds here----------------------- */
@@ -4941,7 +4954,16 @@ var loc_partial_assign;
 					}
 				
 				}).addStyleClass("for_normal_buttons_style1");
-				osearch_manual_emp.createRow(search_manual1_emp_results)		
+				var search_manual1_emp_close =new sap.ui.commons.Button({id:'search_for_emp_manual_close',text :"Close",
+					
+					press: function()
+					{
+						 oFor_emp.removeContent(osearch_manual_emp);
+						 oFor_emp.removeContent(table_for_manual_emp);
+                     		oFor_emp.close();	
+					}
+					}).addStyleClass("for_normal_buttons_style1");
+				osearch_manual_emp.createRow(search_manual1_emp_results,search_manual1_emp_close)		
 						
 						
 						
