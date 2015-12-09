@@ -2348,7 +2348,7 @@ var loc_partial_assign;
 										var parent = $(this).parent().parent().parent().parent();
 										if(parent.find(".multiple_to_test").text()=="NO")
 											{
-										parent.find(".is_proposed_show").remove();
+										//parent.find(".is_proposed_show").remove();
 										
 											};
 										
@@ -2452,10 +2452,10 @@ var loc_partial_assign;
 //--------------------------Table for suitable Match--------------------------------------------------------------------//
 						var suitable_match = new sap.ui.table.Table(
 								{
-									//id : 'suitable_match1',
+									id : 'suitable_match1',
 									title : "Transaction List",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-								visibleRowCount :40,
+								visibleRowCount :20,
 									firstVisibleRow: 3,
 								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
 									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
@@ -2710,16 +2710,19 @@ var loc_partial_assign;
 								//id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-								press: function(){
+								press: function(oEvent){
 
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
 									}
+	var path = [];								
+	var id = oEvent.mParameters.id
+	path = id.split("-")
+	path = path[2]
+	path = path.replace(/[^0-9]+/ig,"");
 									
-
-									//var parent = $(".approveDropdown input").parent().parent().parent().parent();
-									var emp_id_to_pass = $(".is_proposed_show").closest("tr").find('td:eq(2)').text();
-									//var emp_id_to_pass = $(this).children('td:nth-child(2)').text()
+									var emp_id_to_pass = sap.ui.getCore().byId('suitable_match1').getModel().getData().modelData[path].eid
+									
 									
 									console.log(emp_id_to_pass);
 									
@@ -2745,13 +2748,13 @@ var loc_partial_assign;
 
 																
 																	var tmp_popup1 = {
-																		so_no_pop : val.so.so_pos_no,
-																		pro_id_pop : val.so.so_proj_id,
-																		pro_name_pop : val.so.so_proj_name,
-																		start_date_pop : val.so.so_start_date_new,
-																		end_date_pop : val.so.so_end_date,
-																		emp_id_pop : val.emp[0].emp_id,
-																		emp_name_pop : val.emp[0].emp_name,
+																		/* so_no_pop : val.so_pos_no,
+																		pro_id_pop : val.so_proj_id,
+																		pro_name_pop : val.so_proj_name,
+																		start_date_pop : val.so_start_date_new,
+																		end_date_pop : val.so_end_date, */
+																		emp_id_pop : val.emp_id,
+																		emp_name_pop : val.emp_name,
 																	};
 																
 																	completeData_popup1
@@ -2872,7 +2875,7 @@ var loc_partial_assign;
 										 status_str += "&status[]="+$(this).val();
 										 p1_id += "&prop_id="+parent.find(".propo_id").text();
 										 all_multi+="&allow_multi[]="+parent.find(".decide_multi input").val();
-										 ops_comm+="&ops_comments="+parent.find(".ops_comm_to_send").val();
+										 ops_comm+="&ops_comments[]="+parent.find(".ops_comm_to_send").val();
 										 
 										 parent.addClass("change_color");
 											$(this).remove();
@@ -2893,7 +2896,7 @@ var loc_partial_assign;
 									}
 									
 									});
-								var asc= so_str + emp_str +status_str+p1_id+all_multi;
+								var asc= so_str + emp_str +status_str+p1_id+all_multi+ops_comm;
 								console.log(asc);
 								
 								console.log("/rmt/api/ci/index.php/approve_soft_lock/?"+asc)
