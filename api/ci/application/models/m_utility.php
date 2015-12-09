@@ -19,7 +19,7 @@ require_once(APPPATH.'models/m_Notifications.php');
 class m_utility extends CI_model
 {
     const gc_business_days  = 22,
-          gc_date_format    = 'd-M-y',
+          gc_date_format    = 'Y-m-d',
           gc_date_from      = 'date_from',
           gc_bu             = 'Appsone SAP',
           gc_filepath       = '\\\\10.75.250.149\AppsOne_SAP_Operations$\009_SAP Dashboards\Bench Ageing Data\\',
@@ -80,6 +80,7 @@ class m_utility extends CI_model
     {   
         $lt_invalid_project = "('Bench','Campus Hire', 'Apps1 Long  Leave & Ml')";
         $lv_edate = $this->add_business_days(date(self::gc_date_format));
+        echo $lv_edate;
         $lv_query_empid =  'SELECT '. $this->gv_so.','.
                             $this->gv_edate.','.
                             $this->gv_idp.','.
