@@ -14,7 +14,7 @@
 require_once __DIR__.DIRECTORY_SEPARATOR.'cl_DB.php';
 class cl_releasenotification {
     const gc_business_days = 22,
-          gc_date_format   = 'd-M-y',
+          gc_date_format   = 'Y-m-d',
           gc_date_from     = 'date_from';
             
     private $gv_so            = 'curr_so',          
