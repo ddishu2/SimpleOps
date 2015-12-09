@@ -2348,7 +2348,7 @@ var loc_partial_assign;
 										var parent = $(this).parent().parent().parent().parent();
 										if(parent.find(".multiple_to_test").text()=="NO")
 											{
-										//parent.find(".is_proposed_show").remove();
+										parent.find(".is_proposed_show").remove();
 										
 											};
 										
@@ -2746,13 +2746,20 @@ var loc_partial_assign;
 																	i,
 																	val) {
 
-																
+
+																/* sname : val.so.so_pos_no,
+																pcode : val.so.so_proj_id,
+																pname : val.so.so_proj_name,
+																sdate : val.so.so_start_date_new,
+																edate : val.so.so_end_date,
+																eid : val.emp[0].emp_id,
+																ename : val.emp[0].emp_name, */
 																	var tmp_popup1 = {
-																		/* so_no_pop : val.so_pos_no,
-																		pro_id_pop : val.so_proj_id,
-																		pro_name_pop : val.so_proj_name,
-																		start_date_pop : val.so_start_date_new,
-																		end_date_pop : val.so_end_date, */
+																		 so_no_pop : val.so.so_pos_no,
+																		pro_id_pop : val.so.so_proj_id,
+																		pro_name_pop : val.so.so_proj_name,
+																		start_date_pop :val.so.so_start_date_new,
+																		end_date_pop : val.so.so_end_date, 
 																		emp_id_pop : val.emp_id,
 																		emp_name_pop : val.emp_name,
 																	};
@@ -3953,7 +3960,6 @@ var loc_partial_assign;
 																				i,
 																				val) {
 
-																			
 																 			
 																				var tmp = {
 																					so_pro_id_manual : val.so_proj_id,
