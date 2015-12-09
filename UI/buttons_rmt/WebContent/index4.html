@@ -2471,6 +2471,8 @@ var loc_partial_assign;
 							sortProperty : "sname",
 							filterProperty : "sname",
 							width : "100px",
+							resizable : false,
+						    flexible : false,
 						//setRowHeight:"200px"
 						}));
 
@@ -2483,7 +2485,9 @@ var loc_partial_assign;
 									.bindProperty("text", "pcode"),
 							sortProperty : "pcode",
 							filterProperty : "pcode",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2494,7 +2498,9 @@ var loc_partial_assign;
 									.bindProperty("text", "pname"),
 							sortProperty : "pname",
 							filterProperty : "pname",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2505,7 +2511,9 @@ var loc_partial_assign;
 									.bindProperty("text", "sdate"),
 							sortProperty : "sdate",
 							filterProperty : "sdate",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2516,7 +2524,9 @@ var loc_partial_assign;
 									.bindProperty("text", "edate"),
 							sortProperty : "edate",
 							filterProperty : "edate",
-							width : "100px"
+							width : "90px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2528,7 +2538,9 @@ var loc_partial_assign;
 									,
 							sortProperty : "eid",
 							filterProperty : "eid",
-							width : "100px"
+							width : "90px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2539,7 +2551,9 @@ var loc_partial_assign;
 									.bindProperty("text", "ename"),
 							sortProperty : "ename",
 							filterProperty : "ename",
-							width : "100px"
+							width : "200px",
+							resizable : false,
+						    flexible : false,
 						}));
 
 						suitable_match.addColumn(new sap.ui.table.Column({
@@ -2551,7 +2565,9 @@ var loc_partial_assign;
 									.bindProperty("text", "lev"),
 							sortProperty : "lev",
 							filterProperty : "lev",
-							width : "100px"
+							width : "50px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2562,7 +2578,9 @@ var loc_partial_assign;
 									.bindProperty("text", "skill"),
 							sortProperty : "skill",
 							filterProperty : "skill",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2573,7 +2591,9 @@ var loc_partial_assign;
 									.bindProperty("text", "eloc"),
 							sortProperty : "eloc",
 							filterProperty : "eloc",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						
 						suitable_match.addColumn(new sap.ui.table.Column({
@@ -2588,6 +2608,8 @@ var loc_partial_assign;
 							sortProperty : "pro_enddate",
 							filterProperty : "pro_enddate",
 							width : "100px",
+							resizable : false,
+						    flexible : false,
 							/* visible:false, */
 							
 						}));
@@ -2603,6 +2625,8 @@ var loc_partial_assign;
 							sortProperty : "skill_cat",
 							filterProperty : "skill_cat",
 							width : "100px",
+							resizable : false,
+						    flexible : false,
 							
 							
 						}));
@@ -2632,7 +2656,9 @@ var loc_partial_assign;
 							}).bindProperty("value","approve1").addStyleClass("approveDropdown"),
 							sortProperty : "",
 							filterProperty : "",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2644,7 +2670,9 @@ var loc_partial_assign;
 									.bindProperty("text", "reason"),
 							sortProperty : "reason",
 							filterProperty : "reason",
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2668,7 +2696,9 @@ var loc_partial_assign;
 								}),  ]
 							}).bindProperty("value","multi_decide").addStyleClass("decide_multi"),
 							
-							width : "100px"
+							width : "100px",
+							resizable : false,
+						    flexible : false,
 						}));
 						suitable_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -2679,12 +2709,13 @@ var loc_partial_assign;
 								//id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-								press: function(){
+								press: function(oEv){
 
 									if(!oOverlayContainer.isOpen()){
 										oOverlayContainer.open();
 									}
 									
+
 									var parent = $(".approveDropdown input").parent().parent().parent().parent();
 									
 									var emp_id_to_pass = parent.find(".empoid").text();
@@ -2709,6 +2740,8 @@ var loc_partial_assign;
 								}
 							}).addStyleClass("is_proposed_show"),
 							width : "150px",
+							 resizable : false,
+							    flexible : false,
 						}));
 						
 						
@@ -2723,8 +2756,9 @@ var loc_partial_assign;
 									.bindProperty("value", "ops_comm"),
 							sortProperty : "ops_comm",
 							filterProperty : "ops_comm",
-							width : "100px",
-							
+							width : "150px",
+							resizable : false,
+						    flexible : false,
 							
 						}));
 						
@@ -2739,6 +2773,8 @@ var loc_partial_assign;
 									.bindProperty("text", "propose_id").addStyleClass("propo_id").addStyleClass("hide_proposed"),
 							
 							width : "5px",
+							resizable : false,
+						    flexible : false,
 							/* visible:false, */
 							
 						}));
@@ -2752,6 +2788,8 @@ var loc_partial_assign;
 							}).bindProperty("text", "multiprop_val").addStyleClass("multiple_to_test"),
 							
 							width : "5px",
+							resizable : false,
+						    flexible : false,
 							/* visible:false, */
 							
 						}));
