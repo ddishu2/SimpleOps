@@ -158,7 +158,7 @@ Class m_proposals extends CI_model
                     );
                     if(!is_null($lv_multi_emp)) 
                 {
-                    $re_it_emps_for_sos[$lv_so_id]['emp'] = $lv_emp;
+                    $re_it_emps_for_sos[$lv_so_id]['emp'] = $lv_multi_emp;
                 }
                 }
             }
@@ -566,6 +566,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
      */
       public function getMultiProposedEmpForSO($fp_v_so_id, $fp_v_so_skill, $fp_v_so_level, $fp_v_so_loc)
         {
+        
         $lwa_deployable_emp = [];
         $re_wa_emp_for_so = null;
         foreach ($this->it_multi_prop_allowed_emps as $lwa_deployable_emp) {
@@ -619,8 +620,10 @@ public function createProposal( $fp_so_id , $fp_emp_id )
  */
          public function isMultiProposedDeployable($fp_v_emp_id, $fp_v_so_id) {
         $re_isDeployable = false;
-        if (!$this->isProposed($fp_v_emp_id) && !$this->isRejectedByManager($fp_v_emp_id, $fp_v_so_id) && !$this->isHardLocked($fp_v_emp_id) && !$this->isRejectedByOps($fp_v_emp_id, $fp_v_so_id) && !$this->isSlockExpired($fp_v_emp_id)) {
-            $re_isDeployable = true;
+        if (
+                !$this->isProposed($fp_v_emp_id) && 
+                !$this->isRejectedByManager($fp_v_emp_id, $fp_v_so_id) && !$this->isHardLocked($fp_v_emp_id) && !$this->isRejectedByOps($fp_v_emp_id, $fp_v_so_id) && !$this->isSlockExpired($fp_v_emp_id)) {
+                $re_isDeployable = true;
         }
         return $re_isDeployable;
     }
