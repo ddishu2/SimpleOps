@@ -132,6 +132,13 @@
 	}	
 
 	function search_tne(){
+		if($(".teidval").val()=="")
+		{
+			alert("Please Enter T & E Approver ID")
+
+		}
+           
+	else{
 		$(".tenameval").val("");
         $("#tne_table_to_display").removeClass("hide_div")
         $("#button_to_select_tne").removeClass("hide_div")  ;//button_to_select_tne
@@ -151,7 +158,7 @@ $("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td cla
 	  
       	
        	}); 
-
+	}
 }
 	function tename_populate()
 	{
