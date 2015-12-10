@@ -2750,20 +2750,28 @@ var loc_partial_assign;
 																	i,
 																	val) {
 
-                                                                 
-																
+																for(j=0;j<res.length;j++)
+																	{
+															
 																	var tmp_popup1 = {
-																		/*   so_no_pop : res.so.so_pos_no,
-																		pro_id_pop : res.so.so_proj_id,
-																		pro_name_pop : res.so.so_proj_name,
-																		start_date_pop :res.so.so_start_date_new,
-																		end_date_pop : res.so.so_end_date,   */
+																		
+																		
+																		 
+																		so_no_pop : res[j].so_pos_no,
+																		pro_id_pop : res[j].so_proj_id,
+																		pro_name_pop : res[j].so_proj_name,
+																		start_date_pop :res[j].so_start_date_new,
+																		end_date_pop : res[j].so_end_date,  
 																		emp_id_pop : res.emp_id,
 																		emp_name_pop : res.emp_name,
 																	};
+															
+																console.log(tmp_popup1);
 																
 																	completeData_popup1
 																			.push(tmp_popup1);
+																	}
+																
 																	 Model_popup = new sap.ui.model.json.JSONModel();
 																	Model_popup
 																			.setData({
