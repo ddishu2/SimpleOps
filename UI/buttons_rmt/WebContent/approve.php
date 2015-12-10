@@ -43,8 +43,15 @@
 			{
 			display: none
 			}
+			#tne_table_to_display
+			{
+			margin-top : 50px !important
+			}
+			#button_to_select_tne
+			{
 			
-			
+			margin-top : 20px !important
+			}
 		</style>
 		
 		
@@ -125,7 +132,9 @@
 	}	
 
 	function search_tne(){
-        $("#tne_table_to_display").removeClass("hide_div")  ;
+		$(".tenameval").val("");
+        $("#tne_table_to_display").removeClass("hide_div")
+        $("#button_to_select_tne").removeClass("hide_div")  ;//button_to_select_tne
          var tne_emp_id_to_send =$(".teidval").val();
      	$.ajax({
        		  method: "GET",
@@ -135,7 +144,7 @@
       			  var res_tne= odata;
 //       			  var table_row;
       			for (var i = 0; i < res_tne.length; i++) {
-$("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td>" + res_tne[i].emp_name + "</td></tr>");
+$("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td class='te_name_to_send'>" + res_tne[i].emp_name + "</td></tr>");
 }
 			 
        		}
@@ -144,6 +153,16 @@ $("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td>" +
        	}); 
 
 }
+	function tename_populate()
+	{
+		$("#button_to_select_tne").addClass("hide_div")
+		 $("#tne_table_to_display").addClass("hide_div")  ;
+		 var name_assign =$(".te_name_to_send").text();
+		 $(".tenameval").val(name_assign);
+		 $("#tne_table_to_display tr").remove();
+         
+	}
+	
 	</script>
 
 	
@@ -189,7 +208,7 @@ $("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td>" +
 						<td><?php echo htmlspecialchars($_GET["lvl"]);?></td>
 						<td><input type="text" class="teidval" ></td>
 						<td><input type="button" class="search_button" value="SEARCH" onclick="search_tne()"/>
-						<td><input type="text" class="tenameval" ></td>
+						<td><input type="text" class="tenameval"  readonly="readonly"  ></td>
 					</tr>
 				</table>
 				<h3>Assignment Details</h3>
@@ -266,7 +285,7 @@ $("#tne_table_to_display").append("<tr><td>" + res_tne[i].emp_id + "</td><td>" +
 					
 						</tbody>
 					</table>
-			
+			<input type="button" value="Select" id ="button_to_select_tne" class= "hide_div"  onclick="tename_populate()"  />
 			
 			
 			
