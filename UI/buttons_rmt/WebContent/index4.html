@@ -82,7 +82,7 @@ var loc_partial_assign;
 							template: new sap.ui.commons.TextView().bindProperty("text", "so_no_pop"),
 							sortProperty: "so_no_pop",
 							filterProperty: "so_no_pop",
-							width: "70px"
+							width: "50px"
 						});
 					
 						popup_detail.addColumn(oColumn);
@@ -91,7 +91,7 @@ var loc_partial_assign;
 							template: new sap.ui.commons.TextField().bindProperty("value", "pro_id_pop"),
 							sortProperty: "pro_id_pop",
 							filterProperty: "pro_id_pop",
-							width :"50px"
+							width :"100px"
 						}));
 						
 						popup_detail.addColumn(new sap.ui.table.Column({
@@ -99,35 +99,35 @@ var loc_partial_assign;
 							template: new sap.ui.commons.TextField().bindProperty("value", "pro_name_pop"),
 							sortProperty: "pro_name_pop",
 							filterProperty: "pro_name_pop",
-							width: "60px"
+							width: "100px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Start Date" ,tooltip :"Start Date"}),
 							template: new sap.ui.commons.TextField().bindProperty("value", "start_date_pop"),
 							sortProperty: "start_date_pop",
 							filterProperty: "start_date_pop",
-							width: "50px"
+							width: "70px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "End Date" ,tooltip :"End Date"}),
 							template: new sap.ui.commons.TextField().bindProperty("value", "end_date_pop"),
 							sortProperty: "end_date_pop",
 							filterProperty: "end_date_pop",
-							width: "50px"
+							width: "70px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
 							template: new sap.ui.commons.TextField().bindProperty("value", "emp_id_pop"),
 							sortProperty: "emp_id_pop",
 							filterProperty: "emp_id_pop",
-							width: "50px"
+							width: "70px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
 							template: new sap.ui.commons.TextField().bindProperty("value", "emp_name_pop"),
 							sortProperty: "emp_name_pop",
 							filterProperty: "emp_name_pop",
-							width: "50px"
+							width: "90px"
 						}));
 
 						
@@ -2348,7 +2348,7 @@ var loc_partial_assign;
 										var parent = $(this).parent().parent().parent().parent();
 										if(parent.find(".multiple_to_test").text()=="NO")
 											{
-										parent.find(".is_proposed_show").remove();
+									//	parent.find(".is_proposed_show").remove();
 										
 											};
 										
@@ -2737,6 +2737,7 @@ var loc_partial_assign;
 							      			console.log(odata);
 											
 											var res = odata;
+											//console.log(res.so.length);
 											var completeData_popup1 = [];
 
 											jQuery
@@ -2746,22 +2747,16 @@ var loc_partial_assign;
 																	i,
 																	val) {
 
-
-																/* sname : val.so.so_pos_no,
-																pcode : val.so.so_proj_id,
-																pname : val.so.so_proj_name,
-																sdate : val.so.so_start_date_new,
-																edate : val.so.so_end_date,
-																eid : val.emp[0].emp_id,
-																ename : val.emp[0].emp_name, */
+                                                                 
+																
 																	var tmp_popup1 = {
-																		 so_no_pop : val.so.so_pos_no,
-																		pro_id_pop : val.so.so_proj_id,
-																		pro_name_pop : val.so.so_proj_name,
-																		start_date_pop :val.so.so_start_date_new,
-																		end_date_pop : val.so.so_end_date, 
-																		emp_id_pop : val.emp_id,
-																		emp_name_pop : val.emp_name,
+																		/*   so_no_pop : res.so.so_pos_no,
+																		pro_id_pop : res.so.so_proj_id,
+																		pro_name_pop : res.so.so_proj_name,
+																		start_date_pop :res.so.so_start_date_new,
+																		end_date_pop : res.so.so_end_date,   */
+																		emp_id_pop : res.emp_id,
+																		emp_name_pop : res.emp_name,
 																	};
 																
 																	completeData_popup1
@@ -2897,7 +2892,7 @@ var loc_partial_assign;
 									if($(this).val() == "Approve" || $(this).val() == "Reject" || $(this).val() == "None"){
 										
 										$(this).remove();
-										//parent.find(".decide_multi input").remove();
+									
 										
 										
 									}
