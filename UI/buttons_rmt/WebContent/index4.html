@@ -3123,7 +3123,45 @@ var loc_partial_assign;
  				
 
 						      		success : function(odata){
-						      			console.log(odata);
+				                     console.log(odata);
+										
+										var res = odata;
+										var completeData1_appsone = [];
+
+										jQuery
+												.each(res,
+														function(
+																i,
+																val) {
+
+															
+																var tmp1_appsone = {
+																		empid_appsone : val.emp_id,
+																		empname_appsone : val.emp_name,
+																		level_appsone : val.level,
+																		skill_appsone : val.prime_skill,
+																		location_appsone : val.loc,
+																		reason_appsone : val.reason,
+																		
+																	   
+																	   
+																};
+															
+																completeData1_appsone
+																		.push(tmp1_appsone);
+																var  Model_appsone = new sap.ui.model.json.JSONModel();
+																Model_appsone
+																		.setData({
+																			modelData : completeData1_appsone
+																		});
+																report_ras_tab
+																		.setModel(Model_appsone);
+																report_ras_tab
+																		.bindRows("/modelData");
+
+															}
+
+														); 
 						      			 
                                      
 						      		
@@ -3197,11 +3235,9 @@ var loc_partial_assign;
 							label : new sap.ui.commons.Label({
 								text : "Emp ID"
 							}),
-							template : new sap.ui.commons.TextView()
-									
-									,
-							sortProperty : "",
-							filterProperty : "",
+							template : new sap.ui.commons.TextView().bindProperty("text", "empid_appsone"),
+							sortProperty : "empid_appsone",
+							filterProperty : "empid_appsone",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -3209,9 +3245,9 @@ var loc_partial_assign;
 								text : "Emp Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "empname_appsone"),
+							sortProperty : "empname_appsone",
+							filterProperty : "empname_appsone",
 							width : "100px"
 						}));
 
@@ -3220,9 +3256,9 @@ var loc_partial_assign;
 								text : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "level_appsone"),
+							sortProperty : "level_appsone",
+							filterProperty : "level_appsone",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -3230,9 +3266,9 @@ var loc_partial_assign;
 								text : "Skill"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "skill_appsone"),
+							sortProperty : "skill_appsone",
+							filterProperty : "skill_appsone",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -3240,25 +3276,9 @@ var loc_partial_assign;
 								text : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
-							width : "100px"
-						}));
-						
-						
-						report_ras_tab.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Select"
-							}),
-							template :new sap.ui.commons.RadioButton({
-								text : '',
-								tooltip : 'Select',
-								groupName : 'decision_partial',
-									
-								}),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "location_appsone"),
+							sortProperty : "location_appsone",
+							filterProperty : "location_appsone",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -3266,9 +3286,9 @@ var loc_partial_assign;
 								text : "Reason"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", ""),
-							sortProperty : "",
-							filterProperty : "",
+									.bindProperty("text", "reason_appsone"),
+							sortProperty : "reason_appsone",
+							filterProperty : "reason_appsone",
 							width : "100px"
 						}));
 						
