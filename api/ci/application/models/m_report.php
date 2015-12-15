@@ -300,11 +300,22 @@ $this->setHeaders();
             break;
        
            case self::C_TYPE_SL_RELEASE:
-            $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,level,prime_skill,loc,end_date,skill_cat,reason');
+            $lv_date = date('Y-m-d');
+            $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,level,prime_skill,loc,end_date,skill_cat,reason,aging');
             $this->db->from(self::c_v_slock_expiry_display);
             $this->db->where(self::C_FNAME_LOCK_START_DATE." BETWEEN CAST('$fp_start_date' AS DATE)AND CAST('$fp_end_date' AS DATE)");
             $lt_data = $this->db->get();
             $lt_result = $lt_data->result_array();
+            $lv_count = count($lt_result);
+            for($i=0;$i<$lv_count;$i++){
+                $start_date = $lt_result[$i]['lock_start_date'];
+                $datetime1 = date_create($start_date);
+                $datetime2 = date_create($lv_date);
+                $interval = date_diff($datetime1, $datetime2);
+                $days = $interval->format('%R%a days');
+                $lt_result[$i]['aging'] = $days;
+                
+                }
             return $lt_result;
             break;
    

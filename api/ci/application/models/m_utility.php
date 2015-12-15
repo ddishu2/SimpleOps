@@ -13,6 +13,7 @@
  */
 
 require (APPPATH.'models/m_loadFiles.php');
+require_once(APPPATH.'libraries/l_slock_expiry.php');
 
 require_once(APPPATH.'models/m_Notifications.php');
 
@@ -179,6 +180,10 @@ class m_utility extends CI_model
     public function loadAmendments()
     {
       $loadAmendments = m_loadFiles::loadAmendments();  
+    }
+    
+    public function getslockexpiry(){
+        l_slock_expiry::slock_expiry_details();
     }
 }
 
