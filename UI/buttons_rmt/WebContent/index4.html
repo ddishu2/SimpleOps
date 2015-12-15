@@ -58,6 +58,14 @@ var so_id_partial_assign;
 var skill_partial_assign;
  var level_partial_name_assign;
 var loc_partial_assign;
+var emp_id_append ;
+var emp_name_append ;
+var level_append ;
+var skill_append ;
+var location_append;
+var reason_append;
+var so_from
+
 
 	sap.ui
 			.getCore()
@@ -230,6 +238,22 @@ var loc_partial_assign;
 										$("#four1").addClass("hide_div");
 										$("#four2_core").addClass("hide_div");
 										suitable_match.setNoData();
+										$("#Pro_id").val("");
+										$("#spdrop-input").val("");
+										$("#loci").val("");
+										$("#pro_id_form").val("");
+										$("#cust_name1").val("");
+										 $("#ct_drop-input").val("");
+										 $("#so_type_id1-input").val("Project");
+										 $("#so_no_form").val("")
+										
+										
+										
+										//sap.ui.getCore().byId("sfrom1").setValue(so_from);
+										
+										
+										
+										
 									} else if (oEvent.getParameter("itemId") == "item1-2") {
 										$("#second").addClass("hide_div");
 										// $('#second').load('demand_fullfill1.html');
@@ -1294,6 +1318,23 @@ var loc_partial_assign;
 
 						oCell.addContent(oTV);
 						oDetails.createRow(oCell);
+						
+						
+						
+						var sonolabel = new sap.ui.commons.Label({
+							text : 'SO NO.',
+
+						}).addStyleClass("for_text_style1");
+
+						var soidText = new sap.ui.commons.TextField({
+							id : 'so_no_form',
+							editable : true,
+							 width : '200px'
+						}).addStyleClass("for_fields_style1").addStyleClass("for_font");
+						;
+
+						sonolabel.setLabelFor(soidText);
+						oDetails.createRow(sonolabel, soidText);
 
 						var oLabel = new sap.ui.commons.Label({
 							id : 'so_date_from',
@@ -1314,7 +1355,7 @@ var loc_partial_assign;
 						sap.ui.getCore().setModel(for_from_date, "fromModel");
 
 						// create DatePickers and bind to model
-						var so_from = new sap.ui.commons.DatePicker({
+						 so_from = new sap.ui.commons.DatePicker({
 							id : 'sfrom1',
 							width : "10em",
 							value : {
@@ -1605,6 +1646,14 @@ var loc_partial_assign;
 									id : 'tag_result',
 									press : function display_third() {
 										
+										 if ($("#so_no_form").val() != "")
+										 {
+											 $("#sfrom1-input").val("");
+												 $("#sto1-input").val("");
+										 
+										 $("#so_type_id1-input").val("");
+										 
+										 }
 										$("#third").removeClass("hide_div");
 										$("#second").addClass("hide_div");
                                         
@@ -1619,11 +1668,14 @@ var loc_partial_assign;
 										
 									console.log(temp.length);
 				
-										var p_id=$("#pro_id_form").val();
-										var c_name=$("#cust_name1").val();
-											var cap=$("#ct_drop-input").val();
-									 var so_type_text=$("#so_type_id1-input").val();//so_type_id1
+										var p_id= $("#pro_id_form").val();
+										var c_name= $("#cust_name1").val();
+											var cap= $("#ct_drop-input").val();
+									 var so_type_text= $("#so_type_id1-input").val();
+									 var so_no_pass = $("#so_no_form").val()
+									 
 										 sap.ui.core.BusyIndicator.show(0);
+									
 							 			
 										
 										/*  /rmt/api/CI/index.php/deployable_emp/?so_from_date=2015-01-11&so_to_date=2015-12-31 */	
@@ -1647,6 +1699,7 @@ var loc_partial_assign;
 												        +  cap
 												        +"&so_type="
 												        +so_type_text
+												        +"&so_no="+so_no_pass
 												); 
 										 
 										 
@@ -1674,7 +1727,8 @@ var loc_partial_assign;
 												        + "&capability="
 												        +  cap
 												        +"&so_type="
-												        +so_type_text,
+												        +so_type_text
+												        +"&so_no="+so_no_pass,
 													success : function(odata) {
 														
 														sap.ui.core.BusyIndicator.hide(0);
@@ -2458,7 +2512,7 @@ var loc_partial_assign;
 									id : 'suitable_match1',
 									title : "Transaction List",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-								visibleRowCount :20,
+								visibleRowCount :30,
 									firstVisibleRow: 3,
 								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
 									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
@@ -2945,6 +2999,18 @@ var loc_partial_assign;
 								$("#four1").addClass("hide_div");
 								$("#third").removeClass("hide_div");
 								suitable_match.setNoData();
+								$("#Pro_id").val("");
+								$("#spdrop-input").val("");
+								$("#loci").val("");
+								$("#pro_id_form").val("");
+								$("#cust_name1").val("");
+								 $("#ct_drop-input").val("");
+								 $("#so_type_id1-input").val("Project");
+								 $("#so_no_form").val("")
+								
+								
+								
+								
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
@@ -2960,14 +3026,15 @@ var loc_partial_assign;
 
 						var partial_match = new sap.ui.table.Table(
 								{
+									id: 'partial_match1',
 									title : " Pending Transaction List",
 									visibleRowCount : 5,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single, 
-									rowSelectionChange: function(e) {
-									      var oIndex = e.getParameter('rowIndex');
+									rowSelectionChange: function(oEvent) {
+									      var oIndex = oEvent.getParameter('rowIndex');
 									      if (partial_match.isIndexSelected(oIndex )) {
-									        var oContext= partial_match.getContextByIndex(oIndex );
+									        var oContext= partial_match.getContextByIndex(oIndex);
 									        var path = oContext.sPath;
 									        var object = partial_match.getModel().getProperty(path);
 									        so_id_partial_assign=object.sname_partial;
@@ -3034,35 +3101,16 @@ var loc_partial_assign;
 							filterProperty : "edate_partial",
 							width : "100px"
 						}));
-						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp ID"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "empid_partial"),
-							sortProperty : "empid_partial",
-							filterProperty : "empid_partial",
-							width : "100px"
-						}));
-						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Emp Name"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "empname_partial"),
-							sortProperty : "empname_partial",
-							filterProperty : "empname_partial",
-							width : "100px"
-						}));
+						
 
 						partial_match.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Level"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "level_come_partial"),
-							sortProperty : "level_come_partial",
-							filterProperty : "level_come_partial",
+									.bindProperty("text", "level_partial"),
+							sortProperty : "level_partial",
+							filterProperty : "level_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -3070,9 +3118,9 @@ var loc_partial_assign;
 								text : "Skill"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "skill_come_partial"),
-							sortProperty : "skill_come_partial",
-							filterProperty : "skill_come_partial",
+									.bindProperty("text", "skill_partial"),
+							sortProperty : "skill_partial",
+							filterProperty : "skill_partial",
 							width : "100px"
 						}));
 						partial_match.addColumn(new sap.ui.table.Column({
@@ -3080,9 +3128,9 @@ var loc_partial_assign;
 								text : "Location"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "loc_come_partial"),
-							sortProperty : "loc_come_partial",
-							filterProperty : "loc_come_partial",
+									.bindProperty("text", "loc_partial"),
+							sortProperty : "loc_partial",
+							filterProperty : "loc_partial",
 							width : "100px"
 						}));
 					
@@ -3114,7 +3162,7 @@ var loc_partial_assign;
 								$("#fs2").removeClass("hide_div");
 								$("#fs3").addClass("hide_div");
 								$("#fs4").addClass("hide_div");
-								console.log("/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign)
+								
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign,
@@ -3123,51 +3171,77 @@ var loc_partial_assign;
  				
 
 						      		success : function(odata){
-				                     console.log(odata);
-										
-										var res = odata;
-										var completeData1_appsone = [];
-
-										jQuery
-												.each(res,
-														function(
-																i,
-																val) {
-
-															
-																var tmp1_appsone = {
-																		empid_appsone : val.emp_id,
-																		empname_appsone : val.emp_name,
-																		level_appsone : val.level,
-																		skill_appsone : val.prime_skill,
-																		location_appsone : val.loc,
-																		reason_appsone : val.reason,
-																		
-																	   
-																	   
-																};
-															
-																completeData1_appsone
-																		.push(tmp1_appsone);
-																var  Model_appsone = new sap.ui.model.json.JSONModel();
-																Model_appsone
-																		.setData({
-																			modelData : completeData1_appsone
-																		});
-																report_ras_tab
-																		.setModel(Model_appsone);
-																report_ras_tab
-																		.bindRows("/modelData");
-
-															}
-
-														); 
-						      			 
-                                     
+				             
+						      		console.log(odata);
 						      		
+									
+									var res_further = odata;
+									var completeData1_further = [];
+									
+									
+										
+
+									jQuery.each(
+													res_further,
+													function(
+															i,
+															val) {
+
+														
+															var tmp1_further = {
+																	
+																	emp_id_further :val.emp_id,
+																	emp_name_further :  val.emp_name,
+																	emp_lev_further :val.level,
+																	emp_skill_further :val.prime_skill,
+																	emp_loc_further :val.loc,
+																	emp_reason_further :val.reason,
+																	
+															
+															};
+														
+															completeData1_further
+																	.push(tmp1_further);
+															var  Model_further = new sap.ui.model.json.JSONModel();
+															Model_further
+																	.setData({
+																		modelData : completeData1_further
+																	});
+															report_ras_tab
+																	.setModel(Model_further);
+															report_ras_tab
+																	.bindRows("/modelData");
+															
+															
+														//	pass_data = Model_amend.getData().modelData;
+
+
+														}
+
+													);
+						      		
+						      	
 						      		}
-								
 								});
+							
+$(".loc_ras").each(function(index,val){
+	
+	var parent2 =  $(".loc_ras").parent().parent().parent();
+	var location_ras =parent2.find(".loc_ras").text();
+	
+	
+	              if(location_ras == loc_partial_assign)
+	            	  {
+	            	  parent2.find(".loc_ras").css('color' , 'blue')
+	            	  }
+									
+									
+									
+									});	
+								
+								
+								
+								
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
@@ -3186,9 +3260,11 @@ var loc_partial_assign;
 						var back1 = new sap.ui.commons.Button({
 							id : 'bt3',
 							press : function backtothird1() {
-
+                                  
 								$("#four2_core").addClass("hide_div");
 								$("#third").removeClass("hide_div");
+								report_ras_tab.destroyRows();
+								partial_match.destroyRows();
 							},
 
 							text : "Back",
@@ -3221,10 +3297,27 @@ var loc_partial_assign;
 								{
 									id : 'report_ras_tab1',
 									title : "AppsOne SAP",
-									visibleRowCount : 2,
+									visibleRowCount : 6,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									//navigationMode : sap.ui.table.NavigationMode.Paginator,
+									rowSelectionChange: function(e) {
+									      var oIndex = e.getParameter('rowIndex');
+									      if (report_ras_tab.isIndexSelected(oIndex )) {
+									        var oContext= report_ras_tab.getContextByIndex(oIndex );
+									        var path = oContext.sPath;
+									        var object = report_ras_tab.getModel().getProperty(path);
+									        emp_id_append = object.emp_id_further;
+									        emp_name_append = object.emp_name_further;
+									        level_append = object.emp_lev_further;
+									        skill_append = object.emp_skill_further;
+									       location_append = object.emp_loc_further;
+									        reason_append = object.emp_reason_further;   
+									        console.log(emp_id_append);
+										     console.log(emp_name_append);
+		
+									      }
+									    },
 
 								}).addStyleClass("style_for_table");
 
@@ -3235,9 +3328,9 @@ var loc_partial_assign;
 							label : new sap.ui.commons.Label({
 								text : "Emp ID"
 							}),
-							template : new sap.ui.commons.TextView().bindProperty("text", "empid_appsone"),
-							sortProperty : "empid_appsone",
-							filterProperty : "empid_appsone",
+							template : new sap.ui.commons.TextView().bindProperty("text", "emp_id_further"),
+							sortProperty : "emp_id_further",
+							filterProperty : "emp_id_further",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -3245,9 +3338,9 @@ var loc_partial_assign;
 								text : "Emp Name"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "empname_appsone"),
-							sortProperty : "empname_appsone",
-							filterProperty : "empname_appsone",
+									.bindProperty("text", "emp_name_further"),
+							sortProperty : "emp_name_further",
+							filterProperty : "emp_name_further",
 							width : "100px"
 						}));
 
@@ -3255,30 +3348,31 @@ var loc_partial_assign;
 							label : new sap.ui.commons.Label({
 								text : "Level"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "level_appsone"),
-							sortProperty : "level_appsone",
-							filterProperty : "level_appsone",
+							template : new sap.ui.commons.TextView().addStyleClass("level_ras")
+									.bindProperty("text", "emp_lev_further"),
+							sortProperty : "emp_lev_further",
+							filterProperty : "emp_lev_further",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
 								text : "Skill"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "skill_appsone"),
-							sortProperty : "skill_appsone",
-							filterProperty : "skill_appsone",
+							template : new sap.ui.commons.TextView().addStyleClass("skill_ras")
+									.bindProperty("text", "emp_skill_further"),
+							sortProperty : "emp_skill_further",
+							filterProperty : "emp_skill_further",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
+								id: 'loci_ras',
 								text : "Location"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "location_appsone"),
-							sortProperty : "location_appsone",
-							filterProperty : "location_appsone",
+							template : new sap.ui.commons.TextView({id:'loi_ras'}).addStyleClass("loc_ras")
+									.bindProperty("text", "emp_loc_further"),
+							sortProperty : "emp_loc_further",
+							filterProperty : "emp_loc_further",
 							width : "100px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
@@ -3286,9 +3380,9 @@ var loc_partial_assign;
 								text : "Reason"
 							}),
 							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "reason_appsone"),
-							sortProperty : "reason_appsone",
-							filterProperty : "reason_appsone",
+									.bindProperty("text", "emp_reason_further"),
+							sortProperty : "emp_reason_further",
+							filterProperty : "emp_reason_further",
 							width : "100px"
 						}));
 						
@@ -3298,7 +3392,11 @@ var loc_partial_assign;
 						var back_ras = new sap.ui.commons.Button({
 							id : 'bt1_ras',
 							text : "Assign",
-							
+							/* press : function()
+							{
+								
+								
+							} */
 						}).addStyleClass("for_normal_buttons_style1");
 						report_ras_tab.placeAt("fs2");
 						back_ras.placeAt("fs2")
@@ -6893,17 +6991,7 @@ var repo_to1 = new sap.ui.commons.Label({
 										filterProperty : "",
 										width : "100px"
 												}));
-												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
-													label : new sap.ui.commons.Label({
-														text : "Multiproposal ",
-														tooltip:"Multiproposal"
-													}),
-													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
-										width : "100px"
-												}));
+												
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
 														text : "Approve",
@@ -6914,6 +7002,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														id:'stat_soft_expiry_report1',
 														tooltip : "Decision",
 														items : [ 
+                                                                new sap.ui.core.ListItem("decide_sereport0", {
+	                                                                         text : "--Select--",
+	                                                                           key : "se"
+                                                                            }), 
 														         new sap.ui.core.ListItem("decide_sereport", {
 															text : "Approve",
 															key : "Ap"
