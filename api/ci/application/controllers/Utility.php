@@ -17,6 +17,8 @@ class Utility extends CI_controller
     {
         parent::__construct();
         $this->load->model('m_utility');
+//        $this->load->libraries('l_slock_expiry.php');
+        
         
     }
     public function get_username()
@@ -48,6 +50,10 @@ class Utility extends CI_controller
     {
         //echo "Hello";
         $this->m_utility->loadAmendments();
+    }
+    
+    public function getslockdetails(){
+        $this->m_utility->getslockexpiry();
     }
    
 }
