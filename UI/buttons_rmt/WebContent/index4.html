@@ -2804,18 +2804,17 @@ var so_from
 																	i,
 																	val) {
 
-																for(j=0;j<res.length;j++)
-																	{
+																
 															
 																	var tmp_popup1 = {
 																		
 																		
 																		 
-																		so_no_pop : res[j].so_pos_no,
-																		pro_id_pop : res[j].so_proj_id,
-																		pro_name_pop : res[j].so_proj_name,
-																		start_date_pop :res[j].so_start_date_new,
-																		end_date_pop : res[j].so_end_date,  
+																		so_no_pop : res.so[i].so_pos_no,
+																		pro_id_pop : res.so[i].so_proj_id,
+																		pro_name_pop : res.so[i].so_proj_name,
+																		start_date_pop :res.so[i].so_start_date_new,
+																		end_date_pop : res.so[i].so_end_date,   
 																		emp_id_pop : res.emp_id,
 																		emp_name_pop : res.emp_name,
 																	};
@@ -2824,7 +2823,7 @@ var so_from
 																
 																	completeData_popup1
 																			.push(tmp_popup1);
-																	}
+																	
 																
 																	 Model_popup = new sap.ui.model.json.JSONModel();
 																	Model_popup
@@ -5986,13 +5985,14 @@ var repo_to1 = new sap.ui.commons.Label({
 									var from_hardlock_expiry_report = $("#__picker0-input").val();
 									var to_hardlock_expiry_report = $("#__picker1-input").val();
 									
-			//[11/30/2015 3:39 PM] Kumthekar, Reshma: 
-//http://localhost/rmt/api/CI/index.php/getslockexp/?lv_from_date=2015-11-19&lv_to_date=2015-11-25
+			//12/14/2015 7:32 PM] Khisty, Vineet: 
+//Display Soft Lock release report - //http://localhost/rmt/api/ci/index.php/viewreport/?type=Soft_Lock_Release&so_from_date=2015-09-11&so_to_date=2015-09-22
+
 			      	$
 		.ajax({
 			method : "GET",
 			url : 
-				"/rmt/api/CI/index.php/getslockexp/?lv_from_date="+from_hardlock_expiry_report+"&lv_to_date="+to_hardlock_expiry_report,
+				"/rmt/api/ci/index.php/viewreport/?type=Soft_Lock_Release&so_from_date="+from_hardlock_expiry_report+"&so_to_date="+to_hardlock_expiry_report,
 
 			success : function(odata) {
 				console.log(odata);
@@ -6009,12 +6009,27 @@ var repo_to1 = new sap.ui.commons.Label({
 									
 										var tmp1_expiry = {
 												
-												
-												
+												exp_soid : val.so_id,
+												exp_proid : val.so_proj_id,
+												exp_proname : val.so_proj_name,
+												exp_sdate : val.lock_start_date,
+												exp_edate : val.lock_end_date,
+												exp_empid : val.emp_id,
+												exp_empname : val.emp_name,
+												exp_level : val.level,
+												exp_skill : val.prime_skill,
+												exp_loc : val.loc,
+												exp_proj_edate : val.end_date,
+												exp_skill_cat : val.skill_cat,
+												exp_reason :val.reason,
+												exp_age : "",
+												exp_approve :"",
+												exp_ocomments : "",
+	
 											
 										};
 									
-										completeData1
+										completeData1_expiry
 												.push(tmp1_expiry);
 										 Model_amend_expiry = new sap.ui.model.json.JSONModel();
 										Model_amend_expiry
@@ -6056,7 +6071,10 @@ var repo_to1 = new sap.ui.commons.Label({
 									}).addStyleClass("for_hide");
 					
 									}
-									tp1.open();
+								
+								
+								
+									
 									
 							
 								
@@ -6843,10 +6861,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "SO No."
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "exp_soid"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "exp_soid",
+													filterProperty : "exp_soid",
 													width : "70px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6855,10 +6873,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Project Code"
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "exp_proid"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "exp_proid",
+													filterProperty : "exp_proid",
 													width : "70px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6867,10 +6885,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Project Name"
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "exp_proname"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "exp_proname",
+													filterProperty : "exp_proname",
 													width : "70px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6879,10 +6897,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Start Date"
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "exp_sdate"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "exp_sdate",
+													filterProperty : "exp_sdate",
 													width : "70px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6891,10 +6909,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "End Date"
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "exp_edate"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "exp_edate",
+													filterProperty : "exp_edate",
 													width : "70px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6903,10 +6921,10 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Emp ID"
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", ""),
+															.bindProperty("text", "exp_empid"),
 															
-													sortProperty : "",
-													filterProperty : "",
+													sortProperty : "exp_empid",
+													filterProperty : "exp_empid",
 													width : "70px",
 												}));
 
@@ -6916,9 +6934,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Emp Name"
 													}),
 													template : new sap.ui.commons.TextView({id:''})
-															.bindProperty("text", ""),
-													sortProperty : "",
-													filterProperty : "",
+															.bindProperty("text", "exp_empname"),
+													sortProperty : "exp_empname",
+													filterProperty : "exp_empname",
 													width : "100px"
 												}));
 												
@@ -6930,9 +6948,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Level"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "exp_level"),
+										sortProperty : "exp_level",
+										filterProperty : "exp_level",
 										width : "70px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6941,9 +6959,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Skill"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "exp_skill"),
+										sortProperty : "exp_skill",
+										filterProperty : "exp_skill",
 										width : "70px"
 												}));
 
@@ -6953,9 +6971,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Location"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "exp_loc"),
+										sortProperty : "exp_loc",
+										filterProperty : "exp_loc",
 										width : "200px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6964,9 +6982,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Projected End Date"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "exp_proj_edate"),
+										sortProperty : "exp_proj_edate",
+										filterProperty : "exp_proj_edate",
 										width : "200px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6975,9 +6993,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Skill Category"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "exp_skill_cat"),
+										sortProperty : "exp_skill_cat",
+										filterProperty : "exp_skill_cat",
 										width : "100px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6986,9 +7004,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "Reason"
 													}),
 													template : new sap.ui.commons.TextView({})
-												.bindProperty("text", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("text", "exp_reason"),
+										sortProperty : "exp_reason",
+										filterProperty : "exp_reason",
 										width : "100px"
 												}));
 												
@@ -7013,9 +7031,8 @@ var repo_to1 = new sap.ui.commons.Label({
 															text : "Reject",
 															key : "Re"
 														}),]
-													}).bindProperty("value",""),
-													sortProperty : "",
-													filterProperty : "",
+													}).bindProperty("value","exp_approve"),
+													
 													width : "100px"
 												}));
 												
@@ -7025,10 +7042,19 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip :"Ops Comments"
 													}),
 													template : new sap.ui.commons.TextField({})
-												.bindProperty("value", ""),
-										sortProperty : "",
-										filterProperty : "",
+												.bindProperty("value", "exp_approve"),
+										
 										width : "70px"
+												}));
+												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
+													label : new sap.ui.commons.Label({
+														text : "Period",
+														tooltip : "Period"
+													}),
+													template : new sap.ui.commons.TextView({})
+												.bindProperty("text", "exp_age"),
+										
+										width : "100px"
 												}));
 			
 												soft_expiry_report_gen.sort(soft_expiry_report_gen.getColumns()[0]);
