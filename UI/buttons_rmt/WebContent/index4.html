@@ -3399,8 +3399,8 @@ $(".loc_ras").each(function(index,val){
 							label : new sap.ui.commons.Label({
 								text : "Ops Comments"
 							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "emp_ops_comments"),
+							template : new sap.ui.commons.TextField()
+									.bindProperty("value", "emp_ops_comments"),
 							sortProperty : "emp_ops_comments",
 							filterProperty : "emp_ops_comments",
 							width : "120px"
