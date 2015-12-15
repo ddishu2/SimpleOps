@@ -185,7 +185,7 @@ var so_from
 									width : '900px',
 									columns : 6,
 									widths : [ '180px', '180px', '180px',
-											'180px', '180px','180px' ]
+											'180px', '180px','180px','180px','180px' ]
 								});
 						var demand_fulfill = new sap.ui.commons.MenuButton({
 							id : 'df',
@@ -1266,15 +1266,21 @@ var so_from
 							tooltip : "External Hiring",
 
 						});
-					
+				         var home_page =new sap.ui.commons.Button({
+								id : 'hp',
+								text : "Home",
+								tooltip : "Home",
+
+							});
 
 						
 						cg_logo.placeAt("heading");
 					
 						welcome_text.placeAt("heading");
 						welcome_username.placeAt("heading");
-					
 						admin_act.placeAt("heading");
+						
+						
 					
 						for_head_button.createRow(demand_fulfill, report_gen,
 								amendments, Approvals, External_Hiring)
@@ -1832,7 +1838,8 @@ var so_from
 											        + "&capability="
 											        +  cap 
 											        +"&so_type="
-											        +so_type_text,
+											        +so_type_text
+											        +"&so_no=",
 												success : function(odata) {
 													
 													sap.ui.core.BusyIndicator.hide(0);
@@ -1937,7 +1944,8 @@ var so_from
 											        + "&capability="
 											        +  cap
 											        +"&so_type="
-											        +so_type_text,
+											        +so_type_text
+											        +"&so_no=",
 												success : function(odata) {
 													
 													sap.ui.core.BusyIndicator.hide(0);
@@ -2043,7 +2051,8 @@ var so_from
 														        + "&capability="
 														        +  cap 
 														        +"&so_type="
-														        +so_type_text,
+														        +so_type_text
+														        +"&so_no=",
 															success : function(odata) {
 																
 																sap.ui.core.BusyIndicator.hide(0);
@@ -2151,7 +2160,8 @@ var so_from
 																	        + "&capability="
 																	        +  cap 
 																	        +"&so_type="
-																	        +so_type_text,
+																	        +so_type_text
+																	        +"&so_no=",
 																		success : function(odata) {
 																			
 																			sap.ui.core.BusyIndicator.hide(0);
@@ -2264,7 +2274,8 @@ var so_from
 																	        + "&capability="
 																	        +  cap 
 																	        +"&so_type="
-																	        +so_type_text,
+																	        +so_type_text
+																	        +"&so_no=",
 																		success : function(odata) {
 																			
 																			sap.ui.core.BusyIndicator.hide(0);
@@ -2500,6 +2511,14 @@ var so_from
 								$("#second").removeClass("hide_div");
 								$("#third").addClass("hide_div");
 								$(" #suitable_match-table ").empty().load();
+								$("#Pro_id").val("");
+								$("#spdrop-input").val("");
+								$("#loci").val("");
+								$("#pro_id_form").val("");
+								$("#cust_name1").val("");
+								 $("#ct_drop-input").val("");
+								 $("#so_type_id1-input").val("Project");
+								 $("#so_no_form").val("")
 								
 
 							}
@@ -3195,6 +3214,7 @@ var so_from
 																	emp_skill_further :val.prime_skill,
 																	emp_loc_further :val.loc,
 																	emp_reason_further :val.reason,
+																	emp_ops_comments : ""
 																	
 															
 															};
@@ -3246,16 +3266,7 @@ $(".loc_ras").each(function(index,val){
 						}).addStyleClass("for_normal_buttons_style1");
 
 					
-						var notify1 = new sap.ui.commons.Button({
-							text : "Assign & Notify",
-							tooltip : "Assign & Notify",
-
-						}).addStyleClass("for_normal_buttons_style1");
-						var refresh1 = new sap.ui.commons.Button({
-							text : "Refresh",
-							tooltip : "Refresh",
-
-						}).addStyleClass("for_normal_buttons_style1");
+						
 						var back1 = new sap.ui.commons.Button({
 							id : 'bt3',
 							press : function backtothird1() {
@@ -3271,8 +3282,7 @@ $(".loc_ras").each(function(index,val){
 
 						}).addStyleClass("for_normal_buttons_style1");
 						further_search.placeAt("four2")
-						notify1.placeAt("four2");
-						refresh1.placeAt("four2");
+						
 						back1.placeAt("four2");
 
 						var partial_ras = new sap.ui.commons.Button({
@@ -3312,6 +3322,7 @@ $(".loc_ras").each(function(index,val){
 									        skill_append = object.emp_skill_further;
 									       location_append = object.emp_loc_further;
 									        reason_append = object.emp_reason_further;   
+									     
 									        console.log(emp_id_append);
 										     console.log(emp_name_append);
 		
@@ -3330,7 +3341,7 @@ $(".loc_ras").each(function(index,val){
 							template : new sap.ui.commons.TextView().bindProperty("text", "emp_id_further"),
 							sortProperty : "emp_id_further",
 							filterProperty : "emp_id_further",
-							width : "100px"
+							width : "50px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3351,7 +3362,7 @@ $(".loc_ras").each(function(index,val){
 									.bindProperty("text", "emp_lev_further"),
 							sortProperty : "emp_lev_further",
 							filterProperty : "emp_lev_further",
-							width : "100px"
+							width : "50px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3372,7 +3383,7 @@ $(".loc_ras").each(function(index,val){
 									.bindProperty("text", "emp_loc_further"),
 							sortProperty : "emp_loc_further",
 							filterProperty : "emp_loc_further",
-							width : "100px"
+							width : "70px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3383,6 +3394,16 @@ $(".loc_ras").each(function(index,val){
 							sortProperty : "emp_reason_further",
 							filterProperty : "emp_reason_further",
 							width : "100px"
+						}));
+						report_ras_tab.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Ops Comments"
+							}),
+							template : new sap.ui.commons.TextView()
+									.bindProperty("text", "emp_ops_comments"),
+							sortProperty : "emp_ops_comments",
+							filterProperty : "emp_ops_comments",
+							width : "120px"
 						}));
 						
 
@@ -6022,7 +6043,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												exp_proj_edate : val.end_date,
 												exp_skill_cat : val.skill_cat,
 												exp_reason :val.reason,
-												exp_age : "",
+												exp_age : val.aging,
 												exp_approve :"",
 												exp_ocomments : "",
 	
@@ -6865,7 +6886,7 @@ var repo_to1 = new sap.ui.commons.Label({
 															
 													sortProperty : "exp_soid",
 													filterProperty : "exp_soid",
-													width : "70px",
+													width : "50px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -6889,7 +6910,7 @@ var repo_to1 = new sap.ui.commons.Label({
 															
 													sortProperty : "exp_proname",
 													filterProperty : "exp_proname",
-													width : "70px",
+													width : "100px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -6901,7 +6922,7 @@ var repo_to1 = new sap.ui.commons.Label({
 															
 													sortProperty : "exp_sdate",
 													filterProperty : "exp_sdate",
-													width : "70px",
+													width : "60px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -6913,7 +6934,7 @@ var repo_to1 = new sap.ui.commons.Label({
 															
 													sortProperty : "exp_edate",
 													filterProperty : "exp_edate",
-													width : "70px",
+													width : "60px",
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -6925,7 +6946,7 @@ var repo_to1 = new sap.ui.commons.Label({
 															
 													sortProperty : "exp_empid",
 													filterProperty : "exp_empid",
-													width : "70px",
+													width : "50px",
 												}));
 
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -6951,7 +6972,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												.bindProperty("text", "exp_level"),
 										sortProperty : "exp_level",
 										filterProperty : "exp_level",
-										width : "70px"
+										width : "40px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -6974,7 +6995,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												.bindProperty("text", "exp_loc"),
 										sortProperty : "exp_loc",
 										filterProperty : "exp_loc",
-										width : "200px"
+										width : "70px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -6996,7 +7017,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												.bindProperty("text", "exp_skill_cat"),
 										sortProperty : "exp_skill_cat",
 										filterProperty : "exp_skill_cat",
-										width : "100px"
+										width : "70px"
 												}));
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
 													label : new sap.ui.commons.Label({
@@ -7007,7 +7028,7 @@ var repo_to1 = new sap.ui.commons.Label({
 												.bindProperty("text", "exp_reason"),
 										sortProperty : "exp_reason",
 										filterProperty : "exp_reason",
-										width : "100px"
+										width : "70px"
 												}));
 												
 												soft_expiry_report_gen.addColumn(new sap.ui.table.Column({
@@ -7065,6 +7086,19 @@ var repo_to1 = new sap.ui.commons.Label({
 												var report_download_soft_expiry = new sap.ui.commons.Button({
 													text: "Download Report"	,											
 													tooltip : "Download Report",
+													press: function()
+													{
+														var slx_sdate = $("#__picker0-input").val();
+														var slx_edate = $("#__picker1-input").val();
+														
+														window.open("/rmt/api/ci/index.php/displayreport/?type=Soft_Lock_Release&so_from_date="
+															+slx_sdate+"&so_to_date="+slx_edate)
+													}
+													
+												}).addStyleClass("for_normal_buttons_style1");
+												var report_submit_soft_expiry = new sap.ui.commons.Button({
+													text: "Submit"	,											
+													tooltip : "Submit",
 													
 												}).addStyleClass("for_normal_buttons_style1");
 												var report_back_soft_expiry = new sap.ui.commons.Button({
@@ -7081,8 +7115,9 @@ var repo_to1 = new sap.ui.commons.Label({
 														
 													}
 					}).addStyleClass("for_normal_buttons_style1");
-												report_download_soft_expiry.placeAt("soft_expiry_report_view")
-												report_back_soft_expiry.placeAt("soft_expiry_report_view")
+												report_download_soft_expiry.placeAt("soft_expiry_report_view");
+												report_submit_soft_expiry.placeAt("soft_expiry_report_view");
+												report_back_soft_expiry.placeAt("soft_expiry_report_view");
 												
 /////////////////////////////////////////////////////////soft Lock expiry ends here/////////////////////////////////////
 
