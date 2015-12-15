@@ -103,11 +103,11 @@
 	         {
 	        	 alert("Please Enter the Assignment End Date");
 	         }
-	         else if($(".teidval").val()=="")
+	         else if($(".teidval").val()==""  &&  $(".selection1").val()=="Approve")
 	         {
 	        	 alert("Please Enter the T & E Approver ID");
 	         }
-	         else if($(".tenameval").val()=="")
+	         else if($(".tenameval").val()=="" &&  $(".selection1").val()=="Approve")
 	         {
 	        	 alert("Please Enter the T & E Approver Name");
 	         }
@@ -132,7 +132,7 @@
 	}	
 
 	function search_tne(){
-		if($(".teidval").val()=="")
+		if($(".teidval").val()==""  )
 		{
 			alert("Please Enter T & E Approver ID")
 
