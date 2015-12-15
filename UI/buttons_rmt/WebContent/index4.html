@@ -3154,16 +3154,7 @@ var so_from
 					
 						
 						
-						partial_match.addColumn(new sap.ui.table.Column({
-							label : new sap.ui.commons.Label({
-								text : "Reason"
-							}),
-							template : new sap.ui.commons.TextView()
-									.bindProperty("text", "reason_partial"),
-							sortProperty : "reason_partial",
-							filterProperty : "reason_partial",
-							width : "100px"
-						}));
+						
 
 						
 						partial_match.bindRows("/modelData");
@@ -3341,7 +3332,7 @@ $(".loc_ras").each(function(index,val){
 							template : new sap.ui.commons.TextView().bindProperty("text", "emp_id_further"),
 							sortProperty : "emp_id_further",
 							filterProperty : "emp_id_further",
-							width : "50px"
+							width : "70px"
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -3397,6 +3388,47 @@ $(".loc_ras").each(function(index,val){
 						}));
 						report_ras_tab.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
+								text : "Multiproposal" ,
+								tooltip : "Multiproposal"
+							}),
+							template : new sap.ui.commons.ComboBox({
+								
+							//	id:'multi_decision',
+								tooltip : "Decision for MultiProposal",
+								items : [ new sap.ui.core.ListItem("decidem_ras0", {
+									text : "",
+									key : "",
+								}),
+								         new sap.ui.core.ListItem("decidem_ras2", {
+									text : "YES",
+				
+								}), new sap.ui.core.ListItem("decidem_ras1", {
+									text : "NO",
+									
+								}),  ]
+							}).bindProperty("value","multi_decide").addStyleClass("decide_multi"),
+							
+							width : "60px",
+							resizable : false,
+						    flexible : false,
+						}));
+						report_ras_tab.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : "Already Proposed" ,
+								tooltip : "Already Proposed"
+							}),
+							template : new sap.ui.commons.Link({
+								//id: 'is_proposed_show',
+								text: "View",
+								Tooltip:"View",
+						
+							}).addStyleClass("is_proposed_show"),
+							width : "70px",
+							 resizable : false,
+							    flexible : false,
+						}));
+						report_ras_tab.addColumn(new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
 								text : "Ops Comments"
 							}),
 							template : new sap.ui.commons.TextField()
@@ -3411,7 +3443,7 @@ $(".loc_ras").each(function(index,val){
 						
 						var back_ras = new sap.ui.commons.Button({
 							id : 'bt1_ras',
-							text : "Assign",
+							text : "Assign & Notify",
 							/* press : function()
 							{
 								
