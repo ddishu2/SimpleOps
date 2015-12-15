@@ -40,8 +40,8 @@ class l_methods {
 //        {
 //            $this->addFilterLineToQuery($lv_filterLine);
 //            $re_success = true;
-//        }
 //        return $re_success;
+//        }
 //    }
 //    
 //    
