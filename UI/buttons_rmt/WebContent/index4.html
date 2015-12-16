@@ -99,7 +99,7 @@ var so_from
 						popup_detail.addColumn(oColumn);
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", "pro_id_pop"),
+							template: new sap.ui.commons.TextView().bindProperty("text", "pro_id_pop"),
 							sortProperty: "pro_id_pop",
 							filterProperty: "pro_id_pop",
 							width :"100px"
@@ -107,35 +107,35 @@ var so_from
 						
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", "pro_name_pop"),
+							template: new sap.ui.commons.TextView().bindProperty("text", "pro_name_pop"),
 							sortProperty: "pro_name_pop",
 							filterProperty: "pro_name_pop",
 							width: "100px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Start Date" ,tooltip :"Start Date"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", "start_date_pop"),
+							template: new sap.ui.commons.TextView().bindProperty("text", "start_date_pop"),
 							sortProperty: "start_date_pop",
 							filterProperty: "start_date_pop",
 							width: "70px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "End Date" ,tooltip :"End Date"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", "end_date_pop"),
+							template: new sap.ui.commons.TextView().bindProperty("text", "end_date_pop"),
 							sortProperty: "end_date_pop",
 							filterProperty: "end_date_pop",
 							width: "70px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", "emp_id_pop"),
+							template: new sap.ui.commons.TextView().bindProperty("text", "emp_id_pop"),
 							sortProperty: "emp_id_pop",
 							filterProperty: "emp_id_pop",
 							width: "70px"
 						}));
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
-							template: new sap.ui.commons.TextField().bindProperty("value", "emp_name_pop"),
+							template: new sap.ui.commons.TextView().bindProperty("text", "emp_name_pop"),
 							sortProperty: "emp_name_pop",
 							filterProperty: "emp_name_pop",
 							width: "90px"
@@ -157,8 +157,92 @@ var so_from
 						oOverlayContainer.attachOpen(handler);
 						oOverlayContainer.attachOpenNew(handler);
 
-			
-						//for First Div(first)
+/////////////////////////// popup for partial one /////////////////////////////////////////////////////////////////////////////////////
+		var popup_detail_partial = new sap.ui.table.Table({
+							title: "Already Proposed Details",
+							visibleRowCount: 7,
+							firstVisibleRow: 3,
+							selectionMode: sap.ui.table.SelectionMode.Single,
+							toolbar: new sap.ui.commons.Toolbar({items: [ 
+								                                     		new sap.ui.commons.Button({text: "CLOSE", press: function() {
+								                                     			oOverlayContainer1.close();
+								                                     			
+								                                     		}}),
+								                                     		
+								                                     	]}),
+						});
+
+						//Define the columns and the control templates to be used
+						var oColumn = new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "SO NO."  ,tooltip :"SO NO"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "so_no_pop"),
+							sortProperty: "so_no_pop",
+							filterProperty: "so_no_pop",
+							width: "50px"
+						});
+					
+						popup_detail_partial.addColumn(oColumn);
+						popup_detail_partial.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "pro_id_pop"),
+							sortProperty: "pro_id_pop",
+							filterProperty: "pro_id_pop",
+							width :"100px"
+						}));
+						
+						popup_detail_partial.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "pro_name_pop"),
+							sortProperty: "pro_name_pop",
+							filterProperty: "pro_name_pop",
+							width: "100px"
+						}));
+						popup_detail_partial.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Start Date" ,tooltip :"Start Date"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "start_date_pop"),
+							sortProperty: "start_date_pop",
+							filterProperty: "start_date_pop",
+							width: "70px"
+						}));
+						popup_detail_partial.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "End Date" ,tooltip :"End Date"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "end_date_pop"),
+							sortProperty: "end_date_pop",
+							filterProperty: "end_date_pop",
+							width: "70px"
+						}));
+						popup_detail_partial.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "emp_id_pop"),
+							sortProperty: "emp_id_pop",
+							filterProperty: "emp_id_pop",
+							width: "70px"
+						}));
+						popup_detail_partial.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
+							template: new sap.ui.commons.TextView().bindProperty("text", "emp_name_pop"),
+							sortProperty: "emp_name_pop",
+							filterProperty: "emp_name_pop",
+							width: "90px"
+						}));
+
+						
+						popup_detail_partial.sort(popup_detail_partial.getColumns()[0]);	
+						
+						
+					
+						 
+						function handler(oEvent) {
+							
+						}
+                        
+						var oOverlayContainer1 = new sap.ui.ux3.OverlayContainer({ id: 'oCont_popup_partial'});
+						oOverlayContainer1.addContent(popup_detail_partial);			
+						oOverlayContainer1.attachClose(handler);
+						oOverlayContainer1.attachOpen(handler);
+						oOverlayContainer1.attachOpenNew(handler);
+
+///////////////////////////////////////for First Div(first)///////////////////////////////////////////////////////////////////////
                     	var cg_logo = new sap.ui.commons.Image({
 							id : 'cg_logo',
 							src : "images/capgemini-logo.png",
@@ -2416,7 +2500,7 @@ var so_from
 										var parent = $(this).parent().parent().parent().parent();
 										if(parent.find(".multiple_to_test").text()=="NO")
 											{
-									//	parent.find(".is_proposed_show").remove();
+										parent.find(".is_proposed_show").remove();
 										
 											};
 										
@@ -3458,7 +3542,94 @@ $(".decide_multi_report input").each(function(index,val){
 								//id: 'is_proposed_show',
 								text: "View",
 								Tooltip:"View",
-						
+								press: function(oEvent){
+
+									if(!oOverlayContainer1.isOpen()){
+										oOverlayContainer1.open();
+									}
+	var path = [];								
+	var id = oEvent.mParameters.id
+	path = id.split("-")
+	path = path[2]
+	path = path.replace(/[^0-9]+/ig,"");
+									
+									var emp_id_to_pass = sap.ui.getCore().byId('report_ras_tab1').getModel().getData().modelData[path].emp_id_further
+									
+									
+									console.log(emp_id_to_pass);
+									
+									
+									$.ajax({
+							      		  method: "GET",
+							      		  url: "/rmt/api/ci/index.php/get_where_proposed/?emp_id="+emp_id_to_pass,
+							      		
+							      				
+	
+							      		success : function(odata){
+							      			console.log(odata);
+											
+											var res_partial = odata;
+											//console.log(res.so.length);
+											var completeData_popup_partial1 = [];
+
+											jQuery
+													.each(
+															res_partial,
+															function(
+																	i,
+																	val) {
+
+																
+															
+																b = res_partial[i];
+																z = b[0];
+																	var tmp_popup_partial1 = {
+																	
+																		
+																		 
+																		so_no_pop : z.so_pos_no,
+																		pro_id_pop :z.so_proj_id,
+														   				pro_name_pop : z.so_proj_name,
+																		start_date_pop :z.so_start_date_new,
+																		end_date_pop : z.so_end_date,   
+																		emp_id_pop : res_partial.emp_id,
+																		emp_name_pop : res_partial.emp_name,
+																		
+																	};
+															
+																console.log(tmp_popup_partial1);
+																
+																	completeData_popup_partial1
+																			.push(tmp_popup_partial1);
+																
+																
+																	 Model_popup_partial = new sap.ui.model.json.JSONModel();
+																	Model_popup_partial
+																			.setData({
+																				modelData : completeData_popup_partial1
+																			});
+																	popup_detail_partial
+																			.setModel(Model_popup_partial);
+																	popup_detail_partial
+																			.bindRows("/modelData");
+																	
+																	
+																
+
+
+																}
+
+															);
+							      			 
+							      		}
+									
+									});
+									
+									
+									
+
+									
+								}
 							}).addStyleClass("is_proposed_show"),
 							width : "70px",
 							 resizable : false,
@@ -3492,7 +3663,13 @@ $(".decide_multi_report input").each(function(index,val){
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
 						      		success : function(odata){
 						      			alert("Notification Sent Successfully.")
-						      			 
+						      			 report_ras_tab.setNoData();
+						      			 var idx = sap.ui.getCore().byId("partial_match1").getSelectedIndex();
+						      	        if (idx !== -1) {
+						      	          var m = sap.ui.getCore().byId("partial_match1").getModel();
+						      	          var data = m.getData();
+						      	          var removed = data.splice(idx, 1);
+						      	          m.setData(data);
 						      		}
 								
 								});
