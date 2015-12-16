@@ -181,7 +181,7 @@ font-size: 25px;
 	margin-top: 20px !important
 }
 
-#oCont_popup
+#oCont_popup,#oCont_popup_partial
 {
 	
 	width: 1040px !important;
