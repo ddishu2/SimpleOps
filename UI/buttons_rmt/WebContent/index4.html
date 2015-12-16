@@ -3166,12 +3166,13 @@ var so_from
 							text : "Further Search",
 							tooltip : "Further Search",
 							press : function for_further_search1() {
+								
 
 								$("#fs1").removeClass("hide_div");
 								$("#fs2").removeClass("hide_div");
 								$("#fs3").addClass("hide_div");
 								$("#fs4").addClass("hide_div");
-								
+								 sap.ui.core.BusyIndicator.show(0);
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign,
@@ -3180,10 +3181,10 @@ var so_from
  				
 
 						      		success : function(odata){
-				             
+						      			sap.ui.core.BusyIndicator.hide(0);
 						      		console.log(odata);
 						      		
-									
+						      		
 									var res_further = odata;
 									var completeData1_further = [];
 									
@@ -3205,7 +3206,8 @@ var so_from
 																	emp_skill_further :val.prime_skill,
 																	emp_loc_further :val.loc,
 																	emp_reason_further :val.reason,
-																	emp_ops_comments : ""
+																	emp_ops_comments : "",
+																	emp_multi_further :"",
 																	
 															
 															};
@@ -3232,25 +3234,57 @@ var so_from
 						      		
 						      	
 						      		}
+								
 								});
 							
-$(".loc_ras").each(function(index,val){
+$(".decide_multi_report input").each(function(index,val){
 	
-	var parent2 =  $(".loc_ras").parent().parent().parent();
-	var location_ras =parent2.find(".loc_ras").text();
+	var parent2 =  $(".decide_multi_report input").parent().parent().parent().parent();
+	var location_ras =parent2.find('.loc_ras')[index].title;
 	
 	
-	              if(location_ras == loc_partial_assign)
+	
+	              if(location_ras == loc_partial_assign )
+	            	  
+	            	  
 	            	  {
-	            	  parent2.find(".loc_ras").css('color' , 'blue')
+	            	  parent2.find('.loc_ras')[index].style.backgroundColor = 'pink';
+	            	//$(location_ras).addClass("color_change_location");
 	            	  }
-									
-									
-									
 									});	
-								
-								
-								
+									
+									
+									
+ $(".decide_multi_report input").each(function(index,val){
+	
+	var parent3 =  $(".decide_multi_report input").parent().parent().parent().parent();
+	var level1_ras =parent3.find('.level_ras')[index].title;
+	
+	
+	              if(level1_ras == level_partial_name_assign)
+	            	  
+	            	  
+	            	  {
+	            	  parent3.find('.level_ras')[index].style.backgroundColor = 'blue';
+	            	//$(location_ras).addClass("color_change_location");
+	            	  }
+									});	
+									
+									
+$(".decide_multi_report input").each(function(index,val){
+	
+	var parent4 =  $(".decide_multi_report input").parent().parent().parent().parent();
+	var skill1_ras =parent4.find('.skill_ras')[index].title;
+	
+	
+	              if(skill1_ras == skill_partial_assign)
+	            	  
+	            	  
+	            	  {
+	            	  parent4.find('.skill_ras')[index].style.backgroundColor = 'yellow';
+	            	//$(location_ras).addClass("color_change_location");
+	            	  }
+									});	 
 								
 							}
 
@@ -3313,7 +3347,10 @@ $(".loc_ras").each(function(index,val){
 									        skill_append = object.emp_skill_further;
 									       location_append = object.emp_loc_further;
 									        reason_append = object.emp_reason_further;   
-									     
+									        multi_proposed_append = object.emp_multi_further;
+									        ops_comments_append = object.emp_ops_comments;
+									     console.log(multi_proposed_append);
+									     console.log(ops_comments_append);
 									        console.log(emp_id_append);
 										     console.log(emp_name_append);
 		
@@ -3395,10 +3432,7 @@ $(".loc_ras").each(function(index,val){
 								
 							//	id:'multi_decision',
 								tooltip : "Decision for MultiProposal",
-								items : [ new sap.ui.core.ListItem("decidem_ras0", {
-									text : "",
-									key : "",
-								}),
+								items : [ 
 								         new sap.ui.core.ListItem("decidem_ras2", {
 									text : "YES",
 				
@@ -3406,7 +3440,7 @@ $(".loc_ras").each(function(index,val){
 									text : "NO",
 									
 								}),  ]
-							}).bindProperty("value","multi_decide").addStyleClass("decide_multi"),
+							}).bindProperty("value","emp_multi_further").addStyleClass("decide_multi_report"),
 							
 							width : "60px",
 							resizable : false,
@@ -3444,11 +3478,22 @@ $(".loc_ras").each(function(index,val){
 						var back_ras = new sap.ui.commons.Button({
 							id : 'bt1_ras',
 							text : "Assign & Notify",
-							/* press : function()
+							 press : function()
 							{
 								
+								$.ajax({
+						      		  method: "GET",
+						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?so_id[]="+so_id_partial_assign+"&emp_id[]="+emp_id_append+"&status[]=Approve&prop_id=99999&allow_multi="+multi_proposed_append,
+						      		
+						      				
+	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
+						      		success : function(odata){
+						      			
+						      			 
+						      		}
 								
-							} */
+								});
+							}  
 						}).addStyleClass("for_normal_buttons_style1");
 						report_ras_tab.placeAt("fs2");
 						back_ras.placeAt("fs2")
