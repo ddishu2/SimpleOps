@@ -2829,11 +2829,11 @@ var so_from
 																		
 																		
 																		 
-																		so_no_pop : res.so[i].so_pos_no,
-																		pro_id_pop : res.so[i].so_proj_id,
-																		pro_name_pop : res.so[i].so_proj_name,
-																		start_date_pop :res.so[i].so_start_date_new,
-																		end_date_pop : res.so[i].so_end_date,   
+																		so_no_pop : res.so_pos_no,
+																		pro_id_pop : res.so_proj_id,
+																		pro_name_pop : res.so_proj_name,
+																		start_date_pop :res.so_start_date_new,
+																		end_date_pop : res.so_end_date,   
 																		emp_id_pop : res.emp_id,
 																		emp_name_pop : res.emp_name,
 																	};
@@ -3477,13 +3477,13 @@ $(".decide_multi_report input").each(function(index,val){
 						
 						var back_ras = new sap.ui.commons.Button({
 							id : 'bt1_ras',
-							text : "Assign & Notify",
+							text : "Propose & Notify",
 							 press : function()
 							{
 								
 								$.ajax({
 						      		  method: "GET",
-						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?so_id[]="+so_id_partial_assign+"&emp_id[]="+emp_id_append+"&status[]=Approve&prop_id=99999&allow_multi="+multi_proposed_append,
+						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?so_id[]="+so_id_partial_assign+"&emp_id[]="+emp_id_append+"&status[]=Approve&prop_id=99999&allow_multi="+multi_proposed_append+"&ops_comments[]="+ops_comments_append,
 						      		
 						      				
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
