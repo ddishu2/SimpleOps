@@ -2578,8 +2578,6 @@ var so_from
 
 														);
 
-								
-										
 							}
 						});
 							
@@ -2940,15 +2938,9 @@ var so_from
 																			.setModel(Model_popup);
 																	popup_detail
 																			.bindRows("/modelData");
-																	
-																	
-																
+		}
 
-
-																}
-
-															);
-							      			 
+															);		 
 							      		}
 									
 									});
@@ -3416,7 +3408,7 @@ $(".decide_multi_report input").each(function(index,val){
 								{
 									id : 'report_ras_tab1',
 									title : "AppsOne SAP",
-									visibleRowCount : 6,
+									visibleRowCount : 10,
 									firstVisibleRow : 3,
 									selectionMode: sap.ui.table.SelectionMode.Single,
 									//navigationMode : sap.ui.table.NavigationMode.Paginator,
@@ -3438,8 +3430,7 @@ $(".decide_multi_report input").each(function(index,val){
 									     console.log(ops_comments_append);
 									        console.log(emp_id_append);
 										     console.log(emp_name_append);
-		
-									      }
+                                    }
 									    },
 
 								}).addStyleClass("style_for_table");
@@ -3667,8 +3658,7 @@ $(".decide_multi_report input").each(function(index,val){
 						      			 var idx = sap.ui.getCore().byId("partial_match1").getSelectedIndex();
 						      	        if (idx !== -1) {
 						      	          var m = sap.ui.getCore().byId("partial_match1").getModel();
-						      	          var data = m.getData();
-						      	          var removed = data.splice(idx, 1);
+						      	          var data = m.getData(); 
 						      	          m.setData(data);
 						      	        }
 						      		}
