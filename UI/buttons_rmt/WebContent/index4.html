@@ -3348,20 +3348,7 @@ $(".decide_multi_report input").each(function(index,val){
 									});	
 									
 									
-$(".decide_multi_report input").each(function(index,val){
-	
-	var parent4 =  $(".decide_multi_report input").parent().parent().parent().parent();
-	var skill1_ras =parent4.find('.skill_ras')[index].title;
-	
-	
-	              if(skill1_ras == skill_partial_assign)
-	            	  
-	            	  
-	            	  {
-	            	  parent4.find('.skill_ras')[index].style.backgroundColor = 'yellow';
-	            	//$(location_ras).addClass("color_change_location");
-	            	  }
-									});	 
+
 								
 							}
 
@@ -3655,6 +3642,7 @@ $(".decide_multi_report input").each(function(index,val){
 						      		
 						      			alert("Notification Sent Successfully.")
 						      			 report_ras_tab.setNoData();
+						      			
 						      			 var idx = sap.ui.getCore().byId("partial_match1").getSelectedIndex();
 						      	        if (idx !== -1) {
 						      	          var m = sap.ui.getCore().byId("partial_match1").getModel();
