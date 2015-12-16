@@ -3315,10 +3315,8 @@ var so_from
 														//	pass_data = Model_amend.getData().modelData;
 
 
-														}
-
-													);
-						      		
+														});
+										
 						      	
 						      		}
 								
@@ -3654,7 +3652,7 @@ $(".decide_multi_report input").each(function(index,val){
 							text : "Propose & Notify",
 							 press : function()
 							{
-								
+								 sap.ui.core.BusyIndicator.show(0);
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/approve_soft_lock/?so_id[]="+so_id_partial_assign+"&emp_id[]="+emp_id_append+"&status[]=Approve&prop_id=99999&allow_multi="+multi_proposed_append+"&ops_comments[]="+ops_comments_append,
@@ -3662,6 +3660,8 @@ $(".decide_multi_report input").each(function(index,val){
 						      				
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
 						      		success : function(odata){
+						      			sap.ui.core.BusyIndicator.hide(0);
+						      		
 						      			alert("Notification Sent Successfully.")
 						      			 report_ras_tab.setNoData();
 						      			 var idx = sap.ui.getCore().byId("partial_match1").getSelectedIndex();
@@ -3670,6 +3670,7 @@ $(".decide_multi_report input").each(function(index,val){
 						      	          var data = m.getData();
 						      	          var removed = data.splice(idx, 1);
 						      	          m.setData(data);
+						      	        }
 						      		}
 								
 								});
