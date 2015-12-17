@@ -17,6 +17,7 @@ class Utility extends CI_controller
     {
         parent::__construct();
         $this->load->model('m_utility');
+        $this->load->model('m_lock');
 //        $this->load->libraries('l_slock_expiry.php');
         
         
@@ -53,7 +54,8 @@ class Utility extends CI_controller
     }
     
     public function getslockdetails(){
-        $this->m_utility->getslockexpiry();
-    }
+         $lv_so_id =  $this->input->get(m_lock::C_ARR_SO_ID);
+        $this->m_utility->getslockexpiry($lv_so_id);
    
+}
 }
