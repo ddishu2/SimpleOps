@@ -8,7 +8,7 @@
 
 <script id='sap-ui-bootstrap' src='resources/sap-ui-core.js'
 	data-sap-ui-theme='sap_bluecrystal'
-	data-sap-ui-libs='sap.ui.commons,sap.ui.ux3,sap.ui.table'
+	data-sap-ui-libs='sap.ui.commons,sap.ui.ux3,sap.ui.table,sap.m'
 	data-sap-ui-compatVersion='edge' data-sap-ui-preload='async'>
 	
 </script>
@@ -3651,28 +3651,22 @@ $(".decide_multi_report input").each(function(index,val){
 						      				
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
 						      		success : function(odata){
-						      			sap.ui.core.BusyIndicator.hide(0);
-						      		
-						      			alert("Notification Sent Successfully.")
-						      			var aData_set_empty =[];
-						      			 var oModel_set_empty = new sap.ui.model.json.JSONModel();
-                                             oModel_set_empty.setData({modelData: aData_set_empty});
-                                             report_ras_tab.setModel(oModel_set_empty);
-                                             report_ras_tab.bindRows("/modelData");
-                                          $("#report_ras_tab1").hide()   
- 
-		        var idx = partial_match.getSelectedIndex();
-		        if (idx !== -1) {
-		            var m = partial_match.getModel();
-		            var data = m.getData().modelData;
-		            var removed = data.splice(idx, 1);
-		           
-		            partial_match.getModel().refresh();
-		           
-		    
-		        }
-						      		
-						      		}
+						      			     var idx = partial_match.getSelectedIndex();
+						      		        if (idx !== -1) {
+						      		          var m = partial_match.getModel();
+						      		          var data = m.getData();
+						      		          var removed = data.splice(idx, 1);
+						      		          m.setData(data)
+						      		          sap.m.MessageToast.show(JSON.stringify(removed[0]) +  'is removed');
+						      		        } else {
+						      		          sap.m.MessageToast.show('Please select a row');
+						      		        }
+						      				sap.ui.core.BusyIndicator.hide(0);
+							      			alert("Notification Sent Successfully.")
+	                                        $("#report_ras_tab1").hide();
+							      			$("#bt1_ras").hide();
+						      		      
+					      		}
 								
 								});
 							}  
@@ -5574,6 +5568,45 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 				
 				widths : [ '300px','300px','300px','250px','300px']
 			});
+			
+var oRB1_locks = new sap.ui.commons.RadioButton({
+	id: 'rad_locks1',
+	text : 'Hard Lock',
+	tooltip : 'Hard Lock',
+	groupName : 'group_locks',
+
+		select : function() {
+			$("#teops_name1").hide();
+			$("#ops_comm_manual").hide();
+			$("#temulti_name1").hide();
+			$("#multi_decision_manual").hide();
+	
+		} 
+	});
+
+var oRB2_locks = new sap.ui.commons.RadioButton({
+	id: 'rad_locks2',
+	text : 'Soft Lock',
+	tooltip : 'Soft Lock',
+	groupName : 'group_locks',
+	select : function() {
+		$("#teops_name1").show();
+		$("#ops_comm_manual").show();
+		$("#temulti_name1").show();
+		$("#multi_decision_manual").show();
+
+	} 
+	//select : function() {alert('NO');} 
+	});
+
+matrix_for_manual_main.createRow(null,oRB1_locks,oRB2_locks);	
+var oDivider2__0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
+var oDivider_2 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
+var oDivider_3 = new sap.ui.commons.HorizontalDivider( {width: "106%", type: "Page", height: "Small"});
+var oDivider_4 = new sap.ui.commons.HorizontalDivider( {width: "126%", type: "Page", height: "Small"});
+
+matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,null);
+			
 				
 				var son_name = new sap.ui.commons.Label({
 					
@@ -5748,15 +5781,28 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
             matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
 		    
             var teid_name = new sap.ui.commons.Label({
-				
+				id: 'teid_name1',
 				text : "T & E Approver Emp ID"
 			}).addStyleClass("for_font_manual_label"); 
       var tename_name = new sap.ui.commons.Label({
-    	  
+    	  id: 'tename_name1',
 			text : "T & E Approver Name"
 		}).addStyleClass("for_font_manual_label");
       
-      matrix_for_manual_main.createRow(teid_name,tename_name,null,null)  ;
+      
+      var ops_comments_manual = new sap.ui.commons.Label({
+    	  id: 'teops_name1',
+			text : "Ops Comments"
+		}).addStyleClass("for_font_manual_label");
+      
+      var multi_manual = new sap.ui.commons.Label({
+    	  id: 'temulti_name1',
+			text : "Multiproposal"
+		}).addStyleClass("for_font_manual_label");
+      
+
+      
+      matrix_for_manual_main.createRow(teid_name,tename_name,ops_comments_manual,multi_manual)  ;
 
             var teapproveid=  new sap.ui.commons.ValueHelpField(
 					 {
@@ -5792,7 +5838,27 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 					});
             
             var teapprove_name = new sap.ui.commons.TextView({id: 'tename'}).addStyleClass("for_font_manual_label").addStyleClass("for_font_size_manual_textview");
-            matrix_for_manual_main.createRow(teapproveid,teapprove_name,null,null)  ;
+          var  ops_comments = new sap.ui.commons.TextArea({
+            	id : 'ops_comm_manual', 	
+            	tooltip : 'Enter Ops Comments',
+            	cols : 30,
+            	rows : 4,
+            	});
+          var multi_manual1=new sap.ui.commons.ComboBox({
+  			
+  				id:'multi_decision_manual',
+  				tooltip : "Decision for MultiProposal",
+  				items : [ 
+  				         new sap.ui.core.ListItem("decidem_man1", {
+  					text : "YES",
+
+  				}), new sap.ui.core.ListItem("decidem_man2", {
+  					text : "NO",
+  					
+  				}),  ]
+  			})
+            
+            matrix_for_manual_main.createRow(teapproveid,teapprove_name,ops_comments,multi_manual1)  ;
 		   ///5th ro
 		     var oDivider5_0up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
 		    var oDivider5up = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
@@ -5867,6 +5933,8 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 								 var tagtype_send = $("#tag_type-input").val();
 								 var teid_send = $("#teid-input").val();
 								 var tename_send= $("#tename").html();
+								 var  all_multi_send = $("#multi_decision_manual-input").val();
+								 var ops_comments_send =$("#ops_comm_manual").val();
 	
 								if(!input_manual2.match(regex))
 								        	 {
@@ -5884,7 +5952,13 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							        	 {
 							        	 alert("Please Enter Employee ID")
 							        	 }
-						         else{
+								         else if ($("#teid-input").val()=="" && $("#rad_locks1-RB").is(':checked') == true)
+								        	 {
+								        	 
+								        	 alert("Please Enter T & E Approver ID") 
+								        	 }
+								        
+						         else if($("#rad_locks1-RB").is(':checked') == true){
 								
 						        	 $.ajax({
 							      		  method: "GET",
@@ -5896,16 +5970,52 @@ var matrix_for_manual_main =new sap.ui.commons.layout.MatrixLayout({
 							      		success : function(odata){
 							      			console.log(odata);
 							      			 alert(odata);
-	                                        // window.location.reload();
+	                                       
 							      			sap.ui.getCore().byId("matrix_for_manual_main").removeAllRows();
+							      			matrix_for_manual_main.createRow(null,oRB1_locks,oRB2_locks);	
+							      			matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,null);
 							      			matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name);
 							      		  matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
 							      		 matrix_for_manual_main.createRow(oDivider2_0,oDivider2,oDivider3,oDivider4,null);
 							      		 matrix_for_manual_main.createRow(empid_name,empname_name,emplevel_name,eloc_name)  ;
 							      		matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
 							      		 matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
-							      		matrix_for_manual_main.createRow(teid_name,tename_name,null,null)  ;
-							      		  matrix_for_manual_main.createRow(teapproveid,teapprove_name,null,null)  ;
+							      		  matrix_for_manual_main.createRow(teid_name,tename_name,ops_comments_manual,multi_manual)  ;
+							      		matrix_for_manual_main.createRow(teapproveid,teapprove_name,ops_comments,multi_manual1)  ;
+							      		 matrix_for_manual_main.createRow(oDivider5_0up,oDivider5up,oDivider6up,oDivider7up,null);
+							      		matrix_for_manual_main.createRow(smprocode_name,fte_name,taggtype_name);
+							      		 matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
+							      		}
+									
+									});
+						        	 
+						        	 
+						        	 
+						         }
+						         else if($("#rad_locks2-RB").is(':checked') == true){
+										
+						        	 $.ajax({
+							      		  method: "GET",
+							      		url: "/rmt/api/ci/index.php/approve_soft_lock/?so_id[]="+to_send_sono+"&emp_id[]="+emp_to_send+
+							      				"&status[]=Approve&prop_id=99999&allow_multi="+all_multi_send+"&ops_comments[]="+ops_comments_send,
+							      		
+							      				
+	
+							      		success : function(odata){
+							      			console.log(odata);
+							      			 alert("Notification Sent Successfully");
+	                                       
+							      			sap.ui.getCore().byId("matrix_for_manual_main").removeAllRows();
+							      			matrix_for_manual_main.createRow(null,oRB1_locks,oRB2_locks);	
+							      			matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,null);
+							      			matrix_for_manual_main.createRow(son_name,pid_name,pname_name,sdate_name,edate_name);
+							      		  matrix_for_manual_main.createRow(son,proid_man,proname_man,sdate_man,edate_man)  ;
+							      		 matrix_for_manual_main.createRow(oDivider2_0,oDivider2,oDivider3,oDivider4,null);
+							      		 matrix_for_manual_main.createRow(empid_name,empname_name,emplevel_name,eloc_name)  ;
+							      		matrix_for_manual_main.createRow(empid_man,emp_name,level_man,loci_man);
+							      		 matrix_for_manual_main.createRow(oDivider5_0,oDivider5,oDivider6,oDivider7,null);
+							      		  matrix_for_manual_main.createRow(teid_name,tename_name,ops_comments_manual,multi_manual)  ;
+							      		matrix_for_manual_main.createRow(teapproveid,teapprove_name,ops_comments,multi_manual1)  ;
 							      		 matrix_for_manual_main.createRow(oDivider5_0up,oDivider5up,oDivider6up,oDivider7up,null);
 							      		matrix_for_manual_main.createRow(smprocode_name,fte_name,taggtype_name);
 							      		 matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
