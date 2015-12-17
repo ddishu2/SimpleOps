@@ -19,6 +19,7 @@ class m_open_so extends CI_model
     const C_TO_DATE = 'so_to_date';
     const C_PROJ_BU = 'so_proj_bu';
     const C_TYPE = 'so_type';
+    const C_SO_POS_NO = 'so_no';
     
     protected $v_so_sdate;
     protected $v_so_endate;
@@ -29,6 +30,7 @@ class m_open_so extends CI_model
     protected $v_project_id;
     protected $v_customer_name;
     protected $v_so_type;
+    protected $v_so_pos_no;
     
     
     private $arr_open_sos = [];
@@ -59,7 +61,7 @@ class m_open_so extends CI_model
                 $this->load->database();
 //                echo "inside INdex";
         }
-    public function set_attributes($fp_so_start_date,$fp_so_end_date,$fp_project_name,$fp_project_bu,$fp_arr_locs,$fp_capability,$fp_proj_id,$fp_cust_name,$fp_type)
+    public function set_attributes($fp_so_start_date,$fp_so_end_date,$fp_project_name,$fp_project_bu,$fp_arr_locs,$fp_capability,$fp_proj_id,$fp_cust_name,$fp_type,$fp_so_pos_no)
     {
        $this->v_so_sdate = $fp_so_start_date;
        $this->v_so_endate = $fp_so_end_date;  
@@ -70,6 +72,7 @@ class m_open_so extends CI_model
        $this->v_project_id= $fp_proj_id;
        $this->v_customer_name = $fp_cust_name ;
        $this->v_so_type = $fp_type;
+       $this->v_so_pos_no = $fp_so_pos_no;
     }
     public function get()
     { 
@@ -82,8 +85,16 @@ class m_open_so extends CI_model
          $larr_open_sos = [];
 //        $lv_query = parent::getQuery();
 //        $larr_sos = cl_DB::getResultsFromQuery($lv_query);
-         $this->db->where(self::C_FNAME_START_DATE." BETWEEN CAST('$this->v_so_sdate' AS DATE)AND CAST('$this->v_so_endate' AS DATE)");
+         //$this->db->where(self::C_FNAME_START_DATE." BETWEEN CAST('$this->v_so_sdate' AS DATE)AND CAST('$this->v_so_endate' AS DATE)");
          
+         if($this->isFilterset($this->v_so_pos_no))
+         {
+          //$this->db->where(self::C_FNAME_PROJ_NAME,$this->v_project_name);
+          $this->db->like(self::C_FNAME_SO_POS_NO, $this->v_so_pos_no, 'both'); 
+         } 
+         else{
+            
+         $this->db->where(self::C_FNAME_START_DATE." BETWEEN CAST('$this->v_so_sdate' AS DATE)AND CAST('$this->v_so_endate' AS DATE)");
          if($this->isFilterset($this->v_project_name))
          {
           //$this->db->where(self::C_FNAME_PROJ_NAME,$this->v_project_name);
@@ -113,6 +124,7 @@ class m_open_so extends CI_model
           {
               $this->db->where(self::C_FNAME_PROJ_TYPE,$this->v_so_type);
           }
+         }
          $query = $this->db->get(self::C_TABNAME);
                 //return $query->result_array();
          

@@ -41,7 +41,8 @@ class Proposals extends CI_Controller
        $fp_v_proj_id    =   $this->input->get(m_open_so::C_PROJ_ID);
        $fp_v_capability =   $this->input->get(m_open_so::C_CAPABILITY);
        $fp_v_cust_name  =   $this->input->get(m_open_so::C_CUST_NAME);
-       $fp_type = $this->input->get(m_open_so::C_TYPE);        
+       $fp_type = $this->input->get(m_open_so::C_TYPE);   
+       $fp_so_pos_no = $this->input->get(m_open_so::C_SO_POS_NO);
 //       echo 'start date' .$so_from_date;
 //       echo 'end date'.$so_to_date;
 //        echo "Project name  ".$lv_so_projname."</br>";
@@ -54,7 +55,7 @@ class Proposals extends CI_Controller
       
        $filtered_so_locs = array_filter($larr_so_locs); 
 //        $lt_deployable_emps = [];
-        $this->m_open_so->set_attributes($so_from_date, $so_to_date,$lv_so_projname,$lv_so_proj_bu,$filtered_so_locs,$fp_v_capability,$fp_v_proj_id,$fp_v_cust_name,$fp_type);
+        $this->m_open_so->set_attributes($so_from_date, $so_to_date,$lv_so_projname,$lv_so_proj_bu,$filtered_so_locs,$fp_v_capability,$fp_v_proj_id,$fp_v_cust_name,$fp_type,$fp_so_pos_no);
         //$this->m_BuEmployees->set_attributes();
         $this->m_proposals->set_attributes($this->m_open_so,$this->m_BuEmployees);
         

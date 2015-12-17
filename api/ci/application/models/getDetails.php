@@ -17,7 +17,7 @@ private
     const c_so_fulfill_stat = 'm_so_fulfill_stat';
     const c_so_pos_no      = 'so_pos_no';
     const C_SO_MASTER  = 'v_fulfill_stat_open';
-    const C_EMP_MASTER = 'm_emp_ras';
+    const C_EMP_MASTER = 'm_emp_ras_copy';
     const C_EMP_ID = 'emp_id';
     const C_SO_POS_NO = 'so_pos_no';
     const C_FNAME_EMPNAME = 'emp_name';
@@ -59,6 +59,7 @@ private
 //      $lt_result = cl_DB::getResultsFromQuery($sql); 
         $query = $ci_ins->db->get_where(self::C_EMP_MASTER , array(self::C_EMP_ID => $fp_v_emp_id));
         $lt_result = $query->result_array();
+//        echo $ci_ins->db->last_query();
         return $lt_result;
     }
    

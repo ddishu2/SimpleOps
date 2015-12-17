@@ -96,7 +96,7 @@ class m_utility extends CI_model
                             $this->gv_sup_id.','.
                             $this->gv_sup_name.','.
                             $this->gv_pm_name.
-                            ' FROM '. $this->gv_tab_name.
+                            ' FROM '.$this->gv_tab_name.
                             " WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' and "
                             .$this->gv_cust_name." NOT IN " .$lt_invalid_project." ORDER BY ". $this->gv_proj_code;                  
@@ -127,11 +127,14 @@ class m_utility extends CI_model
                       array_push($lt_sup_details, $lwa_values_proj);
                       $io_mail = new m_Notifications();                      
                       $lv_mail = $io_mail->sendhardlockreleasenotification($lt_sup_details);                     
-                      $lt_sup_details = [];                        
+                      $lt_sup_details = [];
+                      $lwa_values_proj = [];
                     }                    
                     else
-                    {array_push($lt_sup_details, $lwa_values);}
+                    {array_push($lt_sup_details, $lwa_values_proj);
+                    }
                     $lt_proj_details = [];
+                    $lwa_values      = [];
                     }                                    
 // If its not the last record then we'll just collect the current record and 
 // wait for the last record to come                     

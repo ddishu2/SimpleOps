@@ -83,6 +83,7 @@ class m_lock extends ci_model
     const C_HLOCK_TNE_ID = 'tne_id';
     const C_HLOCK_TNE_NAME = 'tne_name';
     const c_v_slock_expiry_download = 'v_slock_expiry_download';
+    const C_FNAME_OPS_COMMENTS = 'ops_comments';
     
     private static $arr_SO_that_rejectedemps = [];
 //    private static $arr_result = [];
@@ -128,7 +129,7 @@ class m_lock extends ci_model
         return $lv_max_trans_id;
     }
     
-    public function setSoftLock($lv_trans_id, $fp_v_so_id, $fp_v_emp_id, $lv_prop_id, $fp_v_requestor_id,$fp_v_Multi,$fp_v_updated_by,$lv_updated_on) {
+    public function setSoftLock($lv_trans_id, $fp_v_so_id, $fp_v_emp_id, $lv_prop_id, $fp_v_requestor_id,$fp_v_Multi,$fp_v_updated_by,$lv_updated_on,$lv_ops_comments) {
 
         //To Retrieve lock Start & end date  
         $lv_start_date = date('y-m-d');
@@ -153,7 +154,8 @@ class m_lock extends ci_model
         self::C_FNAME_LOCK_END_DATE =>$lv_end_date,
         self::C_FNAME_ALLOW_MULTI =>$fp_v_Multi,
         self::C_FNAME_UPDATED_BY =>$fp_v_updated_by,    
-        self::C_FNAME_UPDATED_ON  => $lv_updated_on        
+        self::C_FNAME_UPDATED_ON  => $lv_updated_on,
+        self::C_FNAME_OPS_COMMENTS =>$lv_ops_comments
         );
 
       $res=$this->db->insert(self::C_TABNAME, $data);
@@ -194,7 +196,7 @@ class m_lock extends ci_model
     }
     
 
-    public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id,$fp_arr_Multi) {
+    public function ApproveSoftLock($fp_arr_so, $fp_arr_emp, $fp_arr_stat, $lv_prop_id,$fp_arr_Multi,$lv_ops_comments) {
        
 //        $lv_obj = new cl_DB();
 //        $lv_db = $lv_obj->getDBHandle();
@@ -233,7 +235,7 @@ class m_lock extends ci_model
                     {
                         $lv_multi = '';
                     }
-                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$lv_multi,$lv_updated_by,$lv_updated_on);
+                    $lv_app_result = self::setSoftlock($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], $lv_prop_id, $lv_request_id,$lv_multi,$lv_updated_by,$lv_updated_on,$lv_ops_comments[$i]);
                     
                     $lv_history = self::setLockHistory($lv_trans_id, $fp_arr_so[$i], $fp_arr_emp[$i], self::C_STATUS_SOFT_LOCK, $lv_prop_id, $lv_request_id);
                         
@@ -261,7 +263,7 @@ class m_lock extends ci_model
                     
                     $lv_link = self::getLink($fp_arr_so[$i], $fp_arr_emp[$i],$lv_trans_id);
                    
-                   $this->m_Notifications->sendSoftLockNotification($fp_arr_so[$i],$lv_link,$fp_arr_emp[$i],$lv_trans_id);                  
+                   $this->m_Notifications->sendSoftLockNotification($fp_arr_so[$i],$lv_link,$fp_arr_emp[$i],$lv_trans_id,$lv_ops_comments[$i]);                  
                     }
                     else if($this->db->trans_status() === FALSE)
                     {
@@ -342,7 +344,7 @@ class m_lock extends ci_model
 //             return $lv_result;
              
              $data = array(
-            self::C_FNAME_REJ_COUNT  =>  rej_count+1         
+            self::C_FNAME_REJ_COUNT  => 'rej_count'+1         
              );
 
                $this->db->where(self::C_SO_NO, $lv_so_no);
@@ -470,12 +472,13 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
                 /*
                  * logic to send mail to owners of other So's
                  */
+                $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'],$value['emp_id']);
                 }
                 
                 
                     else if($key !='emp_id'&& $key !='emp_name')
                 {
-                   echo $key. "       " .$value[0][self::C_TRANS_ID]. "</br>";
+                   //echo $key. "       " .$value[0][self::C_TRANS_ID]. "</br>";
                    $data = array
                        (                       
                    self::C_FNAME_STATUS => self::C_STATUS_SOFT_LOCK_EXPIRED_DUE_TO_OTHERS_APPROVAL 
@@ -487,6 +490,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
                 /*
                  * logic to send mail to owners of other So's
                  */
+               $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'], $value['emp_id']);
                 }
                 
             }
@@ -585,7 +589,7 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             $lv_so_id = $value[self::C_ARR_SO_ID];
             $lv_emp_id = $value[self::C_ARR_EMP_ID];
                $lv_status = $value[self::C_ARR_STAT];
-            $lv_prop_id = $value[self::C_PROP_ID];
+            $lv_prop_id = $value[self::C_FNAME_PROP_ID];
             $lv_req_id = $value[self::C_REQUESTOR_ID];
 //            $lv_start_date = $value['lock_start_date'];
 //            $lv_end_date = $value['lock_end_date'];
