@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-<title>RMU</title>
+<title>Simple Ops</title>
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
@@ -1372,12 +1372,12 @@ var global_one
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
-							text : 'Welcome To RMU',
+							text : 'Welcome To',
 						})
 
 						var oImage = new sap.ui.commons.Image({
 							//id:'welcome1',
-							src : "images/Picture1.png"
+							src : "images/simple Ops Logo-HD - Copy.png"
 						});
 						oTV.placeAt("first");
 						oImage.placeAt("first");
@@ -6342,6 +6342,68 @@ var repo_to1 = new sap.ui.commons.Label({
 									}
 								else if ($("#soft_check-RB").is(":checked") == true)
 									{
+									var from_soft_report = $("#__picker0-input").val();
+									var to_soft_report = $("#__picker1-input").val();
+							      	$
+									.ajax({
+										method : "GET",
+										url : 
+											"/rmt/api/ci/index.php/viewreport/?type=Soft_Lock_Release&so_from_date="+from_soft_report+"&so_to_date="+to_soft_report,
+
+										success : function(odata) {
+											console.log(odata);
+											var res_soft = odata;
+											var completeData1_soft = [];
+
+											jQuery
+													.each(
+															res_soft,
+															function(
+																	i,
+																	val) {
+
+																
+																	var tmp1_soft = {
+																			
+																			soft_soid : val.so_id,
+																			soft_proid : val.so_proj_id,
+																			soft_proname : val.so_proj_name,
+																			soft_sdate : val.lock_start_date,
+																			soft_edate : val.lock_end_date,
+																			soft_empid : val.emp_id,
+																			soft_empname : val.emp_name,
+																			soft_level : val.level,
+																			soft_skill : val.prime_skill,
+																			soft_loc : val.loc,
+																			soft_proj_edate : val.end_date,
+																			soft_skill_cat : val.skill_cat,
+																			soft_reason :val.reason,
+																			
+								
+																		
+																	};
+																
+																	completeData1_soft
+																			.push(tmp1_soft);
+																	 Model_amend_soft = new sap.ui.model.json.JSONModel();
+																	Model_amend_soft
+																			.setData({
+																				modelData : completeData1_soft
+																			});
+																	soft_lock_report_gen
+																			.setModel(Model_amend_soft);
+																	soft_lock_report_gen
+																			.bindRows("/modelData");
+								
+																}
+
+															);
+
+									
+											
+								}
+							});
+									
 									
 									$("#report_first").addClass("hide_div");
 									$("#report_first_open").addClass("hide_div");
@@ -7044,9 +7106,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip :"SO No"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_soid"),
+						sortProperty : "soft_soid",
+						filterProperty : "soft_soid",
 						width : "100px",
 					
 					}));
@@ -7057,9 +7119,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Project Code"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_proid"),
+						sortProperty : "soft_proid",
+						filterProperty : "soft_proid",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7068,9 +7130,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Project Name"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_proname"),
+						sortProperty : "soft_proname",
+						filterProperty : "soft_proname",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7079,9 +7141,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Start Date"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_sdate"),
+						sortProperty : "soft_sdate",
+						filterProperty : "soft_sdate",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7090,9 +7152,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip :"End Date"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_edate"),
+						sortProperty : "soft_edate",
+						filterProperty : "soft_edate",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7101,10 +7163,10 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip :"Emp ID"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", "")
+								.bindProperty("text", "soft_empid")
 								,
-						sortProperty : "",
-						filterProperty : "",
+						sortProperty : "soft_empid",
+						filterProperty : "soft_empid",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7113,9 +7175,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip :"Emp Name"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_empname"),
+						sortProperty : "soft_empname",
+						filterProperty : "soft_empname",
 						width : "100px"
 					}));
 
@@ -7125,9 +7187,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Level"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_level"),
+						sortProperty : "soft_level",
+						filterProperty : "soft_level",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7136,9 +7198,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip :"Skill"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_skill"),
+						sortProperty : "soft_skill",
+						filterProperty : "soft_skill",
 						width : "100px"
 					}));
 					soft_lock_report_gen.addColumn(new sap.ui.table.Column({
@@ -7147,9 +7209,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : "Location"
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_loc"),
+						sortProperty : "soft_loc",
+						filterProperty : "soft_loc",
 						width : "100px"
 					}));
 					
@@ -7162,9 +7224,9 @@ var repo_to1 = new sap.ui.commons.Label({
 						template : new sap.ui.commons.TextView({
 							//id:'p_s_id'
 						})
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_proj_edate"),
+						sortProperty : "soft_proj_edate",
+						filterProperty : "soft_proj_edate",
 						width : "100px",
 						/* visible:false, */
 						
@@ -7177,9 +7239,9 @@ var repo_to1 = new sap.ui.commons.Label({
 						template : new sap.ui.commons.TextView({
 							
 						})
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_skill_cat"),
+						sortProperty : "soft_skill_cat",
+						filterProperty : "soft_skill_cat",
 						width : "100px",
 						
 						
@@ -7192,9 +7254,9 @@ var repo_to1 = new sap.ui.commons.Label({
 							
 						}),
 						template : new sap.ui.commons.TextView()
-								.bindProperty("text", ""),
-						sortProperty : "",
-						filterProperty : "",
+								.bindProperty("text", "soft_reason"),
+						sortProperty : "soft_reason",
+						filterProperty : "soft_reason",
 						width : "100px"
 					}));
 					
@@ -7209,6 +7271,14 @@ var repo_to1 = new sap.ui.commons.Label({
 												var report_download_soft = new sap.ui.commons.Button({
 													text: "Download Report"	,											
 													tooltip : "Download Report",
+													press: function()
+													{
+														var slks_sdate = $("#__picker0-input").val();
+														var sllks_edate = $("#__picker1-input").val();
+														
+														window.open("/rmt/api/ci/index.php/displayreport/?type=Soft_Lock&so_from_date="
+															+slks_sdate+"&so_to_date="+sllks_edate)
+													}
 													
 												}).addStyleClass("for_normal_buttons_style1");
 												
