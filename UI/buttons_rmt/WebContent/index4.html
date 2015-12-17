@@ -3657,9 +3657,7 @@ $(".decide_multi_report input").each(function(index,val){
 						      		          var data =m.getData().modelData;
 						      		          var removed = data.splice(idx, 1);
 						      		          m.setData(data)
-						      		          sap.m.MessageToast.show(JSON.stringify(removed[0]) +  'is removed');
-						      		        } else {
-						      		          sap.m.MessageToast.show('Please select a row');
+						      		           partial_match.getModel().refresh();
 						      		        }
 						      				sap.ui.core.BusyIndicator.hide(0);
 							      			alert("Notification Sent Successfully.")
