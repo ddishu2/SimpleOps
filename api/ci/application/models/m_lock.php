@@ -468,11 +468,13 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
                    
                 $this->db->where(self::C_TRANS_ID,$value[0][self::C_TRANS_ID]);
                 $this->db->update(self::C_TABNAME,$data);
-                //echo $this->db->last_query();
+//                echo $this->db->last_query();
                 /*
                  * logic to send mail to owners of other So's
                  */
-                $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'],$value['emp_id']);
+//                echo "start".$value[0]['so_pos_no']."                  ".$value['emp_id']."</BR>";
+                $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'],$lv_alredy_proposed['emp_id']);
+ //               $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'],075905);
                 }
                 
                 
@@ -490,7 +492,8 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
                 /*
                  * logic to send mail to owners of other So's
                  */
-               $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'], $value['emp_id']);
+//                 echo "start".$value[0]['so_pos_no']."                  ".$value['emp_id']."</BR>";
+               $this->m_Notifications->sendAlreadyTaggedNotification($value[0]['so_pos_no'], $lv_alredy_proposed['emp_id']);
                 }
                 
             }
