@@ -2613,7 +2613,7 @@ var global_one
 									id : 'suitable_match1',
 									title : "Transaction List",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-								visibleRowCount :30,
+								visibleRowCount :40,
 									firstVisibleRow: 3,
 								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
 									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
@@ -3012,7 +3012,7 @@ var global_one
 						suitable_match.placeAt("four1");
 						var notify = new sap.ui.commons.Button({
 							id: 'noti_suitable',
-							text : "Submit & Send Notification",
+							text : "Propose & Notify",
 							tooltip : "notify",
 							press: function(check){
 								if($(".approveDropdown input").val() == "Approve" || $(".approveDropdown input").val() == "Reject" )
@@ -3428,10 +3428,7 @@ $(".decide_multi_report input").each(function(index,val){
 									        reason_append = object.emp_reason_further;   
 									        multi_proposed_append = object.emp_multi_further;
 									        ops_comments_append = object.emp_ops_comments;
-									     console.log(multi_proposed_append);
-									     console.log(ops_comments_append);
-									        console.log(emp_id_append);
-										     console.log(emp_name_append);
+									     
                                     }
 									    },
 
@@ -3661,7 +3658,7 @@ $(".decide_multi_report input").each(function(index,val){
 						      		          m.setData(data)
 						      		           partial_match.getModel().refresh();
 						      		        } */
-						      		        $('#partial_match1-rows-row'+global_one).css('display','none');
+						      		        $('#partial_match1-rows-row'+global_one).hide();
 						      				sap.ui.core.BusyIndicator.hide(0);
 							      			alert("Notification Sent Successfully.")
 	                                        $("#report_ras_tab1").hide();
