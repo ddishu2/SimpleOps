@@ -477,12 +477,14 @@ class m_Notifications extends CI_model
                 {
 
 // Get PM and EM details.            
-                $this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);
+                if(array_key_exists('pm_id',$this->lt_so_details))
+                {$this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);}
                 if (array_key_exists(0, $this->lt_pm_details)) 
                 {
                 $this->lv_pm_email = $this->lt_pm_details[0]['email'];
                 }
-                $this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);
+                if(array_key_exists('em_id',$this->lt_so_details))
+                {$this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);}
                 if (array_key_exists(0, $this->lt_em_details)) 
                 {
                 $this->lv_em_email = $this->lt_em_details[0]['email'];
@@ -518,7 +520,7 @@ class m_Notifications extends CI_model
                 {
                 $this->lv_empname = $this->lt_emp_details[0]['emp_name'];
                 $this->lv_empid = $this->lt_emp_details[0]['emp_id'];
-                $this->lv_pri_skill = $this->lt_emp_details[0]['skill1_l4'];
+                $this->lv_pri_skill = $this->lt_emp_details[0]['prime_skill'];
                 $this->lv_level = $this->lt_emp_details[0]['level'];
                 $this->lv_BU = $this->lt_emp_details[0]['idp'];
                 $this->lv_sub_bu = $this->lt_emp_details[0]['sub_bu'];
@@ -548,7 +550,7 @@ class m_Notifications extends CI_model
                 {                
                 $this->lv_empname = $this->lt_emp_details[0]['emp_name'];
                 $this->lv_empid = $this->lt_emp_details[0]['emp_id'];
-                $this->lv_pri_skill = $this->lt_emp_details[0]['skill1_l4'];
+                $this->lv_pri_skill = $this->lt_emp_details[0]['prime_skill'];
                 $this->lv_level = $this->lt_emp_details[0]['level'];
                 $this->lv_BU = $this->lt_emp_details[0]['idp'];
                 $this->lv_sub_bu = $this->lt_emp_details[0]['sub_bu'];
@@ -646,7 +648,7 @@ class m_Notifications extends CI_model
                 {
                 $this->lv_empname = $this->lt_emp_details[0]['emp_name'];
                 $this->lv_empid = $this->lt_emp_details[0]['emp_id'];
-                $this->lv_pri_skill = $this->lt_emp_details[0]['skill1_l4'];
+                $this->lv_pri_skill = $this->lt_emp_details[0]['prime_skill'];
                 $this->lv_level = $this->lt_emp_details[0]['level'];
                 $this->lv_BU = $this->lt_emp_details[0]['idp'];
                 $this->lv_sub_bu = $this->lt_emp_details[0]['sub_bu'];
