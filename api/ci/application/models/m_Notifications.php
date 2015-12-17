@@ -801,6 +801,17 @@ class m_Notifications extends CI_model
         }
     }
 
+// Function to write the log
+    private function writelog($i_mode)
+    {
+    $lv_logfile = "D:\\xampp\\htdocs\\rmt\\email_log\\Email_log.csv";
+    $io_handle  = fopen($lv_logfile, 'a') or die("can't open file");
+    $lv_tstmp = date('Y-m-d H:i:s');
+    $lv_content = "Email Log for,$lv_tstmp,$i_mode,$this->lv_recievers".PHP_EOL;
+    fwrite($io_handle, $lv_content);
+    fclose($io_handle);   
+    }    
+    
 // Function to send notifications per SO number.
     private function sendnotification(
     $i_so_number, $i_mode, $i_link = '', $i_transid, $i_emp_id, $i_comments = '') {
@@ -852,9 +863,13 @@ class m_Notifications extends CI_model
 // Get recievers for email.                
         self::get_recievers();      
         $this->lv_subject = 'TEST '.$this->lv_subject;
+        
+// Log the receivers         
+        $this->writelog($i_mode);
+        
 //      $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);              \
         $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
-        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;sumit.naik@capgemini.com;aalekh.bhatt@capgemini.com;venkat.karipalli@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                   
+        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;sumit.naik@capgemini.com;aalekh.bhatt@capgemini.com;venkat.karipalli@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                          
         if ($lv_mail) 
         { return true; } 
         else 
