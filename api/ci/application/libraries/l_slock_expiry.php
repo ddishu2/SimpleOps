@@ -27,18 +27,21 @@ const c_star = '*';
 const c_status = 'status';
 const C_trans_lock_history = 'trans_locks_history';
 
- public static function slock_expiry_details()
+ public static function slock_expiry_details($fp_so_id)
 {
-$lv_date = date("Y-m-d");
+
 $status = self::C_softlock_status;
 
 $ci_ins =& get_instance();
+$lv_count = count($fp_so_id);
+for($i = 0 ;$i<$lv_count; $i++ ){   
 $ci_ins->db->select('*');
 $ci_ins->db->from(self::c_trans_locks);
-$ci_ins->db->where(self::c_status, $status);
-$ci_ins->db->where('lock_end_date <', $lv_date);
-$query = $ci_ins->db->get();       
+$ci_ins->db->where(self::c_status, $status); 
+$query = $ci_ins->db->get(); 
 $lt_data = $query->result_array();
+print_r($lt_data);
+}
 
 foreach ($lt_data as $key => $value) {
 
@@ -84,8 +87,8 @@ foreach ($lt_data as $key => $value) {
        $lo_mail_noti = new m_Notifications();
                     //$lo_mail_noti->sendnotification($lv_so_id, $i_mode,$lv_link ,$lv_trans_id,$lv_emp_id);
                
-       $lo_mail_noti->sendSoftLockReleaseNotification($lv_so_id, $lv_emp_id, $lv_trans_id);
-                    
+      echo($lo_mail_noti->sendSoftLockReleaseNotification($lv_so_id, $lv_emp_id, $lv_trans_id));
+                  
                     
                 }
 } 
