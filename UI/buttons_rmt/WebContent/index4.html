@@ -64,8 +64,8 @@ var level_append ;
 var skill_append ;
 var location_append;
 var reason_append;
-var so_from
-
+var so_from;
+var global_one
 
 	sap.ui
 			.getCore()
@@ -3130,6 +3130,7 @@ var so_from
 									selectionMode: sap.ui.table.SelectionMode.Single, 
 									rowSelectionChange: function(oEvent) {
 									      var oIndex = oEvent.getParameter('rowIndex');
+									      global_one =oIndex;
 									      if (partial_match.isIndexSelected(oIndex )) {
 									        var oContext= partial_match.getContextByIndex(oIndex);
 									        var path = oContext.sPath;
@@ -3651,14 +3652,15 @@ $(".decide_multi_report input").each(function(index,val){
 						      				
 	//localhost/rmt/api/ci/index.php/approve_soft_lock/?so_id[]=0000291209&emp_id[]=00014761&status[]=Approve&prop_id=101&allow_multi=X
 						      		success : function(odata){
-						      			     var idx = partial_match.getSelectedIndex();
-						      		        if (idx !== -1) {
+						      			    // var idx = partial_match.getSelectedIndex();
+						      		      /*   if (idx !== -1) {
 						      		          var m = partial_match.getModel();
 						      		          var data =m.getData().modelData;
 						      		          var removed = data.splice(idx, 1);
 						      		          m.setData(data)
 						      		           partial_match.getModel().refresh();
-						      		        }
+						      		        } */
+						      		        $('#partial_match1-rows-row'+global_one).css('display','none');
 						      				sap.ui.core.BusyIndicator.hide(0);
 							      			alert("Notification Sent Successfully.")
 	                                        $("#report_ras_tab1").hide();
