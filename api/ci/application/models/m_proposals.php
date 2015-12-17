@@ -757,6 +757,72 @@ public function createProposal( $fp_so_id , $fp_emp_id )
             
             
         }
+        /* consider multiprpoesde emplooyee for partial*/
+                foreach ($this->it_multi_prop_allowed_emps as $lwa_deployable_emp) {
+
+
+            $lv_emp_id = $lwa_deployable_emp[self::C_FNAME_EMP_ID];
+
+             $lv_emp_prime_skill =($lwa_deployable_emp[self::c_emp_skill_fname]);
+           // $lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
+            // $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
+            $lv_emp_level = strtolower($lwa_deployable_emp[self::c_emp_level_fname]);
+            $lv_emp_loc = strtolower($lwa_deployable_emp[self::c_emp_loc_fname]);
+
+            
+//            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id))
+//            )
+//                            {
+//                $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
+//                $re_wa_emp_for_so[] = $lwa_deployable_emp;
+////                    echo 'Match'.$fp_v_so_id.'--->'.$lwa_deployable_emp['emp_id'].'======'.json_encode($re_wa_emp_for_so ).PHP_EOL;
+//                break;
+//            }
+            
+            $lv_flag_location = $this->isLocationMatching($fp_v_so_loc,$lv_emp_loc);
+            $lv_flag_level = $this->isLevelMatching($fp_v_so_level,$lv_emp_level);
+            
+            $lv_result = true;
+            //$lv_result = ($lv_flag_level || $lv_flag_location);
+           // echo "so skill:".strtolower($fp_v_so_skill)."emp_skill".$lv_emp_prime_skill."</br>";
+            
+//            if ($lv_flag_location == true && $lv_flag_level==true)
+//            {
+//                $lv_result = false;
+//            }
+            $lv_skillmatch = $this->lo_EMPSO->isMatchOrAlternative($fp_v_so_skill,$lv_emp_prime_skill);
+            
+//            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill &&
+//                     $lv_result &&
+//                     ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+//            )
+            
+            if (     $lv_skillmatch &&
+                     $lv_result &&
+                     ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+            )
+            {
+               
+                if ($lv_flag_location == false)
+                {
+                    $lwa_deployable_emp['not_matching'] = 'location';
+                }
+                 if($lv_flag_level == false)
+                {
+                    $lwa_deployable_emp['not_matching'] = 'level';
+                }   
+                if($lv_flag_location == false && $lv_flag_level == false)
+                {
+                     $lwa_deployable_emp['not_matching'] = 'both';
+                }
+//                $this->addToPartialProposal($lv_emp_id, $fp_v_so_id);
+                $re_wa_emps_for_so[] = $lwa_deployable_emp;
+////                   
+//                break;
+            }
+            
+            
+        }
 
         return $re_wa_emps_for_so;
      }
