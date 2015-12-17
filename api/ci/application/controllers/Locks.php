@@ -27,7 +27,8 @@ class Locks extends CI_Controller
                     $lv_arr_stat   = $this->input->get(m_lock::C_ARR_STAT);
                     $lv_prop_id    = $this->input->get(m_lock::C_PROP_ID);
                     $lv_arr_Multi  = $this->input->get(m_lock::C_MULTI);
-                    
+                    $lv_arr_comments = $this->input->get(m_lock::C_FNAME_OPS_COMMENTS);
+                   // echo $lv_arr_Multi ;
 //                    $lv_arr_link = $app->request->get(cl_lock::C_ARR_LINK);
 //                   $so_id = [];
 //                   $emp_id = [];
@@ -47,7 +48,7 @@ class Locks extends CI_Controller
                    //$lv_prop_id = 2; 
                    
 //                   $lv_result = $lv_obj->ApproveSoftLock($so_id, $emp_id,$stat,$lv_prop_id);
-                    $lv_result = $this->m_lock->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id,$lv_arr_Multi);
+                    $lv_result = $this->m_lock->ApproveSoftLock($lv_arr_so_id,$lv_arr_emp_id,$lv_arr_stat,$lv_prop_id,$lv_arr_Multi,$lv_arr_comments);
                     
 //                   echo $lv_result;
           
@@ -85,7 +86,7 @@ class Locks extends CI_Controller
                 else 
                  if ($lv_result == -1)
                  {
-                 $lv_msg = "Error in hard locking the resource";
+                 $lv_msg = "The Resource is no longer Availabe for confirming lock either softlock expired or it is locked by some other SO or Decision is Already Taken";
                  }
                  if ($lv_result == -2){
                      $lv_msg = 'Please enter the date in the format YYY-MM-DD';

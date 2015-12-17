@@ -243,7 +243,7 @@ class l_SOEmpSkillMatcher
                 $lv_matches = true;
             }
         }
-        var_dump($lv_matches);
+//        var_dump($lv_matches);
         return $lv_matches;
     }
     
@@ -292,7 +292,7 @@ class l_SOEmpSkillMatcher
         $lv_alternative = $this->isAlternative($fp_v_so_skill, $fp_v_emp_skill);        
 //      echo "Alternative Match";var_dump($lv_alternative);
         $lv_match_or_alternative = $lv_match || $lv_alternative;
-        var_dump($lv_match_or_alternative);
+//        var_dump($lv_match_or_alternative);
         return $lv_match_or_alternative;
     }
     

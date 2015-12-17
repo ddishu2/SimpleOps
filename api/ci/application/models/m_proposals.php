@@ -5,7 +5,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+ini_set('max_execution_time', 300);
+require_once(APPPATH.'libraries/l_SOEmpSkillMatcher.php');
 Class m_proposals extends CI_model
 {
     /*
@@ -58,11 +59,15 @@ Class m_proposals extends CI_model
     private $arr_deployableEmp;
     private $lo_deployable_emp;
     private $lv_item_id;
+    private $lo_EMPSO;
     
          public function __construct()
         {
           
                $this->load->database();
+               $this->load->library('l_SOEmpSkillMatcher');
+               $this->lo_EMPSO = new l_SOEmpSkillMatcher();
+               
 //                echo "inside INdex";
         }
         public function set_attributes(m_open_so $fp_o_open_sos, m_BuEmployees $fp_o_deployableEmp)
@@ -483,8 +488,8 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 
             $lv_emp_id = $lwa_deployable_emp[self::C_FNAME_EMP_ID];
 
-
-            $lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
+             $lv_emp_prime_skill = $lwa_deployable_emp[self::c_emp_skill_fname];
+            //$lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
             // $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
             $lv_emp_level = strtolower($lwa_deployable_emp[self::c_emp_level_fname]);
             $lv_emp_loc = strtolower($lwa_deployable_emp[self::c_emp_loc_fname]);
@@ -498,9 +503,15 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 //            .$lwa_deployable_emp['org'].PHP_EOL;
 //            if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
 //            )
-            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
-            )
+//            
+           
+             $lv_skillmatch = $this->lo_EMPSO->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill);
+//            $lv_skillmatch = $this->l_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill);
+            
+           if ($lv_skillmatch && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isDeployable($lv_emp_id, $fp_v_so_id)))
+           // if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isDeployable($lv_emp_id, $fp_v_so_id)))
                             {
+//                echo "so_no ".$fp_v_so_id ."                so skill:     ".$fp_v_so_skill."                 "."Emp_id          :".$lv_emp_id ."              Emp skill:         ".$lv_emp_prime_skill."<br/>";  
                 $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
                 $re_wa_emp_for_so[] = $lwa_deployable_emp;
                 /*
@@ -574,8 +585,8 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 
             $lv_emp_id = $lwa_deployable_emp[self::C_FNAME_EMP_ID];
 
-
-            $lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
+            $lv_emp_prime_skill = $lwa_deployable_emp[self::c_emp_skill_fname];
+            //$lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
             // $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
             $lv_emp_level = strtolower($lwa_deployable_emp[self::c_emp_level_fname]);
             $lv_emp_loc = strtolower($lwa_deployable_emp[self::c_emp_loc_fname]);
@@ -589,8 +600,11 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 //            .$lwa_deployable_emp['org'].PHP_EOL;
 //            if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
 //            )
-            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id))
-            )
+//            $lo_EMPSO = new l_SOEmpSkillMatcher();
+             $lv_skillmatch = $this->lo_EMPSO->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill);
+//            $lv_skillmatch = $this->l_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill);
+           if (  $lv_skillmatch && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id)) )
+          // if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id)) )
                             {
                 $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
                 
@@ -683,8 +697,8 @@ public function createProposal( $fp_so_id , $fp_emp_id )
 
             $lv_emp_id = $lwa_deployable_emp[self::C_FNAME_EMP_ID];
 
-
-            $lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
+             $lv_emp_prime_skill =($lwa_deployable_emp[self::c_emp_skill_fname]);
+           // $lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
             // $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
             $lv_emp_level = strtolower($lwa_deployable_emp[self::c_emp_level_fname]);
             $lv_emp_loc = strtolower($lwa_deployable_emp[self::c_emp_loc_fname]);
@@ -702,16 +716,22 @@ public function createProposal( $fp_so_id , $fp_emp_id )
             $lv_flag_location = $this->isLocationMatching($fp_v_so_loc,$lv_emp_loc);
             $lv_flag_level = $this->isLevelMatching($fp_v_so_level,$lv_emp_level);
             
-            $lv_result = ($lv_flag_level || $lv_flag_location);
+            $lv_result = true;
+            //$lv_result = ($lv_flag_level || $lv_flag_location);
            // echo "so skill:".strtolower($fp_v_so_skill)."emp_skill".$lv_emp_prime_skill."</br>";
             
-            if ($lv_flag_location == true && $lv_flag_level==true)
-            {
-                $lv_result = false;
-            }
+//            if ($lv_flag_location == true && $lv_flag_level==true)
+//            {
+//                $lv_result = false;
+//            }
+            $lv_skillmatch = $this->lo_EMPSO->isMatchOrAlternative($fp_v_so_skill,$lv_emp_prime_skill);
             
+//            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill &&
+//                     $lv_result &&
+//                     ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+//            )
             
-            if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill &&
+            if (     $lv_skillmatch &&
                      $lv_result &&
                      ($this->isDeployable($lv_emp_id, $fp_v_so_id))
             )
@@ -721,10 +741,14 @@ public function createProposal( $fp_so_id , $fp_emp_id )
                 {
                     $lwa_deployable_emp['not_matching'] = 'location';
                 }
-                else if($lv_flag_level == false)
+                 if($lv_flag_level == false)
                 {
                     $lwa_deployable_emp['not_matching'] = 'level';
                 }   
+                if($lv_flag_location == false && $lv_flag_level == false)
+                {
+                     $lwa_deployable_emp['not_matching'] = 'both';
+                }
 //                $this->addToPartialProposal($lv_emp_id, $fp_v_so_id);
                 $re_wa_emps_for_so[] = $lwa_deployable_emp;
 ////                   
