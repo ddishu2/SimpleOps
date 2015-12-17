@@ -327,12 +327,15 @@ class m_Notifications extends CI_model
         $lo_details = new getDetails();
 
         switch ($i_mode) {
+            
+// Soft Lock            
             case 'SL':
 // Get SO details            
                 $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);                
                 if(array_key_exists(0,$this->lt_so_details))
                 {
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
+                
 // Get PM and EM details.            
                 $this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);
                 if (array_key_exists(0, $this->lt_pm_details)) 
@@ -359,6 +362,7 @@ class m_Notifications extends CI_model
                 $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
+// Soft Lock Release
             case 'SLR':
 // Get SO details            
                 $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);
@@ -380,6 +384,7 @@ class m_Notifications extends CI_model
                 $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
+// SO Rejected/Three strikes                 
             case 'SOR':
 // Get SO details            
                 $this->lt_so_details = $lo_details->get_so_details($this->lv_so_number);
@@ -401,6 +406,7 @@ class m_Notifications extends CI_model
                 $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
+// Change in release date                
             case 'CRD':
 // Get employee details.
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lt_crd_details['id']);
@@ -411,7 +417,7 @@ class m_Notifications extends CI_model
                 $this->lt_pm_details = $lo_details->get_emp_details($this->lt_emp_details[0]['proj_m_id']);
                 if (array_key_exists(0, $this->lt_pm_details))
                 {
-                    $this->lv_pm_email = $this->lt_pm_details[0]['email'];
+                $this->lv_pm_email = $this->lt_pm_details[0]['email'];
                 }
                 }
 
@@ -423,6 +429,7 @@ class m_Notifications extends CI_model
                 $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
 
+// Change in TNE Approver                
             case 'CTE':
 // Get employee details.
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lt_cte_details['id']);
@@ -446,6 +453,7 @@ class m_Notifications extends CI_model
                 $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
                 break;
             
+// Hard Lock Release                
             case 'RL4':
 // Get details of all capabilities email ids.
                 $this->lt_recievers   = $this->db->query($this->lv_query_notifcn)->result_array();
@@ -465,6 +473,18 @@ class m_Notifications extends CI_model
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
                 if(array_key_exists(0,$this->lt_corpid_details))
                 {
+
+// Get PM and EM details.            
+                $this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);
+                if (array_key_exists(0, $this->lt_pm_details)) 
+                {
+                $this->lv_pm_email = $this->lt_pm_details[0]['email'];
+                }
+                $this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);
+                if (array_key_exists(0, $this->lt_em_details)) 
+                {
+                $this->lv_em_email = $this->lt_em_details[0]['email'];
+                }
                 $this->lv_so_creator_email = $this->lt_corpid_details[0]['email'];
                 $this->lv_so_creator_name  = $this->lt_corpid_details[0]['emp_name'];
                 }
@@ -481,6 +501,8 @@ class m_Notifications extends CI_model
 // Read details into variables.
     private function read_details($i_mode) {
         switch ($i_mode) {
+            
+// Soft Lock            
             case 'SL':
                 $this->lv_so_owner = $this->lv_so_creator_name;
                 if(array_key_exists(0,$this->lt_so_details))
@@ -510,6 +532,7 @@ class m_Notifications extends CI_model
                 $this->lv_rel_date = date('d-M-Y', strtotime($lv_date . ' + 2 days'));
                 break;
 
+// Soft Lock Release                
             case 'SLR':
                 $this->lv_so_owner = $this->lv_so_creator_name;
                 if(array_key_exists(0,$this->lt_so_details))
@@ -537,6 +560,7 @@ class m_Notifications extends CI_model
                 }
                 break;
 
+// SO Rejected/Three strikes                
             case 'SOR':
                 $this->lv_so_owner = $this->lv_so_creator_name;
                 if(array_key_exists(0,$this->lt_so_details))
@@ -557,6 +581,7 @@ class m_Notifications extends CI_model
                 }
                 break;
 
+// Change in release date                
             case 'CRD':
                 $this->lv_BU         = $this->lt_crd_details['IDP'];
                 $this->lv_capability = $this->lt_crd_details['competency'];
@@ -571,6 +596,7 @@ class m_Notifications extends CI_model
                 }
                 break;
                 
+// Change in TNE Approver                
             case 'CTE':
                 $this->lv_BU         = $this->lt_cte_details['IDP'];
                 $this->lv_capability = $this->lt_cte_details['competency'];
@@ -586,6 +612,7 @@ class m_Notifications extends CI_model
                 }                
                 break;
             
+// Hard lock release                
             case 'RL4':
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
                 if (array_key_exists(0, $this->lt_sup_details))
@@ -594,13 +621,37 @@ class m_Notifications extends CI_model
                 }
                 break;
             
+// Already tagged                
             case 'ATN':
+                if(array_key_exists(0,$this->lt_act_type))
+                {
                 $this->lv_subject    = $this->lt_act_type[0]['action_type_text'];
-                $this->lv_so_owner   = $this->lv_so_creator_name;
-                if(array_key_exists(0,$this->lt_emp_details))
-                {                
-                $this->lv_empname = $this->lt_emp_details[0]['emp_name'];
                 }
+                
+                $this->lv_so_owner   = $this->lv_so_creator_name;
+                
+// Read SO Details                
+                if(array_key_exists(0,$this->lt_so_details))
+                {
+                $this->lv_projname = $this->lt_so_details[0]['so_proj_name'];
+                $this->lv_proj_code = $this->lt_so_details[0]['so_proj_id'];
+                $this->lv_sdate = $this->lt_so_details[0]['so_start_date_new'];
+                $this->lv_edate = $this->lt_so_details[0]['so_end_date'];
+                }
+                
+// Read Emp Details   
+                if(array_key_exists(0,$this->lt_emp_details))
+                {
+                $this->lv_empname = $this->lt_emp_details[0]['emp_name'];
+                $this->lv_empid = $this->lt_emp_details[0]['emp_id'];
+                $this->lv_pri_skill = $this->lt_emp_details[0]['skill1_l4'];
+                $this->lv_level = $this->lt_emp_details[0]['level'];
+                $this->lv_BU = $this->lt_emp_details[0]['idp'];
+                $this->lv_sub_bu = $this->lt_emp_details[0]['sub_bu'];
+                $this->lv_serv_line = $this->lt_emp_details[0]['svc_line'];
+                $this->lv_location = $this->lt_emp_details[0]['org'];
+                $this->lv_capability = $this->lt_emp_details[0]['comp'];
+                }                
                 break;
             default:
                 break;
@@ -725,7 +776,20 @@ class m_Notifications extends CI_model
                 
             case 'ATN':
                 $this->lv_content = str_replace("GV_SO_OWNER", $this->lv_so_creator_name, $this->lv_content);
+                $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lv_projname, $this->lv_content);
                 $this->lv_content = str_replace("GV_EMPNAME", $this->lv_empname, $this->lv_content);
+                $this->lv_content = str_replace("GV_EMPID", $this->lv_empid, $this->lv_content);
+                $this->lv_content = str_replace("GV_PRI_SKILL", $this->lv_pri_skill, $this->lv_content);
+                $this->lv_content = str_replace("GV_LEVEL", $this->lv_level, $this->lv_content);
+                $this->lv_content = str_replace("GV_PROJECT_CODE", $this->lv_proj_code, $this->lv_content);
+                $this->lv_content = str_replace("GV_BU", $this->lv_BU, $this->lv_content);
+                $this->lv_content = str_replace("GV_SBU", $this->lv_sub_bu, $this->lv_content);
+                $this->lv_content = str_replace("GV_SERV_LINE", $this->lv_serv_line, $this->lv_content);
+                $this->lv_content = str_replace("GV_LOCATION", $this->lv_location, $this->lv_content);
+                $this->lv_content = str_replace("GV_SO_NO", $this->lv_so_number, $this->lv_content);
+                $this->lv_content = str_replace("GV_SDATE", $this->lv_sdate, $this->lv_content);
+                $this->lv_content = str_replace("GV_EDATE", $this->lv_edate, $this->lv_content);
+                $this->lv_content = str_replace("GV_LINK", $this->lv_link, $this->lv_content);
                 break;
             
             default:                

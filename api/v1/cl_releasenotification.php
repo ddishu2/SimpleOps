@@ -67,7 +67,7 @@ class cl_releasenotification {
                             " FROM m_emp_ras_copy
                             WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' and "
-                            .$this->gv_cust_name." NOT IN " .$lt_invalid_project." ORDER BY ". $this->gv_proj_code;
+                            .$this->gv_cust_name." NOT IN " .$lt_invalid_project." ORDER BY ". $this->gv_proj_code.','.$this->gv_sup_id;
         $lt_emp_details = cl_DB::getResultsFromQuery($lv_query_empid);
         return $lt_emp_details;
     }
