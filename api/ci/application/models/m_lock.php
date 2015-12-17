@@ -882,27 +882,6 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
     return $arr_result_final;
              
      }
-     
-//     Changes by Vineet Khisty
-         public function getDataSlockExpired($fp_start_date , $fp_end_date)
-    { 
-        
-        $lv_from_date = $fp_start_date;
-        $lv_to_date = $fp_end_date;
-        
-        $this->db->select('so_id,so_proj_id,so_proj_name,lock_start_date,lock_end_date,emp_id,emp_name,level,prime_skill,loc,end_date,skill_cat,reason');
-        $this->db->from(self::c_v_slock_expiry_download);
-        $this->db->where(self::C_FNAME_LOCK_START_DATE." BETWEEN CAST('$lv_from_date' AS DATE)AND CAST('$lv_to_date' AS DATE)");
-        $lt_data = $this->db->get();
-        $lt_result = $lt_data->result_array();
-        return $lt_result;
-        
-    }    
-    
-//    end of changes by vineet khisty
-
-    
-    
-    
+      
    
 }

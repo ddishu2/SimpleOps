@@ -312,7 +312,8 @@ $this->setHeaders();
                 $datetime1 = date_create($start_date);
                 $datetime2 = date_create($lv_date);
                 $interval = date_diff($datetime1, $datetime2);
-                $days = $interval->format('%R%a days');
+                $days1 = $interval->format('%R%a days');
+                $days = (int)$days1;
                 $lt_result[$i]['aging'] = $days;
                 
                 }
