@@ -99,7 +99,7 @@ class m_utility extends CI_model
                             ' FROM '.$this->gv_tab_name.
                             " WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' and "
-                            .$this->gv_cust_name." NOT IN " .$lt_invalid_project." ORDER BY ". $this->gv_proj_code;                  
+                            .$this->gv_cust_name." NOT IN " .$lt_invalid_project." ORDER BY ". $this->gv_proj_code.','.$this->gv_sup_id;          
         return($this->db->query($lv_query_empid)->result_array());                 
     }
     
