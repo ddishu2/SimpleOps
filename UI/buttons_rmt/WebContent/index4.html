@@ -3252,6 +3252,7 @@ var so_from
 								$("#fs3").addClass("hide_div");
 								$("#fs4").addClass("hide_div");
 								 sap.ui.core.BusyIndicator.show(0);
+								 $("#report_ras_tab1").show();
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign,
@@ -3641,7 +3642,12 @@ $(".decide_multi_report input").each(function(index,val){
 						      			sap.ui.core.BusyIndicator.hide(0);
 						      		
 						      			alert("Notification Sent Successfully.")
-						      			 report_ras_tab.setNoData();
+						      			var aData_set_empty =[];
+						      			 var oModel_set_empty = new sap.ui.model.json.JSONModel();
+                                             oModel_set_empty.setData({modelData: aData_set_empty});
+                                             report_ras_tab.setModel(oModel_set_empty);
+                                             report_ras_tab.bindRows("/modelData");
+                                          $("#report_ras_tab1").hide()   
 						      			
 						      			 var idx = sap.ui.getCore().byId("partial_match1").getSelectedIndex();
 						      	        if (idx !== -1) {
