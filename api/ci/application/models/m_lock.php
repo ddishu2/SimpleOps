@@ -17,6 +17,7 @@ class m_lock extends ci_model
                
                $this->load->database();
                $this->load->model('m_Notifications');
+               $this->load->model('m_utility');
 
         }
 //     const C_FNAME_SDATE    = 'lock_start_date';
@@ -421,9 +422,16 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
 //        $fp_sdate = self::getsostartdate($lv_so_id);
         
         $fp_sdate = $lv_sdate;
+//        echo $fp_sdate;
 //        $fp_edate = self::getsoenddate($lv_so_id);
         $fp_edate = $lv_edate;
-       
+        
+//Start of changes by Vineet khisty
+//        $io_u   = new m_utility();
+        if(($this->m_utility->validateDate($fp_sdate, 'Y-m-d') === true && ($this->m_utility->validateDate($fp_edate, 'Y-m-d')) === true))
+        {  
+
+//        End of changes by Vineet Khisty
         
         
         
@@ -505,6 +513,11 @@ public function ApproveHardLock($fp_v_lock_trans_id,$fp_v_comments,$lv_smart_pro
             //echo "Slock expired";
               return -1;            
         }
+        }
+        else
+        {
+            return -2;
+        }    
     }
     public function rejectProposal($fp_v_proposal_id, $fp_v_emp_id, $fp_v_so_id) {
 //        $lv_query = "update trans_proposals SET rejected = 'X' where prop_id ='$fp_v_proposal_id'
