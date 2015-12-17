@@ -185,8 +185,8 @@ class m_utility extends CI_model
       $loadAmendments = m_loadFiles::loadAmendments();  
     }
     
-    public function getslockexpiry(){
-        l_slock_expiry::slock_expiry_details();
+    public function getslockexpiry($fp_so_id){
+        l_slock_expiry::slock_expiry_details($fp_so_id);
     }
 }
 
