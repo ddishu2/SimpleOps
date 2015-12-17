@@ -87,6 +87,9 @@ class Locks extends CI_Controller
                  {
                  $lv_msg = "Error in hard locking the resource";
                  }
+                 if ($lv_result == -2){
+                     $lv_msg = 'Please enter the date in the format YYY-MM-DD';
+                     }
             }
             else 
             if($lv_status == 'Reject')
