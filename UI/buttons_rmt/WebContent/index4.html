@@ -5581,6 +5581,7 @@ var oRB1_locks = new sap.ui.commons.RadioButton({
 			$("#ops_comm_manual").hide();
 			$("#temulti_name1").hide();
 			$("#multi_decision_manual").hide();
+			 sap.ui.getCore().byId("bt1_manual_assign").setText("Assign & Notify")
 	
 		} 
 	});
@@ -5595,7 +5596,7 @@ var oRB2_locks = new sap.ui.commons.RadioButton({
 		$("#ops_comm_manual").show();
 		$("#temulti_name1").show();
 		$("#multi_decision_manual").show();
-
+		 sap.ui.getCore().byId("bt1_manual_assign").setText("Propose & Notify")	
 	} 
 	//select : function() {alert('NO');} 
 	});
@@ -5921,7 +5922,7 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 
 						var assign_manual = new sap.ui.commons.Button({
 							id : 'bt1_manual_assign',
-							text : "Assign",
+							text : "Assign & Notify",
 							press : function(){
 								 var input_manual1 = $(".smart_project_code1").val();
 								 var input_manual2 =  $(".fte_manual1").val();
@@ -5960,7 +5961,7 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 								        	 }
 								        
 						         else if($("#rad_locks1-RB").is(':checked') == true){
-								
+						        
 						        	 $.ajax({
 							      		  method: "GET",
 							      		  url: "/rmt/api/ci/index.php/Lock_EMPs/?so_id="+to_send_sono+"&emp_id="+emp_to_send+"&lock_start_date="+to_send_sdate+"&lock_end_date="+to_send_edate+"&allow_multi=0&requestor_id=0&smart_proj_code="
@@ -5994,7 +5995,7 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 						        	 
 						         }
 						         else if($("#rad_locks2-RB").is(':checked') == true){
-										
+						        	
 						        	 $.ajax({
 							      		  method: "GET",
 							      		url: "/rmt/api/ci/index.php/approve_soft_lock/?so_id[]="+to_send_sono+"&emp_id[]="+emp_to_send+
