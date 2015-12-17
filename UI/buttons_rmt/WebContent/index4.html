@@ -3252,7 +3252,9 @@ var so_from
 								$("#fs3").addClass("hide_div");
 								$("#fs4").addClass("hide_div");
 								 sap.ui.core.BusyIndicator.show(0);
-								 $("#report_ras_tab1").show();
+								
+								 
+								 
 								$.ajax({
 						      		  method: "GET",
 						      		  url: "/rmt/api/ci/index.php/get_partial/?so_id="+so_id_partial_assign+"&skill="+skill_partial_assign+"&level="+level_partial_name_assign+"&loc="+loc_partial_assign,
@@ -3267,9 +3269,11 @@ var so_from
 						      		
 									var res_further = odata;
 									var completeData1_further = [];
+									if(res_further != null)
+									{
 									
-									
-										
+										 $("#report_ras_tab1").show() ;
+										 $("#bt1_ras").show();
 
 									jQuery.each(
 													res_further,
@@ -3309,6 +3313,14 @@ var so_from
 
 
 														});
+						      		}
+									else
+										{
+										
+										alert("No Employee is Proposed");
+										 $("#report_ras_tab1").hide();
+										 $("#bt1_ras").show();
+										}
 										
 						      	
 						      		}
@@ -3343,7 +3355,7 @@ $(".decide_multi_report input").each(function(index,val){
 	            	  
 	            	  
 	            	  {
-	            	  parent3.find('.level_ras')[index].style.backgroundColor = 'blue';
+	            	  parent3.find('.level_ras')[index].style.backgroundColor = 'pink';
 	            	//$(location_ras).addClass("color_change_location");
 	            	  }
 									});	
@@ -3648,13 +3660,26 @@ $(".decide_multi_report input").each(function(index,val){
                                              report_ras_tab.setModel(oModel_set_empty);
                                              report_ras_tab.bindRows("/modelData");
                                           $("#report_ras_tab1").hide()   
-						      			
+ 
+		        var idx = partial_match.getSelectedIndex();
+		        if (idx !== -1) {
+		            var m = partial_match.getModel();
+		            var data = m.getData();
+		            var removed = data.splice(idx, 1);
+		            m.setData(data)
+		            sap.m.MessageToast.show(JSON.stringify(removed[0]) + 'is removed');
+		        } else {
+		            sap.m.MessageToast.show('Please select a row');
+		        }
+		    
+
+						      		/* 	
 						      			 var idx = sap.ui.getCore().byId("partial_match1").getSelectedIndex();
 						      	        if (idx !== -1) {
 						      	          var m = sap.ui.getCore().byId("partial_match1").getModel();
 						      	          var data = m.getData(); 
 						      	          m.setData(data);
-						      	        }
+						      	        } */
 						      		}
 								
 								});
