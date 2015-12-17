@@ -336,13 +336,15 @@ class m_Notifications extends CI_model
                 {
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
                 
-// Get PM and EM details.            
-                $this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);
+// Get PM and EM details.
+                if(array_key_exists('pm_id',$this->lt_so_details))
+                {$this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);}
                 if (array_key_exists(0, $this->lt_pm_details)) 
                 {
                 $this->lv_pm_email = $this->lt_pm_details[0]['email'];
                 }
-                $this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);
+                if(array_key_exists('em_id',$this->lt_so_details))
+                {$this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);}
                 if (array_key_exists(0, $this->lt_em_details)) 
                 {
                 $this->lv_em_email = $this->lt_em_details[0]['email'];
