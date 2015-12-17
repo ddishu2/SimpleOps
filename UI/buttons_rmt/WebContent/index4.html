@@ -3654,7 +3654,7 @@ $(".decide_multi_report input").each(function(index,val){
 						      			     var idx = partial_match.getSelectedIndex();
 						      		        if (idx !== -1) {
 						      		          var m = partial_match.getModel();
-						      		          var data = m.getData();
+						      		          var data =m.getData().modelData;
 						      		          var removed = data.splice(idx, 1);
 						      		          m.setData(data)
 						      		          sap.m.MessageToast.show(JSON.stringify(removed[0]) +  'is removed');
