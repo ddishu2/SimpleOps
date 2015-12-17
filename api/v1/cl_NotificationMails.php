@@ -648,6 +648,17 @@ class cl_NotificationMails {
         }
     }
 
+// Function to write the log
+    private function writelog($i_mode)
+    {
+    $lv_logfile = "D:\\xampp\\htdocs\\rmt\\email_log\\Email_log.csv";
+    $io_handle  = fopen($lv_logfile, 'a') or die("can't open file");
+    $lv_tstmp = date('Y-m-d H:i:s');
+    $lv_content = "Email Log for,$lv_tstmp,$i_mode,$this->lv_recievers".PHP_EOL;
+    fwrite($io_handle, $lv_content);
+    fclose($io_handle);   
+    }      
+    
 // Function to send notifications per SO number.
     private function sendnotification(
     $i_so_number, $i_mode, $i_link = '', $i_transid, $i_emp_id) {
@@ -696,7 +707,8 @@ class cl_NotificationMails {
         }
 
 // Get recievers for email.                
-        self::get_recievers();   
+        self::get_recievers(); 
+        $this->writelog($i_mode);
         if (($i_mode === 'CTE') || ($i_mode == 'CRD') || ($i_mode === 'RL4'))
         {
         $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);          

@@ -15,7 +15,8 @@ class Locks extends CI_Controller
         $this->load->model('m_open_so');
         $this->load->model('m_proposals');
         $this->load->model('m_BuEmployees');
-        $this->load->libraries('l_slock_expiry');
+        $this->load->model('m_lock');
+        $this->load->library('l_slock_expiry');
 //        $this->load->model('m_SOEmpSkillMatcher');
     }
     
