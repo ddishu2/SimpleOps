@@ -74,10 +74,12 @@ margin-top: 15%;
 	width: 115px !important;
 }
 
-#__container1-content
+#__container1-content,#__container2-content
 {
 	
-	height : 100% !important
+	width: 65%;
+	margin-left: 15%;
+	border-radius: 4%;
 }
 #bt1_manual_assign
 {
@@ -152,8 +154,8 @@ margin-top: 10%;
 #matrix_manual_search
 {
 	
-	margin-left: 20%;
-	margin-top : -8px;
+	margin-left: 10%;
+	 margin-top : 2% ;
 }
 
 #for_so_manual_text
