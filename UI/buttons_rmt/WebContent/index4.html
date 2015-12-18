@@ -355,7 +355,6 @@ var global_one
                             	 $("#second").addClass("hide_div");
      							$("#first").addClass("hide_div");
      								$("#manual1").addClass("hide_div");
-     					
      								$("#third").addClass("hide_div");
      								$("#four1").addClass("hide_div");
      								$("#four2_core").addClass("hide_div");
@@ -1330,6 +1329,10 @@ var global_one
 								id : 'hp',
 								text : "Home",
 								tooltip : "Home",
+								press : function()
+								{
+	                                    window.location.reload();
+								}
 
 							}).addStyleClass("for_normal_buttons_style1");
 
@@ -7267,7 +7270,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip : "SO No."
 													}),
 													template : new sap.ui.commons.TextView({})
-															.bindProperty("text", "exp_soid"),
+															.bindProperty("text", "exp_soid").addStyleClass("soid_to_send"),
 															
 													sortProperty : "exp_soid",
 													filterProperty : "exp_soid",
@@ -7421,23 +7424,20 @@ var repo_to1 = new sap.ui.commons.Label({
 														text : "Approve",
 														tooltip : "Approve"
 													}),
-													template : new sap.ui.commons.ComboBox({
+													template : new sap.ui.commons.DropdownBox({
 														
-														id:'stat_soft_expiry_report1',
+														
 														tooltip : "Decision",
 														items : [ 
-                                                                new sap.ui.core.ListItem("decide_sereport0", {
-	                                                                         text : "--Select--",
-	                                                                           key : "se"
-                                                                            }), 
-														         new sap.ui.core.ListItem("decide_sereport", {
+														         new sap.ui.core.ListItem("soft_exp_decide1", {
+															text : "--Select--",
+														
+														}), new sap.ui.core.ListItem("soft_exp_decide2", {
 															text : "Approve",
-															key : "Ap"
-														}), new sap.ui.core.ListItem("decide_sereport1", {
-															text : "Reject",
-															key : "Re"
-														}),]
-													}).bindProperty("value","exp_approve"),
+															
+														}),  ]
+													
+													}).bindProperty("value","exp_approve").addStyleClass("approve_decide"),
 													
 													width : "100px"
 												}));
@@ -7448,7 +7448,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														tooltip :"Ops Comments"
 													}),
 													template : new sap.ui.commons.TextField({})
-												.bindProperty("value", "exp_approve"),
+												.bindProperty("value", "exp_ocomments"),
 										
 										width : "70px"
 												}));
@@ -7484,7 +7484,40 @@ var repo_to1 = new sap.ui.commons.Label({
 												var report_submit_soft_expiry = new sap.ui.commons.Button({
 													text: "Submit"	,											
 													tooltip : "Submit",
-													
+													 press: function()
+													{
+																		var so_exp_approve = "";
+
+								$(".approveDropdown input").each(function(index,val){
+				
+									if($(this).val() == "Approve"){
+										var parent = $(this).parent().parent().parent().parent();
+										so_exp_approve += "&so_id[]="+parent.find(".soid_to_send").text();
+										
+										 
+										
+											$(this).remove();
+	}
+								});
+								var asc1 =so_exp_approve;
+								 $.ajax({
+						      		  method: "GET",
+						      		url: "/rmt/api/ci/index.php/slock_expiry/?"+asc1,
+						      		
+						      				
+
+						      		success : function(odata){
+						      			console.log(odata);
+						      			 alert("Notification Sent Successfully");
+                                      
+						      			
+						      		}
+								
+								});
+								
+								
+														
+													} 
 												}).addStyleClass("for_normal_buttons_style1");
 												var report_back_soft_expiry = new sap.ui.commons.Button({
 													id : 'back_report_soft_expiry',
