@@ -186,7 +186,13 @@ $this->setHeaders();
                for($i=0;$i<count($arr_data);$i++)
         {
         $row = $arr_data[$i]; 
-        fputcsv($lo_csv_output,$row);
+////               $lv_empid = $row['emp_id'];
+               $lv_empid = "'".$row['emp_id']."'";
+               $row['emp_id'] = $lv_empid;
+                  fputcsv($lo_csv_output,$row);
+            
+          
+        
         }
         }
         
