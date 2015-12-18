@@ -120,10 +120,19 @@
     		
     		success : function(odata){
         		console.log(odata)
+        		var res =odata;
+        		if (odata == "Please enter the date in the format YYYY-MM-DD")
+        		{
 
-    		      alert(odata);
+            		alert(res);
+            		}
+        		else
+        		{
+
+    		      alert(res);
     		      window.open('','_parent',''); 
     		      window.close(); 
+        		}
     		}
 		});
 	         }
