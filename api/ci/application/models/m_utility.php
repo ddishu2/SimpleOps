@@ -46,7 +46,10 @@ class m_utility extends CI_model
             $gv_sup_id        = 'sup_id',
             $gv_sup_name      = 'sup_name',
             $gv_pm_name       = 'proj_m_name',
-            $gv_cust_name     = 'cust_name';
+            $gv_cust_name     = 'cust_name',
+            $gv_pm_id         = 'proj_m_id',
+            $gv_em_id         = 'eng_mgr_id',
+            $gv_em_name       = 'eng_mgr_name';
     
     public function __construct()
     {
@@ -95,7 +98,10 @@ class m_utility extends CI_model
                             $this->gv_level.','.
                             $this->gv_sup_id.','.
                             $this->gv_sup_name.','.
-                            $this->gv_pm_name.
+                            $this->gv_pm_id.','.
+                            $this->gv_pm_name.','.
+                            $this->gv_em_id.','.
+                            $this->gv_em_name.
                             ' FROM '.$this->gv_tab_name.
                             " WHERE curr_end_date = '$lv_edate' and ".
                             $this->gv_idp . " = 'Appsone SAP' and "
