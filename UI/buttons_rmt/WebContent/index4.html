@@ -254,7 +254,7 @@ var global_one
 								{
 									id : 'fhb',
 									layoutFixed : true,
-									width : '900px',
+									width : '1080px',
 									columns : 6,
 									widths : [ '180px', '180px', '180px',
 											'180px', '180px','180px' ]
@@ -1331,7 +1331,7 @@ var global_one
 								text : "Home",
 								tooltip : "Home",
 
-							});
+							}).addStyleClass("for_normal_buttons_style1");
 
 						
 						cg_logo.placeAt("heading");
@@ -1343,7 +1343,7 @@ var global_one
 						
 					
 						for_head_button.createRow(demand_fulfill, report_gen,
-								amendments, Approvals, External_Hiring)
+								amendments, Approvals, External_Hiring,home_page)
 							//	for_head_button.createRow(wel_come)
 						for_head_button.placeAt("heading");
 						var oTV = new sap.ui.commons.TextView({
@@ -3304,43 +3304,7 @@ var global_one
 						      		}
 								
 								});
-							
-$(".decide_multi_report input").each(function(index,val){
-	
-	var parent2 =  $(".decide_multi_report input").parent().parent().parent().parent();
-	var location_ras =parent2.find('.loc_ras')[index].title;
-	
-	
-	
-	              if(location_ras == loc_partial_assign )
-	            	  
-	            	  
-	            	  {
-	            	  parent2.find('.loc_ras')[index].style.backgroundColor = 'pink';
-	            	//$(location_ras).addClass("color_change_location");
-	            	  }
-									});	
-									
-									
-									
- $(".decide_multi_report input").each(function(index,val){
-	
-	var parent3 =  $(".decide_multi_report input").parent().parent().parent().parent();
-	var level1_ras =parent3.find('.level_ras')[index].title;
-	
-	
-	              if(level1_ras == level_partial_name_assign)
-	            	  
-	            	  
-	            	  {
-	            	  parent3.find('.level_ras')[index].style.backgroundColor = 'pink';
-	            	//$(location_ras).addClass("color_change_location");
-	            	  }
-									});	
-									
-									
 
-								
 							}
 
 						}).addStyleClass("for_normal_buttons_style1");
