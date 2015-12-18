@@ -97,14 +97,14 @@ var global_one
 						});
 					
 						popup_detail.addColumn(oColumn);
-						popup_detail.addColumn(new sap.ui.table.Column({
+						var oColumn1 = new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
 							template: new sap.ui.commons.TextView().bindProperty("text", "pro_id_pop"),
 							sortProperty: "pro_id_pop",
 							filterProperty: "pro_id_pop",
 							width :"100px"
-						}));
-						
+						});
+						popup_detail.addColumn(oColumn1);
 						popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
 							template: new sap.ui.commons.TextView().bindProperty("text", "pro_name_pop"),
@@ -126,7 +126,7 @@ var global_one
 							filterProperty: "end_date_pop",
 							width: "70px"
 						}));
-						popup_detail.addColumn(new sap.ui.table.Column({
+						/* popup_detail.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
 							template: new sap.ui.commons.TextView().bindProperty("text", "emp_id_pop"),
 							sortProperty: "emp_id_pop",
@@ -139,7 +139,7 @@ var global_one
 							sortProperty: "emp_name_pop",
 							filterProperty: "emp_name_pop",
 							width: "90px"
-						}));
+						})); */
 
 						
 						popup_detail.sort(popup_detail.getColumns()[0]);	
@@ -182,21 +182,22 @@ var global_one
 						});
 					
 						popup_detail_partial.addColumn(oColumn);
-						popup_detail_partial.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Project Code" ,tooltip :"Project Code"}),
+						var oColumn1 = new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({text: "Project ID" ,tooltip :"Project ID"}),
 							template: new sap.ui.commons.TextView().bindProperty("text", "pro_id_pop"),
 							sortProperty: "pro_id_pop",
 							filterProperty: "pro_id_pop",
 							width :"100px"
-						}));
-						
-						popup_detail_partial.addColumn(new sap.ui.table.Column({
+						});
+						popup_detail_partial.addColumn(oColumn1);
+						var oColumn2 = new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Project Name" ,tooltip :"Project Name"}),
 							template: new sap.ui.commons.TextView().bindProperty("text", "pro_name_pop"),
 							sortProperty: "pro_name_pop",
 							filterProperty: "pro_name_pop",
 							width: "100px"
-						}));
+						});
+						popup_detail_partial.addColumn(oColumn2);
 						popup_detail_partial.addColumn(new sap.ui.table.Column({
 							label: new sap.ui.commons.Label({text: "Start Date" ,tooltip :"Start Date"}),
 							template: new sap.ui.commons.TextView().bindProperty("text", "start_date_pop"),
@@ -211,20 +212,7 @@ var global_one
 							filterProperty: "end_date_pop",
 							width: "70px"
 						}));
-						popup_detail_partial.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
-							template: new sap.ui.commons.TextView().bindProperty("text", "emp_id_pop"),
-							sortProperty: "emp_id_pop",
-							filterProperty: "emp_id_pop",
-							width: "70px"
-						}));
-						popup_detail_partial.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
-							template: new sap.ui.commons.TextView().bindProperty("text", "emp_name_pop"),
-							sortProperty: "emp_name_pop",
-							filterProperty: "emp_name_pop",
-							width: "90px"
-						}));
+					
 
 						
 						popup_detail_partial.sort(popup_detail_partial.getColumns()[0]);	
@@ -1376,7 +1364,7 @@ var global_one
 						})
 
 						var oImage = new sap.ui.commons.Image({
-							//id:'welcome1',
+							id:'welcome_logo1',
 							src : "images/simple Ops Logo-HD - Copy.png"
 						});
 						oTV.placeAt("first");
@@ -2918,8 +2906,8 @@ var global_one
 														   				pro_name_pop : y.so_proj_name,
 																		start_date_pop :y.so_start_date_new,
 																		end_date_pop : y.so_end_date,   
-																		emp_id_pop : res.emp_id,
-																		emp_name_pop : res.emp_name,
+																		/* emp_id_pop : res.emp_id,
+																		emp_name_pop : res.emp_name, */
 																		
 																	};
 															
@@ -3536,8 +3524,8 @@ $(".decide_multi_report input").each(function(index,val){
 										oOverlayContainer1.open();
 									}
 	var path = [];								
-	var id = oEvent.mParameters.id
-	path = id.split("-")
+	var id = oEvent.oSource.oPropagatedProperties.oBindingContexts.undefined.sPath;
+	path = id.split("/")
 	path = path[2]
 	path = path.replace(/[^0-9]+/ig,"");
 									
@@ -3658,7 +3646,9 @@ $(".decide_multi_report input").each(function(index,val){
 						      		          m.setData(data)
 						      		           partial_match.getModel().refresh();
 						      		        } */
-						      		        $('#partial_match1-rows-row'+global_one).hide();
+						      		      //  $('#partial_match1-rows-row'+global_one).hide();
+						      		      $('#partial_match1-rows-row'+global_one).css('color','green')
+						      		        
 						      				sap.ui.core.BusyIndicator.hide(0);
 							      			alert("Notification Sent Successfully.")
 	                                        $("#report_ras_tab1").hide();
@@ -4340,10 +4330,12 @@ $(".decide_multi_report input").each(function(index,val){
 														var table_row;
 														var res = odata;		
 														var completeData_manual = [];
+														
 														if(res.length==0)
 														{
 															
 															alert("Entered SO not found");
+															$("#__table2-table").hide()
 													//		var tmp_empty=[];
 														}
 													else{
@@ -5279,7 +5271,8 @@ $(".decide_multi_report input").each(function(index,val){
 		              var emp_send_skill=$("#skill_drop_manual_emp-input").val();
 				      var emp_send_location=$("#ct_drop_manual_location-input").val();
 				      var emp_send_level= $("#emp_level1-input").val() ;
-				    	 
+				 	 sap.ui.core.BusyIndicator.show(0);
+
 					 	$
 						.ajax({
 							method : "GET",
@@ -5301,6 +5294,7 @@ $(".decide_multi_report input").each(function(index,val){
 								if(res.length==0){
 									
 									alert("Entered Employee ID not found");
+								$("#__table3-table").hide();
 									
 								}
 								else
@@ -5412,6 +5406,7 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 							oFor_te.addContent(table_for_te_approve_id);
 						var tne_emp_id =$("#te_id_manual1").val();	
 						var tne_emp_name =$("#te_name_manual1").val();	
+						sap.ui.core.BusyIndicator.show(0);
 							$
 							.ajax({
 								method : "GET",
@@ -5428,7 +5423,7 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
                                if(res.length==0){
 										
 										alert("T & E Approver not found");
-										
+										$("#__table4-table").hide();
 									}
 									else
 										{
@@ -5468,7 +5463,17 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 							
 						}
 					}).addStyleClass("for_normal_buttons_style1");
-					matrix_for_te_main.createRow(search_te)
+					
+					var search_manual1_tneclose =new sap.ui.commons.Button({id:'search_for_tne_manual_close',text :"Close",
+						
+						press: function()
+						{
+							 oFor_te.removeContent(matrix_for_te_main);
+        					 oFor_te.removeContent(table_for_te_approve_id);
+        					 oFor_te.close();	
+						}
+						}).addStyleClass("for_normal_buttons_style1");
+					matrix_for_te_main.createRow(search_te,search_manual1_tneclose)
 
 var table_for_te_approve_id = new sap.ui.table.Table(
 								{
@@ -5743,6 +5748,16 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 						 
 						valueHelpRequest : function(oEvent
 								) {
+							
+							$("#emp_id_manual1").val("")
+							$("#ct_drop_manual_emp-input").val("");
+							$("#skill_drop_manual_emp-input").val("");
+							
+							$("#ct_drop_manual_location-input").val("");
+							$("#emp_level1-input").val("");
+							
+							
+							
 							console
 									.log(oEvent
 											.getParameters('newValue').newValue);
@@ -5984,6 +5999,8 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 							      		 matrix_for_manual_main.createRow(oDivider5_0up,oDivider5up,oDivider6up,oDivider7up,null);
 							      		matrix_for_manual_main.createRow(smprocode_name,fte_name,taggtype_name);
 							      		 matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
+							      		$("#ops_comm_manual").val("");
+							      		$("#multi_decision_manual-input").val("");
 							      		}
 									
 									});
@@ -6018,6 +6035,8 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 							      		 matrix_for_manual_main.createRow(oDivider5_0up,oDivider5up,oDivider6up,oDivider7up,null);
 							      		matrix_for_manual_main.createRow(smprocode_name,fte_name,taggtype_name);
 							      		 matrix_for_manual_main.createRow(smprocode_man,fte_man,taggtype);
+							      		$("#ops_comm_manual").val("");
+							      		$("#multi_decision_manual-input").val("");
 							      		}
 									
 									});
@@ -6058,30 +6077,7 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 //////////////////////////////////////////Manual2 Starts Here////////////////////////////////////////////////////////////////////
                      
                      
-               var osearch_manual2 = new sap.ui.commons.layout.MatrixLayout({
-							id : 'matrix_manual2',
-							layoutFixed : true,
-							width : '800px',
-							columns : 1,
-							widths : [ '800px']
-						});
-                   var tagging_stat1 =new sap.ui.commons.TextView({id:'tag_stat1', text : "Manual Entry For SO Tagging\n\n"}).addStyleClass("for_fonts_manual2");   
-                   var tagging_stat2 =new sap.ui.commons.TextView({ text : "Employee X hard tagged to S01 and notification sent via mail. \n\n"}).addStyleClass("for_fonts_manual2");
-                   
-                   osearch_manual2.createRow(tagging_stat1);
-                   osearch_manual2.createRow(tagging_stat2);
-                   osearch_manual2.placeAt("manual2");
-                   
-                var back_manual2 = new sap.ui.commons.Button({
-                	id : 'back_to_manual1',
-                	text : "Back",
-                	press: function()
-                	{
-                		$("#manual2").addClass("hide_div");
-                		$("#manual1").removeClass("hide_div");
-                	}
-                }).addStyleClass("for_normal_buttons_style1");
-                back_manual2.placeAt("manual2");
+              
                  
   
   
