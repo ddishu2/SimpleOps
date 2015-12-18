@@ -90,7 +90,7 @@ class Locks extends CI_Controller
                  $lv_msg = "The Resource is no longer Availabe for confirming lock either softlock expired or it is locked by some other SO or Decision is Already Taken";
                  }
                  if ($lv_result == -2){
-                     $lv_msg = 'Please enter the date in the format YYY-MM-DD';
+                     $lv_msg = 'Please enter the date in the format YYYY-MM-DD';
                      }
             }
             else 
@@ -120,18 +120,5 @@ class Locks extends CI_Controller
         ->set_content_type('application/json')
         ->set_output(json_encode($lv_result,JSON_PRETTY_PRINT));
     }
-    public function getslockexp()
-    {
-       $lv_empid =  $this->input->get(m_lock::C_ARR_EMP_ID);
-       $lv_approve =  $this->input->get(m_lock::c_arr_aproval);
-       
-//       echo $lv_from_date;
-//       echo $lv_to_date;
-       
-       $lv_result=$this->l_slock_expiry->slock_expiry_details($lv_empid,$lv_approve);
-          $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($lv_result,JSON_PRETTY_PRINT));
-    }
-    
+   
 }
