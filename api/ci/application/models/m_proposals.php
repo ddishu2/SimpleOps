@@ -799,7 +799,7 @@ public function createProposal( $fp_so_id , $fp_emp_id )
             
             if (     $lv_skillmatch &&
                      $lv_result &&
-                     ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+                     ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id))
             )
             {
                
