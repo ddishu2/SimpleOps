@@ -41,6 +41,9 @@
                <CENTER>Level</CENTER>
             </td>
             <td bgcolor='blue'style='color:white'>
+               <CENTER>Supervisor</CENTER>
+            </td>
+            <td bgcolor='blue'style='color:white'>
                <CENTER>Project Manager</CENTER>
             </td>
          </tr>
@@ -78,6 +81,9 @@ SPLIT_HERE
             </td>
            <td>
                <CENTER>GV_LEVEL</CENTER>
+            </td>
+           <td>
+               <CENTER>GV_SUP</CENTER>
             </td>
            <td>
                <CENTER>GV_PM</CENTER>

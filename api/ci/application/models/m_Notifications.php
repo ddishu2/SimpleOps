@@ -37,7 +37,10 @@ class m_Notifications extends CI_model
             gc_proj_name         = 'curr_proj_name',
             gc_level             = 'level',
             gc_sup_id            = 'sup_id',
-            gc_sup_name          = 'sup_name';
+            gc_sup_name          = 'sup_name',
+            gc_pm_id             = 'proj_m_id',
+            gc_em_id             = 'eng_mgr_id',
+            gc_em_name           = 'eng_mgr_name';
 
 // Private class variables.    
     private $lv_content,
@@ -80,7 +83,8 @@ class m_Notifications extends CI_model
             $lv_em_email,
             $lv_status,
             $lv_req_by,
-            $lv_comments;
+            $lv_comments,
+            $lv_pm_name;
 
 // Constructor of the class
     function __construct() 
@@ -461,6 +465,19 @@ class m_Notifications extends CI_model
                 $this->lt_recievers   = $this->db->query($this->lv_query_notifcn)->result_array();
                 $this->lt_act_type    = $this->db->query($this->lv_query_act_type)->result_array();
                 $this->lt_sup_details = $lo_details->get_emp_details($this->lt_hlr_details[0][self::gc_sup_id], 'm_emp_record');
+
+// Get PM and EM details.
+                $this->lt_pm_details = $lo_details->get_emp_details($this->lt_hlr_details[0][self::gc_pm_id], 'm_emp_record');
+                if (array_key_exists(0, $this->lt_pm_details)) 
+                {
+                $this->lv_pm_email = $this->lt_pm_details[0]['email'];
+                $this->lv_pm_name  = $this->lt_pm_details[0]['emp_name'];
+                }
+                $this->lt_em_details = $lo_details->get_emp_details($this->lt_hlr_details[0][self::gc_em_id], 'm_emp_record');
+                if (array_key_exists(0, $this->lt_em_details)) 
+                {
+                $this->lv_em_email = $this->lt_em_details[0]['email'];
+                }
                 break;            
             
             case 'ATN':
@@ -622,7 +639,7 @@ class m_Notifications extends CI_model
                 if (array_key_exists(0, $this->lt_sup_details))
                 {
                 $this->lv_recievers .= $this->lt_sup_details[0]['email'] . self::lc_colon;
-                }
+                }                
                 break;
             
 // Already tagged                
@@ -756,8 +773,7 @@ class m_Notifications extends CI_model
                 $this->lv_content = str_replace("GV_RMGC", $this->lv_comments, $this->lv_content);
                 break;
                 
-            case 'RL4':
-                $this->lv_content = str_replace("GV_PM", $this->lt_hlr_details[0][self::gc_sup_name], $this->lv_content);
+            case 'RL4':                
                 $this->lv_content = str_replace("GV_PROJECT_NAME", $this->lt_hlr_details[0][self::gc_proj_name], $this->lv_content);
                 $lv_content = explode('SPLIT_HERE', $this->lv_content);
                 $this->lv_content = $lv_content[0];
@@ -773,7 +789,9 @@ class m_Notifications extends CI_model
                 $this->lv_content = str_replace("GV_EMPID", $lwa_hlr[self::gc_empid], $this->lv_content);
                 $this->lv_content = str_replace("GV_EMPNAME", $lwa_hlr[self::gc_emp_name], $this->lv_content);
                 $this->lv_content = str_replace("GV_PRI_SKILL", $lwa_hlr[self::gc_prime_skill], $this->lv_content);
-                $this->lv_content = str_replace("GV_LEVEL", $lwa_hlr[self::gc_level], $this->lv_content);                
+                $this->lv_content = str_replace("GV_LEVEL", $lwa_hlr[self::gc_level], $this->lv_content);  
+                $this->lv_content = str_replace("GV_SUP", $this->lt_hlr_details[0][self::gc_sup_name], $this->lv_content);
+                $this->lv_content = str_replace("GV_PM", $this->lv_pm_name, $this->lv_content);                
                 }
                 $this->lv_content .= $lv_content[2];
                 break;
