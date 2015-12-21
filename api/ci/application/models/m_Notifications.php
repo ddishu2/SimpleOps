@@ -880,7 +880,6 @@ class m_Notifications extends CI_model
 
 // Get recievers for email.                
         self::get_recievers();      
-        $this->lv_subject = 'TEST '.$this->lv_subject;
         
 // Log the receivers         
         $this->writelog($i_mode);
@@ -892,7 +891,7 @@ class m_Notifications extends CI_model
 //        if (($i_mode === 'RL4'))
 //        {
 //        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);    
-//        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;sumit.naik@capgemini.com;aalekh.bhatt@capgemini.com;venkat.karipalli@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                                                                
+//        $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                                                                
 //        }
 //        else
 //        {        

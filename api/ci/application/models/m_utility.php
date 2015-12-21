@@ -131,7 +131,7 @@ class m_utility extends CI_model
                     if($this->atendofvalue($lt_proj_details, $lv_key_proj, $lwa_values_proj, $this->gv_sup_id))
                     {
                       array_push($lt_sup_details, $lwa_values_proj);
-                      $io_mail = new m_Notifications();                      
+                      $io_mail = new m_Notifications(); 
                       $lv_mail = $io_mail->sendhardlockreleasenotification($lt_sup_details);                     
                       $lt_sup_details = [];
                       $lwa_values_proj = [];
