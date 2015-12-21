@@ -7258,7 +7258,7 @@ var repo_to1 = new sap.ui.commons.Label({
 														{
 															id : 'for_soft_expiry_report_gen',
 															title : "RMT Soft Lock Expiry Report View",
-															//visibleRowCount : 9,
+															visibleRowCount : 25,
 															//firstVisibleRow : 3,
 															selectionMode: sap.ui.table.SelectionMode.Single,
 															// visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
@@ -7492,11 +7492,7 @@ var repo_to1 = new sap.ui.commons.Label({
 				
 									if($(this).val() == "Approve"){
 										var parent = $(this).parent().parent().parent().parent();
-										so_exp_approve += "&so_id[]="+parent.find(".soid_to_send").text();
-										
-										 
-										
-											$(this).remove();
+										so_exp_approve += "&so_id[]="+parent.find(".soid_to_send")[index].title;								
 	}
 								});
 								var asc1 =so_exp_approve;
@@ -7514,9 +7510,7 @@ var repo_to1 = new sap.ui.commons.Label({
 						      		}
 								
 								});
-								
-								
-														
+					
 													} 
 												}).addStyleClass("for_normal_buttons_style1");
 												var report_back_soft_expiry = new sap.ui.commons.Button({
