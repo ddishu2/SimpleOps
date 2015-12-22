@@ -549,7 +549,7 @@ var global_one
 										oSimpleListBox_amend.setAllowMultiSelect(e
 												.getSource().getChecked());
 									}
-								});
+								}).addStyleClass("color_change_for_font");
 
 						
 						oDetails_amend_search.createRow(capLabel_amend, oSimpleListBox_amend,
@@ -1334,7 +1334,7 @@ var global_one
 	                                    window.location.reload();
 								}
 
-							}).addStyleClass("for_normal_buttons_style1");
+							});
 
 						
 						cg_logo.placeAt("heading");
@@ -1352,7 +1352,9 @@ var global_one
 						var oTV = new sap.ui.commons.TextView({
 							id : 'welcome1',
 							text : 'Welcome To',
-						})
+						}).addStyleClass("color_change_for_font");
+
+
 
 						var oImage = new sap.ui.commons.Image({
 							id:'welcome_logo1',
@@ -1640,7 +1642,7 @@ var global_one
 										oSimpleListBox.setAllowMultiSelect(e
 												.getSource().getChecked());
 									}
-								});
+								}).addStyleClass("color_change_for_font");
 
 						
 						oDetails.createRow(locationLabel, oSimpleListBox,
@@ -2442,7 +2444,7 @@ var global_one
 
 									text : " OPEN SO's are processed.\n\n\n Identified suitable match for  SOs.\n\n\n"
 
-								});
+								}).addStyleClass("color_change_for_font");
 
 						descript.placeAt("third");
 						var oNav1 = new sap.ui.commons.layout.MatrixLayout({
@@ -4138,7 +4140,7 @@ var global_one
 										oSimpleListBox_manual.setAllowMultiSelect(e
 												.getSource().getChecked());
 									}
-								});
+								}).addStyleClass("color_change_for_font");
 
 						
 						osearch_manual.createRow(locationLabel_manual, oSimpleListBox_manual,
@@ -5541,7 +5543,7 @@ var oRB1_locks = new sap.ui.commons.RadioButton({
 			 sap.ui.getCore().byId("bt1_manual_assign").setText("Assign & Notify")
 	
 		} 
-	});
+	}).addStyleClass("color_change_for_font");
 
 var oRB2_locks = new sap.ui.commons.RadioButton({
 	id: 'rad_locks2',
@@ -5556,7 +5558,7 @@ var oRB2_locks = new sap.ui.commons.RadioButton({
 		 sap.ui.getCore().byId("bt1_manual_assign").setText("Propose & Notify")	
 	} 
 	//select : function() {alert('NO');} 
-	});
+	}).addStyleClass("color_change_for_font");
 
 matrix_for_manual_main.createRow(null,oRB1_locks,oRB2_locks);	
 var oDivider2__0 = new sap.ui.commons.HorizontalDivider( {width: "120%", type: "Page", height: "Small"});
@@ -6126,7 +6128,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							text : 'Soft Locks',
 							tooltip : 'Soft Locks',
 							groupName : 'Group1',	
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font");
 
 						var report_RB2 = new sap.ui.commons.RadioButton({
 							id: 'soft_expiry_check',
@@ -6134,7 +6136,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : 'Soft Lock Expiry',
 							groupName : 'Group1',
 
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font");
 						var report_RB3 = new sap.ui.commons.RadioButton({
 							id : 'hard_check',
 							text : 'Hard Locks',
@@ -6142,14 +6144,14 @@ var repo_to1 = new sap.ui.commons.Label({
 							groupName : 'Group1',
 						
 							
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font");
 
 						var report_RB4 = new sap.ui.commons.RadioButton({
 							text : 'Expired Hard Locks',
 							tooltip : 'Expired Hard Locks',
 							groupName : 'Group1',
 
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font");
 						
 						var report_RB5 = new sap.ui.commons.RadioButton({
 							id: 'amend_check',
@@ -6157,7 +6159,7 @@ var repo_to1 = new sap.ui.commons.Label({
 							tooltip : 'Amendments',
 							groupName : 'Group1',
 
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font");
 						
 						var report_RB6 = new sap.ui.commons.RadioButton({
 							text : 'OPEN SO Report ',
@@ -6175,14 +6177,14 @@ var repo_to1 = new sap.ui.commons.Label({
 							},
 							groupName : 'Group1',
 
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font");
 						var report_RB7 = new sap.ui.commons.RadioButton({
 							id: 'bench_age_check',
 							text : 'Bench Ageing',
 							tooltip : 'Bench Ageing',
 							groupName : 'Group1',
 
-							}).addStyleClass("for_report_gen");
+							}).addStyleClass("for_report_gen").addStyleClass("color_change_for_font")                                 ;
 						report_matrix_layout.createRow(report_RB1);
 						report_matrix_layout.createRow(report_RB2);
 						report_matrix_layout.createRow(report_RB3);
@@ -6664,7 +6666,7 @@ var repo_to1 = new sap.ui.commons.Label({
 										oSimpleListBox_sel.setAllowMultiSelect(e
 												.getSource().getChecked());
 									}
-								});
+								}).addStyleClass("color_change_for_font");
 
 						
 						odetails_open.createRow(locationLabel_sel, oSimpleListBox_sel,
