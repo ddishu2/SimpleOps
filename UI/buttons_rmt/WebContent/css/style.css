@@ -597,7 +597,7 @@ margin-left: 50px !important;
 	padding-bottom: 15px !important;
 }
 
-#df, #rg, #mt, #ad, #ap, #eh,#sle,#hp {
+#df, #rg, #mt, #ad, #ap, #eh,#sle {
 	width: 100%;
 	margin-top: 60px !important;
 	margin-right: 8px;
@@ -607,7 +607,18 @@ margin-left: 50px !important;
 	border: 2px solid #CAD7EE;
 	border-radius: 6px;
 }
-
+#hp
+{
+	width: 100%;
+	margin-top: 60px !important;
+	margin-right: 8px;
+	height: 36px;
+	text-align: center;
+	font-size: 16px;
+	border: 2px solid #CAD7EE;
+	border-radius: 6px;
+	
+}
 #cg_logo {
 	margin-top: 5px;
 }
@@ -640,7 +651,7 @@ margin-left: 50px !important;
 }
 
 #df.selected, #df:hover, #rg.selected, #rg:hover, #mt.selected, #mt:hover,
-	#ad.selected, #ad:hover, #aa11.selected, #aa11:hover, #lo.selected, #lo:hover,#sle.selected, #sle:hover
+	#ad.selected, #ad:hover, #aa11.selected, #aa11:hover, #lo.selected, #lo:hover,#sle.selected, #sle:hover,#hp.selected, #hp:hover
 	{
 	background: #2b7579;
 	color: #fff;
