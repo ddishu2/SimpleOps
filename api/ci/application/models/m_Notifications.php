@@ -926,7 +926,7 @@ class m_Notifications extends CI_model
         $this->writelog($i_mode);
         
 // Send emails with determined parameters. For testing, the commented code below should be utilized.
-//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
+        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
         
 // Added check for mode before sending emails. This lets us test specific notification types.         
 //        if (($i_mode === 'RL4'))
