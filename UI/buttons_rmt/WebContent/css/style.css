@@ -1,3 +1,14 @@
+.style_for_popup_table_buttons
+{
+	width: 10% !important;
+	background: #C6E0E1 !important;
+	
+}
+.style_for_popup_table
+{
+	margin-top: 6% !important;
+}
+
 .color_change_for_font
 {
 color: rgb(60, 85, 87) !important;	
