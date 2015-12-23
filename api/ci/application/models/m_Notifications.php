@@ -341,14 +341,13 @@ class m_Notifications extends CI_model
                 $this->lt_corpid_details = $lo_details->get_corpid_details($this->lt_so_details[0]['so_entered_by']);
                 
 // Get PM and EM details.
-                if(array_key_exists('pm_id',$this->lt_so_details))
-                {$this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);}
+                $this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id'], 'm_emp_record');
                 if (array_key_exists(0, $this->lt_pm_details)) 
                 {
                 $this->lv_pm_email = $this->lt_pm_details[0]['email'];
                 }
                 if(array_key_exists('em_id',$this->lt_so_details))
-                {$this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);}
+                {$this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id'], 'm_emp_record');}
                 if (array_key_exists(0, $this->lt_em_details)) 
                 {
                 $this->lv_em_email = $this->lt_em_details[0]['email'];
@@ -362,7 +361,13 @@ class m_Notifications extends CI_model
                 
 // Get employee details.
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lv_empid);
-
+                
+// Get supervisor details                
+                if (array_key_exists(0, $this->lt_emp_details)) 
+                {
+                    $this->lt_sup_details = $lo_details->get_emp_details($this->lt_emp_details[0][self::gc_sup_id], 'm_emp_record');
+                }
+                
 // Get details of all capabilities email ids.
                 $this->lt_recievers = $this->db->query($this->lv_query_notifcn)->result_array();
                 $this->lt_act_type  = $this->db->query($this->lv_query_act_type)->result_array();
@@ -494,14 +499,13 @@ class m_Notifications extends CI_model
                 {
 
 // Get PM and EM details.            
-                if(array_key_exists('pm_id',$this->lt_so_details))
-                {$this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id']);}
+                $this->lt_pm_details = $lo_details->get_emp_details($this->lt_so_details[0]['pm_id'], 'm_emp_record');
                 if (array_key_exists(0, $this->lt_pm_details)) 
                 {
                 $this->lv_pm_email = $this->lt_pm_details[0]['email'];
                 }
                 if(array_key_exists('em_id',$this->lt_so_details))
-                {$this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id']);}
+                {$this->lt_em_details = $lo_details->get_emp_details($this->lt_so_details[0]['em_id'], 'm_emp_record');}
                 if (array_key_exists(0, $this->lt_em_details)) 
                 {
                 $this->lv_em_email = $this->lt_em_details[0]['email'];
@@ -513,6 +517,12 @@ class m_Notifications extends CI_model
 
 // Get employee details.
                 $this->lt_emp_details = $lo_details->get_emp_details($this->lv_empid);
+                
+// Get supervisor details                
+                if (array_key_exists(0, $this->lt_emp_details)) 
+                {
+                    $this->lt_sup_details = $lo_details->get_emp_details($this->lt_emp_details[0][self::gc_sup_id], 'm_emp_record');
+                }                
                 break;
             default:
                 break;
@@ -830,6 +840,34 @@ class m_Notifications extends CI_model
     fclose($io_handle);   
     }    
     
+// Set custom CC and to lists.
+    private function set_cc_to($i_mode)
+        {
+            switch($i_mode) 
+            {
+            case 'SL':
+            if(array_key_exists(0, $this->lt_sup_details))
+            {            
+                $lv_sup_email = $this->lt_sup_details[0]['email'];
+            }    
+                $this->lv_headers   = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", 'cc: alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;'.$lv_sup_email, $this->lv_headers);    
+                $this->lv_recievers = str_replace('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', '',$this->lv_recievers);
+            break;
+            
+            case 'ATN':
+            if(array_key_exists(0, $this->lt_sup_details))
+            {            
+                $lv_sup_email = $this->lt_sup_details[0]['email'];
+            }    
+                $this->lv_headers   = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", 'cc: alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;'.$lv_sup_email, $this->lv_headers);    
+                $this->lv_recievers = str_replace('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', '',$this->lv_recievers);
+            break;
+            
+            default:                
+            break;
+            }
+        }
+    
 // Function to send notifications per SO number.
     private function sendnotification(
     $i_so_number, $i_mode, $i_link = '', $i_transid, $i_emp_id, $i_comments = '') {
@@ -879,13 +917,16 @@ class m_Notifications extends CI_model
         }
 
 // Get recievers for email.                
-        self::get_recievers();      
+        self::get_recievers();  
+        
+// Set custom CC and to lists.
+        self::set_cc_to($i_mode);
         
 // Log the receivers         
         $this->writelog($i_mode);
         
 // Send emails with determined parameters. For testing, the commented code below should be utilized.
-        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
+//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
         
 // Added check for mode before sending emails. This lets us test specific notification types.         
 //        if (($i_mode === 'RL4'))
