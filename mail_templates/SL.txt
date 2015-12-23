@@ -2,7 +2,7 @@
 <html>
    <style>.font{font-size:15;font-family:Calibri}</style>
    <body class="font">
-      <p>Dear GV_SO_OWNER,</p>
+      <p>Dear Manager,</p>
       <d>Following employee is proposed for your requirement on <b> GV_PROJECT_NAME </b> project. Attached please find the resume for your evaluation. 
       </d>
       <h4><u>Employee Details:</u></h4>

@@ -2,7 +2,7 @@
 <html>
    <style>.font{font-size:15;font-family:Calibri}</style>
    <body class="font">
-      <p>Dear GV_SO_OWNER,</p>
+      <p>Dear Manager,</p>
       <d>The proposed employee has already been tagged to another project. We will get back to you shortly with a new proposal.
       </d> 
       <h4><u>Employee Details:</u></h4>
