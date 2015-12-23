@@ -4358,8 +4358,8 @@ var global_one
 									//id : 'table_for_manual_so1',
 									title : "List of SO's",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :20,
-									firstVisibleRow: 3,
+									//visibleRowCount :20,
+									//firstVisibleRow: 10,
 									rowSelectionChange: function(e) {
 									      var oIndex = e.getParameter('rowIndex');
 									      if (table_for_manual_so.isIndexSelected(oIndex )) {
@@ -4395,14 +4395,14 @@ var global_one
 									                                     		
 									                                     		
 									                                     		
-									                                     		}}),
+									                                     		}}).addStyleClass("style_for_popup_table_buttons"),
 									                                     		new sap.ui.commons.Button({text: "Close", press: function() { 
 									                                     			
 									                                     			 oFor_so.removeContent(osearch_manual);
 									                        						 oFor_so.removeContent(table_for_manual_so);
 											                                     		oFor_so.close();
 
-									                                     		}})
+									                                     		}}).addStyleClass("style_for_popup_table_buttons")
 									                                     	]}),
 									                                     	extension: [
 									                                     		new sap.ui.commons.Button({text: "Back", press: function() { 
@@ -4410,10 +4410,10 @@ var global_one
 									                                     			 oFor_so.addContent(osearch_manual);
 									                        						 oFor_so.removeContent(table_for_manual_so);
 									                                     			
-									                                     		}})
+									                                     		}}).addStyleClass("style_for_popup_table_buttons")
 									                                     	]
 
-								}).addStyleClass("style_for_table");
+								}).addStyleClass("style_for_table").addStyleClass("style_for_popup_table");
 
 						table_for_manual_so.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -4504,8 +4504,8 @@ var global_one
 								//	id : 'table_for_manual_emp1',
 									title : "List of Emp's",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :20,
-									firstVisibleRow: 3,
+									//visibleRowCount :20,
+									//firstVisibleRow: 3,
 									rowSelectionChange: function(e) {
 									      var oIndex = e.getParameter('rowIndex');
 									      if (table_for_manual_emp.isIndexSelected(oIndex )) {
@@ -4534,14 +4534,14 @@ var global_one
 										                            					 oFor_emp.removeContent(table_for_manual_emp); 
 										                                     		oFor_emp.close();
 										                                     		
-										                                     		}}),
+										                                     		}}).addStyleClass("style_for_popup_table_buttons"),
 										                                    		new sap.ui.commons.Button({text: "Close", press: function() { 
 										                                     			
 										                                    			oFor_emp.removeContent(osearch_manual_emp);
 										                            					 oFor_emp.removeContent(table_for_manual_emp); 
 										                                     		oFor_emp.close();
 
-										                                     		}})
+										                                     		}}).addStyleClass("style_for_popup_table_buttons")
 										                                     	]}),
 										                                     	extension: [
 										                                     		new sap.ui.commons.Button({text: "Back", press: function() { 
@@ -4551,9 +4551,9 @@ var global_one
 										                            					 
 										                            					 
 										                                     			
-										                                     		}})
+										                                     		}}).addStyleClass("style_for_popup_table_buttons")
 										                                     	]
-								}).addStyleClass("style_for_table");
+								}).addStyleClass("style_for_table").addStyleClass("style_for_popup_table");
 			table_for_manual_emp.addColumn(new sap.ui.table.Column({
 				label : new sap.ui.commons.Label({
 					text : "Emp ID",
@@ -5428,6 +5428,8 @@ var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 							 oFor_te.removeContent(matrix_for_te_main);
         					 oFor_te.removeContent(table_for_te_approve_id);
         					 oFor_te.close();	
+        					  $("#te_id_manual1").val("");
+          					 $("#te_name_manual1").val("");
 						}
 						}).addStyleClass("for_normal_buttons_style1");
 					matrix_for_te_main.createRow(search_te,search_manual1_tneclose)
@@ -5437,8 +5439,8 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 								//	id : 'table_for_te_approve_id',
 									title : "List of T&E Approver",
 									selectionMode: sap.ui.table.SelectionMode.Single,
-									visibleRowCount :20,
-									firstVisibleRow: 3,
+									//visibleRowCount :20,
+									//firstVisibleRow: 3,
 								
 									rowSelectionChange: function(e) {
 									      var oIndex = e.getParameter('rowIndex');
@@ -5463,14 +5465,16 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 											                            					 oFor_te.removeContent(table_for_te_approve_id);
 											                            					 oFor_te.close();
 	
-											                                     		}}),
+											                                     		}}).addStyleClass("style_for_popup_table_buttons"),
 											                                     		new sap.ui.commons.Button({text: "Close", press: function() { 
 											                                     			
 											                            					 oFor_te.removeContent(matrix_for_te_main);
 											                            					 oFor_te.removeContent(table_for_te_approve_id);
 											                            					 oFor_te.close();
+											                            					  $("#te_id_manual1").val("");
+											                             					 $("#te_name_manual1").val("");
 	
-											                                     		}})
+											                                     		}}).addStyleClass("style_for_popup_table_buttons")
 											                                     	]}),
 											                                     	extension: [
 													                                     		new sap.ui.commons.Button({text: "Back", press: function() { 
@@ -5480,9 +5484,9 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 													                            					 
 													                            					 
 													                                     			
-													                                     		}})
+													                                     		}}).addStyleClass("style_for_popup_table_buttons")
 													                                     	]
-								}).addStyleClass("style_for_table");
+								}).addStyleClass("style_for_table").addStyleClass("style_for_popup_table");
 
 				table_for_te_approve_id.addColumn(new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -5540,7 +5544,7 @@ var oRB1_locks = new sap.ui.commons.RadioButton({
 			$("#ops_comm_manual").hide();
 			$("#temulti_name1").hide();
 			$("#multi_decision_manual").hide();
-			 sap.ui.getCore().byId("bt1_manual_assign").setText("Assign & Notify");
+			 sap.ui.getCore().byId("bt1_manual_assign").setText("Assign & Notify")
 			 $("#sono_man1-input").val("");
 			 $("#proid1_man1").html("");
 			 $("#proname1_man1").html("");
@@ -5551,15 +5555,12 @@ var oRB1_locks = new sap.ui.commons.RadioButton({
 			 $("#emp_level_main").html("");
 			 $("#emp_location_main").html("");
 			 $("#teid-input").val("");
-			 $("#tename").html("");
+			 $("#tename").html("")
 			 $("#ops_comm_manual").val("");
 			 $("#multi_decision_manual-input").val("");
 			 $("#sm_pro_code1").val("");
 			 $("#fte1").val("100");
 			 $("#tag_type-input").val("Effort Booking");
-			 
-			 
-
 		} 
 	}).addStyleClass("color_change_for_font");
 
@@ -5584,7 +5585,7 @@ var oRB2_locks = new sap.ui.commons.RadioButton({
 		 $("#emp_level_main").html("");
 		 $("#emp_location_main").html("");
 		 $("#teid-input").val("");
-		 $("#tename").html("");
+		 $("#tename").html("")
 		 $("#ops_comm_manual").val("");
 		 $("#multi_decision_manual-input").val("");
 		 $("#sm_pro_code1").val("");
