@@ -920,25 +920,17 @@ class m_Notifications extends CI_model
         self::get_recievers();  
         
 // Set custom CC and to lists.
-        self::set_cc_to($i_mode);
+//        $this->set_cc_to($i_mode);
         
 // Log the receivers         
-        $this->writelog($i_mode);
+//        $this->writelog($i_mode);
         
 // Send emails with determined parameters. For testing, the commented code below should be utilized.
-        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
+//        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
         
-// Added check for mode before sending emails. This lets us test specific notification types.         
-//        if (($i_mode === 'RL4'))
-//        {
-//        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);    
-//        $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                                                                
-//        }
-//        else
-//        {        
-//        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
-//        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;sumit.naik@capgemini.com;aalekh.bhatt@capgemini.com;venkat.karipalli@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                          
-//        }
+// Added check for mode before sending emails. This lets us test specific notification types.                
+        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
+        $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;sumit.naik@capgemini.com;aalekh.bhatt@capgemini.com;venkat.karipalli@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                          
         if ($lv_mail) 
         { return true; } 
         else 
