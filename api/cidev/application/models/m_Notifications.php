@@ -43,8 +43,7 @@ class m_Notifications extends CI_model
             gc_em_name           = 'eng_mgr_name';
 
 // Private class variables.    
-    private $lv_content,
-            $lt_emp_details      = [],
+    private $lt_emp_details      = [],
             $lt_crd_details      = [],
             $lt_cte_details      = [],
             $lt_act_type         = [],
@@ -56,35 +55,36 @@ class m_Notifications extends CI_model
             $lt_req_details      = [],
             $lt_sup_details      = [],
             $lt_hlr_details      = [],
-            $lv_query_notifcn,
-            $lv_recievers,
-            $lv_so_owner,
-            $lv_so_number,
-            $lv_projname,
-            $lv_proj_code,
-            $lv_sdate,
-            $lv_edate,
-            $lv_empname,
-            $lv_empid,
-            $lv_pri_skill,
-            $lv_level,
-            $lv_BU,
-            $lv_sub_bu,
-            $lv_serv_line,
-            $lv_location,
-            $lv_capability,
-            $lv_rel_date,
-            $lv_message,
-            $lv_headers,
-            $lv_subject,
-            $lv_so_creator_email,
-            $lv_so_creator_name,
-            $lv_pm_email,
-            $lv_em_email,
-            $lv_status,
-            $lv_req_by,
-            $lv_comments,
-            $lv_pm_name;
+            $lv_query_notifcn = '',
+            $lv_recievers = '',
+            $lv_so_owner = '',
+            $lv_so_number = '',
+            $lv_projname = '',
+            $lv_proj_code = '',
+            $lv_sdate = '',
+            $lv_edate = '',
+            $lv_empname = '',
+            $lv_empid = '',
+            $lv_pri_skill = '',
+            $lv_level = '',
+            $lv_BU = '',
+            $lv_sub_bu = '',
+            $lv_serv_line = '',
+            $lv_location = '',
+            $lv_capability = '',
+            $lv_rel_date = '',
+            $lv_message = '',
+            $lv_headers = '',
+            $lv_subject = '',
+            $lv_so_creator_email = '',
+            $lv_so_creator_name = '',
+            $lv_pm_email = '',
+            $lv_em_email = '',
+            $lv_status = '',
+            $lv_req_by = '',
+            $lv_comments = '',
+            $lv_pm_name = '',
+            $lv_content  = '';
 
 // Constructor of the class
     function __construct() 
@@ -176,23 +176,26 @@ class m_Notifications extends CI_model
 // Get Employee ID/Email IDs of different recievers.                
         switch ($i_reciever) {
             case 'capability_lead':
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email))
+                {
                 return $this->lt_capability_email[$lv_key_cap]['lead'];
+                }
                 break;
             case 'capability_sub_lead':
-                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) {
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) 
+                {
                     return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'] . self::lc_colon . $this->lt_capability_email[$lv_key_cap]['sub_lead_2'];
                 }
-                return $this->lt_capability_email[$lv_key_cap]['sub_lead_1'] . self::lc_colon . $this->lt_capability_email[$lv_key_cap]['sub_lead_2'];
                 break;
             case 'capability_SPOC':
-                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) {
-                    return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'] . self::lc_colon . $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'];
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) 
+                {
+                    return $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'] . self::lc_colon . $this->lt_capability_email[$lv_key_cap]['staffing_spoc_2'];
                 }
                 break;
-                return ($this->lt_capability_email[$lv_key_cap]['staffing_spoc_1'] . self::lc_colon . $this->lt_capability_email[$lv_key_cap]['staffing_spoc_1']);
-                break;
             case 'capability_gen_id':
-                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) {
+                if (array_key_exists($lv_key_cap, $this->lt_capability_email)) 
+                {
                     return $this->lt_capability_email[$lv_key_cap]['generic_id'];
                 }
                 break;
@@ -835,7 +838,7 @@ class m_Notifications extends CI_model
     $lv_logfile = "D:\\xampp\\htdocs\\rmt\\email_log\\Email_log.csv";
     $io_handle  = fopen($lv_logfile, 'a') or die("can't open file");
     $lv_tstmp = date('Y-m-d H:i:s');
-    $lv_content = "Email Log for,$lv_tstmp,$i_mode,$this->lv_recievers".PHP_EOL;
+    $lv_content = "Email Log for,$lv_tstmp,$i_mode,$this->lv_so_number,$this->lv_recievers".PHP_EOL;
     fwrite($io_handle, $lv_content);
     fclose($io_handle);   
     }    
@@ -850,7 +853,7 @@ class m_Notifications extends CI_model
             {            
                 $lv_sup_email = $this->lt_sup_details[0]['email'];
             }    
-                $this->lv_headers   = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", 'cc: alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;'.$lv_sup_email, $this->lv_headers);    
+                $this->lv_headers   = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", 'cc: alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;'.$lv_sup_email."\r\n", $this->lv_headers);    
                 $this->lv_recievers = str_replace('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', '',$this->lv_recievers);
             break;
             
@@ -859,7 +862,7 @@ class m_Notifications extends CI_model
             {            
                 $lv_sup_email = $this->lt_sup_details[0]['email'];
             }    
-                $this->lv_headers   = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", 'cc: alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;'.$lv_sup_email, $this->lv_headers);    
+                $this->lv_headers   = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", 'cc: alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;'.$lv_sup_email."\r\n", $this->lv_headers);    
                 $this->lv_recievers = str_replace('alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com', '',$this->lv_recievers);
             break;
             
@@ -928,12 +931,64 @@ class m_Notifications extends CI_model
 // Send emails with determined parameters. For testing, the commented code below should be utilized.
 //        $lv_mail = mail($this->lv_recievers, $this->lv_subject, $this->lv_message, $this->lv_headers);     
         
-// Added check for mode before sending emails. This lets us test specific notification types.                
+// Added check for mode before sending emails. This lets us test specific notification types.         
+//        if (($i_mode === 'RL4'))
+//        {
+//        $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);    
+//        $lv_mail = mail('dikshant.mishra@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                                                                
+//        }
+//        else
+//        {        
         $this->lv_headers = str_replace('cc: appsonesap.in@capgemini.com'."\r\n", '', $this->lv_headers);  
         $lv_mail = mail('dikshant.mishra@capgemini.com;tejas.nakwa@capgemini.com;alice.kolatkar@capgemini.com;praveen.kumaran@capgemini.com;sumit.naik@capgemini.com;aalekh.bhatt@capgemini.com;venkat.karipalli@capgemini.com', $this->lv_subject, $this->lv_message, $this->lv_headers);                                          
+//        }
         if ($lv_mail) 
         { return true; } 
         else 
         { return false; }
+        
+// Clear all the variables used.        
+            $this->lt_emp_details      = [];
+            $this->lt_crd_details      = [];
+            $this->lt_cte_details      = [];
+            $this->lt_act_type         = [];
+            $this->lt_recievers        = [];
+            $this->lt_capability_email = [];
+            $this->lt_corpid_details   = [];
+            $this->lt_pm_details       = [];
+            $this->lt_em_details       = [];
+            $this->lt_req_details      = [];
+            $this->lt_sup_details      = [];
+            $this->lt_hlr_details      = [];
+            $this->lv_query_notifcn = '';
+            $this->lv_recievers = '';
+            $this->lv_so_owner = '';
+            $this->lv_so_number = '';
+            $this->lv_projname = '';
+            $this->lv_proj_code = '';
+            $this->lv_sdate = '';
+            $this->lv_edate = '';
+            $this->lv_empname = '';
+            $this->lv_empid = '';
+            $this->lv_pri_skill = '';
+            $this->lv_level = '';
+            $this->lv_BU = '';
+            $this->lv_sub_bu = '';
+            $this->lv_serv_line = '';
+            $this->lv_location = '';
+            $this->lv_capability = '';
+            $this->lv_rel_date = '';
+            $this->lv_message = '';
+            $this->lv_headers = '';
+            $this->lv_subject = '';
+            $this->lv_so_creator_email = '';
+            $this->lv_so_creator_name = '';
+            $this->lv_pm_email = '';
+            $this->lv_em_email = '';
+            $this->lv_status = '';
+            $this->lv_req_by = '';
+            $this->lv_comments = '';
+            $this->lv_pm_name = '';
+            $this->lv_content  = '';
     }
 }
