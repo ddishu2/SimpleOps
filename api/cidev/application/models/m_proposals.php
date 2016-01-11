@@ -165,6 +165,24 @@ Class m_proposals extends CI_model
                 {
                     $re_it_emps_for_sos[$lv_so_id]['emp'] = $lv_multi_emp;
                 }
+//                Changes by Vineet Khisty
+                else{
+                    $lv_multi_skill_cat = $this->getMultiProposedEmpForSO_skillcat
+                            (
+                                $lv_so_id, 
+                                $lv_so_skill, 
+                                $lv_so_level,
+                                $lv_so_loc
+                            
+                            );
+                    
+                    if(!is_null($lv_multi_skill_cat))
+                    {
+                        $re_it_emps_for_sos[$lv_so_id]['emp'] = $lv_multi_skill_cat;
+                    }
+                            
+                }
+//                End of changes by Vineet Khisty
                 }
             }
         }
@@ -891,4 +909,72 @@ public function createProposal( $fp_so_id , $fp_emp_id )
      {
          return self::$arr_sowithnoperfectproposal;
      }
+//     Start of Changes by Vineet Khisty
+//   Check for suitable employees in having skill in skill category  
+     public function getMultiProposedEmpForSO_skillcat($fp_v_so_id, $fp_v_so_skill, $fp_v_so_level, $fp_v_so_loc)
+        {
+        
+        $lwa_deployable_emp = [];
+        $re_wa_emp_for_so = null;
+        foreach ($this->it_multi_prop_allowed_emps as $lwa_deployable_emp) {
+
+
+            $lv_emp_id = $lwa_deployable_emp[self::C_FNAME_EMP_ID];
+
+            $lv_emp_prime_skill = $lwa_deployable_emp[self::c_emp_skill_fname];
+            //$lv_emp_prime_skill = strtolower($lwa_deployable_emp[self::c_emp_skill_fname]);
+            // $lv_emp_prime_skill = strtolower($lwa_deployable_emp['prime_skill']);
+            $lv_emp_level = strtolower($lwa_deployable_emp[self::c_emp_level_fname]);
+            $lv_emp_loc = strtolower($lwa_deployable_emp[self::c_emp_loc_fname]);
+//            echo $fp_v_so_id.','
+//            .$fp_v_so_skill.','
+//            .$fp_v_so_level.','
+//            .$fp_v_so_loc.'--->';
+//            echo $lwa_deployable_emp['emp_id'].','
+//            .$lwa_deployable_emp['skill1_l4'].','
+//            .$lwa_deployable_emp['level'].','
+//            .$lwa_deployable_emp['org'].PHP_EOL;
+//            if ($this->lo_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill) && $lv_emp_level == $fp_v_so_level && $lv_emp_loc == $fp_v_so_loc && ($this->isDeployable($lv_emp_id, $fp_v_so_id))
+//            )
+//            $lo_EMPSO = new l_SOEmpSkillMatcher();
+             $lv_skillmatch = $this->isMatchinSkillCategory($fp_v_so_skill);
+//            $lv_skillmatch = $this->l_SOEmpSkillMatcher->isMatchOrAlternative($fp_v_so_skill, $lv_emp_prime_skill);
+           if (  $lv_skillmatch && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id)) )
+          // if (strtolower($fp_v_so_skill) == $lv_emp_prime_skill && $lv_emp_level == strtolower($fp_v_so_level) && $lv_emp_loc == strtolower($fp_v_so_loc) && ($this->isMultiProposedDeployable($lv_emp_id, $fp_v_so_id)) )
+                            {
+                $this->addToPerfectProposal($lv_emp_id, $fp_v_so_id);
+                
+               $re_wa_emp_for_so[] = $lwa_deployable_emp;
+                $arr = $this->m_lock->getDetailsWhereEmpIsAlreadyProposed($lv_emp_id);
+                if(!array_key_exists('0', $arr))
+                {
+                    $re_wa_emp_for_so['ProposedAnyWhereElse'] = false;
+                }
+                else  
+                {
+                    $re_wa_emp_for_so['ProposedAnyWhereElse'] = true;
+                }   
+                 //$re_wa_emp_for_so[] = $lwa_deployable_emp; 
+//                    echo 'Match'.$fp_v_so_id.'--->'.$lwa_deployable_emp['emp_id'].'======'.json_encode($re_wa_emp_for_so ).PHP_EOL;
+                break;
+            }
+        }
+
+        return $re_wa_emp_for_so;
+         }
+         
+         public function isMatchinSkillCategory($lp_v_so_skill)
+         {
+             $lv_skillmatch = false;
+             $this->db->select('*');
+             $this->db->from('m_emp_ras');
+             $this->db->like('skill_cat',$lp_v_so_skill); 
+             $arr_result = $this->db->get();
+             $arr_result_final = $arr_result->result_array();  
+             if (!is_null($arr_result_final)){
+             $lv_skillmatch = true;
+        }
+        return  $lv_skillmatch;
+         }
+//         End of changes by Vineet Khisty
 }
