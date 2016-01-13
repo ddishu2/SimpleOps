@@ -126,27 +126,10 @@ var global_one
 							filterProperty: "end_date_pop",
 							width: "70px"
 						}));
-						/* popup_detail.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Emp ID" ,tooltip :"Emp ID"}),
-							template: new sap.ui.commons.TextView().bindProperty("text", "emp_id_pop"),
-							sortProperty: "emp_id_pop",
-							filterProperty: "emp_id_pop",
-							width: "70px"
-						}));
-						popup_detail.addColumn(new sap.ui.table.Column({
-							label: new sap.ui.commons.Label({text: "Emp Name" ,tooltip :"Emp Name"}),
-							template: new sap.ui.commons.TextView().bindProperty("text", "emp_name_pop"),
-							sortProperty: "emp_name_pop",
-							filterProperty: "emp_name_pop",
-							width: "90px"
-						})); */
-
+				
 						
 						popup_detail.sort(popup_detail.getColumns()[0]);	
-						
-						
-					
-						 
+ 
 						function handler(oEvent) {
 							
 						}
@@ -319,13 +302,7 @@ var global_one
 										 $("#so_type_id1-input").val("Project");
 										 $("#so_no_form").val("")
 										
-										
-										
-										//sap.ui.getCore().byId("sfrom1").setValue(so_from);
-										
-										
-										
-										
+
 									} else if (oEvent.getParameter("itemId") == "item1-2") {
 										$("#second").addClass("hide_div");
 										// $('#second').load('demand_fullfill1.html');
@@ -2587,6 +2564,33 @@ var global_one
 							}
 						}).addStyleClass("for_normal_buttons_style1");
 						back_third.placeAt("third");
+						
+						
+						
+					////////////////////for radio buttons//////////////////////////
+					
+					
+					var type_resource_auto = new sap.ui.commons.Label({
+					text : "Type Of Resource :",
+				
+				}).addStyleClass("for_text_style1");
+				
+				var exp_resource_auto = new sap.ui.commons.RadioButton({
+					text : 'Experienced',
+					tooltip : 'Select this for getting Experienced Resource List',
+					groupName : 'res_type_auto',
+						
+					}).addStyleClass("for_text_style1");
+				var train_resource_auto = new sap.ui.commons.RadioButton({
+					text : 'Trained',
+					tooltip : 'Select this for getting Trained Resource List',
+					groupName : 'res_type_auto',
+						
+					}).addStyleClass("for_text_style1");
+				
+				type_resource_auto.placeAt("four1");
+				exp_resource_auto.placeAt("four1");
+				train_resource_auto.placeAt("four1");
 
 //--------------------------Table for suitable Match--------------------------------------------------------------------//
 						var suitable_match = new sap.ui.table.Table(
@@ -2596,8 +2600,7 @@ var global_one
 									selectionMode: sap.ui.table.SelectionMode.Single,
 								visibleRowCount :40,
 									firstVisibleRow: 3,
-								/* 	 visibleRowCountMode : sap.ui.table.VisibleRowCountMode.Auto,
-									 navigationMode: sap.ui.table.NavigationMode.Scrollbar, */
+								
 
 								});
 
@@ -2890,18 +2893,12 @@ var global_one
 															
 																a = res[i];
 																y = a[0];
-																	var tmp_popup1 = {
-																	
-																		
-																		 
+																	var tmp_popup1 = {		 
 																		so_no_pop : y.so_pos_no,
 																		pro_id_pop :y.so_proj_id,
 														   				pro_name_pop : y.so_proj_name,
 																		start_date_pop :y.so_start_date_new,
-																		end_date_pop : y.so_end_date,   
-																		/* emp_id_pop : res.emp_id,
-																		emp_name_pop : res.emp_name, */
-																		
+																		end_date_pop : y.so_end_date,   		
 																	};
 															
 																console.log(tmp_popup1);
@@ -2925,11 +2922,7 @@ var global_one
 							      		}
 									
 									});
-									
-									
-									
-
-									
+				
 								}
 							}).addStyleClass("is_proposed_show"),
 							width : "100px",
@@ -3007,10 +3000,7 @@ var global_one
 								var p1_id = "";
 								var all_multi = "";
 								var ops_comm ="";
-								 
-							
-
-								
+	
 								$(".approveDropdown input").each(function(index,val){
 				
 									if($(this).val() == "Approve" || $(this).val() == "Reject"){
@@ -3213,12 +3203,7 @@ var global_one
 							filterProperty : "loc_partial",
 							width : "100px"
 						}));
-					
-						
-						
-						
-
-						
+	
 						partial_match.bindRows("/modelData");
 
 						//partial_match.sort(partial_match.getColumns()[0]);
@@ -3545,23 +3530,14 @@ var global_one
 																			.setModel(Model_popup_partial);
 																	popup_detail_partial
 																			.bindRows("/modelData");
-																	
-																	
-																
-
-
-																}
+							}
 
 															);
 							      			 
 							      		}
 									
 									});
-									
-									
-									
-
-									
+		
 								}
 							}).addStyleClass("is_proposed_show"),
 							width : "70px",
@@ -3875,11 +3851,7 @@ var global_one
 					//////////////////////////////////////////////Manual Tagging Starts///////////////////////////////////////////////////////////
 			
 		//  table for manual emp search starts here///
-		
-		 
-					
-					
-                 /*     -----------------/* on f4 of SO field	 ------------------------*/
+      /*     -----------------/* on f4 of SO field	 ------------------------*/
               	var osearch_manual = new sap.ui.commons.layout.MatrixLayout({
 							id : 'matrix_manual_search',
 							layoutFixed : true,
@@ -4043,8 +4015,6 @@ var global_one
 							
 							text : 'Project Name'
 						}).addStyleClass("for_text_style1");
-						
-						
 
 						var projectNameText_manual = new sap.ui.commons.TextField({
 							
@@ -4337,14 +4307,7 @@ var global_one
 													}
 													}
 												});
-											 
-							
-
-									
-						
-						
-						 
-						}
+		}
 						
 						}).addStyleClass("for_normal_buttons_style1");
 						osearch_manual.createRow(search_manual1,search_manual1_close)
@@ -4686,7 +4649,7 @@ var global_one
 						
 						
 						var capabilityLabel_manual_emp = new sap.ui.commons.Label({
-							text : 'Capability',
+							text : 'Capability :',
 							
 					
 						}).addStyleClass("for_text_style1");
@@ -5106,7 +5069,7 @@ var global_one
 
                         
 						var  skill_Label_manual_emp = new sap.ui.commons.Label({
-							text : 'Skill'
+							text : 'Skill :'
 						}).addStyleClass("for_text_style1");
 						
 						 skill_Text_manual_emp = new sap.ui.commons.DropdownBox(
@@ -5216,6 +5179,26 @@ var global_one
 				
 
 				osearch_manual_emp.createRow(level_manual, capabilityText_level);
+				
+				var type_resource = new sap.ui.commons.Label({
+					text : "Type Of Resource :",
+				
+				}).addStyleClass("for_text_style1");
+				
+				var exp_resource = new sap.ui.commons.RadioButton({
+					text : 'Experienced',
+					tooltip : 'Select this for getting Experienced Resource List',
+					groupName : 'res_type',
+						
+					}).addStyleClass("for_text_style1");
+				osearch_manual_emp.createRow(type_resource, exp_resource);
+				var train_resource = new sap.ui.commons.RadioButton({
+					text : 'Trained',
+					tooltip : 'Select this for getting Trained Resource List',
+					groupName : 'res_type',
+						
+					}).addStyleClass("for_text_style1");
+				osearch_manual_emp.createRow(null, train_resource);
 
 				var search_manual1_emp_results =new sap.ui.commons.Button({text :"Get Emp Results" ,press: function()
 					{
@@ -5286,10 +5269,7 @@ var global_one
 											
 												completeData_manual_emp
 														.push(tmp_emp);
-											
-
-											
-
+	
 										});
 
 								var oModel2_manual_emp = new sap.ui.model.json.JSONModel();
@@ -5320,10 +5300,7 @@ var global_one
 					}
 					}).addStyleClass("for_normal_buttons_style1");
 				osearch_manual_emp.createRow(search_manual1_emp_results,search_manual1_emp_close)		
-						
-						
-						
-					
+		
 /////////////////////////////////////////////////////////Manual's Table starts here/////////////////////////////////////////////
 var matrix_for_te_main =new sap.ui.commons.layout.MatrixLayout({
 				id : 'matrix_for_te_main',
@@ -5517,10 +5494,6 @@ var table_for_te_approve_id = new sap.ui.table.Table(
 				
 				
 //////////////////////////////////////////////////Table for Corp ID//////////////////////////////////////////////////////////
-
-
-
-
 
  //////////////////////////////1st Row
 
@@ -6053,14 +6026,7 @@ matrix_for_manual_main.createRow(oDivider2__0,oDivider_2,oDivider_3,oDivider_4,n
 					//	manual1_table.placeAt("manual1");
 						assign_manual.placeAt("manual1");
 						back_manual.placeAt("manual1");
-
-						
-						
-						
-						
-						
-
-						
+			
 					
 ////////////////////////////////////////////Manual1 Ends Here//////////////////////////////////////////////////////////////////
 
@@ -6229,12 +6195,9 @@ var repo_to1 = new sap.ui.commons.Label({
 						report_matrix_layout.createRow(report_RB7);
 					
 						
-						report_matrix_layout.placeAt("report_first");	
-					
+						report_matrix_layout.placeAt("report_first");
 						
-					
-						
-						var view_report_sel = new sap.ui.commons.Button({
+	var view_report_sel = new sap.ui.commons.Button({
 							id : 'view_report_button',
 							text : "View Report",
 							tooltip : "View Report",
@@ -6510,20 +6473,14 @@ var repo_to1 = new sap.ui.commons.Label({
 									}).addStyleClass("for_hide");
 					
 									}
-								
-								
-								
-									
-									
-							
-								
+	
 							}
 
 							}).addStyleClass("for_normal_buttons_style1");
 						var Open_bench = new sap.ui.commons.Button({text:"Open",press: function(){
 							
 							
-							window.open("10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment")
+							window.open("http://10.75.250.149\Datagrp\AppsOne SAP RMT\Ammendment")
 						}}).addStyleClass("for_normal_buttons_style1");
 						var Save_bench = new sap.ui.commons.Button({text :"Save"}).addStyleClass("for_normal_buttons_style1");
 						var Cancel_bench = new sap.ui.commons.Button({text:"Cancel" ,		
